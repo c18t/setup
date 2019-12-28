@@ -1,0 +1,18 @@
+#name: CI
+
+on:
+  push:
+    paths:
+      - setup-iapetus.sh
+  schedule:
+    - cron: '0 0 1 * *'
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run setup-iapetus.sh
+      run: ./setup-iapetus.sh
