@@ -1,5 +1,3 @@
-#name: CI
-
 on:
   push:
     paths:
@@ -8,8 +6,7 @@ on:
     - cron: '0 0 1 * *'
 
 jobs:
-  build:
-
+  setup:
     runs-on: macos-latest
 
     steps:

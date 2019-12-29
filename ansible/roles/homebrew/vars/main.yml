@@ -1,0 +1,4 @@
+---
+
+# homebrew用変数設定ファイル: roles/homebrew/vars/{{ config }}
+config: '{{ homebrew_config }}'

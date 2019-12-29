@@ -1,0 +1,89 @@
+---
+
+brew_taps:
+  - buo/cask-upgrade
+  - homebrew/cask
+  - homebrew/cask-drivers
+  - homebrew/cask-fonts
+  - homebrew/cask-versions
+  - homebrew/core
+brew_fomulae:
+  - sqlite
+  - ansible
+  - asciidoctor
+  - bats
+  - byobu
+  - dep
+  - direnv
+  - docker
+  - ext4fuse # for osxfuse
+  - fish
+  - fzf
+  - ghq
+  - git-secret
+  - git-secrets
+  - gradle
+  - graphviz
+  - hardlink-osx
+  - haskell-stack
+  - hub
+  - jenv
+  - lua
+  - luajit
+  - mas
+  - neofetch
+  - neovim
+  - nim
+  - peco
+  - swagger-codegen
+  - terminal-notifier # for fisherman/done
+  - the_platinum_searcher
+  - tree
+brew_casks:
+  - osxfuse
+  - android-studio
+  - cakebrew
+  - calibre
+  - docker
+  - filezilla
+  - firefox
+  - font-ricty-diminished
+  - fork
+  - gimp
+  - gitter
+  - google-chrome
+  - google-japanese-ime
+  - google-photos-backup-and-sync
+  - horndis
+  - inkscape
+  - iterm2
+  - keepassx
+  - kindle
+  - kitematic
+  - licecap
+  - limechat
+  - mactex
+  - microsoft-remote-desktop-beta
+  - mnemosyne
+  - send-to-kindle
+  - sketch
+  - skype
+  - slack
+  - steam
+  - visual-studio
+  - visual-studio-code
+  - wacom-intuos-tablet
+  - workflowy
+  - xmind
+  - xquartz
+mas_apps:
+  - name: LINE
+    id: 539883307
+  - name: LINE WORKS
+    id: 1029784963
+  - name: Trello
+    id: 1278508951
+  - name: TweetDeck
+    id: 485812721
+  - name: Xcode
+    id: 497799835

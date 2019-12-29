@@ -1,0 +1,15 @@
+---
+
+- hosts: local
+  roles:
+  - os-setting-macos
+  - homebrew
+  - iterm2
+  vars: # 指定できる変数は各ロールの defaults/main.yml 参照
+    # ansible
+    #ansible_python_interpreter: /usr/local/bin/python
+    # os-setting-macos
+    #os_setting_macos_dock_tilesize:
+    # homebrew
+    homebrew_config: brewfile-iapetus.yml
+    # iterm2

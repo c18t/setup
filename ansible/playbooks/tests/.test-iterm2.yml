@@ -1,0 +1,13 @@
+---
+
+- hosts: local
+  pre_tasks:
+  - name: remove imgcat
+    file:
+      path: /usr/local/bin/imgcat
+      state: absent
+    when: false # true
+  roles:
+  - iterm2
+  vars: # 指定できる変数は各ロールの defaults/main.yml 参照
+    # iterm2

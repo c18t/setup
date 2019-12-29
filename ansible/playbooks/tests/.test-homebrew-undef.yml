@@ -1,0 +1,8 @@
+---
+
+- hosts: local
+  roles:
+  - homebrew
+  vars: # 指定できる変数は各ロールの defaults/main.yml 参照
+    # homebrew
+    homebrew_config: tests/.test-undef.yml

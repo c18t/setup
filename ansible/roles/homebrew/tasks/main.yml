@@ -1,0 +1,87 @@
+---
+
+- name: assert homebrew role config
+  assert:
+    that:
+      - config is defined
+      - config is not none
+      - config != ''
+    quiet: true
+
+- block:
+  - name: 'include roles/homebrew/vars/{{ config }}'
+    include_vars: '{{ config }}'
+  - name: assert brew_taps
+    assert:
+      that: brew_taps is not defined or brew_taps is iterable
+      quiet: true
+  - name: assert brew_fomulae
+    assert:
+      that: brew_fomulae is not defined or brew_fomulae is iterable
+      quiet: true
+  - name: assert brew_casks
+    assert:
+      that: brew_casks is not defined or brew_casks is iterable
+      quiet: true
+  - name: assert mas_apps
+    assert:
+      that: mas_apps is not defined or mas_apps is iterable
+      quiet: true
+
+- name: type brew
+  shell: type brew
+  register: type_brew
+  failed_when: type_brew.rc not in [0, 1, 126, 127]
+  changed_when: false
+  check_mode: no
+    
+- block:
+  - name: install Homebrew
+    shell: ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    args:
+      executable: /usr/bin/env bash
+    when: ansible_distribution == "MacOSX"
+  - name: install Linuxbrew
+    shell: |
+      sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+      test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+      test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+      test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+      echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+    args:
+      executable: /usr/bin/env bash
+    when: ansible_distribution != "MacOSX"
+  when: type_brew.rc != 0
+
+- name: update Homebrew/Linuxbrew and upgrade fomulae
+  homebrew:
+    update_homebrew: yes
+    upgrade_all: yes
+  ignore_errors: yes
+  when: type_brew.rc == 0
+
+- name: Homebrew/Linuxbrew tap
+  homebrew_tap:
+    name: '{{ brew_taps }}'
+  when: brew_taps is defined and brew_taps | length > 0
+
+- name: install Homebrew/Linuxbrew formurae
+  homebrew:
+    name: '{{ brew_fomulae }}'
+  when: brew_fomulae is defined and brew_fomulae | length > 0
+
+- name: install Homebrew/Linuxbrew casks
+  homebrew_cask:
+    name: '{{ item }}'
+  # どれかが失敗してもすべて実施されるように with_items で指定
+  with_items: '{{ brew_casks | default([]) }}'
+  ignore_errors: yes
+
+- name: mas install
+  script: 'mas.sh {{ item.id }}'
+  args:
+    executable: mas
+  register: mas_result
+  changed_when: mas_result.rc == 1
+  failed_when: mas_result.rc not in [0, 1]
+  with_items: '{{ mas_apps | default([]) }}'
