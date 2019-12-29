@@ -2,6 +2,11 @@ on:
   push:
     paths:
       - setup-iapetus.sh
+      - ansible/playbooks/iapetus-macbookpro.yml
+      - 'ansible/roles/homebrew/*'
+      - 'ansible/roles/iterm2/*'
+      - 'ansible/roles/os-setting-macos/*'
+
   schedule:
     - cron: '0 0 1 * *'
 
