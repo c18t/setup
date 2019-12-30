@@ -1,9 +1,11 @@
+name: setup-iapetus
+
 on:
   push:
     paths:
       - setup-iapetus.sh
       - ansible/playbooks/iapetus-macbookpro.yml
-      - 'ansible/roles/*'
+      - 'ansible/roles/**'
 
   schedule:
     - cron: '0 0 1 * *'
