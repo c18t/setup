@@ -1,12 +1,23 @@
 ---
 
 - hosts: local
+  pre_tasks:
+  - name: register setup_root
+    shell: 'dirname $(dirname $(dirname $(pwd)))'
+    register: setup_root
+    changed_when: false
+    check_mode: no
+  - name: set resources
+    set_fact:
+      resources: '{{ setup_root.stdout }}/resources'
+    changed_when: false
+    check_mode: no
   roles:
   - fish-shell
   vars: # 指定できる変数は各ロールの defaults/main.yml 参照
     # fish-shell
     fish_shell_path:
   vars_prompt:
-    - name: my_password
-      prompt: "User password"
-      private: yes
+  - name: my_password
+    prompt: "User password"
+    private: yes

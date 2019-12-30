@@ -72,7 +72,21 @@
     follow: yes
     path: '{{ item }}'
   with_items:
-  - '{{ home }}/{{ xdg_config_home }}/fish/functions'
+  - '{{ xdg_config_home }}/fish/functions'
+
+- name: set link items
+  set_fact:
+    link_items:
+    - { path: '{{ dotfiles }}/fish/{{ fish_shell_config }}', dest: '{{ xdg_config_home }}/fish/config.fish' }
+    - { path: '{{ resources }}/fish/fishfile', dest: '{{ xdg_config_home }}/fish/fishfile' }
+    - { path: '{{ resources }}/fish/functions/fish_prompt.fish', dest: '{{ xdg_config_home }}/fish/functions/fish_prompt.fish' }
+
+- name: check for the existence of link sources
+  stat:
+    path: '{{ item.path }}'
+  register: stat_link_source
+  failed_when: not stat_link_source.stat.exists or stat_link_source.stat.isdir
+  with_items: '{{ link_items }}'
 
 - name: link to files
   become: true
@@ -81,18 +95,15 @@
     follow: no
     force: yes
     owner: '{{ user }}'
-    src:  '{{ home }}/{{ dotfiles_dirpath }}/{{ item.path }}'
+    src:  '{{ item.path }}'
     dest: '{{ item.dest }}'
-  with_items:
-  - { path: 'fish/{{ fish_shell_config }}', dest: '{{ home }}/{{ xdg_config_home }}/fish/config.fish' }
-  - { path: 'fish/fishfile', dest: '{{ home }}/{{ xdg_config_home }}/fish/fishfile' }
-  - { path: 'fish/functions/fish_prompt.fish', dest: '{{ home }}/{{ xdg_config_home }}/fish/functions/fish_prompt.fish' }
+  with_items: '{{ link_items }}'
 
 - name: set environment variables
   shell: >
-    fish -c "set -Ux XDG_CONFIG_HOME {{ home }}/{{ xdg_config_home }}";
-    fish -c "set -Ux XDG_CACHE_HOME {{ home }}/{{ xdg_cache_home }}";
-    fish -c "set -Ux XDG_DATA_HOME {{ home }}/{{ xdg_data_home }}";
+    fish -c "set -Ux XDG_CONFIG_HOME {{ xdg_config_home }}";
+    fish -c "set -Ux XDG_CACHE_HOME {{ xdg_cache_home }}";
+    fish -c "set -Ux XDG_DATA_HOME {{ xdg_data_home }}";
     fish -c "set -Ux LC_CTYPE en_US.UTF-8"
     fish -c "set -Ux EDITOR {{ editor }}";
     fish -c "set -Ux VISUAL {{ visual }}";
@@ -174,7 +185,7 @@
   when: type_fisherman.rc != 0
 
 - name: install fish functions
-  shell: fish -c "fisher {{ home }}/{{ dotfiles_dirpath }}/fish/functions"
+  shell: fish -c "fisher resources/fish/functions"
   register: install_fish_functions
   changed_when: install_fish_functions.stderr.find('No plugins to install or dependencies missing.') == -1
 

@@ -13,8 +13,8 @@ fish_shell_user: '{{ ansible_env.USER }}'
 fish_shell_editor: '{{ ansible_env.EDITOR }}'
 fish_shell_visual: '{{ ansible_env.VISUAL }}'
 # XDG
-fish_shell_xdg_config_home: .config
-fish_shell_xdg_cache_home: .cache
-fish_shell_xdg_data_home: .local/share
+fish_shell_xdg_config_home: '{{ ansible_env.XDG_CONFIG_HOME | default(fish_shell_home + "/.config") }}'
+fish_shell_xdg_cache_home: '{{ ansible_env.XDG_CACHE_HOME | default(fish_shell_home + "/.cache") }}'
+fish_shell_xdg_data_home: '{{ ansible_env.XDG_DATA_HOME | default(fish_shell_home + "/.local/share") }}'
 # dotfiles
-fish_shell_dotfiles_dirpath: GoogleDrive/share/dotfiles
+fish_shell_dotfiles: '{{ fish_shell_home + "/GoogleDrive/share/dotfiles" }}'

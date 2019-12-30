@@ -17,4 +17,4 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Run setup-iapetus.sh
-      run: ./setup-iapetus.sh -e my_password=
+      run: ./setup-iapetus.sh -e my_password= -e fish_shell_dotfiles=$(pwd)/resources/tests/dotfiles
