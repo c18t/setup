@@ -1,0 +1,110 @@
+---
+
+- name: check phpenv was installed
+  shell: fish -c "type phpenv"
+  register: type_phpenv
+  failed_when: type_phpenv.rc not in [0, 1, 126, 127]
+  changed_when: false
+  check_mode: no
+
+- block:
+  - name: get phpenv
+    shell: fish -c "ghq get CHH/phpenv | grep -i CHH/phpenv"
+    register: get_phpenv
+    changed_when: get_phpenv.stdout.find('exists') == -1
+    check_mode: no
+  - name: get php-build
+    shell: fish -c "ghq get CHH/php-build | grep -i CHH/php-build"
+    register: get_php_build
+    changed_when: get_php_build.stdout.find('exists') == -1
+    check_mode: no
+  - name: get phpenv-apache-version
+    shell: fish -c "ghq get garamon/phpenv-apache-version | grep -i garamon/phpenv-apache-version"
+    register: get_phpenv_apache_version
+    changed_when: get_phpenv_apache_version.stdout.find('exists') == -1
+    check_mode: no
+  - name: get phpenv local repositry path
+    shell: fish -c "echo (ghq root)/(ghq list | grep -i CHH/phpenv) | grep -i CHH/phpenv"
+    register: check_phpenv
+    changed_when: false
+    check_mode: no
+  - name: get php-build local repositry path
+    shell: fish -c "echo (ghq root)/(ghq list | grep -i CHH/php-build) | grep -i CHH/php-build"
+    register: check_php_build
+    changed_when: false
+    check_mode: no
+  - name: get phpenv-apache-version local repositry path
+    shell: fish -c "echo (ghq root)/(ghq list | grep -i garamon/phpenv-apache-version) | grep -i garamon/phpenv-apache-version"
+    register: check_phpenv_apache_version
+    changed_when: false
+    check_mode: no
+  - name: set phpenv_path
+    set_fact:
+      phpenv_path: '{{ check_phpenv.stdout }}'
+  - name: set php_build_path
+    set_fact:
+      php_build_path: '{{ check_php_build.stdout }}'
+  - name: set phpenv_apache_version_path
+    set_fact:
+      phpenv_apache_version_path: '{{ check_phpenv_apache_version.stdout }}'
+  - name: install phpenv
+    shell: fish -c "bash {{ phpenv_path }}/bin/phpenv-install.sh"
+  - name: make phpenv directory
+    file:
+      state: directory
+      follow: yes
+      path: '{{ home }}/.phpenv/{{ item }}'
+    with_items: [ 'shims', 'plugins' ]
+  - name: install php-build
+    file:
+      state: link
+      follow: no
+      force: yes
+      src:  '{{ item.src }}'
+      dest: '{{ home }}/.phpenv/plugins/{{ item.dest }}'
+    with_items:
+      - { dest: 'php-build', src: '{{ php_build_path }}' }
+      - { dest: 'phpenv-apache-version', src: '{{ phpenv_apache_version_path }}' }
+  when: type_phpenv.rc != 0
+
+- name: find phpenv
+  shell: fish -c "type phpenv"
+  register: type_phpenv
+  changed_when: false
+  check_mode: no
+
+- name: check phpenv-composer was installed
+  shell: fish -c "type composer"
+  register: type_composer
+  failed_when: type_composer.rc not in [0, 1, 126, 127]
+  changed_when: false
+  check_mode: no
+
+- block:
+  - name: get phpenv-composer
+    shell: fish -c "ghq get ngyuki/phpenv-composer | grep -i phpenv-composer"
+    register: get_phpenv_composer
+    changed_when: get_phpenv_composer.stdout.find('exists') == -1
+    check_mode: no
+  - name: get phpenv-composer local repositry path
+    shell: fish -c "echo (ghq root)/(ghq list | grep -i phpenv-composer) | grep -i phpenv-composer"
+    register: check_phpenv_composer
+    changed_when: false
+    check_mode: no
+  - name: set phpenv_composer_path
+    set_fact:
+      phpenv_composer_path: '{{ check_phpenv_composer.stdout }}'
+  - name: make phpenv plugins directory
+    file:
+      state: directory
+      follow: yes
+      path: '{{ home }}/.phpenv/{{ item }}'
+    with_items: [ 'plugins' ]
+  - name: install phpenv-composer
+    file:
+      state: link
+      follow: no
+      force: yes
+      src:  '{{ phpenv_composer_path }}'
+      dest: '{{ home }}/.phpenv/plugins/phpenv-composer'
+  when: type_composer.rc != 0

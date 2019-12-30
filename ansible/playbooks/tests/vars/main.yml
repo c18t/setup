@@ -1,0 +1,4 @@
+---
+
+# dotfiles
+local_dotfiles: '{{ ansible_env.HOME + "/GoogleDrive/share/dotfiles" }}'

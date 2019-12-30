@@ -163,7 +163,6 @@
     fish -c "set -U fish_user_paths \$fish_user_paths {{ home }}/.anyenv/bin";
     fish -c "set -U fish_user_paths \$fish_user_paths {{ home }}/.phpenv/bin";
     fish -c "set -U fish_user_paths \$fish_user_paths {{ home }}/.rsvm/current/dist/bin";
-  register: set_user_paths
   when: >
     check_user_paths.stdout.find('.go/bin') == -1
       or check_user_paths.stdout.find('.nimble/bin') == -1
@@ -175,7 +174,6 @@
   shell: >
     fish -c "set -U fish_user_paths \$fish_user_paths {{ home }}/Library/Android/sdk/tools";
     fish -c "set -U fish_user_paths \$fish_user_paths {{ home }}/Library/Android/sdk/platform-tools";
-  register: set_user_paths
   when: >
     ansible_distribution == "MacOSX" and (
       check_user_paths.stdout.find('Library/Android/sdk/tools') == -1

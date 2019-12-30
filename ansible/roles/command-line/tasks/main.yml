@@ -1,0 +1,91 @@
+---
+
+- name: assert npm packages config
+  assert:
+    that:
+      - npm_config is defined
+      - npm_config is not none
+      - npm_config != ''
+    quiet: true
+
+- name: assert gem packages config
+  assert:
+    that:
+      - gem_config is defined
+      - gem_config is not none
+      - gem_config != ''
+    quiet: true
+
+- name: assert pip packages config
+  assert:
+    that:
+      - pip_config is defined
+      - pip_config is not none
+      - pip_config != ''
+    quiet: true
+      
+- block:
+  - name: 'include roles/command-line/vars/{{ npm_config }}'
+    include_vars: '{{ npm_config }}'
+  - name: assert npm_packages
+    assert:
+      that: npm_packages is not defined or npm_packages is iterable
+      quiet: true
+
+- block:
+  - name: 'include roles/command-line/vars/{{ gem_config }}'
+    include_vars: '{{ gem_config }}'
+  - name: assert gem_packages
+    assert:
+      that: gem_packages is not defined or gem_packages is iterable
+      quiet: true
+
+- block:
+  - name: 'include roles/command-line/vars/{{ pip_config }}'
+    include_vars: '{{ pip_config }}'
+  - name: assert pip_config
+    assert:
+      that: pip_config is not defined or pip_config is iterable
+      quiet: true
+
+- name: check npm was installed
+  shell: type npm
+  changed_when: false
+  check_mode: no
+
+- name: check gem was installed
+  shell: type gem
+  changed_when: false
+  check_mode: no
+
+- name: check pip was installed
+  shell: type pip
+  register: type_pip
+  failed_when: type_pip.rc not in [0, 1, 126, 127]
+  changed_when: false
+  check_mode: no
+
+- name: install pip
+  easy_install:
+    name: pip
+  when: type_pip.rc != 0
+
+- name: install node.js packages
+  npm:
+    name: '{{ item }}'
+    global: yes
+  with_items: '{{ npm_packages }}'
+  when: npm_packages is defined
+
+- name: install rubygems
+  become: true
+  gem:
+    name: '{{ item }}'
+  with_items: '{{ gem_packages }}'
+  when: gem_packages is defined
+
+- name: install python modules
+  become: true
+  pip:
+    name: '{{ pip_packages }}'
+  when: pip_packages is defined and pip_packages | length > 0

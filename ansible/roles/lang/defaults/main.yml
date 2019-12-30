@@ -1,0 +1,23 @@
+---
+
+lang_elixir: yes
+lang_erlang: yes
+lang_haskell: yes
+lang_go: yes
+lang_java: yes
+lang_lua: yes
+lang_nim: yes
+lang_node: yes
+lang_perl: yes
+lang_php: yes
+lang_python: yes
+lang_ruby: yes
+lang_rust: yes
+lang_scala: yes
+lang_swift: yes
+
+# env
+lang_home: '{{ ansible_env.HOME }}'
+lang_xdg_config_home: '{{ ansible_env.XDG_CONFIG_HOME | default(lang_home + "/.config") }}'
+
+lang_opt_erlang: ''

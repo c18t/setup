@@ -1,0 +1,5 @@
+---
+
+# env
+home: '{{ lang_home }}'
+xdg_config_home: '{{ lang_xdg_config_home }}'

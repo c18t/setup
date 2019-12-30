@@ -1,0 +1,6 @@
+---
+
+- name: include go.yml
+  include: go.yml
+  when: lang_go
+

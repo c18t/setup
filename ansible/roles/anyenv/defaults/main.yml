@@ -1,0 +1,4 @@
+---
+
+# user home
+anyenv_home: '{{ ansible_env.HOME }}'

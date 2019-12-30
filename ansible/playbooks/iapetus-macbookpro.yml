@@ -14,18 +14,34 @@
     check_mode: no
   roles:
   - os-setting-macos
+  - home
   - homebrew
   - iterm2
+  - vscode
+  - nvim
   - fish-shell
+  - command-line
+  - anyenv
+  # - lang
   vars: # 指定できる変数は各ロールの defaults/main.yml 参照
     # os-setting-macos
+    # home
+    home_ssh_config: config-prv
+    home_git_config: .gitconfig-prv
     # homebrew
     homebrew_config: brewfile-iapetus.yml
     # iterm2
+    # vscode
+    vscode_extensions: extensions.yml
+    # nvim
     # fish-shell
     fish_shell_config: config-mac.fish
     fish_shell_editor: code
     fish_shell_visual: code
+    # command-line
+    # anyenv
+    # lang
+    lang_opt_erlang: "--enable-dynamic-ssl-lib --with-ssl=/usr/local/opt/openssl"
   vars_prompt:
   - name: my_password
     prompt: "User password"

@@ -4,11 +4,8 @@
   pre_tasks:
   - include: pre_tasks/resources.yml
   roles:
-  - fish-shell
+  - home
   vars: # 指定できる変数は各ロールの defaults/main.yml 参照
-    # fish-shell
-    fish_shell_path:
-  vars_prompt:
-  - name: my_password
-    prompt: "User password"
-    private: yes
+    # home
+    home_ssh_config:
+    home_git_config:

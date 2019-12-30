@@ -1,0 +1,9 @@
+---
+
+# env
+home: '{{ nvim_home }}'
+user: '{{ nvim_user }}'
+xdg_config_home: '{{ nvim_xdg_config_home }}'
+xdg_cache_home: '{{ nvim_xdg_cache_home }}'
+xdg_data_home: '{{ nvim_xdg_data_home }}'
+dotfiles: '{{ nvim_dotfiles }}'

@@ -1,0 +1,19 @@
+---
+
+# ssh config
+home_ssh_config: null
+# .gitconfig
+home_git_config: null
+# WSL host home
+home_wsl_host_home: null
+
+# user home
+home_home: '{{ ansible_env.HOME }}'
+# user name
+home_user: '{{ ansible_env.USER }}'
+# XDG
+home_xdg_config_home: '{{ ansible_env.XDG_CONFIG_HOME | default(home_home + "/.config") }}'
+home_xdg_cache_home: '{{ ansible_env.XDG_CACHE_HOME | default(home_home + "/.cache") }}'
+home_xdg_data_home: '{{ ansible_env.XDG_DATA_HOME | default(home_home + "/.local/share") }}'
+# dotfiles
+home_dotfiles: '{{ local_dotfiles | default(home_home + "/GoogleDrive/share/dotfiles") }}'

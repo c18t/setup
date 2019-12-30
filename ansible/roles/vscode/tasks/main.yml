@@ -1,0 +1,41 @@
+---
+
+- name: assert vscode extensions
+  assert:
+    that:
+      - extensions is defined
+      - extensions is not none
+      - extensions != ''
+    quiet: true
+
+- block:
+  - name: 'include roles/vscode/vars/{{ extensions }}'
+    include_vars: '{{ extensions }}'
+  - name: assert code_install_extensions
+    assert:
+      that: code_install_extensions is not defined or code_install_extensions is iterable
+      quiet: true
+    
+- name: check cmd.exe was installed (for WSL)
+  shell: type cmd.exe
+  register: type_cmd
+  failed_when: type_cmd.rc not in [0, 1, 126, 127]
+  changed_when: false
+  check_mode: no
+
+# setup vscode (exclude WSL)
+- block:
+  - name: check vscode was installed
+    shell: type code
+    register: type_code
+    failed_when: type_code.rc not in [0, 1, 126, 127]
+    changed_when: false
+    check_mode: no
+  - name: install vscode extensions
+    shell: 'code --install-extension {{ item }} | grep -i "was successfully installed!"'
+    register: install_vscode_ex
+    failed_when: install_vscode_ex.rc not in [0, 1]
+    changed_when: install_vscode_ex.rc == 0
+    with_items: '{{ code_install_extensions | default([]) }}'
+    when: type_code.rc == 0
+  when: ansible_os_family == "Windows" or type_cmd.rc != 0

@@ -1,0 +1,11 @@
+---
+
+# setup home directories
+- name: make directories
+  file:
+    state: directory
+    follow: yes
+    path: '{{ item }}'
+  with_items:
+  # nim
+  - '{{ home }}/.nimble/bin'

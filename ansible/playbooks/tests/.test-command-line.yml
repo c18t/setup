@@ -1,0 +1,10 @@
+---
+
+- hosts: local
+  roles:
+  - command-line
+  vars: # 指定できる変数は各ロールの defaults/main.yml 参照
+    # home
+    home_ssh_config: config-prv
+    home_git_config: .gitconfig-prv
+    # command-line

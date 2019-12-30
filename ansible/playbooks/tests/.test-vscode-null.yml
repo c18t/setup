@@ -1,0 +1,8 @@
+---
+
+- hosts: local
+  roles:
+  - vscode
+  vars: # 指定できる変数は各ロールの defaults/main.yml 参照
+    # vscode
+    vscode_extensions: tests/.test-null.yml

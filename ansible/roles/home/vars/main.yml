@@ -1,0 +1,31 @@
+---
+
+# ssh config
+ssh_config: '{{ home_ssh_config }}'
+# .gitconfig
+git_config: '{{ home_git_config }}'
+# WSL host home
+wsl_host_home: '{{ home_wsl_host_home }}'
+
+# standard directories
+standard_directories:
+- Applications
+- Archives
+- Projects
+
+# WSL link to host home
+wsl_link_directories:
+- Archives
+- Desktop
+- Documents
+- Downloads
+- GoogleDrive
+- Projects
+
+# env
+home: '{{ home_home }}'
+user: '{{ home_user }}'
+xdg_config_home: '{{ home_xdg_config_home }}'
+xdg_cache_home: '{{ home_xdg_cache_home }}'
+xdg_data_home: '{{ home_xdg_data_home }}'
+dotfiles: '{{ home_dotfiles }}'

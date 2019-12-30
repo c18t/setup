@@ -1,0 +1,49 @@
+---
+
+- name: check anyenv was installed
+  shell: fish -c "type anyenv"
+  register: type_anyenv
+  failed_when: type_anyenv.rc not in [0, 1, 126, 127]
+  changed_when: false
+  check_mode: no
+
+- block: # install anyenv
+  - name: get anyenv
+    shell: fish -c "ghq get c18t/anyenv | grep -iq anyenv"
+    register: get_anyenv
+    changed_when: get_anyenv.stdout.find('exists') == -1
+    check_mode: no
+  - name: get anyenv local repositry path
+    shell: fish -c "echo (ghq root)/(ghq list | grep -i anyenv) | grep -iq anyenv"
+    register: check_anyenv
+    changed_when: false
+    check_mode: no
+  - name: set anyenv_path
+    set_fact:
+      anyenv_path: '{{ check_anyenv.stdout }}'
+  - name: make required anyenv directory
+    file:
+      state: directory
+      follow: yes
+      path: '{{ anyenv_path }}/{{ item }}'
+    with_items: [ envs, shims ]
+  - name: install anyenv
+    file:
+      state: link
+      follow: no
+      force: yes
+      src:  '{{ anyenv_path }}'
+      dest: '{{ home }}/.anyenv'
+  when: type_anyenv.rc != 0
+
+- name: check fish_user_paths
+  shell: fish -c "echo \$fish_user_paths"
+  register: check_user_paths
+  changed_when: false
+  check_mode: no
+
+- name: add anyenv to fish_user_paths
+  shell: >
+    fish -c "set -U fish_user_paths \$fish_user_paths {{ home }}/.anyenv/bin";
+  when: >
+    check_user_paths.stdout.find('.anyenv/bin') == -1

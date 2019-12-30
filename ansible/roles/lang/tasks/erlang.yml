@@ -1,0 +1,38 @@
+---
+
+- name: check erlenv was installed
+  shell: fish -c "type erlenv"
+  register: type_erlenv
+  failed_when: false
+  changed_when: false
+  check_mode: no
+
+- name: install erlenv
+  shell: fish -c "anyenv install erlenv"
+  when: type_erlenv.rc != 0
+  register: install_erlenv
+  failed_when: install_erlenv.rc != 0 and install_erlenv.stdout.find('erlenv already exists') == -1
+  changed_when: install_erlenv.rc == 0
+
+- name: type erl
+  shell: fish -c "type erl"
+  register: type_erl
+  failed_when: type_erl.rc not in [0, 1, 126, 127]
+  changed_when: false
+  check_mode: no
+
+- name: install erlang v20.3
+  shell: >
+    fish -c "cd {{ home }};
+      and curl -L http://erlang.org/download/otp_src_20.3.tar.gz -O;
+      and tar zxf otp_src_20.3.tar.gz;
+      and cd otp_src_20.3;
+      and ./configure --prefix=$HOME/.anyenv/envs/erlenv/releases/20.3 {{ opt_erlang }};
+      and make -j 4;
+      and make install;
+      and cd ../;
+      and rm -rf ./otp_src_20.3;
+      and rm -f otp_src_20.3.tar.gz;
+      and erlenv global 20.3;
+      and erlenv rehash;"
+  when: type_erl.rc != 0

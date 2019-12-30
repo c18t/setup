@@ -1,0 +1,13 @@
+---
+
+# config: roles/command-line/vars/npm-packages.yml
+command_line_npm_config: npm-packages.yml
+# config: roles/command-line/vars/gem-packages.yml
+command_line_gem_config: gem-packages.yml
+# config: roles/command-line/vars/pip-packages.yml
+command_line_pip_config: pip-packages.yml
+
+# user home
+command_line_home: '{{ ansible_env.HOME }}'
+# dotfiles
+command_line_dotfiles: '{{ local_dotfiles | default(command_line_home + "/GoogleDrive/share/dotfiles") }}'

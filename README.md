@@ -1,6 +1,17 @@
 # setup
 環境のセットアップスクリプト
 
+## Update config
+### brewfile
+```sh
+$ brew tap bundle && brew bundle dump && cat Brewfile
+```
+
+### VS Code extensions
+```sh
+$ code --list-extensions | sort | awk 'BEGIN { print "---"; print; print "code_install_extensions:" } { print "- "$1 }'
+```
+
 ## Copyrights
 
 ### ansible/roles/files/mas.sh
