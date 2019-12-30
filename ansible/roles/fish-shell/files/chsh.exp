@@ -1,0 +1,14 @@
+#!/usr/bin/env expect
+
+set NEW_SHELL [lindex $argv 0]
+set PW [lindex $argv 1]
+
+spawn chsh -s ${NEW_SHELL}
+expect {
+  -glob "Password for*" {
+    send -- "${PW}\n"
+  }
+}
+
+expect eof
+exit 0

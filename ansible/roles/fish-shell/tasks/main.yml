@@ -4,7 +4,6 @@
   - name: which fish
     shell: which fish
     register: which_fish
-    failed_when: which_fish.rc != 0
     changed_when: false
     check_mode: no
 
@@ -27,11 +26,9 @@
     become: true
     shell: echo {{ path }} | tee -a /etc/shells
     register: add_fish_in_shells
-    failed_when: add_fish_in_shells.rc != 0
   - name: recheck fish is enabled as login shells
     shell: cat /etc/shells | grep -q '{{ path }}'
     register: fish_in_shells
-    failed_when: fish_in_shells.rc != 0
     changed_when: false
     check_mode: no
   when: fish_in_shells.rc != 0
@@ -43,11 +40,22 @@
     failed_when: check_fish_is_login_shell.rc not in [0, 1]
     changed_when: false
     check_mode: no
-  - name: change login shell to fish
-    expect:
-      command: chsh -s {{ path }}
-      responses:
-        (?i)password: '{{ my_password }}'
+  - block:
+    - name: find expect
+      shell: which expect
+      register: which_expect
+      changed_when: false
+      check_mode: no
+    - name: change login shell to fish
+      script: 'chsh.exp "{{ which_fish.stdout }}" "{{ my_password }}"'
+      args:
+        executable: '{{ which_expect.stdout }}'
+    - name: recheck user's login shell
+      shell: dscl . -read /Users/{{ user }} UserShell | grep -q {{ path }}
+      register: check_fish_is_login_shell
+      failed_when: check_fish_is_login_shell.rc not in [0, 1]
+      changed_when: false
+      check_mode: no
     when: check_fish_is_login_shell.rc != 0
   when: ansible_distribution == "MacOSX"
 
@@ -58,11 +66,22 @@
     failed_when: check_fish_is_login_shell.rc not in [0, 1]
     changed_when: false
     check_mode: no
-  - name: change login shell to fish
-    expect:
-      command: chsh -s {{ path }}
-      responses:
-        (?i)password: '{{ my_password }}'
+  - block:
+    - name: find expect
+      shell: which expect
+      register: which_expect
+      changed_when: false
+      check_mode: no
+    - name: change login shell to fish
+      script: 'chsh.exp "{{ which_fish.stdout }}" "{{ my_password }}"'
+      args:
+        executable: '{{ which_expect.stdout }}'
+    - name: recheck user's login shell
+      shell: cat /etc/passwd | grep "{{ home }}:{{ path }}"
+      register: check_fish_is_login_shell
+      failed_when: check_fish_is_login_shell.rc not in [0, 1]
+      changed_when: false
+      check_mode: no
     when: check_fish_is_login_shell.rc != 0
   when: ansible_distribution != "MacOSX"
 
@@ -134,7 +153,6 @@
 - name: check fish_user_paths
   shell: fish -c "echo \$fish_user_paths"
   register: check_user_paths
-  failed_when: check_user_paths.rc != 0
   changed_when: false
   check_mode: no
 
@@ -146,7 +164,6 @@
     fish -c "set -U fish_user_paths \$fish_user_paths {{ home }}/.phpenv/bin";
     fish -c "set -U fish_user_paths \$fish_user_paths {{ home }}/.rsvm/current/dist/bin";
   register: set_user_paths
-  failed_when: set_user_paths.rc != 0
   when: >
     check_user_paths.stdout.find('.go/bin') == -1
       or check_user_paths.stdout.find('.nimble/bin') == -1
@@ -159,7 +176,6 @@
     fish -c "set -U fish_user_paths \$fish_user_paths {{ home }}/Library/Android/sdk/tools";
     fish -c "set -U fish_user_paths \$fish_user_paths {{ home }}/Library/Android/sdk/platform-tools";
   register: set_user_paths
-  failed_when: set_user_paths.rc != 0
   when: >
     ansible_distribution == "MacOSX" and (
       check_user_paths.stdout.find('Library/Android/sdk/tools') == -1
@@ -179,7 +195,6 @@
   - name: find fisherman
     shell: fish -c "type fisher"
     register: type_fisherman
-    failed_when: type_fisherman.rc != 0
     changed_when: false
     check_mode: no
   when: type_fisherman.rc != 0
