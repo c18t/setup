@@ -15,3 +15,4 @@ if [ $result -eq 0 ]; then
 fi
 
 popd
+exit $result

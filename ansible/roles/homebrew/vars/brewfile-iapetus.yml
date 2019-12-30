@@ -44,7 +44,6 @@ brew_casks:
   - cakebrew
   - calibre
   - docker
-  - filezilla
   - firefox
   - font-ricty-diminished
   - fork
@@ -60,7 +59,6 @@ brew_casks:
   - kindle
   - kitematic
   - licecap
-  - limechat
   - mactex
   - microsoft-remote-desktop-beta
   - mnemosyne
@@ -71,7 +69,7 @@ brew_casks:
   - steam
   - visual-studio
   - visual-studio-code
-  - wacom-intuos-tablet
+  - wacom-tablet
   - workflowy
   - xmind
   - xquartz
@@ -80,6 +78,8 @@ mas_apps:
     id: 539883307
   - name: LINE WORKS
     id: 1029784963
+  - name: LimeChat
+    id: 414030210
   - name: Trello
     id: 1278508951
   - name: TweetDeck
