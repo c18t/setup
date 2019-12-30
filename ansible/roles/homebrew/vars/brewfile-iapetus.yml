@@ -16,7 +16,6 @@ brew_fomulae:
   - dep
   - direnv
   - docker
-  - ext4fuse # for osxfuse
   - fish
   - fzf
   - ghq
