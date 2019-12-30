@@ -1,0 +1,6 @@
+---
+
+- hosts: local
+  vars: # 指定できる変数は各ロールの defaults/main.yml 参照
+  tasks:
+  - debug: var=ansible_facts

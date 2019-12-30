@@ -1,0 +1,15 @@
+---
+
+# fish-shell
+path: '{{ fish_shell_path }}'
+config: '{{ fish_shell_config }}'
+
+# env
+home: '{{ fish_shell_home }}'
+user: '{{ fish_shell_user }}'
+editor: '{{ fish_shell_editor }}'
+visual: '{{ fish_shell_visual }}'
+xdg_config_home: '{{ fish_shell_xdg_config_home }}'
+xdg_cache_home: '{{ fish_shell_xdg_cache_home }}'
+xdg_data_home: '{{ fish_shell_xdg_data_home }}'
+dotfiles_dirpath: '{{ fish_shell_dotfiles_dirpath }}'

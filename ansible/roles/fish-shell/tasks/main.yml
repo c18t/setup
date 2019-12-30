@@ -1,0 +1,184 @@
+---
+
+- block: # fish path
+  - name: which fish
+    shell: which fish
+    register: which_fish
+    failed_when: which_fish.rc != 0
+    changed_when: false
+    check_mode: no
+
+  - name: set path
+    set_fact:
+      path: '{{ which_fish.stdout }}'
+    changed_when: false
+    check_mode: no
+  when: path is not string or path == ''
+
+- name: check fish is enabled as login shells
+  shell: cat /etc/shells | grep -q '{{ path }}'
+  register: fish_in_shells
+  failed_when: fish_in_shells.rc not in [0, 1]
+  changed_when: false
+  check_mode: no
+
+- block: # add fish to shells
+  - name: add fish to shells
+    become: true
+    shell: echo {{ path }} | tee -a /etc/shells
+    register: add_fish_in_shells
+    failed_when: add_fish_in_shells.rc != 0
+  - name: recheck fish is enabled as login shells
+    shell: cat /etc/shells | grep -q '{{ path }}'
+    register: fish_in_shells
+    failed_when: fish_in_shells.rc != 0
+    changed_when: false
+    check_mode: no
+  when: fish_in_shells.rc != 0
+
+- block: # change login shell to fish (for MacOSX)
+  - name: check user's login shell (for MacOSX)
+    shell: dscl . -read /Users/{{ user }} UserShell | grep -q {{ path }}
+    register: check_fish_is_login_shell
+    failed_when: check_fish_is_login_shell.rc not in [0, 1]
+    changed_when: false
+    check_mode: no
+  - name: change login shell to fish
+    expect:
+      command: chsh -s {{ path }}
+      responses:
+        (?i)password: '{{ my_password }}'
+    when: check_fish_is_login_shell.rc != 0
+  when: ansible_distribution == "MacOSX"
+
+- block: # change login shell to fish (for other)
+  - name: check user's login shell (for other)
+    shell: cat /etc/passwd | grep "{{ home }}:{{ path }}"
+    register: check_fish_is_login_shell
+    failed_when: check_fish_is_login_shell.rc not in [0, 1]
+    changed_when: false
+    check_mode: no
+  - name: change login shell to fish
+    expect:
+      command: chsh -s {{ path }}
+      responses:
+        (?i)password: '{{ my_password }}'
+    when: check_fish_is_login_shell.rc != 0
+  when: ansible_distribution != "MacOSX"
+
+- name: make directories
+  file:
+    state: directory
+    follow: yes
+    path: '{{ item }}'
+  with_items:
+  - '{{ home }}/{{ xdg_config_home }}/fish/functions'
+
+- name: link to files
+  become: true
+  file:
+    state: link
+    follow: no
+    force: yes
+    owner: '{{ user }}'
+    src:  '{{ home }}/{{ dotfiles_dirpath }}/{{ item.path }}'
+    dest: '{{ item.dest }}'
+  with_items:
+  - { path: 'fish/{{ fish_shell_config }}', dest: '{{ home }}/{{ xdg_config_home }}/fish/config.fish' }
+  - { path: 'fish/fishfile', dest: '{{ home }}/{{ xdg_config_home }}/fish/fishfile' }
+  - { path: 'fish/functions/fish_prompt.fish', dest: '{{ home }}/{{ xdg_config_home }}/fish/functions/fish_prompt.fish' }
+
+- name: set environment variables
+  shell: >
+    fish -c "set -Ux XDG_CONFIG_HOME {{ home }}/{{ xdg_config_home }}";
+    fish -c "set -Ux XDG_CACHE_HOME {{ home }}/{{ xdg_cache_home }}";
+    fish -c "set -Ux XDG_DATA_HOME {{ home }}/{{ xdg_data_home }}";
+    fish -c "set -Ux LC_CTYPE en_US.UTF-8"
+    fish -c "set -Ux EDITOR {{ editor }}";
+    fish -c "set -Ux VISUAL {{ visual }}";
+    fish -c "set -Ux GOPATH {{ home }}/.go";
+    fish -c "set -Ux ANDROID_HOME {{ home }}/Library/Android/sdk"
+    fish -c "set -Ux ANDRIOD_SDK_ROOT {{ home }}/Library/Android/sdk";
+    fish -c "set -Ux ANDRIOD_AVD_HOME {{ home }}/.android/avd";
+  changed_when: false
+  check_mode: no
+
+- block: # setup graphviz
+  - name: find graphviz dot
+    shell: which dot
+    register: which_dot
+    changed_when: false
+    failed_when: false
+    check_mode: no
+  - name: check GRAPHVIZ_DOT
+    shell: fish -c "echo $GRAPHVIZ_DOT"
+    register: echo_dot
+    changed_when: false
+    failed_when: false
+    check_mode: no
+  - name: set environment variables GRAPHVIZ_DOT
+    shell: fish -c "set -Ux GRAPHVIZ_DOT {{ which_dot.stdout }}";
+    when: which_dot.rc == 0 and echo_dot.stdout != which_dot.stdout
+
+- name: check fish_user_paths
+  shell: fish -c "echo \$fish_user_paths"
+  register: check_user_paths
+  failed_when: check_user_paths.rc != 0
+  changed_when: false
+  check_mode: no
+
+- name: set fish_user_paths
+  shell: >
+    fish -c "set -U fish_user_paths \$GOPATH/bin";
+    fish -c "set -U fish_user_paths \$fish_user_paths {{ home }}/.nimble/bin";
+    fish -c "set -U fish_user_paths \$fish_user_paths {{ home }}/.anyenv/bin";
+    fish -c "set -U fish_user_paths \$fish_user_paths {{ home }}/.phpenv/bin";
+    fish -c "set -U fish_user_paths \$fish_user_paths {{ home }}/.rsvm/current/dist/bin";
+  register: set_user_paths
+  failed_when: set_user_paths.rc != 0
+  when: >
+    check_user_paths.stdout.find('.go/bin') == -1
+      or check_user_paths.stdout.find('.nimble/bin') == -1
+      or check_user_paths.stdout.find('.anyenv/bin') == -1
+      or check_user_paths.stdout.find('.phpenv/bin') == -1
+      or check_user_paths.stdout.find('.rsvm/current/dist/bin') == -1
+
+- name: set fish_user_paths (for MacOSX)
+  shell: >
+    fish -c "set -U fish_user_paths \$fish_user_paths {{ home }}/Library/Android/sdk/tools";
+    fish -c "set -U fish_user_paths \$fish_user_paths {{ home }}/Library/Android/sdk/platform-tools";
+  register: set_user_paths
+  failed_when: set_user_paths.rc != 0
+  when: >
+    ansible_distribution == "MacOSX" and (
+      check_user_paths.stdout.find('Library/Android/sdk/tools') == -1
+      or check_user_paths.stdout.find('Library/Android/sdk/platform-tools') == -1
+    )
+
+- name: check fisherman was installed
+  shell: fish -c "type fisher"
+  register: type_fisherman
+  failed_when: type_fisherman.rc not in [0, 1, 126, 127]
+  changed_when: false
+  check_mode: no
+
+- block: # install fisherman
+  - name: install fisherman
+    shell: fish -c "curl -Lo \$XDG_CONFIG_HOME/fish/functions/fisher.fish --create-dirs git.io/fisherman"
+  - name: find fisherman
+    shell: fish -c "type fisher"
+    register: type_fisherman
+    failed_when: type_fisherman.rc != 0
+    changed_when: false
+    check_mode: no
+  when: type_fisherman.rc != 0
+
+- name: install fish functions
+  shell: fish -c "fisher {{ home }}/{{ dotfiles_dirpath }}/fish/functions"
+  register: install_fish_functions
+  changed_when: install_fish_functions.stderr.find('No plugins to install or dependencies missing.') == -1
+
+- name: install fish plugins
+  shell: fish -c "fisher"
+  register: install_fish_plugins
+  changed_when: install_fish_plugins.stderr.find('No plugins to install or dependencies missing.') == -1

@@ -5,11 +5,17 @@
   - os-setting-macos
   - homebrew
   - iterm2
+  - fish-shell
   vars: # 指定できる変数は各ロールの defaults/main.yml 参照
-    # ansible
-    #ansible_python_interpreter: /usr/local/bin/python
     # os-setting-macos
-    #os_setting_macos_dock_tilesize:
     # homebrew
     homebrew_config: brewfile-iapetus.yml
     # iterm2
+    # fish-shell
+    fish_shell_config: config-mac.fish
+    fish_shell_editor: code
+    fish_shell_visual: code
+  vars_prompt:
+  - name: my_password
+    prompt: "User password"
+    private: yes
