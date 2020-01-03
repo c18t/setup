@@ -39,7 +39,8 @@
     with_items: '{{ code_install_extensions }}'
     # GitHub Actionsだと拡張のインストールで止まるのでスキップ
     when: >
-      ansible_env.GITHUB_ACTIONS != 'true'
+      (ansible_env.GITHUB_ACTIONS is not defined
+        or ansible_env.GITHUB_ACTIONS != 'true')
         and
       type_code.rc == 0 and code_install_extensions | length > 0
   when: ansible_os_family == "Windows" or type_cmd.rc != 0
