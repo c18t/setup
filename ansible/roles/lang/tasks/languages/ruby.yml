@@ -1,0 +1,51 @@
+---
+
+- name: assert ruby_versions
+  assert:
+    that: ruby_versions is not defined or ruby_versions is iterable
+    quiet: true
+
+- name: check rbenv
+  shell: anyenv envs | grep -qe \^rbenv\$
+  args:
+    executable: '{{ fish_path }}'
+  register: check_rbenv
+  failed_when: check_rbenv.rc not in [0, 1]
+  changed_when: false
+  check_mode: no
+
+- name: install rbenv
+  shell: anyenv install --skip-existing rbenv
+  args:
+    executable: '{{ fish_path }}'
+  when: check_rbenv.rc != 0
+
+- block:
+  - name: get installed ruby version list
+    shell: fish -l -c "rbenv versions"
+    args:
+      executable: '{{ fish_path }}'
+    register: installed_ruby_version
+    failed_when: installed_ruby_version.rc not in [0, 1]
+    changed_when: false
+    check_mode: no
+  - name: install ruby version
+    shell: fish -l -c "rbenv install {{ item }}"
+    args:
+      executable: '{{ fish_path }}'
+    when: installed_ruby_version.stdout is not regex("\\b"+item+"\\b")
+    with_items: '{{ ruby_versions }}'
+  - name: 'check global ruby version {{ ruby_versions[0] }}'
+    shell: fish -l -c "rbenv global | grep -qe \^{{ ruby_versions[0] }}\\\$"
+    args:
+      executable: '{{ fish_path }}'
+    register: check_rbenv_version
+    failed_when: check_rbenv_version.rc not in [0, 1]
+    changed_when: false
+    check_mode: no
+  - name: 'set global ruby version {{ ruby_versions[0] }}'
+    shell: fish -l -c "rbenv global {{ ruby_versions[0] }}"
+    args:
+      executable: '{{ fish_path }}'
+    when: check_rbenv_version.rc != 0
+  when: ruby_versions is defined and ruby_versions | length > 0

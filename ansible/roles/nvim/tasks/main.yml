@@ -6,13 +6,11 @@
     follow: yes
     path: '{{ item }}'
   with_items:
-  # nvim
   - '{{ xdg_cache_home }}/nvim_backup'
 
 - name: set link items
   set_fact:
     link_items:
-    # nvim
     - { path: '{{ dotfiles }}/nvim', dest: '{{ xdg_config_home }}/nvim' }
 
 - name: check for the existence of link sources

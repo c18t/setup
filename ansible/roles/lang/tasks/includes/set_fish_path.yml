@@ -1,0 +1,11 @@
+---
+
+- name: find fish
+  shell: which fish
+  register: which_fish
+  changed_when: false
+  check_mode: no
+
+- name: set fish_path
+  set_fact:
+    fish_path: '{{ which_fish.stdout }}'

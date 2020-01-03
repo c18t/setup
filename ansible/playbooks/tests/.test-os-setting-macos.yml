@@ -1,8 +1,0 @@
----
-
-- hosts: local
-  roles:
-  - os-setting-macos
-  vars: # 指定できる変数は各ロールの defaults/main.yml 参照
-    # os-setting-macos
-    os_setting_macos_dock_tilesize: 100

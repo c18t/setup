@@ -3,14 +3,14 @@
 - name: assert homebrew role config
   assert:
     that:
-      - config is defined
-      - config is not none
-      - config != ''
+      - homebrew_config is defined
+      - homebrew_config is not none
+      - homebrew_config != ''
     quiet: true
 
 - block:
-  - name: 'include roles/homebrew/vars/{{ config }}'
-    include_vars: '{{ config }}'
+  - name: 'include roles/homebrew/vars/{{ homebrew_config }}'
+    include_vars: '{{ homebrew_config }}'
   - name: assert brew_taps
     assert:
       that: brew_taps is not defined or brew_taps is iterable
@@ -28,7 +28,7 @@
       that: mas_apps is not defined or mas_apps is iterable
       quiet: true
 
-- name: type brew
+- name: check brew
   shell: type brew
   register: type_brew
   failed_when: type_brew.rc not in [0, 1, 126, 127]
@@ -74,8 +74,9 @@
   homebrew_cask:
     name: '{{ item }}'
   # どれかが失敗してもすべて実施されるように with_items で指定
-  with_items: '{{ brew_casks | default([]) }}'
+  with_items: '{{ brew_casks }}'
   ignore_errors: yes
+  when: brew_casks is defined and brew_casks | length > 0
 
 - name: mas install
   script: 'mas.sh {{ item.id }}'
@@ -84,4 +85,5 @@
   register: mas_result
   changed_when: mas_result.rc == 1
   failed_when: mas_result.rc not in [0, 1]
-  with_items: '{{ mas_apps | default([]) }}'
+  with_items: '{{ mas_apps }}'
+  when: mas_apps is defined and mas_apps | length > 0

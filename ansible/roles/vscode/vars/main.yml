@@ -1,4 +1,0 @@
----
-
-# vscode拡張リストファイル: roles/vscode/vars/{{ extensions }}
-extensions: '{{ vscode_extensions }}'

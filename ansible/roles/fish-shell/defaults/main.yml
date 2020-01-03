@@ -1,20 +1,4 @@
 ---
 
-# fish shell path
-fish_shell_path: null
 # fish config in $home/$dotfiles/fish
 fish_shell_config: null
-
-# user home
-fish_shell_home: '{{ ansible_env.HOME }}'
-# user name
-fish_shell_user: '{{ ansible_env.USER }}'
-# editor
-fish_shell_editor: '{{ ansible_env.EDITOR }}'
-fish_shell_visual: '{{ ansible_env.VISUAL }}'
-# XDG
-fish_shell_xdg_config_home: '{{ ansible_env.XDG_CONFIG_HOME | default(fish_shell_home + "/.config") }}'
-fish_shell_xdg_cache_home: '{{ ansible_env.XDG_CACHE_HOME | default(fish_shell_home + "/.cache") }}'
-fish_shell_xdg_data_home: '{{ ansible_env.XDG_DATA_HOME | default(fish_shell_home + "/.local/share") }}'
-# dotfiles
-fish_shell_dotfiles: '{{ local_dotfiles | default(fish_shell_home + "/GoogleDrive/share/dotfiles") }}'

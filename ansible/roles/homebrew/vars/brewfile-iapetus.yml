@@ -13,6 +13,7 @@ brew_fomulae:
 - asciidoctor
 - bats
 - byobu
+- bzip2 # for phpenv
 - dep
 - direnv
 - docker
@@ -26,7 +27,11 @@ brew_fomulae:
 - hardlink-osx
 - haskell-stack
 - hub
+- icu4c # for phpenv
 - jenv
+- krb5 # for phpenv
+- libedit # for phpenv
+- libxml2 # for phpenv
 - mas
 - neofetch
 - neovim
@@ -36,6 +41,7 @@ brew_fomulae:
 - terminal-notifier # for fisherman/done
 - the_platinum_searcher
 - tree
+- zlib # for phpenv
 brew_casks:
 - osxfuse
 - android-studio
@@ -45,6 +51,7 @@ brew_casks:
 - firefox
 - font-ricty-diminished
 - fork
+- gfortran
 - gimp
 - gitter
 - google-chrome

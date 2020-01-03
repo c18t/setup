@@ -1,0 +1,35 @@
+---
+
+- name: make directories
+  file:
+    state: directory
+    follow: yes
+    path: '{{ item }}'
+  with_items:
+  - '{{ xdg_config_home }}/fish/completions'
+  - '{{ xdg_config_home }}/fish/functions'
+
+- name: set link items
+  set_fact:
+    link_items:
+    - { path: '{{ dotfiles }}/fish/{{ fish_shell_config }}', dest: '{{ xdg_config_home }}/fish/config.fish' }
+    - { path: '{{ resources }}/fish/fishfile', dest: '{{ xdg_config_home }}/fish/fishfile' }
+    - { path: '{{ resources }}/fish/functions/fish_prompt.fish', dest: '{{ xdg_config_home }}/fish/functions/fish_prompt.fish' }
+
+- name: check for the existence of link sources
+  stat:
+    path: '{{ item.path }}'
+  register: stat_link_source
+  failed_when: not stat_link_source.stat.exists or stat_link_source.stat.isdir
+  with_items: '{{ link_items }}'
+
+- name: link to files
+  become: true
+  file:
+    state: link
+    follow: no
+    force: yes
+    owner: '{{ user }}'
+    src:  '{{ item.path }}'
+    dest: '{{ item.dest }}'
+  with_items: '{{ link_items }}'

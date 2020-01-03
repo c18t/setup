@@ -1,0 +1,35 @@
+---
+
+- name: assert pip packages config
+  assert:
+    that:
+      - pip_config is defined
+      - pip_config is not none
+      - pip_config != ''
+    quiet: true
+
+- block:
+  - name: 'include roles/command-line/vars/{{ pip_config }}'
+    include_vars: '{{ pip_config }}'
+  - name: assert pip_config
+    assert:
+      that: pip_config is not defined or pip_config is iterable
+      quiet: true
+
+- name: check pip
+  shell: type pip
+  register: type_pip
+  failed_when: type_pip.rc not in [0, 1, 126, 127]
+  changed_when: false
+  check_mode: no
+
+- name: install pip
+  easy_install:
+    name: pip
+  when: type_pip.rc != 0
+
+- name: install python modules
+  become: true
+  pip:
+    name: '{{ pip_packages }}'
+  when: pip_packages is defined and pip_packages | length > 0

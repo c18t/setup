@@ -1,0 +1,30 @@
+---
+
+- name: assert gem packages config
+  assert:
+    that:
+      - gem_config is defined
+      - gem_config is not none
+      - gem_config != ''
+    quiet: true
+
+- block:
+  - name: 'include roles/command-line/vars/{{ gem_config }}'
+    include_vars: '{{ gem_config }}'
+  - name: assert gem_packages
+    assert:
+      that: gem_packages is not defined or gem_packages is iterable
+      quiet: true
+
+- name: check gem
+  shell: type gem
+  changed_when: false
+  check_mode: no
+
+- name: install rubygems
+  become: true
+  gem:
+    name: '{{ item }}'
+    user_install: no
+  with_items: '{{ gem_packages }}'
+  when: gem_packages is defined and gem_packages | length > 0

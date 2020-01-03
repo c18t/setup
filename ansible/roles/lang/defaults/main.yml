@@ -1,23 +1,29 @@
 ---
 
-lang_elixir: yes
-lang_erlang: yes
-lang_haskell: yes
-lang_go: yes
-lang_java: yes
-lang_lua: yes
-lang_nim: yes
-lang_node: yes
-lang_perl: yes
-lang_php: yes
-lang_python: yes
-lang_ruby: yes
-lang_rust: yes
-lang_scala: yes
-lang_swift: yes
+elixir_versions:
+- '1.9.4'
 
-# env
-lang_home: '{{ ansible_env.HOME }}'
-lang_xdg_config_home: '{{ ansible_env.XDG_CONFIG_HOME | default(lang_home + "/.config") }}'
+erlang_versions:
+- { version: '22.2', source: http://erlang.org/download/otp_src_22.2.tar.gz }
+opt_erlang: ''
 
-lang_opt_erlang: ''
+golang_versions:
+- '1.13.5'
+
+lua_versions:
+- '5.3.5'
+
+node_versions:
+- '13.5.0'
+
+perl_versions:
+- '5.30.1'
+
+php_versions:
+- '7.4.1'
+
+python_versions:
+- 'anaconda3-2019.10'
+
+ruby_versions:
+- '2.7.0'

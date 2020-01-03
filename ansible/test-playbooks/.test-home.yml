@@ -1,0 +1,14 @@
+---
+
+- hosts: local
+  pre_tasks:
+  - include: pre_tasks/set_common_vars.yml
+  roles:
+  - home
+  vars:
+    # ssh config
+    ssh_config: config-prv
+    # .gitconfig
+    git_config: .gitconfig-prv
+    # WSL host home
+    wsl_host_home: null

@@ -1,0 +1,9 @@
+---
+
+- hosts: local
+  pre_tasks:
+  - include: pre_tasks/set_common_vars.yml
+  roles:
+  - os-setting-macos
+  vars:
+    dock_tilesize: 100

@@ -1,0 +1,13 @@
+---
+
+- hosts: local
+  pre_tasks:
+  - include: pre_tasks/set_common_vars.yml
+  roles:
+  - fish-shell
+  vars:
+    fish_shell_config: config-mac.fish
+  vars_prompt:
+  - name: my_password
+    prompt: "User password"
+    private: yes

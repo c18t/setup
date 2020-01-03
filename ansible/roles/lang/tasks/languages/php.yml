@@ -1,0 +1,51 @@
+---
+
+- name: assert php_versions
+  assert:
+    that: php_versions is not defined or php_versions is iterable
+    quiet: true
+
+- name: check phpenv
+  shell: anyenv envs | grep -qe \^phpenv\$
+  args:
+    executable: '{{ fish_path }}'
+  register: check_phpenv
+  failed_when: check_phpenv.rc not in [0, 1]
+  changed_when: false
+  check_mode: no
+
+- name: install phpenv
+  shell: anyenv install --skip-existing phpenv
+  args:
+    executable: '{{ fish_path }}'
+  when: check_phpenv.rc != 0
+
+- block:
+  - name: get installed php version list
+    shell: fish -l -c "phpenv versions"
+    args:
+      executable: '{{ fish_path }}'
+    register: installed_php_version
+    failed_when: installed_php_version.rc not in [0, 1]
+    changed_when: false
+    check_mode: no
+  - name: install php version
+    shell: fish -l -c "phpenv install {{ item }}"
+    args:
+      executable: '{{ fish_path }}'
+    when: installed_php_version.stdout is not regex("\\b"+item+"\\b")
+    with_items: '{{ php_versions }}'
+  - name: 'check global php version {{ php_versions[0] }}'
+    shell: fish -l -c "phpenv global | grep -qe \^{{ php_versions[0] }}\\\$"
+    args:
+      executable: '{{ fish_path }}'
+    register: check_phpenv_version
+    failed_when: check_phpenv_version.rc not in [0, 1]
+    changed_when: false
+    check_mode: no
+  - name: 'set global php version {{ php_versions[0] }}'
+    shell: fish -l -c "phpenv global {{ php_versions[0] }}"
+    args:
+      executable: '{{ fish_path }}'
+    when: check_phpenv_version.rc != 0
+  when: php_versions is defined and php_versions | length > 0

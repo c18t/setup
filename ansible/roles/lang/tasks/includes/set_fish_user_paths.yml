@@ -1,0 +1,13 @@
+---
+
+- name: check fish_user_paths
+  shell: echo $fish_user_paths
+  args:
+    executable: '{{ fish_path }}'
+  register: check_fish_user_paths
+  changed_when: false
+  check_mode: no
+
+- name: set fish_user_paths
+  set_fact:
+    fish_user_paths: '{{ check_fish_user_paths.stdout }}'

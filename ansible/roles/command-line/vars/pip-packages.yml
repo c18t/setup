@@ -2,3 +2,4 @@
 
 pip_packages:
 - jupyter
+- yamllint

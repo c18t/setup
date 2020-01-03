@@ -1,0 +1,30 @@
+---
+
+- name: assert npm packages config
+  assert:
+    that:
+      - npm_config is defined
+      - npm_config is not none
+      - npm_config != ''
+    quiet: true
+
+- block:
+  - name: 'include roles/command-line/vars/{{ npm_config }}'
+    include_vars: '{{ npm_config }}'
+  - name: assert npm_packages
+    assert:
+      that: npm_packages is not defined or npm_packages is iterable
+      quiet: true
+
+- name: check npm
+  shell: type npm
+  changed_when: false
+  check_mode: no
+
+- name: install node.js packages
+  become: true
+  npm:
+    name: '{{ item }}'
+    global: yes
+  with_items: '{{ npm_packages }}'
+  when: npm_packages is defined and npm_packages | length > 0

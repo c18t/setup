@@ -1,4 +1,0 @@
----
-
-# Dockのタイルサイズ
-dock_tilesize: '{{ os_setting_macos_dock_tilesize }}'

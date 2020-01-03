@@ -1,0 +1,17 @@
+---
+
+ignore_dependencies: false
+
+# user home
+home: '{{ ansible_env.HOME }}'
+# user name
+user: '{{ ansible_env.USER }}'
+# editor
+editor: '{{ ansible_env.EDITOR }}'
+visual: '{{ ansible_env.VISUAL }}'
+# XDG
+xdg_config_home: '{{ ansible_env.XDG_CONFIG_HOME | default(home + "/.config") }}'
+xdg_cache_home: '{{ ansible_env.XDG_CACHE_HOME | default(home + "/.cache") }}'
+xdg_data_home: '{{ ansible_env.XDG_DATA_HOME | default(home + "/.local/share") }}'
+# dotfiles
+dotfiles: '{{ home + "/GoogleDrive/share/dotfiles" }}'

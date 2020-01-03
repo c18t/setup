@@ -1,5 +1,0 @@
----
-
-dependencies:
-- { role: fish-shell }
-- { role: command-line }

@@ -1,0 +1,15 @@
+---
+
+- name: make directories
+  file:
+    state: directory
+    follow: yes
+    path: '{{ item }}'
+  with_items:
+  - '{{ home }}/.nimble/bin'
+
+- name: add .nimble/bin to fish_user_paths
+  shell: set -U fish_user_paths $fish_user_paths "{{ home }}/.nimble/bin"
+  args:
+    executable: '{{ fish_path }}'
+  when: fish_user_paths is not search(home+'/.nimble/bin')

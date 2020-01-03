@@ -1,0 +1,20 @@
+---
+
+- name: check fish is enabled as login shells
+  shell: cat /etc/shells | grep -q '{{ fish_path }}'
+  register: fish_in_shells
+  failed_when: fish_in_shells.rc not in [0, 1]
+  changed_when: false
+  check_mode: no
+
+- block: # add fish to shells
+  - name: add fish to shells
+    become: true
+    shell: echo {{ fish_path }} | tee -a /etc/shells
+    register: add_fish_in_shells
+  - name: recheck fish is enabled as login shells
+    shell: cat /etc/shells | grep -q '{{ fish_path }}'
+    register: fish_in_shells
+    changed_when: false
+    check_mode: no
+  when: fish_in_shells.rc != 0

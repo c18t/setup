@@ -1,0 +1,57 @@
+---
+
+- name: assert golang_versions
+  assert:
+    that: golang_versions is not defined or golang_versions is iterable
+    quiet: true
+
+- name: add $GOPATH/bin to fish_user_paths
+  shell: set -U fish_user_paths $GOPATH/bin
+  args:
+    executable: '{{ fish_path }}'
+  when: fish_user_paths is not search(ansible_env.GOPATH+'/bin')
+  
+- name: check goenv
+  shell: anyenv envs | grep -qe \^goenv\$
+  args:
+    executable: '{{ fish_path }}'
+  register: check_goenv
+  failed_when: check_goenv.rc not in [0, 1]
+  changed_when: false
+  check_mode: no
+
+- name: install goenv
+  shell: anyenv install --skip-existing goenv
+  args:
+    executable: '{{ fish_path }}'
+  when: check_goenv.rc != 0
+
+- block:
+  - name: get installed go version list
+    shell: fish -l -c "goenv versions"
+    args:
+      executable: '{{ fish_path }}'
+    register: installed_go_version
+    failed_when: installed_go_version.rc not in [0, 1]
+    changed_when: false
+    check_mode: no
+  - name: install go version
+    shell: fish -l -c "goenv install {{ item }}"
+    args:
+      executable: '{{ fish_path }}'
+    when: installed_go_version.stdout is not regex("\\b"+item+"\\b")
+    with_items: '{{ golang_versions }}'
+  - name: 'check global go version {{ golang_versions[0] }}'
+    shell: fish -l -c "goenv global | grep -qe \^{{ golang_versions[0] }}\\\$"
+    args:
+      executable: '{{ fish_path }}'
+    register: check_goenv_version
+    failed_when: check_goenv_version.rc not in [0, 1]
+    changed_when: false
+    check_mode: no
+  - name: 'set global go version {{ golang_versions[0] }}'
+    shell: fish -l -c "goenv global {{ golang_versions[0] }}"
+    args:
+      executable: '{{ fish_path }}'
+    when: check_goenv_version.rc != 0
+  when: golang_versions is defined and golang_versions | length > 0

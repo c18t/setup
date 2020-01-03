@@ -1,0 +1,38 @@
+---
+
+- name: check fisherman
+  shell: type fisher
+  args:
+    executable: '{{ fish_path }}'
+  register: type_fisherman
+  failed_when: type_fisherman.rc not in [0, 1, 126, 127]
+  changed_when: false
+  check_mode: no
+
+- block: # install fisherman
+  - name: install fisherman
+    shell: curl -Lo $XDG_CONFIG_HOME/fish/functions/fisher.fish --create-dirs git.io/fisherman
+    args:
+      executable: '{{ fish_path }}'
+  - name: find fisherman
+    shell: type fisher
+    args:
+      executable: '{{ fish_path }}'
+    register: type_fisherman
+    changed_when: false
+    check_mode: no
+  when: type_fisherman.rc != 0
+
+- name: install fish functions
+  shell: fisher "{{ resources }}/fish/functions"
+  args:
+    executable: '{{ fish_path }}'
+  register: install_fish_functions
+  changed_when: install_fish_functions.stderr is not search('No plugins to install or dependencies missing.')
+
+- name: install fish plugins
+  shell: fisher
+  args:
+    executable: '{{ fish_path }}'
+  register: install_fish_plugins
+  changed_when: install_fish_plugins.stderr is not search('No plugins to install or dependencies missing.')

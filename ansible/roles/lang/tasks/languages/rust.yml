@@ -1,0 +1,51 @@
+---
+
+- name: check rustup
+  shell: type rustup
+  args:
+    executable: '{{ fish_path }}'
+  register: type_rustup
+  failed_when: type_rustup.rc not in [0, 1, 126, 127]
+  changed_when: false
+  check_mode: no
+
+- block:
+  - name: download rustup installer
+    get_url:
+      url: https://sh.rustup.rs
+      dest: '{{ home }}/.rustup.sh'
+      mode: 0755
+  - name: install rustup
+    shell: '{{ home }}/.rustup.sh -y'
+    args:
+      executable: '{{ fish_path }}'
+  - name: delete rustup installer
+    file:
+      path: '{{ home }}/.rustup.sh'
+      state: absent
+  when: type_rustup.rc != 0
+
+- name: add .cargo/bin to fish_user_paths
+  shell: set -U fish_user_paths $fish_user_paths "{{ home }}/.cargo/bin"
+  args:
+    executable: '{{ fish_path }}'
+  when: fish_user_paths is not search('.cargo/bin')
+
+- name: update rustup
+  shell: rustup update
+  args:
+    executable: '{{ fish_path }}'
+  when: type_rustup.rc == 0
+
+- name: get rust config content
+  shell: rustup completions fish
+  args:
+    executable: '{{ fish_path }}'
+  register: rust_config
+  changed_when: false
+  check_mode: no
+
+- name: make rust config
+  copy:
+    dest: '{{ xdg_config_home }}/fish/completions/rust.fish'
+    content: '{{ rust_config.stdout }}'

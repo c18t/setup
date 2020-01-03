@@ -1,4 +1,4 @@
 ---
 
-# env
-home: '{{ anyenv_home }}'
+# anyenv repository
+anyenv_repository: c18t/anyenv

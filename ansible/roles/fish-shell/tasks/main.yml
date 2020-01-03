@@ -1,208 +1,36 @@
 ---
 
-- block: # fish path
-  - name: which fish
-    shell: which fish
-    register: which_fish
-    changed_when: false
-    check_mode: no
+- include: includes/set_fish_path.yml
 
-  - name: set path
-    set_fact:
-      path: '{{ which_fish.stdout }}'
-    changed_when: false
-    check_mode: no
-  when: path is not string or path == ''
+- include: includes/add_fish_to_shells.yml
 
-- name: check fish is enabled as login shells
-  shell: cat /etc/shells | grep -q '{{ path }}'
-  register: fish_in_shells
-  failed_when: fish_in_shells.rc not in [0, 1]
-  changed_when: false
-  check_mode: no
-
-- block: # add fish to shells
-  - name: add fish to shells
-    become: true
-    shell: echo {{ path }} | tee -a /etc/shells
-    register: add_fish_in_shells
-  - name: recheck fish is enabled as login shells
-    shell: cat /etc/shells | grep -q '{{ path }}'
-    register: fish_in_shells
-    changed_when: false
-    check_mode: no
-  when: fish_in_shells.rc != 0
-
-- block: # change login shell to fish (for MacOSX)
-  - name: check user's login shell (for MacOSX)
-    shell: dscl . -read /Users/{{ user }} UserShell | grep -q {{ path }}
-    register: check_fish_is_login_shell
-    failed_when: check_fish_is_login_shell.rc not in [0, 1]
-    changed_when: false
-    check_mode: no
-  - block:
-    - name: find expect
-      shell: which expect
-      register: which_expect
-      changed_when: false
-      check_mode: no
-    - name: change login shell to fish
-      script: 'chsh.exp "{{ which_fish.stdout }}" "{{ my_password }}"'
-      args:
-        executable: '{{ which_expect.stdout }}'
-    - name: recheck user's login shell
-      shell: dscl . -read /Users/{{ user }} UserShell | grep -q {{ path }}
-      register: check_fish_is_login_shell
-      failed_when: check_fish_is_login_shell.rc not in [0, 1]
-      changed_when: false
-      check_mode: no
-    when: check_fish_is_login_shell.rc != 0
+- include: includes/change_login_shell_to_fish_for_MacOSX.yml
   when: ansible_distribution == "MacOSX"
 
-- block: # change login shell to fish (for other)
-  - name: check user's login shell (for other)
-    shell: cat /etc/passwd | grep "{{ home }}:{{ path }}"
-    register: check_fish_is_login_shell
-    failed_when: check_fish_is_login_shell.rc not in [0, 1]
-    changed_when: false
-    check_mode: no
-  - block:
-    - name: find expect
-      shell: which expect
-      register: which_expect
-      changed_when: false
-      check_mode: no
-    - name: change login shell to fish
-      script: 'chsh.exp "{{ which_fish.stdout }}" "{{ my_password }}"'
-      args:
-        executable: '{{ which_expect.stdout }}'
-    - name: recheck user's login shell
-      shell: cat /etc/passwd | grep "{{ home }}:{{ path }}"
-      register: check_fish_is_login_shell
-      failed_when: check_fish_is_login_shell.rc not in [0, 1]
-      changed_when: false
-      check_mode: no
-    when: check_fish_is_login_shell.rc != 0
+- include: includes/change_login_shell_to_fish_for_other.yml
   when: ansible_distribution != "MacOSX"
 
-- name: make directories
-  file:
-    state: directory
-    follow: yes
-    path: '{{ item }}'
-  with_items:
-  - '{{ xdg_config_home }}/fish/functions'
-
-- name: set link items
-  set_fact:
-    link_items:
-    - { path: '{{ dotfiles }}/fish/{{ fish_shell_config }}', dest: '{{ xdg_config_home }}/fish/config.fish' }
-    - { path: '{{ resources }}/fish/fishfile', dest: '{{ xdg_config_home }}/fish/fishfile' }
-    - { path: '{{ resources }}/fish/functions/fish_prompt.fish', dest: '{{ xdg_config_home }}/fish/functions/fish_prompt.fish' }
-
-- name: check for the existence of link sources
-  stat:
-    path: '{{ item.path }}'
-  register: stat_link_source
-  failed_when: not stat_link_source.stat.exists or stat_link_source.stat.isdir
-  with_items: '{{ link_items }}'
-
-- name: link to files
-  become: true
-  file:
-    state: link
-    follow: no
-    force: yes
-    owner: '{{ user }}'
-    src:  '{{ item.path }}'
-    dest: '{{ item.dest }}'
-  with_items: '{{ link_items }}'
+- include: includes/setup_resources.yml
 
 - name: set environment variables
   shell: >
-    fish -c "set -Ux XDG_CONFIG_HOME {{ xdg_config_home }}";
-    fish -c "set -Ux XDG_CACHE_HOME {{ xdg_cache_home }}";
-    fish -c "set -Ux XDG_DATA_HOME {{ xdg_data_home }}";
-    fish -c "set -Ux LC_CTYPE en_US.UTF-8"
-    fish -c "set -Ux EDITOR {{ editor }}";
-    fish -c "set -Ux VISUAL {{ visual }}";
-    fish -c "set -Ux GOPATH {{ home }}/.go";
-    fish -c "set -Ux ANDROID_HOME {{ home }}/Library/Android/sdk"
-    fish -c "set -Ux ANDRIOD_SDK_ROOT {{ home }}/Library/Android/sdk";
-    fish -c "set -Ux ANDRIOD_AVD_HOME {{ home }}/.android/avd";
+    set -Ux XDG_CONFIG_HOME {{ xdg_config_home }};
+    set -Ux XDG_CACHE_HOME {{ xdg_cache_home }};
+    set -Ux XDG_DATA_HOME {{ xdg_data_home }};
+    set -Ux LC_CTYPE en_US.UTF-8;
+    set -Ux EDITOR {{ editor }};
+    set -Ux VISUAL {{ visual }};
+    set -Ux GOPATH {{ home }}/.go;
+  args:
+    executable: '{{ fish_path }}'
   changed_when: false
   check_mode: no
 
-- block: # setup graphviz
-  - name: find graphviz dot
-    shell: which dot
-    register: which_dot
-    changed_when: false
-    failed_when: false
-    check_mode: no
-  - name: check GRAPHVIZ_DOT
-    shell: fish -c "echo $GRAPHVIZ_DOT"
-    register: echo_dot
-    changed_when: false
-    failed_when: false
-    check_mode: no
-  - name: set environment variables GRAPHVIZ_DOT
-    shell: fish -c "set -Ux GRAPHVIZ_DOT {{ which_dot.stdout }}";
-    when: which_dot.rc == 0 and echo_dot.stdout != which_dot.stdout
+- include: includes/setup_graphviz.yml
 
-- name: check fish_user_paths
-  shell: fish -c "echo \$fish_user_paths"
-  register: check_user_paths
-  changed_when: false
-  check_mode: no
+- include: includes/set_fish_user_paths.yml
 
-- name: set fish_user_paths
-  shell: >
-    fish -c "set -U fish_user_paths \$GOPATH/bin";
-    fish -c "set -U fish_user_paths \$fish_user_paths {{ home }}/.nimble/bin";
-    fish -c "set -U fish_user_paths \$fish_user_paths {{ home }}/.anyenv/bin";
-    fish -c "set -U fish_user_paths \$fish_user_paths {{ home }}/.phpenv/bin";
-    fish -c "set -U fish_user_paths \$fish_user_paths {{ home }}/.rsvm/current/dist/bin";
-  when: >
-    check_user_paths.stdout.find('.go/bin') == -1
-      or check_user_paths.stdout.find('.nimble/bin') == -1
-      or check_user_paths.stdout.find('.anyenv/bin') == -1
-      or check_user_paths.stdout.find('.phpenv/bin') == -1
-      or check_user_paths.stdout.find('.rsvm/current/dist/bin') == -1
+- include: includes/set_environment_for_MacOSX.yml
+  when: ansible_distribution == "MacOSX"
 
-- name: set fish_user_paths (for MacOSX)
-  shell: >
-    fish -c "set -U fish_user_paths \$fish_user_paths {{ home }}/Library/Android/sdk/tools";
-    fish -c "set -U fish_user_paths \$fish_user_paths {{ home }}/Library/Android/sdk/platform-tools";
-  when: >
-    ansible_distribution == "MacOSX" and (
-      check_user_paths.stdout.find('Library/Android/sdk/tools') == -1
-      or check_user_paths.stdout.find('Library/Android/sdk/platform-tools') == -1
-    )
-
-- name: check fisherman was installed
-  shell: fish -c "type fisher"
-  register: type_fisherman
-  failed_when: type_fisherman.rc not in [0, 1, 126, 127]
-  changed_when: false
-  check_mode: no
-
-- block: # install fisherman
-  - name: install fisherman
-    shell: fish -c "curl -Lo \$XDG_CONFIG_HOME/fish/functions/fisher.fish --create-dirs git.io/fisherman"
-  - name: find fisherman
-    shell: fish -c "type fisher"
-    register: type_fisherman
-    changed_when: false
-    check_mode: no
-  when: type_fisherman.rc != 0
-
-- name: install fish functions
-  shell: fish -c "fisher resources/fish/functions"
-  register: install_fish_functions
-  changed_when: install_fish_functions.stderr.find('No plugins to install or dependencies missing.') == -1
-
-- name: install fish plugins
-  shell: fish -c "fisher"
-  register: install_fish_plugins
-  changed_when: install_fish_plugins.stderr.find('No plugins to install or dependencies missing.') == -1
+- include: includes/setup_fisher.yml

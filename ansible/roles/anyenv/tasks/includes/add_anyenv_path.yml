@@ -1,0 +1,15 @@
+---
+
+- name: check fish_user_paths
+  shell: echo $fish_user_paths
+  args:
+    executable: '{{ fish_path }}'
+  register: check_user_paths
+  changed_when: false
+  check_mode: no
+
+- name: add anyenv to fish_user_paths
+  shell: set -U fish_user_paths $fish_user_paths "{{ home }}/.anyenv/bin"
+  args:
+    executable: '{{ fish_path }}'
+  when: check_user_paths.stdout is not search(home+'/.anyenv/bin')
