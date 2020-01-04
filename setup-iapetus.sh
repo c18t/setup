@@ -2,7 +2,7 @@
 pushd `dirname $0`
 
 # install ansible
-./script/install-ansible-macos.sh
+bash ./script/install-ansible-macos.sh
 result=$?
 if [ $result -ne 0 ]; then
     popd

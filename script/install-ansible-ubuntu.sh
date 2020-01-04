@@ -3,7 +3,7 @@ pushd `dirname $0`
 export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
 
 # install build-essential
-./install-build-essential-ubuntu.sh
+bash ./install-build-essential-ubuntu.sh
 result=$?
 if [ $result -ne 0 ]; then
     popd
@@ -11,7 +11,7 @@ if [ $result -ne 0 ]; then
 fi
 
 # install expect
-./install-expect-ubuntu.sh
+bash ./install-expect-ubuntu.sh
 result=$?
 if [ $result -ne 0 ]; then
     popd
@@ -19,7 +19,7 @@ if [ $result -ne 0 ]; then
 fi
 
 # install linuxbrew
-./install-linuxbrew.sh
+bash ./install-linuxbrew.sh
 result=$?
 if [ $result -ne 0 ]; then
     popd

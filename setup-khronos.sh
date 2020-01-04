@@ -3,7 +3,7 @@ pushd `dirname $0`
 export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
 
 # install ansible
-./script/install-ansible-ubuntu.sh
+bash ./script/install-ansible-ubuntu.sh
 result=$?
 if [ $result -ne 0 ]; then
     popd
