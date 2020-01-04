@@ -7,8 +7,8 @@ home: '{{ ansible_env.HOME }}'
 # user name
 user: '{{ ansible_env.USER }}'
 # editor
-editor: '{{ ansible_env.EDITOR }}'
-visual: '{{ ansible_env.VISUAL }}'
+editor: '{{ ansible_env.EDITOR | default(none) }}'
+visual: '{{ ansible_env.VISUAL | default(none) }}'
 # XDG
 xdg_config_home: '{{ ansible_env.XDG_CONFIG_HOME | default(home + "/.config") }}'
 xdg_cache_home: '{{ ansible_env.XDG_CACHE_HOME | default(home + "/.cache") }}'
