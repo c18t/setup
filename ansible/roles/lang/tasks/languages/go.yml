@@ -6,7 +6,7 @@
     quiet: true
 
 - name: add $GOPATH/bin to fish_user_paths
-  shell: set -U fish_user_paths $GOPATH/bin
+  shell: set -U fish_user_paths $fish_user_paths $GOPATH/bin
   args:
     executable: '{{ fish_path }}'
   when: fish_user_paths is not search(ansible_env.GOPATH+'/bin')
