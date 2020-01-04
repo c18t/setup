@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 pushd `dirname $0`
+export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
 
 # install ansible
-./script/install-ansible-macos.sh
+./script/install-ansible-ubuntu.sh
 result=$?
 if [ $result -ne 0 ]; then
     popd
@@ -11,11 +12,12 @@ fi
 
 # configure with ansible
 pushd ./ansible
-ansible-playbook ./playbooks/iapetus-macbookpro.yml $*
+ansible-playbook ./playbooks/khronos-windows.yml $*
 result=$?
 popd
 
 if [ $result -eq 0 ]; then
+    # read -p
     echo "$(basename $0): your machine have been configured! enjoy your development!"
 fi
 

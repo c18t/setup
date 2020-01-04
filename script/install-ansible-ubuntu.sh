@@ -1,8 +1,25 @@
 #!/usr/bin/env bash
 pushd `dirname $0`
+export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
 
-# install homebrew
-./install-homebrew.sh
+# install build-essential
+./install-build-essential-ubuntu.sh
+result=$?
+if [ $result -ne 0 ]; then
+    popd
+    exit $result
+fi
+
+# install expect
+./install-expect-ubuntu.sh
+result=$?
+if [ $result -ne 0 ]; then
+    popd
+    exit $result
+fi
+
+# install linuxbrew
+./install-linuxbrew.sh
 result=$?
 if [ $result -ne 0 ]; then
     popd

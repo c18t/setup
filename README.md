@@ -1,6 +1,19 @@
 # setup
 環境のセットアップスクリプト
 
+## How to use
+### macOS
+#### Iapetus
+```sh
+$ ./setup-iapetus.sh -K
+```
+
+### Windows
+#### Khronos
+```ps1
+PS > .\setup-windows.ps1 setup-khronos.sh -K "-e my_username=$env:USERNAME"
+```
+
 ## Update config
 ### brewfile
 ```sh

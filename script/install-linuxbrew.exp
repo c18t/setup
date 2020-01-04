@@ -1,0 +1,23 @@
+#!/usr/bin/env expect
+
+set timeout -1
+set SH_COMMAND [lindex $argv 0]
+set PW [lindex $argv 1]
+
+spawn sh -c "${SH_COMMAND}"
+expect {
+  -glob "Enter password for * to install *" {
+    send -- "${PW}\n"
+  }
+}
+expect {
+  -glob "Press RETURN to continue or any other key to abort" {
+    send -- "\n"
+  }
+}
+
+expect {
+  eof {
+    exit 0
+  }
+}
