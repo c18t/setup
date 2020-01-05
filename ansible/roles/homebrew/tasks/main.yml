@@ -80,10 +80,8 @@
 
 - name: mas install
   script: 'mas.sh {{ item.id }}'
-  args:
-    executable: mas
+  when: mas_apps is defined and mas_apps | length > 0
   register: mas_result
   changed_when: mas_result.rc == 1
   failed_when: mas_result.rc not in [0, 1]
   with_items: '{{ mas_apps }}'
-  when: mas_apps is defined and mas_apps | length > 0

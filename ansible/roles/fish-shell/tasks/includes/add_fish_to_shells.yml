@@ -14,7 +14,6 @@
     register: add_fish_in_shells
   - name: recheck fish is enabled as login shells
     shell: cat /etc/shells | grep -q '{{ fish_path }}'
-    register: fish_in_shells
     changed_when: false
     check_mode: no
   when: fish_in_shells.rc != 0

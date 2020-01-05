@@ -6,6 +6,7 @@
     follow: yes
     path: '{{ item }}'
   with_items:
+  - '{{ xdg_config_home }}/fish/conf.d'
   - '{{ xdg_config_home }}/fish/completions'
   - '{{ xdg_config_home }}/fish/functions'
 
