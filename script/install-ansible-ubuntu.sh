@@ -26,6 +26,14 @@ if [ $result -ne 0 ]; then
     exit $result
 fi
 
+# install pywinrm
+bash ./install-pywinrm.sh
+result=$?
+if [ $result -ne 0 ]; then
+    popd
+    exit $result
+fi
+
 # install ansible
 if ! type ansible >/dev/null 2>&1; then
     echo install ansible ...

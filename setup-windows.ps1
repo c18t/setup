@@ -5,7 +5,7 @@ $setupScriptArgs = $Args[1..-1]
 Set-ExecutionPolicy Bypass -Scope Process -Force
 
 # 管理者権限の確認
-if (([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator") -eq $False) {
+if (([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator) -eq $False) {
     # 管理者に昇格して再実行
     Start-Process powershell.exe -Verb runas -ArgumentList "-File ""$PSCommandPath"" ""$setupScript""" -Wait
     exit $?
@@ -36,6 +36,10 @@ else {
     powershell.exe -File "$Current\script\install-chocolatey.ps1"
     if ($? -eq $False) { exit 1 }
 
+    # # MSYS2/expectのインストール
+    # powershell.exe -File "$Current\script\install-msys2.ps1"
+    # if ($? -eq $False) { exit 1 }
+
     # ubuntuのインストール
     powershell.exe -File "$Current\script\install-wsl-ubuntu.ps1"
     if ($? -eq $False) { exit 1 }
@@ -44,7 +48,7 @@ else {
     # セットアップコマンドの実行
     $driveLetter = $Current.Substring(0, 1).ToLower()
     $wslPath = "$Current\$setupScript" -replace "\\", "/" -replace "^\w:", "/mnt/$driveLetter"
-    ubuntu.exe run bash "$wslPath" $setupScriptArgs
+    ubuntu.exe run bash "$wslPath" -e my_username=$env:USERNAME $setupScriptArgs
     if ($? -eq $False) { exit 1 }
 }
 

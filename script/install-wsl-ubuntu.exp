@@ -1,0 +1,29 @@
+#!/usr/bin/env expect -d
+
+set timeout -1
+set COMMAND [lindex $argv 0]
+set USER [lindex $argv 1]
+set PW [lindex $argv 2]
+
+spawn ${COMMAND}
+expect {
+  -glob "Enter new UNIX username:*" {
+    send -- "${USER}\n"
+  }
+}
+expect {
+  -glob "Enter new UNIX password:*" {
+    send -- "${PW}\n"
+  }
+}
+expect {
+  -glob "Retype new UNIX password:*" {
+    send -- "${PW}\n"
+  }
+}
+
+expect {
+  eof {
+    exit 0
+  }
+}

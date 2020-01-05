@@ -11,7 +11,7 @@ $ ./setup-iapetus.sh -K
 ### Windows
 #### Khronos
 ```ps1
-PS > .\setup-windows.ps1 setup-khronos.sh -K "-e my_username=$env:USERNAME"
+PS > .\setup-windows.ps1 setup-khronos.sh -K
 ```
 
 ## Update config

@@ -1,6 +1,8 @@
 ---
 
 - hosts: local
+  tasks:
+  - debug: var=ansible_facts
   vars:
   - ansible_user: '{{ my_username }}'
   - ansible_password: '{{ my_password }}'
