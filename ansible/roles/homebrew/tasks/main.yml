@@ -73,10 +73,10 @@
 - name: install Homebrew/Linuxbrew casks
   homebrew_cask:
     name: '{{ item }}'
+  when: brew_casks is defined and brew_casks | length > 0
   # どれかが失敗してもすべて実施されるように with_items で指定
   with_items: '{{ brew_casks }}'
   ignore_errors: yes
-  when: brew_casks is defined and brew_casks | length > 0
 
 - name: mas install
   script: 'mas.sh {{ item.id }}'
