@@ -6,46 +6,37 @@
     quiet: true
 
 - name: check luaenv
-  shell: anyenv envs | grep -qe \^luaenv\$
-  args:
-    executable: '{{ fish_path }}'
+  # NOTE: xenv系のコマンドが$(basename $SHELL)でシェルを判定することから
+  #       ansibleを開始したシェルが$SHELLに入っていると失敗するため
+  #       $SHELLを上書きする
+  shell: SHELL={{ fish_path }} fish -l -c "anyenv envs | grep -qe \^luaenv\\\$"
   register: check_luaenv
   failed_when: check_luaenv.rc not in [0, 1]
   changed_when: false
   check_mode: no
 
 - name: install luaenv
-  shell: anyenv install --skip-existing luaenv
-  args:
-    executable: '{{ fish_path }}'
+  shell: SHELL={{ fish_path }} fish -l -c "anyenv install --skip-existing luaenv"
   when: check_luaenv.rc != 0
 
 - block:
   - name: get installed lua version list
-    shell: fish -l -c "luaenv versions"
-    args:
-      executable: '{{ fish_path }}'
+    shell: SHELL={{ fish_path }} fish -l -c "luaenv versions"
     register: installed_lua_version
     failed_when: installed_lua_version.rc not in [0, 1]
     changed_when: false
     check_mode: no
   - name: install lua version
-    shell: fish -l -c "luaenv install {{ item }}"
-    args:
-      executable: '{{ fish_path }}'
+    shell: SHELL={{ fish_path }} fish -l -c "luaenv install {{ item }}"
     when: installed_lua_version.stdout is not regex("\\b"+item+"\\b")
     with_items: '{{ lua_versions }}'
   - name: 'check global lua version {{ lua_versions[0] }}'
-    shell: fish -l -c "luaenv global | grep -qe \^{{ lua_versions[0] }}\\\$"
-    args:
-      executable: '{{ fish_path }}'
+    shell: SHELL={{ fish_path }} fish -l -c "luaenv global | grep -qe \^{{ lua_versions[0] }}\\\$"
     register: check_luaenv_version
     failed_when: check_luaenv_version.rc not in [0, 1]
     changed_when: false
     check_mode: no
   - name: 'set global lua version {{ lua_versions[0] }}'
-    shell: fish -l -c "luaenv global {{ lua_versions[0] }}"
-    args:
-      executable: '{{ fish_path }}'
+    shell: SHELL={{ fish_path }} fish -l -c "luaenv global {{ lua_versions[0] }}"
     when: check_luaenv_version.rc != 0
   when: lua_versions is defined and lua_versions | length > 0

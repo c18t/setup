@@ -6,32 +6,29 @@
     quiet: true
 
 - name: check erlenv
-  shell: anyenv envs | grep -qe \^erlenv\$
-  args:
-    executable: '{{ fish_path }}'
+  # NOTE: xenv系のコマンドが$(basename $SHELL)でシェルを判定することから
+  #       ansibleを開始したシェルが$SHELLに入っていると失敗するため
+  #       $SHELLを上書きする
+  shell: SHELL={{ fish_path }} fish -l -c "anyenv envs | grep -qe \^erlenv\\\$"
   register: check_erlenv
   failed_when: false
   changed_when: false
   check_mode: no
 
 - name: install erlenv
-  shell: anyenv install --skip-existing erlenv
-  args:
-    executable: '{{ fish_path }}'
+  shell: SHELL={{ fish_path }} fish -l -c "anyenv install --skip-existing erlenv"
   when: check_erlenv.rc != 0
 
 - block:
   - name: get installed erlang version list
-    shell: fish -l -c "erlenv releases"
-    args:
-      executable: '{{ fish_path }}'
+    shell: SHELL={{ fish_path }} fish -l -c "erlenv releases"
     register: installed_erlang_version
     failed_when: installed_erlang_version.rc not in [0, 1]
     changed_when: false
     check_mode: no
   - name: install erlang version
     shell: >
-      fish -l -c "cd {{ home }};
+      SHELL={{ fish_path }} fish -l -c "cd {{ home }};
         and curl -Lo otp_src_{{ item.version }}.tar.gz {{ item.source }};
         and tar zxf otp_src_{{ item.version }}.tar.gz;
         and cd otp_src_{{ item.version }};
@@ -41,21 +38,15 @@
         and cd ../;
         and rm -rf ./otp_src_{{ item.version }};
         and rm -f otp_src_{{ item.version }}.tar.gz;"
-    args:
-      executable: '{{ fish_path }}'
     when: installed_erlang_version.stdout is not regex("\\b"+item.version+"\\b")
     with_items: '{{ erlang_versions }}'
   - name: 'check global erlang version {{ erlang_versions[0].version }}'
-    shell: fish -l -c "erlenv global | grep -qe \^{{ erlang_versions[0].version }}\\\$"
-    args:
-      executable: '{{ fish_path }}'
+    shell: SHELL={{ fish_path }} fish -l -c "erlenv global | grep -qe \^{{ erlang_versions[0].version }}\\\$"
     register: check_erlenv_version
     failed_when: check_erlenv_version.rc not in [0, 1]
     changed_when: false
     check_mode: no
   - name: 'set global erlang version {{ erlang_versions[0].version }}'
-    shell: fish -l -c "erlenv global {{ erlang_versions[0].version }}"
-    args:
-      executable: '{{ fish_path }}'
+    shell: SHELL={{ fish_path }} fish -l -c "erlenv global {{ erlang_versions[0].version }}"
     when: check_erlenv_version.rc != 0
   when: erlang_versions is defined and erlang_versions | length > 0

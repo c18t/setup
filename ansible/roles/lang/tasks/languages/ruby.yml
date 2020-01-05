@@ -6,46 +6,37 @@
     quiet: true
 
 - name: check rbenv
-  shell: anyenv envs | grep -qe \^rbenv\$
-  args:
-    executable: '{{ fish_path }}'
+  # NOTE: xenv系のコマンドが$(basename $SHELL)でシェルを判定することから
+  #       ansibleを開始したシェルが$SHELLに入っていると失敗するため
+  #       $SHELLを上書きする
+  shell: SHELL={{ fish_path }} fish -l -c "anyenv envs | grep -qe \^rbenv\\\$"
   register: check_rbenv
   failed_when: check_rbenv.rc not in [0, 1]
   changed_when: false
   check_mode: no
 
 - name: install rbenv
-  shell: anyenv install --skip-existing rbenv
-  args:
-    executable: '{{ fish_path }}'
+  shell: SHELL={{ fish_path }} fish -l -c "anyenv install --skip-existing rbenv"
   when: check_rbenv.rc != 0
 
 - block:
   - name: get installed ruby version list
-    shell: fish -l -c "rbenv versions"
-    args:
-      executable: '{{ fish_path }}'
+    shell: SHELL={{ fish_path }} fish -l -c "rbenv versions"
     register: installed_ruby_version
     failed_when: installed_ruby_version.rc not in [0, 1]
     changed_when: false
     check_mode: no
   - name: install ruby version
-    shell: fish -l -c "rbenv install {{ item }}"
-    args:
-      executable: '{{ fish_path }}'
+    shell: SHELL={{ fish_path }} fish -l -c "rbenv install {{ item }}"
     when: installed_ruby_version.stdout is not regex("\\b"+item+"\\b")
     with_items: '{{ ruby_versions }}'
   - name: 'check global ruby version {{ ruby_versions[0] }}'
-    shell: fish -l -c "rbenv global | grep -qe \^{{ ruby_versions[0] }}\\\$"
-    args:
-      executable: '{{ fish_path }}'
+    shell: SHELL={{ fish_path }} fish -l -c "rbenv global | grep -qe \^{{ ruby_versions[0] }}\\\$"
     register: check_rbenv_version
     failed_when: check_rbenv_version.rc not in [0, 1]
     changed_when: false
     check_mode: no
   - name: 'set global ruby version {{ ruby_versions[0] }}'
-    shell: fish -l -c "rbenv global {{ ruby_versions[0] }}"
-    args:
-      executable: '{{ fish_path }}'
+    shell: SHELL={{ fish_path }} fish -l -c "rbenv global {{ ruby_versions[0] }}"
     when: check_rbenv_version.rc != 0
   when: ruby_versions is defined and ruby_versions | length > 0

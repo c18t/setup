@@ -25,10 +25,6 @@ $ brew tap bundle && brew bundle dump && cat Brewfile
 $ code --list-extensions | sort | awk 'BEGIN { print "---"; print; print "code_install_extensions:" } { print "- "$1 }'
 ```
 
-## TODO
-- Ansibleを起動するシェルが fish じゃないとxenv系の設定で落ちる
-    - 各xenvのシェルの判定が `$(basename $SHELL)` になってるからどうしようもない？
-
 ## Copyrights
 
 ### ansible/roles/files/mas.sh

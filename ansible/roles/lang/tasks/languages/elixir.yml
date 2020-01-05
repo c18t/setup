@@ -6,46 +6,37 @@
     quiet: true
 
 - name: check exenv
-  shell: anyenv envs | grep -qe \^exenv\$
-  args:
-    executable: '{{ fish_path }}'
+  # NOTE: xenv系のコマンドが$(basename $SHELL)でシェルを判定することから
+  #       ansibleを開始したシェルが$SHELLに入っていると失敗するため
+  #       $SHELLを上書きする
+  shell: SHELL={{ fish_path }} fish -l -c "anyenv envs | grep -qe \^exenv\\\$"
   register: check_exenv
   failed_when: check_exenv.rc not in [0, 1]
   changed_when: false
   check_mode: no
 
 - name: install exenv
-  shell: anyenv install --skip-existing exenv
-  args:
-    executable: '{{ fish_path }}'
+  shell: SHELL={{ fish_path }} fish -l -c "anyenv install --skip-existing exenv"
   when: check_exenv.rc != 0
 
 - block:
   - name: get installed elixir version list
-    shell: fish -l -c "exenv versions"
-    args:
-      executable: '{{ fish_path }}'
+    shell: SHELL={{ fish_path }} fish -l -c "exenv versions"
     register: installed_elixir_version
     failed_when: installed_elixir_version.rc not in [0, 1]
     changed_when: false
     check_mode: no
   - name: install elixir version
-    shell: fish -l -c "exenv install {{ item }}"
-    args:
-      executable: '{{ fish_path }}'
+    shell: SHELL={{ fish_path }} fish -l -c "exenv install {{ item }}"
     when: installed_elixir_version.stdout is not regex("\\b"+item+"\\b")
     with_items: '{{ elixir_versions }}'
   - name: 'check global elixir version {{ elixir_versions[0] }}'
-    shell: fish -l -c "exenv global | grep -qe \^{{ elixir_versions[0] }}\\\$"
-    args:
-      executable: '{{ fish_path }}'
+    shell: SHELL={{ fish_path }} fish -l -c "exenv global | grep -qe \^{{ elixir_versions[0] }}\\\$"
     register: check_exenv_version
     failed_when: check_exenv_version.rc not in [0, 1]
     changed_when: false
     check_mode: no
   - name: 'set global elixir version {{ elixir_versions[0] }}'
-    shell: fish -l -c "exenv global {{ elixir_versions[0] }}"
-    args:
-      executable: '{{ fish_path }}'
+    shell: SHELL={{ fish_path }} fish -l -c "exenv global {{ elixir_versions[0] }}"
     when: check_exenv_version.rc != 0
   when: elixir_versions is defined and elixir_versions | length > 0
