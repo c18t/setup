@@ -45,7 +45,7 @@
     # common
     my_editor: code
     my_visual: code
-    my_temp: '{{ "/mnt/d/Temp/" + (home | basename) }}'
+    my_temporary_home: '{{ "/mnt/d/Temp/" + (home | basename) }}'
     my_xdg_config_home: '{{ home + "/AppData/Local" }}'
     my_xdg_cache_home: '{{ home + "/AppData/Roaming" }}'
     my_xdg_data_home: '{{ home + "/AppData/Local" }}'

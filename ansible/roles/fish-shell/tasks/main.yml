@@ -20,8 +20,8 @@
     set -Ux LC_CTYPE en_US.UTF-8;
     set -Ux EDITOR {{ editor }};
     set -Ux VISUAL {{ visual }};
-    set -Ux TEMP {{ temp }};
-    set -Ux TMP {{ temp }};
+    set -Ux TEMP {{ temporary_home }};
+    set -Ux TMP {{ temporary_home }};
     set -Ux GOPATH {{ home }}/.go;
   args:
     executable: '{{ fish_path }}'
