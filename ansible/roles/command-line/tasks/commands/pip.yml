@@ -26,14 +26,14 @@
 # MacOSXだとHomebrewでpip3が入らないのでシステムのpip3を使う
 - name: check python3 on system
   shell: which pip3
-  register: type_pip3
+  register: which_pip3
   changed_when: false
   check_mode: no
   when: type_pip3.rc != 0
 
 - name: set pip3 path
   set_fact:
-    pip3_path: '{{ type_pip3.stdout }}'
+    pip3_path: '{{ (type_pip3.rc == 0 and type_pip3.stdout) or which_pip3.stdout }}'
 
 - name: install python modules
   become: true
