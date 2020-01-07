@@ -28,7 +28,6 @@ brew_fomulae:
 - haskell-stack
 - hub
 - icu4c # for phpenv
-- jenv
 - krb5 # for phpenv
 - libedit # for phpenv
 - libxml2 # for phpenv
@@ -36,7 +35,10 @@ brew_fomulae:
 - neofetch
 - neovim
 - nim
+- npm # for command-line
 - peco
+- python # for command-line
+- ruby # for command-line
 - swagger-codegen
 - terminal-notifier # for fisherman/done
 - the_platinum_searcher

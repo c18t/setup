@@ -1,0 +1,15 @@
+---
+
+- name: set environment variables
+  win_environment:
+    level: '{{ item.level }}'
+    name: '{{ item.name }}'
+    value: '{{ item.value }}'
+  with_items:
+  - { level: 'user', name: 'MSYS', value: 'winsymlinks:nativestrict' }
+  - { level: 'user', name: 'MSYS2_PATH_TYPE', value: 'inherit' }
+  - { level: 'user', name: 'TMP', value: 'D:\Temp\%USERNAME%' }
+  - { level: 'user', name: 'TEMP', value: 'D:\Temp\%USERNAME%' }
+  - { level: 'user', name: 'XDG_CACHE_HOME', value: '%APPDATA%' }
+  - { level: 'user', name: 'XDG_CONFIG_HOME', value: '%LOCALAPPDATA%' }
+  - { level: 'user', name: 'XDG_DATA_HOME', value: '%LOCALAPPDATA%' }

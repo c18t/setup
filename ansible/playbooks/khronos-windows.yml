@@ -1,18 +1,74 @@
 ---
 
-- hosts: local
-  tasks:
-  - debug: var=ansible_facts
+- name: Windows
+  hosts: local
+  roles: # 指定できる変数は各ロールの defaults/main.yml 参照
+  # WSL側のロールを指定しないこと
+  # - os-setting-windows
+  - chocolatey
+  # - software-windows # forkが再インストールされるので普段は呼ばない
   vars:
-  - ansible_user: '{{ my_username }}'
-  - ansible_password: '{{ my_password }}'
-  - ansible_connection: winrm
-  - ansible_winrm_transport: basic
-  - ansible_winrm_server_cert_validation: ignore
+    ansible_user: '{{ win_username }}'
+    ansible_password: '{{ win_password }}'
+    ansible_connection: winrm
+    ansible_winrm_transport: basic
+    ansible_winrm_server_cert_validation: ignore
+    ansible_python_interpreter: /home/linuxbrew/.linuxbrew/bin/python3
+    chocolatey_config: chocolatey-khronos.yml
   vars_prompt:
-  - name: my_username
-    prompt: "User username"
+  - name: win_username
+    prompt: "Windows username"
     private: no
+  - name: win_password
+    prompt: "Windows password"
+    private: yes
+
+- name: WSL
+  hosts: local
+  pre_tasks:
+  - include_vars: common.yml
+  - include: pre_tasks/set_resources.yml
+  roles: # 指定できる変数は各ロールの defaults/main.yml 参照
+  - home
+  - apt
+  - homebrew
+  - vscode
+  - nvim
+  - fish-shell
+  - anyenv
+  - lang
+  - command-line
+  vars:
+    # ansible
+    # python3-apt を呼び出すためにシステムのpython3が必要
+    ansible_python_interpreter: /usr/bin/python3
+    # common
+    my_editor: code
+    my_visual: code
+    my_temp: '{{ "/mnt/d/Temp/" + (home | basename) }}'
+    my_xdg_config_home: '{{ home + "/AppData/Local" }}'
+    my_xdg_cache_home: '{{ home + "/AppData/Roaming" }}'
+    my_xdg_data_home: '{{ home + "/AppData/Local" }}'
+    # home
+    ssh_config: config-prv
+    git_config: .gitconfig-prv
+    # apt
+    apt_config: apt-khronos.yml
+    # homebrew
+    homebrew_config: brewfile-khronos.yml
+    # vscode
+    vscode_extensions: extensions.yml
+    # fish-shell
+    fish_shell_config: config-wsl.fish
+    # lang
+    elixir_versions: []
+    erlang_versions: []
+    erlang_option: "--enable-dynamic-ssl-lib --with-ssl=/home/linuxbrew/.linuxbrew/opt/openssl"
+    lua_versions: []
+    perl_versions: []
+    php_versions: []
+    ruby_versions: []
+  vars_prompt:
   - name: my_password
     prompt: "User password"
     private: yes

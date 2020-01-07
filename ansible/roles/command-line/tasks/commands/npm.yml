@@ -17,14 +17,14 @@
       quiet: true
 
 - name: check npm
-  shell: type npm
+  shell: type '{{ brew_prefix }}/bin/npm'
   changed_when: false
   check_mode: no
 
 - name: install node.js packages
-  become: true
   npm:
     name: '{{ item }}'
     global: yes
-  with_items: '{{ npm_packages }}'
+    executable: '{{ brew_prefix }}/bin/npm'
   when: npm_packages is defined and npm_packages | length > 0
+  with_items: '{{ npm_packages }}'

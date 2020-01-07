@@ -36,9 +36,9 @@ else {
     powershell.exe -File "$Current\script\install-chocolatey.ps1"
     if ($? -eq $False) { exit 1 }
 
-    # # MSYS2/expectのインストール
-    # powershell.exe -File "$Current\script\install-msys2.ps1"
-    # if ($? -eq $False) { exit 1 }
+    # MSYS2/expectのインストール
+    powershell.exe -File "$Current\script\install-msys2.ps1"
+    if ($? -eq $False) { exit 1 }
 
     # ubuntuのインストール
     powershell.exe -File "$Current\script\install-wsl-ubuntu.ps1"
@@ -48,7 +48,7 @@ else {
     # セットアップコマンドの実行
     $driveLetter = $Current.Substring(0, 1).ToLower()
     $wslPath = "$Current\$setupScript" -replace "\\", "/" -replace "^\w:", "/mnt/$driveLetter"
-    ubuntu.exe run bash "$wslPath" -e my_username=$env:USERNAME $setupScriptArgs
+    ubuntu.exe run bash "$wslPath" "-e win_username=$env:USERNAME" $setupScriptArgs
     if ($? -eq $False) { exit 1 }
 }
 

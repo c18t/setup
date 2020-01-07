@@ -32,7 +32,7 @@ if (-Not (Get-Command -Name pacman -ErrorAction SilentlyContinue)) {
 
     # MSYS2の/usr/binにパスを通す
     $Current = Split-Path $PSCommandPath
-    & "$Current\addpath.vbs" "System" "$env:SYSTEMDRIVE\tools\msys64\usr\bin"
+    cscript.exe "//nologo" "$Current\addpath.vbs" "System" "$env:SYSTEMDRIVE\tools\msys64\usr\bin"
     RefreshEnv.cmd
 
     Write-Host "... done!"

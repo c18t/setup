@@ -16,20 +16,23 @@
       that: pip_config is not defined or pip_config is iterable
       quiet: true
 
-- name: check pip
-  shell: type pip
-  register: type_pip
-  failed_when: type_pip.rc not in [0, 1, 126, 127]
+- name: check python3
+  shell: type '{{ brew_prefix }}/bin/pip3' >/dev/null 2>&1 && echo {{ brew_prefix }}/bin/pip3
+  register: type_pip3
+  failed_when: false
   changed_when: false
   check_mode: no
 
-- name: install pip
-  easy_install:
-    name: pip
-  when: type_pip.rc != 0
+- name: set pip3 path
+  set_fact:
+    pip3_path: '{{ type_pip3.stdout }}'
+  when: type_pip3.rc == 0
 
 - name: install python modules
   become: true
   pip:
-    name: '{{ pip_packages }}'
+    name: '{{ item }}'
+    # MacOSXだとHomebrewでpip3が入らないのでシステムのpipを使う
+    executable: '{{ pip3_path | default(omit) }}'
   when: pip_packages is defined and pip_packages | length > 0
+  with_items: '{{ pip_packages }}'

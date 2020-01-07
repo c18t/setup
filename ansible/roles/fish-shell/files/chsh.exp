@@ -5,10 +5,13 @@ set PW [lindex $argv 1]
 
 spawn chsh -s ${NEW_SHELL}
 expect {
-  -glob "Password for*" {
+  -glob "Password*:*" {
     send -- "${PW}\n"
   }
 }
 
-expect eof
-exit 0
+expect {
+  eof {
+    exit 0
+  }
+}

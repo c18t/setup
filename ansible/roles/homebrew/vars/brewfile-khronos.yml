@@ -1,0 +1,36 @@
+---
+
+brew_taps:
+- homebrew/core
+brew_fomulae:
+- sqlite
+- ansible
+- asciidoctor
+- bats
+- byobu
+- bzip2 # for phpenv
+- dep
+- direnv
+- fish
+- fzf
+- ghq
+- git-secret
+- git-secrets
+- gradle
+# - haskell-stack # 落ちるので apt で入れる
+- hub
+- icu4c # for phpenv
+- krb5 # for phpenv
+- libedit # for phpenv
+- libxml2 # for phpenv
+- neofetch
+- neovim
+- nim
+- npm # for command-line
+- peco
+- python # for command-line
+- ruby # for command-line
+# - swagger-codegen
+- the_platinum_searcher
+- tree
+- zlib # for phpenv

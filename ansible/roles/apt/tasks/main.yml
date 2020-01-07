@@ -1,0 +1,31 @@
+---
+
+- name: assert apt role config
+  assert:
+    that: >
+      apt_config is not defined or
+        (apt_config is string and apt_config != "")
+    quiet: true
+
+- name: 'include roles/apt/vars/{{ apt_config }}'
+  include_vars: '{{ apt_config }}'
+  when: apt_config is defined
+
+- name: assert apt_packages
+  assert:
+    that: apt_packages is not defined or apt_packages is iterable
+    quiet: true
+
+- name: update apt cache and upgrade packages
+  become: true
+  apt:
+    cache_valid_time: 3600
+    update_cache: yes
+    upgrade: safe
+
+- name: install packages with apt
+  become: true
+  apt:
+    name: '{{ item }}'
+  when: apt_packages is defined and apt_packages | length > 0
+  with_items: '{{ apt_packages }}'

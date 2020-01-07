@@ -1,0 +1,23 @@
+---
+
+- name: add tools to fish_user_paths (for other)
+  shell: set -U fish_user_paths $fish_user_paths "{{ item }}"
+  args:
+    executable: '{{ fish_path }}'
+  when: fish_user_paths is not search(item)
+  with_items:
+  - /home/linuxbrew/.linuxbrew/bin
+
+- name: make PKG_CONFIG_PATH config (for other)
+  copy:
+    dest: '{{ xdg_config_home }}/fish/conf.d/{{ item }}.fish'
+    content: set -gx PKG_CONFIG_PATH "/home/linuxbrew/.linuxbrew/opt/{{ item }}/lib/pkgconfig" $PKG_CONFIG_PATH
+  with_items:
+  - icu4c
+  - krb5
+  - libedit
+  - libxml2
+  - libzip
+  - openssl@1.1
+  - tidy-htm5
+  - zlib

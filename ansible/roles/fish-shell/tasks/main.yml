@@ -20,6 +20,8 @@
     set -Ux LC_CTYPE en_US.UTF-8;
     set -Ux EDITOR {{ editor }};
     set -Ux VISUAL {{ visual }};
+    set -Ux TEMP {{ temp }};
+    set -Ux TMP {{ temp }};
     set -Ux GOPATH {{ home }}/.go;
   args:
     executable: '{{ fish_path }}'
@@ -32,5 +34,8 @@
 
 - include: includes/set_environment_for_MacOSX.yml
   when: ansible_distribution == "MacOSX"
+
+- include: includes/set_environment_for_other.yml
+  when: ansible_distribution != "MacOSX"
 
 - include: includes/setup_fisher.yml

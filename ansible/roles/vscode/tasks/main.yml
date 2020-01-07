@@ -2,10 +2,9 @@
 
 - name: assert vscode vscode_extensions
   assert:
-    that:
-      - vscode_extensions is defined
-      - vscode_extensions is not none
-      - vscode_extensions != ''
+    that: >
+      vscode_extensions is not defined or
+        (vscode_extensions is string and vscode_extensions != '')
     quiet: true
 
 - block:
@@ -15,7 +14,8 @@
     assert:
       that: code_install_extensions is defined and code_install_extensions is iterable
       quiet: true
-    
+  when: vscode_extensions is defined
+
 - name: check cmd.exe (for WSL)
   shell: type cmd.exe
   register: type_cmd
@@ -23,24 +23,24 @@
   changed_when: false
   check_mode: no
 
-# setup vscode (exclude WSL)
-- block:
-  - name: check vscode
-    shell: type code
-    register: type_code
-    failed_when: type_code.rc not in [0, 1, 126, 127]
-    changed_when: false
-    check_mode: no
-  - name: install vscode extensions
-    shell: 'code --install-extension {{ item }} | grep -i "was successfully installed!"'
-    register: install_vscode_ex
-    failed_when: install_vscode_ex.rc not in [0, 1]
-    changed_when: install_vscode_ex.rc == 0
-    with_items: '{{ code_install_extensions }}'
-    # GitHub Actionsだと拡張のインストールで止まるのでスキップ
-    when: >
-      (ansible_env.GITHUB_ACTIONS is not defined
-        or ansible_env.GITHUB_ACTIONS != 'true')
-        and
-      type_code.rc == 0 and code_install_extensions | length > 0
-  when: ansible_os_family == "Windows" or type_cmd.rc != 0
+- name: check vscode
+  shell: type code
+  register: type_code
+  failed_when: type_code.rc not in [0, 1, 126, 127]
+  changed_when: false
+  check_mode: no
+
+- name: install vscode extensions
+  shell: 'code --install-extension {{ item }} | grep -iq "successfully installed"'
+  args:
+    executable: '{{ (type_cmd.rc == 0 and "cmd.exe") or omit }}'
+  register: install_vscode_ex
+  failed_when: install_vscode_ex.rc not in [0, 1]
+  changed_when: install_vscode_ex.rc == 0
+  with_items: '{{ code_install_extensions }}'
+  # GitHub Actionsだと拡張のインストールで止まるのでスキップ
+  when: >
+    (ansible_env.GITHUB_ACTIONS is not defined
+      or ansible_env.GITHUB_ACTIONS != 'true')
+      and
+    type_code.rc == 0 and code_install_extensions | length > 0

@@ -1,0 +1,4 @@
+---
+
+# chocolatey用変数設定ファイル: roles/chocolatey/vars/{{ chocolatey_config }}
+chocolatey_config: null

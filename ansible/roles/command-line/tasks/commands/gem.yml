@@ -17,14 +17,14 @@
       quiet: true
 
 - name: check gem
-  shell: type gem
+  shell: type '{{ brew_prefix }}/bin/gem'
   changed_when: false
   check_mode: no
 
 - name: install rubygems
-  become: true
   gem:
     name: '{{ item }}'
     user_install: no
-  with_items: '{{ gem_packages }}'
+    executable: '{{ brew_prefix }}/bin/gem'
   when: gem_packages is defined and gem_packages | length > 0
+  with_items: '{{ gem_packages }}'

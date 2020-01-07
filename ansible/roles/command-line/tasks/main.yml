@@ -1,5 +1,7 @@
 ---
 
+- include: includes/set_brew_prefix.yml
+
 - include: commands/npm.yml
   tags: npm
 

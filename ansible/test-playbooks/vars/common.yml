@@ -1,7 +1,5 @@
 ---
 
-ignore_dependencies: true
-
 # user home
 home: '{{ ansible_env.HOME }}'
 # user name

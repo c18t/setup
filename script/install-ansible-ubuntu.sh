@@ -2,16 +2,8 @@
 pushd `dirname $0`
 export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
 
-# install build-essential
-bash ./install-build-essential-ubuntu.sh
-result=$?
-if [ $result -ne 0 ]; then
-    popd
-    exit $result
-fi
-
-# install expect
-bash ./install-expect-ubuntu.sh
+# install build-essential, expect, python3-apt
+bash ./install-ansible-dependencies-ubuntu.sh
 result=$?
 if [ $result -ne 0 ]; then
     popd
@@ -26,8 +18,8 @@ if [ $result -ne 0 ]; then
     exit $result
 fi
 
-# install pywinrm
-bash ./install-pywinrm.sh
+# install python packages
+bash ./install-python-packages.sh
 result=$?
 if [ $result -ne 0 ]; then
     popd

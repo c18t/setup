@@ -4,5 +4,3 @@
 ssh_config: null
 # .gitconfig
 git_config: null
-# WSL host home
-wsl_host_home: null

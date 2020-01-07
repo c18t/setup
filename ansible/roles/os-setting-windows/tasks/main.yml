@@ -1,0 +1,9 @@
+---
+
+- include: includes/setup_resources.yml
+
+- include: includes/win_environment.yml
+
+- include: includes/win_updates.yml
+
+- include: includes/install_font.yml

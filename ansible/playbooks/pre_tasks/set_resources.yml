@@ -10,5 +10,3 @@
     resources: '{{ setup_root.stdout }}/resources'
   changed_when: false
   check_mode: no
-- name: include common.yml
-  include_vars: common.yml

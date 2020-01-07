@@ -1,0 +1,55 @@
+---
+
+chocolatey_packages:
+- { name: 7zip }
+- { name: adobereader }
+- { name: androidstudio }
+- { name: arduino }
+- { name: audacity }
+- { name: autohotkey }
+- { name: blender }
+- { name: calibre }
+- { name: chocolatey }
+- { name: chocolateygui }
+- { name: discord }
+- { name: docker-desktop }
+- { name: Firefox }
+- { name: FirefoxESR }
+- { name: Ghostscript }
+- { name: gimp }
+- { name: git, install_args: "/GitAndUnixToolsOnPath /NoAutoCrlf" }
+- { name: gitter }
+- { name: GoogleChrome }
+- { name: GoogleJapaneseInput }
+- { name: gpg4win }
+- { name: graphviz }
+- { name: InkScape }
+- { name: iTunes }
+- { name: jdk8 }
+- { name: jmeter }
+- { name: jre8 }
+- { name: keepass }
+- { name: limechat }
+- { name: MakeMKV }
+- { name: mnemosyne }
+- { name: msys2 }
+- { name: neovim }
+- { name: obs-studio }
+- { name: Opera }
+- { name: opera-developer }
+- { name: plantuml }
+- { name: screentogif }
+- { name: slack }
+- { name: steam }
+- { name: Sudo }
+- { name: teraterm }
+- { name: unity }
+- { name: utorrent }
+- { name: VirtualCloneDrive }
+- { name: visualstudio-installer }
+- { name: visualstudiocode }
+- { name: vivaldi }
+- { name: vlc }
+- { name: winmerge }
+- { name: winscp }
+- { name: xmind }
