@@ -6,6 +6,8 @@
   roles:
   - fish-shell
   vars:
+    my_editor: code
+    my_visual: code
     fish_shell_config: config-mac.fish
   vars_prompt:
   - name: my_password

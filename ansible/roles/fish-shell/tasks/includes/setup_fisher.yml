@@ -22,23 +22,24 @@
     check_mode: no
   when: type_fisherman.rc != 0
 
-- name: update fisher
-  shell: fisher self-update
-  args:
-    executable: '{{ fish_path }}'
-  register: update_fisher
-  changed_when: update_fisher.stderr is not search('No plugins to install or dependencies missing.')
-
-- name: install or update fisher packages from fishfile
-  shell: fisher
-  args:
-    executable: '{{ fish_path }}'
-  register: install_fisher_packages
-  changed_when: install_fisher_packages.stderr is not search('No plugins to install or dependencies missing.')
-
-- name: install fish functions
-  shell: fisher add "{{ resources }}/fish/functions"
-  args:
-    executable: '{{ fish_path }}'
-  register: install_fish_functions
-  changed_when: install_fish_functions.stderr is not search('No plugins to install or dependencies missing.')
+- block:
+  - name: update fisher itself
+    shell: fish -l -c 'fisher self-update'
+    args:
+      executable: '{{ fish_path }}'
+    register: update_fisher
+    changed_when: update_fisher.stderr is not search('No plugins to install or dependencies missing.')
+  - name: install or update fisher packages from fishfile
+    shell: fish -l -c 'fisher'
+    args:
+      executable: '{{ fish_path }}'
+    register: install_fisher_packages
+    changed_when: install_fisher_packages.stderr is not search('No plugins to install or dependencies missing.')
+  - name: install fish functions
+    shell: fish -l -c 'fisher add "{{ resources }}/fish/functions"'
+    args:
+      executable: '{{ fish_path }}'
+    register: install_fish_functions
+    changed_when: install_fish_functions.stderr is not search('No plugins to install or dependencies missing.')
+  environment:
+    SHELL: '{{ fish_path }}'
