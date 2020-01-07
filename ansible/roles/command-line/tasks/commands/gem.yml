@@ -17,7 +17,7 @@
       quiet: true
 
 - name: check gem
-  shell: type '{{ brew_prefix }}/bin/gem'
+  shell: type '{{ brew_prefix }}/opt/ruby/bin/gem'
   changed_when: false
   check_mode: no
 
@@ -25,6 +25,6 @@
   gem:
     name: '{{ item }}'
     user_install: no
-    executable: '{{ brew_prefix }}/bin/gem'
+    executable: '{{ brew_prefix }}/opt/ruby/bin/gem'
   when: gem_packages is defined and gem_packages | length > 0
   with_items: '{{ gem_packages }}'
