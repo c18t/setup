@@ -2,4 +2,5 @@
 
 pip_packages:
 - jupyter
+- sphinx
 - yamllint
