@@ -1,15 +1,12 @@
-fisherman/ansible-completion
 edc/bass
 0rax/fish-bd
-# https://gist.github.com/c18t/17a9e2d31b39311b4c96a68e5b9b19d6
-fisherman/done
-fisherman/free
-fisherman/fzf
-fisherman/getopts
+franciscolourenco/done
+jethrokuan/fzf
+jorgebucaran/fish-getopts
 decors/fish-ghq
-fisherman/git_util
-fisherman/gitignore
-fisherman/humanize_duration
-fisherman/spin
+fishpkg/fish-git-util
+sijad/gitignore
+fishpkg/fish-humanize-duration
+fishpkg/fish-spin
 joehillen/to-fish
-fisherman/z
+jethrokuan/z
