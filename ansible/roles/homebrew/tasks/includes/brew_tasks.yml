@@ -1,0 +1,34 @@
+---
+
+- name: update Homebrew/Linuxbrew and upgrade fomulae (for {{ brew_distr }})
+  homebrew:
+    update_homebrew: yes
+    upgrade_all: yes
+
+- name: Homebrew/Linuxbrew tap (for {{ brew_distr }})
+  homebrew_tap:
+    name: '{{ brew_taps }}'
+  when: brew_taps is defined and brew_taps | length > 0
+
+- name: install Homebrew/Linuxbrew formurae (for {{ brew_distr }})
+  homebrew:
+    name: '{{ item }}'
+  when: brew_fomulae is defined and brew_fomulae | length > 0
+  # どれかが失敗してもすべて実施されるように with_items で指定
+  # Note: ansible.cfgの[defaults] squash_actions切っておくこと
+  with_items: '{{ brew_fomulae }}'
+
+- name: install Homebrew/Linuxbrew casks (for {{ brew_distr }})
+  homebrew_cask:
+    name: '{{ item }}'
+  when: brew_casks is defined and brew_casks | length > 0
+  # どれかが失敗してもすべて実施されるように with_items で指定
+  with_items: '{{ brew_casks }}'
+
+- name: mas install (for {{ brew_distr }})
+  script: 'mas.sh {{ item.id }}'
+  register: mas_result
+  changed_when: mas_result.rc == 1
+  failed_when: mas_result.rc not in [0, 1]
+  when: mas_apps is defined and mas_apps | length > 0
+  with_items: '{{ mas_apps }}'
