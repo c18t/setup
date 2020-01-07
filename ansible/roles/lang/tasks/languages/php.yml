@@ -6,37 +6,34 @@
     quiet: true
 
 - name: check phpenv
-  # NOTE: xenv系のコマンドが$(basename $SHELL)でシェルを判定することから
-  #       ansibleを開始したシェルが$SHELLに入っていると失敗するため
-  #       $SHELLを上書きする
-  shell: SHELL={{ fish_path }} fish -l -c "anyenv envs | grep -qe \^phpenv\\\$"
+  shell: fish -l -c "anyenv envs | grep -qe \^phpenv\\\$"
   register: check_phpenv
   failed_when: check_phpenv.rc not in [0, 1]
   changed_when: false
   check_mode: no
 
 - name: install phpenv
-  shell: SHELL={{ fish_path }} fish -l -c "anyenv install --skip-existing phpenv"
+  shell: fish -l -c "anyenv install --skip-existing phpenv"
   when: check_phpenv.rc != 0
 
 - block:
   - name: get installed php version list
-    shell: SHELL={{ fish_path }} fish -l -c "phpenv versions"
+    shell: fish -l -c "phpenv versions"
     register: installed_php_version
     failed_when: installed_php_version.rc not in [0, 1]
     changed_when: false
     check_mode: no
   - name: install php version
-    shell: SHELL={{ fish_path }} fish -l -c "phpenv install {{ item }}"
+    shell: fish -l -c "phpenv install {{ item }}"
     when: installed_php_version.stdout is not regex("\\b"+item+"\\b")
     with_items: '{{ php_versions }}'
   - name: 'check global php version {{ php_versions[0] }}'
-    shell: SHELL={{ fish_path }} fish -l -c "phpenv global | grep -qe \^{{ php_versions[0] }}\\\$"
+    shell: fish -l -c "phpenv global | grep -qe \^{{ php_versions[0] }}\\\$"
     register: check_phpenv_version
     failed_when: check_phpenv_version.rc not in [0, 1]
     changed_when: false
     check_mode: no
   - name: 'set global php version {{ php_versions[0] }}'
-    shell: SHELL={{ fish_path }} fish -l -c "phpenv global {{ php_versions[0] }}"
+    shell: fish -l -c "phpenv global {{ php_versions[0] }}"
     when: check_phpenv_version.rc != 0
   when: php_versions is defined and php_versions | length > 0

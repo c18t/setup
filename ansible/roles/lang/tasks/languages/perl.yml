@@ -6,37 +6,34 @@
     quiet: true
 
 - name: check plenv
-  # NOTE: xenv系のコマンドが$(basename $SHELL)でシェルを判定することから
-  #       ansibleを開始したシェルが$SHELLに入っていると失敗するため
-  #       $SHELLを上書きする
-  shell: SHELL={{ fish_path }} fish -l -c "anyenv envs | grep -qe \^plenv\\\$"
+  shell: fish -l -c "anyenv envs | grep -qe \^plenv\\\$"
   register: check_plenv
   failed_when: check_plenv.rc not in [0, 1]
   changed_when: false
   check_mode: no
 
 - name: install plenv
-  shell: SHELL={{ fish_path }} fish -l -c "anyenv install --skip-existing plenv"
+  shell: fish -l -c "anyenv install --skip-existing plenv"
   when: check_plenv.rc != 0
 
 - block:
   - name: get installed perl version list
-    shell: SHELL={{ fish_path }} fish -l -c "plenv versions"
+    shell: fish -l -c "plenv versions"
     register: installed_perl_version
     failed_when: installed_perl_version.rc not in [0, 1]
     changed_when: false
     check_mode: no
   - name: install perl version
-    shell: SHELL={{ fish_path }} fish -l -c "plenv install {{ item }}"
+    shell: fish -l -c "plenv install {{ item }}"
     when: installed_perl_version.stdout is not regex("\\b"+item+"\\b")
     with_items: '{{ perl_versions }}'
   - name: 'check global perl version {{ perl_versions[0] }}'
-    shell: SHELL={{ fish_path }} fish -l -c "plenv global | grep -qe \^{{ perl_versions[0] }}\\\$"
+    shell: fish -l -c "plenv global | grep -qe \^{{ perl_versions[0] }}\\\$"
     register: check_plenv_version
     failed_when: check_plenv_version.rc not in [0, 1]
     changed_when: false
     check_mode: no
   - name: 'set global perl version {{ perl_versions[0] }}'
-    shell: SHELL={{ fish_path }} fish -l -c "plenv global {{ perl_versions[0] }}"
+    shell: fish -l -c "plenv global {{ perl_versions[0] }}"
     when: check_plenv_version.rc != 0
   when: perl_versions is defined and perl_versions | length > 0
