@@ -9,7 +9,7 @@
 
 - include: includes/install_or_update_anyenv.yml
 
-- include: includes/add_anyenv_path.yml
+- include: includes/configure_anyenv_for_fish.yml
 
 - include: includes/make_anyenv_directory.yml
 

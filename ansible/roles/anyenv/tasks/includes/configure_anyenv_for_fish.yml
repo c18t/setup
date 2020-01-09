@@ -1,0 +1,38 @@
+---
+
+- name: check fish_user_paths
+  shell: echo $fish_user_paths
+  args:
+    executable: '{{ fish_path }}'
+  register: check_user_paths
+  changed_when: false
+  check_mode: no
+
+- name: add anyenv to fish_user_paths
+  shell: set -U fish_user_paths $fish_user_paths "{{ home }}/.anyenv/bin"
+  args:
+    executable: '{{ fish_path }}'
+  when: check_user_paths.stdout is not search(home+'/.anyenv/bin')
+
+- name: set link items
+  set_fact:
+    link_items:
+    - { path: '{{ resources }}/fish/conf.d/anyenv.fish', dest: '{{ xdg_config_home }}/fish/conf.d/anyenv.fish' }
+
+- name: check for the existence of link sources
+  stat:
+    path: '{{ item.path }}'
+  register: stat_link_source
+  failed_when: not stat_link_source.stat.exists or stat_link_source.stat.isdir
+  with_items: '{{ link_items }}'
+
+- name: link to files
+  become: true
+  file:
+    state: link
+    follow: no
+    force: yes
+    owner: '{{ user }}'
+    src:  '{{ item.path }}'
+    dest: '{{ item.dest }}'
+  with_items: '{{ link_items }}'

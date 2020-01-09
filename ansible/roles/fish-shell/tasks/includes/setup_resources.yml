@@ -16,6 +16,7 @@
     - { path: '{{ dotfiles }}/fish/{{ fish_shell_config }}', dest: '{{ xdg_config_home }}/fish/config.fish' }
     - { path: '{{ resources }}/fish/fishfile', dest: '{{ xdg_config_home }}/fish/fishfile' }
     - { path: '{{ resources }}/fish/functions/fish_prompt.fish', dest: '{{ xdg_config_home }}/fish/functions/fish_prompt.fish' }
+    - { path: '{{ resources }}/fish/conf.d/homebrew.fish', dest: '{{ xdg_config_home }}/fish/conf.d/homebrew.fish' }
 
 - name: check for the existence of link sources
   stat:
