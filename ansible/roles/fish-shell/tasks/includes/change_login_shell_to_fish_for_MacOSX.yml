@@ -25,7 +25,7 @@
     register: recheck_user_login_shell
     changed_when: false
     check_mode: no
-  - debug: recheck_user_login_shell
+  - debug: var=recheck_user_login_shell
   - name: recheck user's login shell
     shell: dscl . -read '/Users/{{ user }}' UserShell | grep -q '{{ fish_path }}'
     changed_when: false
