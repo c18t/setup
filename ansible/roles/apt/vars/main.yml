@@ -1,0 +1,4 @@
+---
+
+# python3-apt を呼び出すためにシステムのpython3が必要
+ansible_python_interpreter: /usr/bin/python3

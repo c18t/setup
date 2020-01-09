@@ -31,6 +31,9 @@
   - libedit
   - libxml2
   - libzip
+  - ncurses
   - openssl@1.1
+  - readline
+  - sqlite
   - tidy-htm5
   - zlib

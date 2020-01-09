@@ -29,7 +29,9 @@
     # fish-shell
     fish_shell_config: config-mac.fish
     # lang
-    erlang_option: "--enable-dynamic-ssl-lib --with-ssl=/usr/local/opt/openssl"
+    # wxはwxWidgetsを--enable-compat28オプションを付けてソースからビルドしないといけないので除外
+    # cf. https://erlang.org/doc/installation_guide/INSTALL.html#Advanced-configuration-and-build-of-ErlangOTP_Building_Building-with-wxErlang
+    erlang_option: "--enable-dynamic-ssl-lib --with-ssl=/usr/local/opt/openssl@1.1 --without-wx"
   vars_prompt:
   - name: my_password
     prompt: "User password"

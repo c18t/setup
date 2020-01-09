@@ -8,7 +8,6 @@ brew_taps:
 - homebrew/cask-versions
 - homebrew/core
 brew_fomulae:
-- sqlite
 - ansible
 - asciidoctor
 - bats
@@ -18,6 +17,7 @@ brew_fomulae:
 - direnv
 - docker
 - fish
+- fop # for erlenv
 - fzf
 - ghq
 - git-secret
@@ -32,13 +32,17 @@ brew_fomulae:
 - libedit # for phpenv
 - libxml2 # for phpenv
 - mas
+- ncurses # for erlenv
 - neofetch
 - neovim
 - nim
 - npm # for command-line
 - peco
+- pkg-config # for ansible, phpenv
 - python # for command-line
+- readline # for luaenv
 - ruby # for command-line
+- sqlite # for ansible, phpenv
 - swagger-codegen
 - terminal-notifier # for fisherman/done
 - the_platinum_searcher

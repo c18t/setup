@@ -69,6 +69,10 @@
   # environmentへのomitの指定がうまくいかないので ansible_distribution で場合分け
   environment:
     PATH: '{{ brew_prefix }}/bin:{{ ansible_env.PATH | default("") }}'
+    LIBRARY_PATH: '{{ brew_prefix }}/lib:{{ ansible_env.LIBRARY_PATH | default("") }}'
     LD_LIBRARY_PATH: '{{ brew_prefix }}/lib:{{ ansible_env.LD_LIBRARY_PATH | default("") }}'
+    C_INCLUDE_PATH: '{{ brew_prefix }}/include:{{ ansible_env.C_INCLUDE_PATH | default("") }}'
+    CPLUS_INCLUDE_PATH: '{{ brew_prefix }}/include:{{ ansible_env.CPLUS_INCLUDE_PATH | default("") }}'
+    OBJC_INCLUDE_PATH: '{{ brew_prefix }}/include:{{ ansible_env.OBJC_INCLUDE_PATH | default("") }}'
   ignore_errors: yes
   when: ansible_distribution != "MacOSX"

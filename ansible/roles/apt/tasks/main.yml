@@ -7,14 +7,36 @@
         (apt_config is string and apt_config != "")
     quiet: true
 
-- name: 'include roles/apt/vars/{{ apt_config }}'
-  include_vars: '{{ apt_config }}'
-  when: apt_config is defined
+- block:
+  - name: 'include roles/apt/vars/{{ apt_config }}'
+    include_vars: '{{ apt_config }}'
+    when: apt_config is defined
+  - name: assert apt_keys
+    assert:
+      that: apt_keys is not defined or apt_keys is iterable
+      quiet: true
+  - name: assert apt_repositories
+    assert:
+      that: apt_repositories is not defined or apt_repositories is iterable
+      quiet: true
+  - name: assert apt_packages
+    assert:
+      that: apt_packages is not defined or apt_packages is iterable
+      quiet: true
 
-- name: assert apt_packages
-  assert:
-    that: apt_packages is not defined or apt_packages is iterable
-    quiet: true
+- name: add apt keys
+  become: true
+  apt_key:
+    url: '{{ item }}'
+  when: apt_keys is defined and apt_keys | length > 0
+  with_items: '{{ apt_keys }}'
+
+- name: add apt repositories
+  become: true
+  apt_repository:
+    repo: '{{ item }}'
+  when: apt_repositories is defined and apt_repositories | length > 0
+  with_items: '{{ apt_repositories }}'
 
 - name: update apt cache and upgrade packages
   become: true

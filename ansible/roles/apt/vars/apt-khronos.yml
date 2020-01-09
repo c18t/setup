@@ -1,4 +1,6 @@
 ---
 
+apt_keys: []
+apt_repositories: []
 apt_packages:
 - haskell-stack
