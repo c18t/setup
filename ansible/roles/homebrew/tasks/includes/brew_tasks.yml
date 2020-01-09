@@ -4,6 +4,10 @@
   homebrew:
     update_homebrew: yes
     upgrade_all: yes
+  # GitHub Actionsで止まるようになってしまったのでスキップ
+  when: >
+    ansible_env.GITHUB_ACTIONS is not defined
+      or ansible_env.GITHUB_ACTIONS != 'true'
 
 - name: Homebrew/Linuxbrew tap (for {{ brew_distr }})
   homebrew_tap:
