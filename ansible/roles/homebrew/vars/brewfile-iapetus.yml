@@ -13,7 +13,6 @@ brew_fomulae:
 - bats
 - byobu
 - bzip2 # for phpenv
-- dep
 - direnv
 - docker
 - fish
