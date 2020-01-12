@@ -11,6 +11,6 @@
   changed_when: false
   check_mode: no
 
-- name: set Homebrew prefix
+- name: set Homebrew/Linuxbrew prefix
   set_fact:
     brew_prefix: '{{ get_brew_prefix.stdout }}'
