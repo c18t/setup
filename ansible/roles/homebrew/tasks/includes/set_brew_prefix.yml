@@ -1,0 +1,16 @@
+---
+
+- name: check Homebrew/Linuxbrew
+  shell: type brew
+  changed_when: false
+  check_mode: no
+
+- name: get brew --prefix
+  shell: brew --prefix
+  register: get_brew_prefix
+  changed_when: false
+  check_mode: no
+
+- name: set Homebrew prefix
+  set_fact:
+    brew_prefix: '{{ get_brew_prefix.stdout }}'

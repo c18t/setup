@@ -1,7 +1,7 @@
 ---
 
 - name: set environment variables (for MacOSX)
-  shell: >
+  shell: >-
     set -Ux ANDROID_HOME {{ home }}/Library/Android/sdk;
     set -Ux ANDRIOD_SDK_ROOT {{ home }}/Library/Android/sdk;
     set -Ux ANDRIOD_AVD_HOME {{ home }}/.android/avd;
@@ -16,24 +16,26 @@
     executable: '{{ fish_path }}'
   when: fish_user_paths is not search(item)
   with_items:
-  - /usr/local/opt/bzip2/bin
-  - /usr/local/opt/libiconv/bin
   - '{{ home }}/Library/Android/sdk/tools'
   - '{{ home }}/Library/Android/sdk/platform-tools'
 
 - name: make PKG_CONFIG_PATH config (for MacOSX)
   copy:
     dest: '{{ xdg_config_home }}/fish/conf.d/{{ item }}.fish'
-    content: set -gx PKG_CONFIG_PATH "/usr/local/opt/{{ item }}/lib/pkgconfig" $PKG_CONFIG_PATH
+    content: set -gx PKG_CONFIG_PATH "{{ brew_prefix }}/opt/{{ item }}/lib/pkgconfig" $PKG_CONFIG_PATH
   with_items:
+  - curl-openssl
   - icu4c
   - krb5
   - libedit
   - libxml2
   - libzip
   - ncurses
+  - oniguruma
+  - openldap
   - openssl@1.1
   - readline
   - sqlite
-  - tidy-htm5
+  - tidy-html5
+  - unixodbc
   - zlib

@@ -23,11 +23,11 @@
     creates: '{{ download_ricty_diminished.dest }}.unzip'
 
 - name: install Ricty Diminished
-  win_shell: >
-    $ShellAppFontNamespace = 0x14;
-    $Fonts = Get-ChildItem -Path "{{ download_ricty_diminished.dest }}.unzip\*" -Include ('*.fon','*.otf','*.ttc','*.ttf');
-    $ShellApp = New-Object -ComObject Shell.Application;
-    $FontsFolder = $ShellApp.NameSpace($ShellAppFontNamespace);
-    foreach ($Font in $Fonts) {
-      $FontsFolder.CopyHere($Font.FullName);
+  win_shell: |-
+    $ShellAppFontNamespace = 0x14; `
+    $Fonts = Get-ChildItem -Path "{{ download_ricty_diminished.dest }}.unzip\*" -Include ('*.fon','*.otf','*.ttc','*.ttf'); `
+    $ShellApp = New-Object -ComObject Shell.Application; `
+    $FontsFolder = $ShellApp.NameSpace($ShellAppFontNamespace); `
+    foreach ($Font in $Fonts) { `
+      $FontsFolder.CopyHere($Font.FullName); `
     }

@@ -5,12 +5,12 @@
   changed_when: false
   check_mode: no
 
-- name: echo brew --prefix
-  shell: echo $(brew --prefix)
-  register: echo_brew_prefix
+- name: get brew --prefix
+  shell: brew --prefix
+  register: get_brew_prefix
   changed_when: false
   check_mode: no
 
 - name: set Homebrew/Linuxbrew prefix
   set_fact:
-    brew_prefix: '{{ echo_brew_prefix.stdout }}'
+    brew_prefix: '{{ get_brew_prefix.stdout }}'

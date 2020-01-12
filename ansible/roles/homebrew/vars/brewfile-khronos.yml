@@ -4,10 +4,13 @@ brew_taps:
 - homebrew/core
 brew_fomulae:
 - ansible
+- anyenv
 - asciidoctor
+- autoconf # for phpenv
 - bats
 - byobu
 - bzip2 # for phpenv
+- curl-openssl # for phpenv
 - direnv
 - fish
 - fop # for erlenv
@@ -22,11 +25,14 @@ brew_fomulae:
 - krb5 # for phpenv
 - libedit # for phpenv
 - libxml2 # for phpenv
+- libzip # for phpenv
 - ncurses # for erlenv
 - neofetch
 - neovim
 - nim
 - npm # for command-line
+- oniguruma # for phpenv
+- openldap # for phpenv
 - openssl@1.1 # for erlenv
 - peco
 - pkg-config # for ansible, phpenv
@@ -35,6 +41,8 @@ brew_fomulae:
 - ruby # for command-line
 - sqlite # for ansible, phpenv
 # - swagger-codegen
+- tidy-html5 # for phpenv
 - the_platinum_searcher
 - tree
+- unixodbc # for erlenv
 - zlib # for phpenv

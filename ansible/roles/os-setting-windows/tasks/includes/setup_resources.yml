@@ -5,4 +5,4 @@
     state: directory
     path: '{{ item }}'
   with_items:
-  - 'D:\Temp\{{ win_username }}'
+  - '{{ temporary_home }}'

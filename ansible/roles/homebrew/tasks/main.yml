@@ -40,22 +40,14 @@
     shell: ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     when: ansible_distribution == "MacOSX"
   - name: install Linuxbrew
-    shell: >
+    shell: |-
       sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
       test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
       echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
     when: ansible_distribution != "MacOSX"
   when: type_brew.rc != 0
 
-- name: echo brew --prefix
-  shell: echo $(brew --prefix)
-  register: echo_brew_prefix
-  changed_when: false
-  check_mode: no
-
-- name: set Homebrew/Linuxbrew prefix
-  set_fact:
-    brew_prefix: '{{ echo_brew_prefix.stdout }}'
+- include: includes/set_brew_prefix.yml
 
 - set_fact: brew_distr=MacOSX
 - block:

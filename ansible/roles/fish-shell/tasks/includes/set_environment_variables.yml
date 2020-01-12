@@ -1,0 +1,17 @@
+---
+
+- name: set environment variables
+  shell: >-
+    set -Ux XDG_CONFIG_HOME {{ xdg_config_home }};
+    set -Ux XDG_CACHE_HOME {{ xdg_cache_home }};
+    set -Ux XDG_DATA_HOME {{ xdg_data_home }};
+    set -Ux LC_CTYPE en_US.UTF-8;
+    set -Ux EDITOR {{ editor }};
+    set -Ux VISUAL {{ visual }};
+    set -Ux TEMP {{ temporary_home }};
+    set -Ux TMP {{ temporary_home }};
+    set -Ux GOPATH {{ home }}/.go;
+  args:
+    executable: '{{ fish_path }}'
+  changed_when: false
+  check_mode: no

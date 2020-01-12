@@ -24,13 +24,13 @@
     changed_when: false
     check_mode: no
   - name: install erlang version
-    shell: >
+    shell: >-
       fish -l -c "cd {{ home }};
         and curl -Lo otp_src_{{ item.version }}.tar.gz {{ item.source }};
         and tar zxf otp_src_{{ item.version }}.tar.gz;
         and cd otp_src_{{ item.version }};
-        and ./configure --prefix={{ home }}/.anyenv/envs/erlenv/releases/{{ item.version }} {{ opt_erlang }};
-        and make -j 4;
+        and ./configure --prefix={{ home }}/.anyenv/envs/erlenv/releases/{{ item.version }} {{ erlang_option }};
+        and make {{ erlang_make_arguments }};
         and make install;
         and cd ../;
         and rm -rf ./otp_src_{{ item.version }};

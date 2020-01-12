@@ -1,5 +1,10 @@
 ---
 
+- name: check anyenv
+  shell: type anyenv
+  changed_when: false
+  check_mode: no
+
 - name: check ghq
   shell: type ghq
   changed_when: false
@@ -7,13 +12,9 @@
 
 - include: includes/set_fish_path.yml
 
-- include: includes/install_or_update_anyenv.yml
+- include: includes/setup_anyenv.yml
 
-- include: includes/configure_anyenv_for_fish.yml
-
-- include: includes/make_anyenv_directory.yml
-
-- include: includes/install_anyenv_plugin.yml
+- include: includes/install_anyenv_plugins.yml
   with_items:
   - { name: anyenv-update, repo: znz/anyenv-update }
   loop_control:

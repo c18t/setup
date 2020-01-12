@@ -12,7 +12,8 @@ fi
 
 # configure with ansible
 pushd ./ansible
-ansible-playbook ./playbooks/khronos-windows.yml $*
+# パーミッションの都合で読み込めないので明示的にansible.cfgを指定
+ANSIBLE_CONFIG=ansible.cfg ansible-playbook ./playbooks/khronos-windows.yml $*
 result=$?
 popd
 

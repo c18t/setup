@@ -7,3 +7,5 @@
 - include: includes/win_updates.yml
 
 - include: includes/install_font.yml
+  # fontのインストールを再度行おうとすると止まるので一旦止め
+  tags: never

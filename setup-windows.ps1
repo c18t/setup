@@ -1,13 +1,14 @@
 ﻿Param($setupScript)
 
-$setupScriptArgs = $Args[1..-1]
+$setupScriptArgs = $Args
 
 Set-ExecutionPolicy Bypass -Scope Process -Force
 
 # 管理者権限の確認
 if (([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator) -eq $False) {
     # 管理者に昇格して再実行
-    Start-Process powershell.exe -Verb runas -ArgumentList "-File ""$PSCommandPath"" ""$setupScript""" -Wait
+    $argList = "-File ""$PSCommandPath"" ""$setupScript"" "+($setupScriptArgs -replace "^|$", """" -join " ")
+    Start-Process powershell.exe -Verb runas -ArgumentList $argList -Wait
     exit $?
 }
 

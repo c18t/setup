@@ -6,11 +6,24 @@
     quiet: true
 
 - name: add $GOPATH/bin to fish_user_paths
-  shell: set -U fish_user_paths $fish_user_paths $GOPATH/bin
+  shell: >-
+    set -e -g GOPATH;
+    [ -n "$GOPATH" ];
+      and not contains "$GOPATH/bin" $fish_user_paths;
+      and set -U fish_user_paths $fish_user_paths $GOPATH/bin
   args:
     executable: '{{ fish_path }}'
-  when: ansible_env.GOPATH is defined and fish_user_paths is not search(ansible_env.GOPATH+'/bin')
-  
+  register: add_gopath
+  failed_when: add_gopath.rc not in [0, 1]
+  changed_when: add_gopath.rc == 0
+
+- name: set GOENV_GOPATH_PREFIX
+  shell: set -Ux GOENV_GOPATH_PREFIX {{ home }}/.go
+  args:
+    executable: '{{ fish_path }}'
+  changed_when: false
+  check_mode: no
+
 - name: check goenv
   shell: fish -l -c "anyenv envs | grep -qe \^goenv\\\$"
   register: check_goenv

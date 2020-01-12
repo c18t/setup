@@ -23,10 +23,22 @@
     failed_when: installed_php_version.rc not in [0, 1]
     changed_when: false
     check_mode: no
+  - name: set php_build_config_path
+    set_fact:
+      php_build_config_path: '{{ resources }}/php-build/{{ php_build_config }}'
+    when: php_build_config is string and php_build_config != ''
+  - name: set php_build_configure_opts
+    shell: '[ -e "{{ php_build_config_path }}" ] && cat "{{ php_build_config_path }}"'
+    register: php_build_configure_opts
+    changed_when: false
+    check_mode: no
   - name: install php version
-    shell: fish -l -c "phpenv install {{ item }}"
+    shell: fish -l -c "phpenv install --ini development --verbose {{ item }}"
     when: installed_php_version.stdout is not regex("\\b"+item+"\\b")
     with_items: '{{ php_versions }}'
+    environment:
+      PHP_BUILD_CONFIGURE_OPTS: '{{ php_build_configure_opts.stdout }}'
+      PHP_BUILD_EXTRA_MAKE_ARGUMENTS: '{{ php_make_arguments }}'
   - name: 'check global php version {{ php_versions[0] }}'
     shell: fish -l -c "phpenv global | grep -qe \^{{ php_versions[0] }}\\\$"
     register: check_phpenv_version

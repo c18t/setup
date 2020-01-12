@@ -1,26 +1,26 @@
 ---
 
-- name: check fisherman
+- name: check fisher
   shell: type fisher
   args:
     executable: '{{ fish_path }}'
-  register: type_fisherman
-  failed_when: type_fisherman.rc not in [0, 1, 126, 127]
+  register: type_fisher
+  failed_when: type_fisher.rc not in [0, 1, 126, 127]
   changed_when: false
   check_mode: no
 
-- block: # install fisherman
-  - name: install fisherman
+- block: # install fisher
+  - name: install fisher
     get_url:
-      url: https://git.io/fisherman
+      url: https://git.io/fisher
       dest: '{{ xdg_config_home }}/fish/functions/fisher.fish'
-  - name: find fisherman
+  - name: find fisher
     shell: type fisher
     args:
       executable: '{{ fish_path }}'
     changed_when: false
     check_mode: no
-  when: type_fisherman.rc != 0
+  when: type_fisher.rc != 0
 
 - block:
   - name: update fisher itself
@@ -28,18 +28,24 @@
     args:
       executable: '{{ fish_path }}'
     register: update_fisher
-    changed_when: update_fisher.stderr is not search('No plugins to install or dependencies missing.')
-  - name: install or update fisher packages from fishfile
-    shell: fish -l -c 'fisher'
+    changed_when: update_fisher.stderr is not search('fisher is already up-to-date')
+  - name: install fish config
+    shell: fish -l -c 'fisher add "{{ resources }}/fisher-my-setup"'
     args:
       executable: '{{ fish_path }}'
-    register: install_fisher_packages
-    changed_when: install_fisher_packages.stderr is not search('No plugins to install or dependencies missing.')
-  - name: install fish functions
-    shell: fish -l -c 'fisher add "{{ resources }}/fish/functions"'
+    register: install_fish_config
+    changed_when: false
+  - name: check cmd.exe (for WSL)
+    shell: type cmd.exe
+    register: type_cmd
+    failed_when: type_cmd.rc not in [0, 1]
+    changed_when: false
+    check_mode: no
+  - name: install fish config (for WSL)
+    shell: fish -l -c 'fisher add "{{ resources }}/fisher-my-setup-wsl"'
     args:
       executable: '{{ fish_path }}'
-    register: install_fish_functions
-    changed_when: install_fish_functions.stderr is not search('No plugins to install or dependencies missing.')
+    register: install_fish_config_wsl
+    changed_when: false
   environment:
     SHELL: '{{ fish_path }}'

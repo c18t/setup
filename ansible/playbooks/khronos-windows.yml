@@ -1,27 +1,36 @@
 ---
 
-# - name: Windows
-#   hosts: local
-#   roles: # 指定できる変数は各ロールの defaults/main.yml 参照
-#   # WSL側のロールを指定しないこと
-#   # - os-setting-windows
-#   - chocolatey
-#   # - software-windows # forkが再インストールされるので普段は呼ばない
-#   vars:
-#     ansible_user: '{{ win_username }}'
-#     ansible_password: '{{ win_password }}'
-#     ansible_connection: winrm
-#     ansible_winrm_transport: basic
-#     ansible_winrm_server_cert_validation: ignore
-#     ansible_python_interpreter: /home/linuxbrew/.linuxbrew/bin/python3
-#     chocolatey_config: chocolatey-khronos.yml
-#   vars_prompt:
-#   - name: win_username
-#     prompt: "Windows username"
-#     private: no
-#   - name: win_password
-#     prompt: "Windows password"
-#     private: yes
+- name: Windows
+  hosts: local
+  pre_tasks:
+  - include_vars: common.yml
+  roles: # 指定できる変数は各ロールの defaults/main.yml 参照
+  # WSL側のロールを指定しないこと
+  - os-setting-windows
+  - chocolatey
+  # - software-windows # forkが再インストールされるので普段は呼ばない
+  vars:
+    # ansible
+    ansible_user: '{{ win_username }}'
+    ansible_password: '{{ win_password }}'
+    ansible_connection: winrm
+    ansible_winrm_transport: basic
+    ansible_winrm_server_cert_validation: ignore
+    ansible_python_interpreter: /home/linuxbrew/.linuxbrew/bin/python3
+    # common
+    my_user: '{{ win_username }}'
+    my_editor: code
+    my_visual: code
+    my_temporary_home: D:\Temp\{{ user }}
+    # chocolatey
+    chocolatey_config: chocolatey-khronos.yml
+  vars_prompt:
+  - name: win_username
+    prompt: "Windows username"
+    private: no
+  - name: win_password
+    prompt: "Windows password"
+    private: yes
 
 - name: WSL
   hosts: local
@@ -29,15 +38,15 @@
   - include_vars: common.yml
   - include: pre_tasks/set_resources.yml
   roles: # 指定できる変数は各ロールの defaults/main.yml 参照
-  # - home
-  # - apt
+  - home
+  - apt
   - homebrew
-  # - vscode
-  # - nvim
+  - vscode
+  - nvim
   - fish-shell
-  # - anyenv
+  - anyenv
   - lang
-  # - command-line
+  - command-line
   vars:
     # ansible
     ansible_python_interpreter: /home/linuxbrew/.linuxbrew/bin/python3
@@ -62,11 +71,17 @@
     # lang
     # wxはwxWidgetsを--enable-compat28オプションを付けてソースからビルドしないといけないので除外
     # cf. https://erlang.org/doc/installation_guide/INSTALL.html#Advanced-configuration-and-build-of-ErlangOTP_Building_Building-with-wxErlang
-    erlang_option: "--enable-dynamic-ssl-lib --with-ssl=/home/linuxbrew/.linuxbrew/opt/openssl@1.1 --without-wx"
-    # perl_versions: []
-    # php_versions: []
-    # ruby_versions: []
+    erlang_option: >-
+      --enable-dynamic-ssl-lib
+      --with-ssl=/home/linuxbrew/.linuxbrew/opt/openssl@1.1
+      --with-odbc=/home/linuxbrew/.linuxbrew/opt/unixodbc
+      --without-wx
+    erlang_make_arguments: -j 4
+    # makefileが見つからないエラーが出るので別名を指定
+    perl_option: -j 4 -Dfirstmakefile=GNUmakefile
+    php_build_config: configure_options-wsl
+    php_make_arguments: -j 4
   vars_prompt:
   - name: my_password
-    prompt: "User password"
+    prompt: "WSL user password"
     private: yes
