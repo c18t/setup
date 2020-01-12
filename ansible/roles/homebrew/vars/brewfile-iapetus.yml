@@ -81,6 +81,7 @@ brew_casks:
 - mactex
 - microsoft-remote-desktop-beta
 - mnemosyne
+- powershell
 - send-to-kindle
 - sketch
 - skype
