@@ -3,7 +3,7 @@ pushd `dirname $0`
 export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
 
 # install build-essential, expect, python3-apt
-bash ./install-ansible-dependencies-ubuntu.sh
+./install-ansible-dependencies-ubuntu.sh
 result=$?
 if [ $result -ne 0 ]; then
     popd
@@ -11,7 +11,7 @@ if [ $result -ne 0 ]; then
 fi
 
 # install linuxbrew
-bash ./install-linuxbrew.sh
+./install-linuxbrew.sh
 result=$?
 if [ $result -ne 0 ]; then
     popd
@@ -19,7 +19,7 @@ if [ $result -ne 0 ]; then
 fi
 
 # install python packages
-bash ./install-python-packages.sh
+./install-python-packages.sh
 result=$?
 if [ $result -ne 0 ]; then
     popd

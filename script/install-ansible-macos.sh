@@ -2,7 +2,7 @@
 pushd `dirname $0`
 
 # install homebrew
-bash ./install-homebrew.sh
+./install-homebrew.sh
 result=$?
 if [ $result -ne 0 ]; then
     popd
