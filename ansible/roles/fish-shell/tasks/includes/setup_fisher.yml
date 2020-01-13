@@ -47,5 +47,6 @@
       executable: '{{ fish_path }}'
     register: install_fish_config_wsl
     changed_when: false
+    when: type_cmd.rc == 0
   environment:
     SHELL: '{{ fish_path }}'
