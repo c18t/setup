@@ -1,6 +1,4 @@
-if status --is-login
+if status --is-login; and type anyenv >/dev/null 2>&1
     # anyenv
-    if type anyenv >/dev/null 2>&1
-        anyenv init - | source
-    end
+    anyenv init - | source
 end

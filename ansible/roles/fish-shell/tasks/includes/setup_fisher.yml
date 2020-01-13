@@ -35,6 +35,13 @@
       executable: '{{ fish_path }}'
     register: install_fish_config
     changed_when: false
+  - name: install fish config (for MacOSX)
+    shell: fish -l -c 'fisher add "{{ resources }}/fisher-my-setup-mac"'
+    args:
+      executable: '{{ fish_path }}'
+    register: install_fish_config_mac
+    changed_when: false
+    when: ansible_distribution == "MacOSX"
   - name: check cmd.exe (for WSL)
     shell: type cmd.exe
     register: type_cmd
