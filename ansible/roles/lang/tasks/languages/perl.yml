@@ -15,6 +15,7 @@
 - name: install plenv
   shell: fish -l -c "anyenv install --skip-existing plenv"
   when: check_plenv.rc != 0
+  notify: update_global_path
 
 - block:
   - name: get installed perl version list

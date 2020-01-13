@@ -15,6 +15,7 @@
 - name: install rbenv
   shell: fish -l -c "anyenv install --skip-existing rbenv"
   when: check_rbenv.rc != 0
+  notify: update_global_path
 
 - block:
   - name: get installed ruby version list

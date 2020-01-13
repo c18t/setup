@@ -41,6 +41,8 @@
   pre_tasks:
   - include_vars: common.yml
   - include: pre_tasks/set_resources.yml
+  handlers:
+  - include: handlers/handlers_wsl.yml
   roles: # 指定できる変数は各ロールの defaults/main.yml 参照
   - role: home
     tags: home

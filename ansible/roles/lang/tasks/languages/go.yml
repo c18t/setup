@@ -10,12 +10,13 @@
     set -e -g GOPATH;
     [ -n "$GOPATH" ];
       and not contains "$GOPATH/bin" $fish_user_paths;
-      and set -U fish_user_paths $fish_user_paths $GOPATH/bin
+      and set -U --append fish_user_paths "$GOPATH/bin"
   args:
     executable: '{{ fish_path }}'
   register: add_gopath
   failed_when: add_gopath.rc not in [0, 1]
   changed_when: add_gopath.rc == 0
+  notify: update_global_path
 
 - name: set GOENV_GOPATH_PREFIX
   shell: set -Ux GOENV_GOPATH_PREFIX {{ home }}/.go
@@ -34,6 +35,7 @@
 - name: install goenv
   shell: fish -l -c "anyenv install --skip-existing goenv"
   when: check_goenv.rc != 0
+  notify: update_global_path
 
 - block:
   - name: get installed go version list

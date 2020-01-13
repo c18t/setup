@@ -15,6 +15,7 @@
 - name: install luaenv
   shell: fish -l -c "anyenv install --skip-existing luaenv"
   when: check_luaenv.rc != 0
+  notify: update_global_path
 
 - block:
   - name: get installed lua version list

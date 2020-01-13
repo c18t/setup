@@ -15,6 +15,7 @@
 - name: install exenv
   shell: fish -l -c "anyenv install --skip-existing exenv"
   when: check_exenv.rc != 0
+  notify: update_global_path
 
 - block:
   - name: get installed elixir version list

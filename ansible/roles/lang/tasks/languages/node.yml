@@ -15,6 +15,7 @@
 - name: install nodenv
   shell: fish -l -c "anyenv install --skip-existing nodenv"
   when: check_nodenv.rc != 0
+  notify: update_global_path
 
 - name: get nodenv root
   shell: fish -l -c "nodenv root"

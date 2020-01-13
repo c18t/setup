@@ -9,7 +9,8 @@
   - '{{ home }}/.local/bin'
 
 - name: add .local/bin to fish_user_paths for haskell-stack
-  shell: set -U fish_user_paths $fish_user_paths "{{ home }}/.local/bin"
+  shell: set -U --append fish_user_paths "{{ home }}/.local/bin"
   args:
     executable: '{{ fish_path }}'
   when: fish_user_paths is not search(home+'/.local/bin')
+  notify: update_global_path

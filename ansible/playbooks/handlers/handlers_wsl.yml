@@ -1,0 +1,5 @@
+---
+
+# update global path
+- name: update_global_path
+  debug: msg="I have nothing to do."

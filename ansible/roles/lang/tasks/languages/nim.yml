@@ -9,7 +9,8 @@
   - '{{ home }}/.nimble/bin'
 
 - name: add .nimble/bin to fish_user_paths
-  shell: set -U fish_user_paths $fish_user_paths "{{ home }}/.nimble/bin"
+  shell: set -U --append fish_user_paths "{{ home }}/.nimble/bin"
   args:
     executable: '{{ fish_path }}'
   when: fish_user_paths is not search(home+'/.nimble/bin')
+  notify: update_global_path

@@ -15,6 +15,7 @@
 - name: install pyenv
   shell: fish -l -c "anyenv install --skip-existing pyenv"
   when: check_pyenv.rc != 0
+  notify: update_global_path
 
 - block:
   - name: get installed python version list

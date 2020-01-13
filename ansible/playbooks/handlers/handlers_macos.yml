@@ -7,3 +7,7 @@
 # restart Finder
 - name: restart_finder
   command: killall 'Finder'
+
+# update global path
+- name: update_global_path
+  include_tasks: includes/set_global_path.yml

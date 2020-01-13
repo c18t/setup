@@ -15,6 +15,7 @@
 - name: install phpenv
   shell: fish -l -c "anyenv install --skip-existing phpenv"
   when: check_phpenv.rc != 0
+  notify: update_global_path
 
 - block:
   - name: get installed php version list

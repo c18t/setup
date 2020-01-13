@@ -18,6 +18,7 @@
   with_items:
   - '{{ home }}/Library/Android/sdk/tools'
   - '{{ home }}/Library/Android/sdk/platform-tools'
+  notify: update_global_path
 
 - name: make PKG_CONFIG_PATH config (for MacOSX)
   copy:
