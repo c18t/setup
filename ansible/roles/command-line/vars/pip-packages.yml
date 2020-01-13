@@ -2,5 +2,6 @@
 
 pip_packages:
 - jupyter
+- pre-commit
 - sphinx
 - yamllint

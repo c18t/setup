@@ -1,0 +1,5 @@
+---
+
+stack_packages:
+- pandoc
+- ShellCheck

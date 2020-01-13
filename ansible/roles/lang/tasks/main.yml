@@ -18,6 +18,8 @@
     tags: elixir
   - include: languages/go.yml
     tags: go
+  - include: languages/haskell.yml
+    tags: haskell
   - include: languages/lua.yml
     tags: lua
   - include: languages/nim.yml
