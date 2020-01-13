@@ -5,7 +5,6 @@ code_install_extensions:
 - MS-CEINTL.vscode-language-pack-ja
 - PKief.markdown-checkbox
 - Stephanvs.dot
-- TeddyDD.fish
 - Tyriar.sort-lines
 - bierner.markdown-checkbox
 - bierner.markdown-preview-github-styles
@@ -34,8 +33,8 @@ code_install_extensions:
 - kosz78.nim
 - kukushi.pasteurl
 - lextudio.restructuredtext
-- lunaryorn.fish-ide
 - mattn.OpenVim
+- me-dutour-mathieu.vscode-github-actions
 - mechatroner.rainbow-csv
 - mitchdenny.ecdc
 - mjmcloug.vscode-elixir
@@ -45,10 +44,14 @@ code_install_extensions:
 - ms-python.python
 - ms-vscode.Go
 - ms-vscode.cpptools
+- ms-vscode.powershell
 - msjsdiag.cordova-tools
 - octref.vetur
+- oderwat.indent-rainbow
+- redhat.vscode-yaml
 - shuworks.vscode-table-formatter
-- skyapps.fish-vscode
 - sysoev.language-stylus
+- thisismanta.stylus-supremacy
 - tomoki1207.pdf
 - vscodevim.vim
+- vscoss.vscode-ansible
