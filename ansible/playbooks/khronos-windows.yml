@@ -48,8 +48,8 @@
     tags: apt
   - role: homebrew
     tags: homebrew
-  - role: scode
-    tags: scode
+  - role: vscode
+    tags: vscode
   - role: nvim
     tags: nvim
   - role: fish-shell
