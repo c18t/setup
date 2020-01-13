@@ -1,42 +1,56 @@
 #!/usr/bin/env bash
-pushd `dirname $0`
+
 export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
 
-# install build-essential, expect, python3-apt
-./install-ansible-dependencies-ubuntu.sh
-result=$?
-if [ $result -ne 0 ]; then
-    popd
-    exit $result
+# Use FD3 to print log messages
+exec 3>/dev/null
+if [ -n "$VERBOSE" ]; then
+    exec 3>&2
 fi
 
-# install linuxbrew
-./install-linuxbrew.sh
-result=$?
-if [ $result -ne 0 ]; then
-    popd
-    exit $result
-fi
-
-# install python packages
-./install-python-packages.sh
-result=$?
-if [ $result -ne 0 ]; then
-    popd
-    exit $result
-fi
-
-# install ansible
-if ! type ansible >/dev/null 2>&1; then
-    echo install ansible ...
-    brew install ansible
+pushd "$(dirname "$0")" >&3 || exit $?
+    # install build-essential, expect, python3-apt
+    echo "call ./install-ansible-dependencies-ubuntu.sh" >&3
+    ./install-ansible-dependencies-ubuntu.sh
     result=$?
-    if [ $result -eq 0 ]; then
-        echo ... done!
-    else
-        echo ... failed!
+    if [ $result -ne 0 ]; then
+        popd >&3 || exit $?
+        exit $result
     fi
-fi
 
-popd
+    # install linuxbrew
+    echo "call ./install-linuxbrew.sh" >&3
+    ./install-linuxbrew.sh
+    result=$?
+    if [ $result -ne 0 ]; then
+        popd >&3 || exit $?
+        exit $result
+    fi
+
+    # install python packages
+    echo "call ./install-python-packages.sh" >&3
+    ./install-python-packages.sh
+    result=$?
+    if [ $result -ne 0 ]; then
+        popd >&3 || exit $?
+        exit $result
+    fi
+
+    echo -n "check ansible ..." >&3
+    type ansible >/dev/null 2>&1
+    ANSIBLE=$?
+    ([ $ANSIBLE -eq 0 ] && echo "ok." || echo "no.") >&3
+
+    # install ansible
+    if [ $ANSIBLE -ne 0 ]; then
+        echo install ansible ...
+        brew install ansible
+        result=$?
+        if [ $result -eq 0 ]; then
+            echo ... done!
+        else
+            echo ... failed!
+        fi
+    fi
+popd >&3 || exit $?
 exit $result

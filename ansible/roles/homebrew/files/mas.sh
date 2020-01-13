@@ -9,7 +9,7 @@ test $# -eq 1 || exit 2
 mas list 2> /dev/null | grep -q "^${APPID} " && exit 0
 
 ## App install
-mas install ${APPID} > /dev/null 2>&1 || exit 3
+mas install "${APPID}" > /dev/null 2>&1 || exit 3
 
 ## Normal termination
 exit 1

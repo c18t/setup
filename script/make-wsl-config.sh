@@ -12,7 +12,8 @@ if ! [ -e /etc/wsl.conf ]; then
         echo '[automount]'
         echo 'options = "metadata,umask=22"'
     } | sudo tee /etc/wsl.conf >/dev/null 2>&1
-    if [ $? -eq 0 ]; then
+    result=$?
+    if [ $result -eq 0 ]; then
         result=1
     else
         result=2

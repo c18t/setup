@@ -1,23 +1,31 @@
 #!/usr/bin/env bash
-pushd `dirname $0`
 
-# install ansible
-bash ./script/install-ansible-macos.sh
-result=$?
-if [ $result -ne 0 ]; then
-    popd
-    exit $result
+# Use FD3 to print log messages
+exec 3>/dev/null
+if [ -n "$VERBOSE" ]; then
+    exec 3>&2
 fi
 
-# configure with ansible
-pushd ./ansible
-ansible-playbook ./playbooks/iapetus-macbookpro.yml $*
-result=$?
-popd
+pushd "$(dirname "$0")" >&3 || exit $?
+    # install ansible
+    echo "call ./script/install-ansible-macos.sh" >&3
+    ./script/install-ansible-macos.sh
+    result=$?
+    if [ $result -ne 0 ]; then
+        popd >&3 || exit $?
+        exit $result
+    fi
 
-if [ $result -eq 0 ]; then
-    echo "$(basename $0): your machine have been configured! enjoy your development!"
-fi
+    # configure with ansible
+    pushd ./ansible >&3 || exit $?
+        PLAYBOOK=./playbooks/iapetus-macbookpro.yml
+        echo "call ansible-playbook $PLAYBOOK $*" >&3
+        ansible-playbook "$PLAYBOOK" "$@"
+        result=$?
+    popd >&3 || exit $?
 
-popd
+    if [ $result -eq 0 ]; then
+        echo "$(basename "$0"): your machine have been configured! enjoy your development!"
+    fi
+popd >&3 || exit $?
 exit $result
