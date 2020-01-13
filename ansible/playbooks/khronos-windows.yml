@@ -6,9 +6,13 @@
   - include_vars: common.yml
   roles: # 指定できる変数は各ロールの defaults/main.yml 参照
   # WSL側のロールを指定しないこと
-  - os-setting-windows
-  - chocolatey
-  # - software-windows # forkが再インストールされるので普段は呼ばない
+  - role: os-setting-windows
+    tags: os-setting-windows
+  - role: chocolatey
+    tags: chocolatey
+  # forkが再インストールされるので普段は呼ばない
+  # - role: software-windows
+  #   tags: software-windows
   vars:
     # ansible
     ansible_user: '{{ win_username }}'
@@ -38,15 +42,24 @@
   - include_vars: common.yml
   - include: pre_tasks/set_resources.yml
   roles: # 指定できる変数は各ロールの defaults/main.yml 参照
-  - home
-  - apt
-  - homebrew
-  - vscode
-  - nvim
-  - fish-shell
-  - anyenv
-  - lang
-  - command-line
+  - role: home
+    tags: home
+  - role: apt
+    tags: apt
+  - role: homebrew
+    tags: homebrew
+  - role: scode
+    tags: scode
+  - role: nvim
+    tags: nvim
+  - role: fish-shell
+    tags: fish-shell
+  - role: anyenv
+    tags: anyenv
+  - role: lang
+    tags: lang
+  - role: command-line
+    tags: command-line
   vars:
     # ansible
     ansible_python_interpreter: /home/linuxbrew/.linuxbrew/bin/python3

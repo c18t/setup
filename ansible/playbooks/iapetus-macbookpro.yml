@@ -5,16 +5,26 @@
   - include_vars: common.yml
   - include: pre_tasks/set_resources.yml
   roles: # 指定できる変数は各ロールの defaults/main.yml 参照
-  - os-setting-macos
-  - home
-  - homebrew
-  - iterm2
-  - vscode
-  - nvim
-  - fish-shell
-  - anyenv
-  - lang
-  - command-line
+  - role: os-setting-macos
+    tags: os-setting-macos
+  - role: home
+    tags: home
+  - role: homebrew
+    tags: homebrew
+  - role: iterm2
+    tags: iterm2
+  - role: vscode
+    tags: vscode
+  - role: nvim
+    tags: nvim
+  - role: fish-shell
+    tags: fish-shell
+  - role: anyenv
+    tags: anyenv
+  - role: lang
+    tags: lang
+  - role: command-line
+    tags: command-line
   vars:
     # common
     my_editor: code
