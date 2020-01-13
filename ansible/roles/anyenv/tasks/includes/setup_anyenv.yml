@@ -64,7 +64,10 @@
   changed_when: false
   check_mode: no
 - name: update anyenv
-  shell: anyenv update
+  shell: anyenv update | grep -iqv "\\bSkipping\\b\\|\\bUpdating\\b"
   args:
     executable: '{{ fish_path }}'
+  register: anyenv_update
+  failed_when: anyenv_update.rc not in [0, 1]
+  changed_when: anyenv_update.rc == 0
   when: check_anyenv_update.rc == 0
