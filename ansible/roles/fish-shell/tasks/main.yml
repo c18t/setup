@@ -25,7 +25,7 @@
   changed_when: false
   check_mode: no
   # 個別のロールで作成したパスも消してしまうので止める
-  tags: never
+  when: false
 
 - include: includes/set_fish_user_paths.yml
 
