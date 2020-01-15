@@ -49,6 +49,7 @@ brew_fomulae:
 - readline # for luaenv
 - ruby # for command-line
 - sqlite # for ansible, phpenv
+- sshfs # depends osxfuse
 - swagger-codegen
 - tidy-html5 # for phpenv
 - terminal-notifier # for fisherman/done
@@ -57,7 +58,6 @@ brew_fomulae:
 - unixodbc # for erlenv
 - zlib # for phpenv
 brew_casks:
-- osxfuse
 - android-studio
 - cakebrew
 - calibre
@@ -81,6 +81,7 @@ brew_casks:
 - mactex
 - microsoft-remote-desktop-beta
 - mnemosyne
+- osxfuse
 - powershell
 - send-to-kindle
 - sketch
