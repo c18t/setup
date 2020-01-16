@@ -38,10 +38,14 @@ else {
     if ($? -eq $False) { exit 1 }
     . $profile
 
+    # $HOMEの作成
+    $driveLetter = $HOME.Substring(0, 1).ToLower()
+    $wslHome = $HOME -replace "\\", "/" -replace "^\w:", "/mnt/$driveLetter"
+
     # セットアップコマンドの実行
     $driveLetter = $Current.Substring(0, 1).ToLower()
     $wslPath = "$Current\$setupScript" -replace "\\", "/" -replace "^\w:", "/mnt/$driveLetter"
-    ubuntu.exe run bash "$wslPath" "-e win_username=$env:USERNAME" $setupScriptArgs
+    ubuntu.exe run bash "$wslPath" "-e win_username=$env:USERNAME" "-e my_home=$wslHome" $setupScriptArgs
     if ($? -eq $False) { exit 1 }
 }
 
