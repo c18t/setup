@@ -1,0 +1,87 @@
+---
+
+- name: assert scoop role config
+  assert:
+    that:
+      - scoop_config is defined
+      - scoop_config is not none
+      - scoop_config != ''
+    quiet: true
+
+- name: 'include roles/scoop/vars/{{ scoop_config }}'
+  include_vars: '{{ scoop_config }}'
+
+- block:
+  - name: assert scoop_buckets
+    assert:
+      that: scoop_buckets is not defined or scoop_buckets is iterable
+      quiet: true
+  - name: assert scoop_packages
+    assert:
+      that: scoop_packages is not defined or scoop_packages is iterable
+      quiet: true
+
+- name: install scoop
+  win_shell: if (-Not(gcm scoop -ErrorAction SilentlyContinue)) { iwr -useb get.scoop.sh | iex; }
+  register: install_scoop
+  changed_when: install_scoop.stdout is search('Scoop was installed successfully!')
+
+- name: install scoop dependencies
+  become: yes
+  win_shell: 'if ((scoop info {{ item }}) -match "Installed: No") { scoop install {{ item }} --global; }'
+  register: install_scoop_dependency
+  changed_when: install_scoop_dependency.stdout is search('was installed successfully!')
+  with_items: [7zip, git]
+
+- name: add backets
+  win_shell: scoop bucket add {{ item }}
+  register: add_bucket
+  changed_when: add_bucket.stdout is search('was added successfully.')
+  with_items: '{{ scoop_buckets }}'
+
+- name: install packages
+  become: '{{ item.global | default(omit) }}'
+  win_shell: scoop install {{ item.name }} {{ (item.global is defined and item.global and '--global') or '' }}
+  register: install_packege
+  changed_when: install_packege.stdout is search('was installed successfully!')
+  with_items: '{{ scoop_packages }}'
+  ignore_errors: yes
+  when: false
+
+- name: prepend to PATH
+  script: prependpath.vbs "{{ item.type }}" "{{ item.path }}"
+  args:
+    executable: cscript.exe
+  changed_when: false
+  with_items:
+  # OSで用意しているlibssl.dllではpythonのsslモジュールが動かないので、scoopのものを使用する
+  - { type: 'System', path: 'C:\ProgramData\scoop\apps\openssl\current\bin' }
+
+- name: download translation for WinSCP
+  win_get_url:
+    url: https://winscp.net/translations/dll/5.15.9/jp.zip
+    dest: '{{ temporary_home }}\winscp_tran_5.15.9_jp.zip'
+    force: no
+  register: download_tran_winscp
+  ignore_errors: yes
+
+- name: add translation for WinSCP
+  win_unzip:
+    src: '{{ temporary_home }}\winscp_tran_5.15.9_jp.zip'
+    dest: C:\ProgramData\scoop\apps\winscp\current\Translations
+  when: download_tran_winscp.changed == true
+
+# pre-commitで参照しているsqlite3パッケージが動かないので追加
+- name: download sqlite3.dll
+  win_get_url:
+    url: https://www.sqlite.org/2019/sqlite-dll-win64-x64-3300100.zip
+    dest: '{{ temporary_home }}\'
+    force: no
+  register: download_sqlite3
+  ignore_errors: yes
+
+- name: add sqlite3.dll to PATH
+  win_unzip:
+    src: '{{ temporary_home }}\sqlite-dll-win64-x64-3300100.zip'
+    dest: C:\ProgramData\scoop\shims
+  when: download_sqlite3.changed == true

@@ -1,0 +1,4 @@
+---
+
+# scoop用変数設定ファイル: roles/scoop/vars/{{ scoop_config }}
+scoop_config: null

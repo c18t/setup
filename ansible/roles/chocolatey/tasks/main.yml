@@ -16,6 +16,12 @@
     that: chocolatey_packages is not defined or chocolatey_packages is iterable
     quiet: true
 
+- name: install chocolatey
+  become: true
+  win_shell: if (-Not(gcm choco -ErrorAction SilentlyContinue)) { iwr -useb chocolatey.org/install.ps1 | iex; }
+  register: install_choco
+  changed_when: install_scoop.stdout is search('is now ready.')
+  
 - name: install packages with chocolatey
   win_chocolatey:
     name: '{{ item.name }}'

@@ -1,0 +1,59 @@
+---
+
+scoop_buckets:
+- main
+- extras
+- java
+
+scoop_packages:
+- { name: 7zip, global: yes }
+- { name: anaconda3, global: yes }
+- { name: android-studio }
+- { name: arduino }
+- { name: audacity }
+- { name: autohotkey }
+- { name: busybox, global: yes }
+- { name: calibre }
+- { name: direnv, global: yes }
+- { name: discord }
+- { name: firefox }
+- { name: firefox-nightly }
+- { name: fork }
+- { name: gimp } # Windows Defender のリアルタイム保護が有効だと脅威とみなされて失敗する
+- { name: git, global: yes }
+- { name: ghostscript, global: yes }
+- { name: ghq, global: yes }
+- { name: googlechrome }
+- { name: googlechrome-dev }
+- { name: gpg4win, global: yes }
+- { name: gradle, global: yes }
+- { name: graphviz, global: yes }
+- { name: honeyview }
+- { name: inkscape }
+- { name: jmeter, global: yes }
+- { name: keepass }
+- { name: linqpad }
+- { name: makemkv }
+- { name: msys2, global: yes }
+- { name: neofetch }
+- { name: neovim }
+- { name: nodejs, global: yes }
+- { name: obs-studio }
+- { name: openjdk, global: yes }
+- { name: opera }
+- { name: perl, global: yes }
+- { name: plantuml, global: yes }
+- { name: qbittorrent }
+- { name: ruby, global: yes }
+- { name: screentogif }
+- { name: slack }
+- { name: stack, global: yes }
+- { name: steam }
+- { name: sudo }
+- { name: teraterm }
+- { name: vivaldi }
+- { name: vlc }
+- { name: vscode }
+- { name: winmerge, global: yes }
+- { name: winscp, global: yes }
+- { name: xmind8 }

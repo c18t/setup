@@ -33,14 +33,6 @@ if ($reboot) {
     Write-Host "Windowsの設定を変更しました。再起動後、もう一度 $scriptName を実行してください。"
 }
 else {
-    # chocolateyのインストール
-    powershell.exe -File "$Current\script\install-chocolatey.ps1"
-    if ($? -eq $False) { exit 1 }
-
-    # MSYS2/expectのインストール
-    powershell.exe -File "$Current\script\install-msys2.ps1"
-    if ($? -eq $False) { exit 1 }
-
     # ubuntuのインストール
     powershell.exe -File "$Current\script\install-wsl-ubuntu.ps1"
     if ($? -eq $False) { exit 1 }

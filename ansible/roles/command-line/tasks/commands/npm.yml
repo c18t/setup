@@ -16,15 +16,25 @@
       that: npm_packages is not defined or npm_packages is iterable
       quiet: true
 
-- name: check npm
-  shell: type '{{ brew_prefix }}/bin/npm'
-  changed_when: false
-  check_mode: no
+- block:
+  - name: install node.js packages (for Windows)
+    win_shell: 'if (-Not(npm list -g --depth=0 {{ item }} | Select-String -Pattern " {{ item }}@")) { npm install -g {{ item }}; }'
+    register: npm_install
+    changed_when: npm_install.stdout is search('\\+ '+item+'@')
+    when: npm_packages is defined and npm_packages | length > 0
+    with_items: '{{ npm_packages }}'
+  when: ansible_os_family == "Windows"
 
-- name: install node.js packages
-  npm:
-    name: '{{ item }}'
-    global: yes
-    executable: '{{ brew_prefix }}/bin/npm'
-  when: npm_packages is defined and npm_packages | length > 0
-  with_items: '{{ npm_packages }}'
+- block:
+  - name: check npm
+    shell: type '{{ brew_prefix }}/bin/npm'
+    changed_when: false
+    check_mode: no
+  - name: install node.js packages
+    npm:
+      name: '{{ item }}'
+      global: yes
+      executable: '{{ brew_prefix }}/bin/npm'
+    when: npm_packages is defined and npm_packages | length > 0
+    with_items: '{{ npm_packages }}'
+  when: ansible_os_family != "Windows"

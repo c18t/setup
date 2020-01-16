@@ -1,6 +1,7 @@
 ---
 
 - include: includes/set_brew_prefix.yml
+  when: ansible_os_family != "Windows"
 
 - include: commands/gem.yml
   tags: gem

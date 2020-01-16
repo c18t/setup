@@ -2,5 +2,3 @@
 
 gem_packages:
 - asciidoctor
-- mdl
-- sass

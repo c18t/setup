@@ -5,18 +5,25 @@
   pre_tasks:
   - include_vars: common.yml
   roles: # 指定できる変数は各ロールの defaults/main.yml 参照
-  # WSL側のロールを指定しないこと
   - role: os-setting-windows
     tags: os-setting-windows
   - role: chocolatey
     tags: chocolatey
-  # forkが再インストールされるので普段は呼ばない
-  # - role: software-windows
-  #   tags: software-windows
+  - role: scoop
+    tags: scoop
+  - role: vscode
+    tags: vscode
+  - role: software-windows
+    tags: software-windows
+  - role: command-line
+    tags: command-line
   vars:
     # ansible
     ansible_user: '{{ win_username }}'
     ansible_password: '{{ win_password }}'
+    ansible_become_method: runas
+    ansible_become_user: '{{ win_username }}'
+    ansible_become_password: '{{ win_password }}'
     ansible_connection: winrm
     ansible_winrm_transport: basic
     ansible_winrm_server_cert_validation: ignore
@@ -26,8 +33,15 @@
     my_editor: code
     my_visual: code
     my_temporary_home: D:\Temp\{{ user }}
+    my_xdg_cache_home: D:\Users\{{ user }}\AppData\Roaming
+    my_xdg_config_home: D:\Users\{{ user }}\AppData\Local
+    my_xdg_data_home: D:\Users\{{ user }}\AppData\Local
     # chocolatey
     chocolatey_config: chocolatey-khronos.yml
+    # scoop
+    scoop_config: scoop-khronos.yml
+    # vscode
+    vscode_extensions: extensions.yml
   vars_prompt:
   - name: win_username
     prompt: "Windows username"
@@ -50,8 +64,6 @@
     tags: apt
   - role: homebrew
     tags: homebrew
-  - role: vscode
-    tags: vscode
   - role: nvim
     tags: nvim
   - role: fish-shell
@@ -79,8 +91,6 @@
     apt_config: apt-khronos.yml
     # homebrew
     homebrew_config: brewfile-khronos.yml
-    # vscode
-    vscode_extensions: extensions.yml
     # fish-shell
     fish_shell_config: config-wsl.fish
     # lang

@@ -16,31 +16,47 @@
       quiet: true
   when: vscode_extensions is defined
 
-- name: check cmd.exe (for WSL)
-  shell: type cmd.exe
-  register: type_cmd
-  failed_when: type_cmd.rc not in [0, 1, 126, 127]
-  changed_when: false
-  check_mode: no
+- block:
+  - name: check vscode (for Windows)
+    win_shell: gcm code -ErrorAction SilentlyContinue
+    register: type_code
+    failed_when: type_code.rc not in [0, 1, 126, 127]
+    changed_when: false
+    check_mode: no
+  - name: install vscode extensions (for Windows)
+    win_shell: if (-Not(code --install-extension {{ item }} | Select-String -Pattern "successfully installed")) { exit 1; }
+    register: install_vscode_ex
+    failed_when: install_vscode_ex.rc not in [0, 1]
+    changed_when: install_vscode_ex.rc == 0
+    with_items: '{{ code_install_extensions }}'
+    when: type_code.rc == 0 and code_install_extensions | length > 0
+  when: ansible_os_family == "Windows"
 
-- name: check vscode
-  shell: type code
-  register: type_code
-  failed_when: type_code.rc not in [0, 1, 126, 127]
-  changed_when: false
-  check_mode: no
-
-- name: install vscode extensions
-  shell: 'code --install-extension {{ item }} | grep -iq "successfully installed"'
-  args:
-    executable: '{{ (type_cmd.rc == 0 and "cmd.exe") or omit }}'
-  register: install_vscode_ex
-  failed_when: install_vscode_ex.rc not in [0, 1]
-  changed_when: install_vscode_ex.rc == 0
-  with_items: '{{ code_install_extensions }}'
-  # GitHub Actionsだと拡張のインストールで止まるのでスキップ
-  when: >
-    (ansible_env.GITHUB_ACTIONS is not defined
-      or ansible_env.GITHUB_ACTIONS != 'true')
-      and
-    type_code.rc == 0 and code_install_extensions | length > 0
+- block:
+  - name: check cmd.exe (for WSL)
+    shell: type cmd.exe
+    register: type_cmd
+    failed_when: type_cmd.rc not in [0, 1, 126, 127]
+    changed_when: false
+    check_mode: no
+  - name: check vscode
+    shell: type code
+    register: type_code
+    failed_when: type_code.rc not in [0, 1, 126, 127]
+    changed_when: false
+    check_mode: no
+  - name: install vscode extensions
+    shell: 'code --install-extension {{ item }} | grep -iq "successfully installed"'
+    args:
+      executable: '{{ (type_cmd.rc == 0 and "cmd.exe") or omit }}'
+    register: install_vscode_ex
+    failed_when: install_vscode_ex.rc not in [0, 1]
+    changed_when: install_vscode_ex.rc == 0
+    with_items: '{{ code_install_extensions }}'
+    # GitHub Actionsだと拡張のインストールで止まるのでスキップ
+    when: >
+      (ansible_env.GITHUB_ACTIONS is not defined
+        or ansible_env.GITHUB_ACTIONS != 'true')
+        and
+      type_code.rc == 0 and code_install_extensions | length > 0
+  when: ansible_os_family != "Windows"

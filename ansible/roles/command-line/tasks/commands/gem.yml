@@ -16,15 +16,25 @@
       that: gem_packages is not defined or gem_packages is iterable
       quiet: true
 
-- name: check gem
-  shell: type '{{ brew_prefix }}/opt/ruby/bin/gem'
-  changed_when: false
-  check_mode: no
+- block:
+  - name: install rubygems (for Windows)
+    win_shell: if (-Not(gem info --local {{ item }} | Select-String {{ item }})) { gem install --no-user-install {{ item }}; }
+    register: gem_install
+    changed_when: gem_install.stdout is search('Successfully installed')
+    when: gem_packages is defined and gem_packages | length > 0
+    with_items: '{{ gem_packages }}'
+  when: ansible_os_family == "Windows"
 
-- name: install rubygems
-  gem:
-    name: '{{ item }}'
-    user_install: no
-    executable: '{{ brew_prefix }}/opt/ruby/bin/gem'
-  when: gem_packages is defined and gem_packages | length > 0
-  with_items: '{{ gem_packages }}'
+- block:
+  - name: check gem
+    shell: type '{{ brew_prefix }}/opt/ruby/bin/gem'
+    changed_when: false
+    check_mode: no
+  - name: install rubygems
+    gem:
+      name: '{{ item }}'
+      user_install: no
+      executable: '{{ brew_prefix }}/opt/ruby/bin/gem'
+    when: gem_packages is defined and gem_packages | length > 0
+    with_items: '{{ gem_packages }}'
+  when: ansible_os_family != "Windows"

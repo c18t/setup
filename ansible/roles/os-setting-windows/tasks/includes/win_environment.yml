@@ -12,6 +12,6 @@
   - { level: 'user', name: 'VISUAL', value: '{{ visual }}' }
   - { level: 'user', name: 'TMP', value: '{{ temporary_home }}' }
   - { level: 'user', name: 'TEMP', value: '{{ temporary_home }}' }
-  - { level: 'user', name: 'XDG_CACHE_HOME', value: '%APPDATA%' }
-  - { level: 'user', name: 'XDG_CONFIG_HOME', value: '%LOCALAPPDATA%' }
-  - { level: 'user', name: 'XDG_DATA_HOME', value: '%LOCALAPPDATA%' }
+  - { level: 'user', name: 'XDG_CACHE_HOME', value: '{{ xdg_cache_home }}' }
+  - { level: 'user', name: 'XDG_CONFIG_HOME', value: '{{ xdg_config_home }}' }
+  - { level: 'user', name: 'XDG_DATA_HOME', value: '{{ xdg_data_home }}' }
