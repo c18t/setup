@@ -10,7 +10,6 @@ brew_taps:
 brew_fomulae:
 - ansible
 - anyenv
-- asciidoctor
 - autoconf # for phpenv
 - bats
 - byobu
