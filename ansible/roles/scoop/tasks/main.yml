@@ -31,7 +31,7 @@
   win_shell: 'if ((scoop info {{ item }}) -match "Installed: No") { scoop install {{ item }} --global; }'
   register: install_scoop_dependency
   changed_when: install_scoop_dependency.stdout is search('was installed successfully!')
-  with_items: [7zip, git]
+  with_items: [git]
 
 - name: add backets
   win_shell: scoop bucket add {{ item }}
@@ -42,11 +42,10 @@
 - name: install packages
   become: '{{ item.global | default(omit) }}'
   win_shell: scoop install {{ item.name }} {{ (item.global is defined and item.global and '--global') or '' }}
-  register: install_packege
-  changed_when: install_packege.stdout is search('was installed successfully!')
+  register: install_package
+  changed_when: install_package.stdout is search('was installed successfully!')
   with_items: '{{ scoop_packages }}'
   ignore_errors: yes
-  when: false
 
 - name: prepend to PATH
   script: prependpath.vbs "{{ item.type }}" "{{ item.path }}"
@@ -72,16 +71,19 @@
   when: download_tran_winscp.changed == true
 
 # pre-commitで参照しているsqlite3パッケージが動かないので追加
-- name: download sqlite3.dll
-  win_get_url:
-    url: https://www.sqlite.org/2019/sqlite-dll-win64-x64-3300100.zip
-    dest: '{{ temporary_home }}\'
-    force: no
-  register: download_sqlite3
-  ignore_errors: yes
+- name: find scoop\shims\sqlite3.dll
+  win_stat:
+    path: C:\ProgramData\scoop\shims\sqlite3.dll
+  register: find_sqlite3_dll
 
-- name: add sqlite3.dll to PATH
-  win_unzip:
-    src: '{{ temporary_home }}\sqlite-dll-win64-x64-3300100.zip'
-    dest: C:\ProgramData\scoop\shims
-  when: download_sqlite3.changed == true
+- block:
+  - name: download sqlite3.dll
+    win_get_url:
+      url: https://www.sqlite.org/2019/sqlite-dll-win64-x64-3300100.zip
+      dest: '{{ temporary_home }}\'
+      force: no
+  - name: add sqlite3.dll to scoop\shims
+    win_unzip:
+      src: '{{ temporary_home }}\sqlite-dll-win64-x64-3300100.zip'
+      dest: C:\ProgramData\scoop\shims
+  when: not find_sqlite3_dll.stat.exists

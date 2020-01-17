@@ -40,6 +40,7 @@ scoop_packages:
 - { name: nodejs, global: yes }
 - { name: obs-studio }
 - { name: openjdk, global: yes }
+- { name: openssl, global: yes }
 - { name: opera }
 - { name: perl, global: yes }
 - { name: plantuml, global: yes }
