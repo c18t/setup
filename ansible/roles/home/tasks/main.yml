@@ -60,30 +60,3 @@
     src:  '{{ item.path }}'
     dest: '{{ item.dest }}'
   with_items: '{{ link_items }}'
-
-- name: set link items
-  set_fact:
-    link_items:
-    # XDG default
-    - { path: '{{ xdg_config_home }}', dest: '{{ default_xdg_config_home }}' }
-    - { path: '{{ xdg_cache_home }}', dest: '{{ default_xdg_cache_home }}' }
-    - { path: '{{ xdg_data_home }}', dest: '{{ default_xdg_data_home }}' }
-
-- name: check for the existence of link sources
-  stat:
-    path: '{{ item.path }}'
-  register: stat_link_source
-  failed_when: not stat_link_source.stat.exists or not stat_link_source.stat.isdir
-  with_items: '{{ link_items }}'
-
-- name: link to directory if item.path != item.dest
-  become: true
-  file:
-    state: link
-    follow: no
-    force: yes
-    owner: '{{ user }}'
-    src:  '{{ item.path }}'
-    dest: '{{ item.dest }}'
-  when: item.path != item.dest
-  with_items: '{{ link_items }}'

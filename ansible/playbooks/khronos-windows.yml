@@ -29,6 +29,7 @@
     ansible_winrm_server_cert_validation: ignore
     ansible_python_interpreter: /home/linuxbrew/.linuxbrew/bin/python3
     # common
+    my_home: D:\Users\{{ user }}
     my_user: '{{ win_username }}'
     my_editor: code
     my_visual: code
