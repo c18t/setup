@@ -23,7 +23,6 @@ scoop_packages:
 - { name: git, global: yes }
 - { name: ghostscript, global: yes }
 - { name: ghq, global: yes }
-- { name: googlechrome }
 - { name: googlechrome-dev }
 - { name: gpg4win, global: yes }
 - { name: gradle, global: yes }
@@ -49,7 +48,6 @@ scoop_packages:
 - { name: screentogif }
 - { name: slack }
 - { name: stack, global: yes }
-- { name: steam }
 - { name: sudo }
 - { name: teraterm }
 - { name: vivaldi }

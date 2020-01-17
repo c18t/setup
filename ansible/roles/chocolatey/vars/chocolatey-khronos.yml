@@ -6,11 +6,13 @@ chocolatey_packages:
 - { name: chocolateygui }
 - { name: docker-desktop } # scoop にない
 - { name: gitter } # scoop にない
+- { name: GoogleChrome } # インストーラで入れたい
 - { name: GoogleJapaneseInput }
 - { name: iTunes }
 - { name: limechat } # scoop にない
 - { name: mnemosyne } # scoop にない
 - { name: opera-developer } # scoop にない
+- { name: steam } # インストーラで入れたい
 - { name: unity } # scoop にない
 - { name: VirtualCloneDrive }
 - { name: visualstudio-installer }
