@@ -32,5 +32,6 @@ pushd "$(dirname "$0")" >&3 || exit $?
             echo ... failed!
         fi
     fi
+
 popd >&3 || exit $?
 exit $result

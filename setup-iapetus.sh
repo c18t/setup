@@ -27,5 +27,6 @@ pushd "$(dirname "$0")" >&3 || exit $?
     if [ $result -eq 0 ]; then
         echo "$(basename "$0"): your machine have been configured! enjoy your development!"
     fi
+
 popd >&3 || exit $?
 exit $result
