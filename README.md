@@ -35,11 +35,25 @@ $ brew tap bundle && brew bundle dump && cat Brewfile
 *path:* ansible/roles/chocolatey/vars/
 
 ```ps1
-PS > (choco list --local-only) -split "[`r`n]+" `
+PS > choco list --local-only `
   | Select-String -NotMatch "packages installed" `
   | ForEach-Object `
     -Begin { Write-Output "---" "chocolatey_packages:" } `
     -Process { Write-Output ("  - { name: "+($_ -split " ")[0]+" }") }
+```
+
+### scoop export
+
+*path:* ansible/roles/scoop/vars/
+
+```ps1
+PS > scoop export `
+  | ForEach-Object `
+    -Begin { Write-Output "---" "scoop_packages:" } `
+    -Process { $local:g = ""; `
+      if ($_ -match "\*global\*") { $g = ", global: yes"; } `
+      Write-Output ("  - { name: "+($_ -split " ")[0]+$g+" }") `
+    }
 ```
 
 ### VS Code extensions
@@ -48,9 +62,15 @@ PS > (choco list --local-only) -split "[`r`n]+" `
 
 ```sh
 $ code --list-extensions \
-  | sort \
   | awk 'BEGIN { print "---";  print "code_install_extensions:" }
     { print "  - "$1 }'
+```
+
+```ps1
+PS > code --list-extensions `
+  | ForEach-Object `
+    -Begin { Write-Output "---" "code_install_extensions:" } `
+    -Process { Write-Output "  - $_" }
 ```
 
 ### fishfile
