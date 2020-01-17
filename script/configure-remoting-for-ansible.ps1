@@ -13,7 +13,7 @@ if (([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]:
 $reboot = $False
 if ([String]::IsNullOrWhiteSpace($(winrm enumerate winrm/config/Listener))) {
     # WinRMのセットアップ
-    Write-Host "setup WinRT ..."
+    Write-Host "setup WinRM ..."
     $url = "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"
     $file = "$env:temp\ConfigureRemotingForAnsible.ps1"
     (New-Object -TypeName System.Net.WebClient).DownloadFile($url, $file)
