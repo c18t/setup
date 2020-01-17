@@ -1,5 +1,4 @@
 ---
-
 - name: set environment variables (for MacOSX)
   shell: >-
     set -Ux ANDROID_HOME {{ home }}/Library/Android/sdk;
@@ -8,7 +7,7 @@
   args:
     executable: '{{ fish_path }}'
   changed_when: false
-  check_mode: no
+  check_mode: false
 
 - name: add tools to fish_user_paths (for MacOSX)
   shell: set -U fish_user_paths $fish_user_paths "{{ item }}"
@@ -16,8 +15,8 @@
     executable: '{{ fish_path }}'
   when: fish_user_paths is not search(item)
   with_items:
-  - '{{ home }}/Library/Android/sdk/tools'
-  - '{{ home }}/Library/Android/sdk/platform-tools'
+    - '{{ home }}/Library/Android/sdk/tools'
+    - '{{ home }}/Library/Android/sdk/platform-tools'
   notify: update_global_path
 
 - name: make PKG_CONFIG_PATH config (for MacOSX)
@@ -25,18 +24,18 @@
     dest: '{{ xdg_config_home }}/fish/conf.d/{{ item }}.fish'
     content: set -gx PKG_CONFIG_PATH "{{ brew_prefix }}/opt/{{ item }}/lib/pkgconfig" $PKG_CONFIG_PATH
   with_items:
-  - curl-openssl
-  - icu4c
-  - krb5
-  - libedit
-  - libxml2
-  - libzip
-  - ncurses
-  - oniguruma
-  - openldap
-  - openssl@1.1
-  - readline
-  - sqlite
-  - tidy-html5
-  - unixodbc
-  - zlib
+    - curl-openssl
+    - icu4c
+    - krb5
+    - libedit
+    - libxml2
+    - libzip
+    - ncurses
+    - oniguruma
+    - openldap
+    - openssl@1.1
+    - readline
+    - sqlite
+    - tidy-html5
+    - unixodbc
+    - zlib

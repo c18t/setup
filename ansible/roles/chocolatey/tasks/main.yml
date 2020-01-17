@@ -1,5 +1,4 @@
 ---
-
 - name: assert chocolatey role config
   assert:
     that:
@@ -21,7 +20,7 @@
   win_shell: if (-Not(gcm choco -ErrorAction SilentlyContinue)) { iwr -useb chocolatey.org/install.ps1 | iex; }
   register: install_choco
   changed_when: install_choco.stdout is search('is now ready.')
-  
+
 - name: install packages with chocolatey
   win_chocolatey:
     name: '{{ item.name }}'

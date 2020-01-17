@@ -1,28 +1,31 @@
 ---
-
 - name: assert apt role config
   assert:
-    that: >
+    that: >-
       apt_config is not defined or
         (apt_config is string and apt_config != "")
     quiet: true
 
-- block:
-  - name: 'include roles/apt/vars/{{ apt_config }}'
-    include_vars: '{{ apt_config }}'
-    when: apt_config is defined
-  - name: assert apt_keys
-    assert:
-      that: apt_keys is not defined or apt_keys is iterable
-      quiet: true
-  - name: assert apt_repositories
-    assert:
-      that: apt_repositories is not defined or apt_repositories is iterable
-      quiet: true
-  - name: assert apt_packages
-    assert:
-      that: apt_packages is not defined or apt_packages is iterable
-      quiet: true
+- name: include apt role config
+  block:
+    - name: 'include roles/apt/vars/{{ apt_config }}'
+      include_vars: '{{ apt_config }}'
+      when: apt_config is defined
+
+    - name: assert apt_keys
+      assert:
+        that: apt_keys is not defined or apt_keys is iterable
+        quiet: true
+
+    - name: assert apt_repositories
+      assert:
+        that: apt_repositories is not defined or apt_repositories is iterable
+        quiet: true
+
+    - name: assert apt_packages
+      assert:
+        that: apt_packages is not defined or apt_packages is iterable
+        quiet: true
 
 - name: add apt keys
   become: true
@@ -42,7 +45,7 @@
   become: true
   apt:
     cache_valid_time: 3600
-    update_cache: yes
+    update_cache: true
     upgrade: safe
 
 - name: install packages with apt

@@ -1,12 +1,12 @@
 ---
-
 - name: register setup_root
   shell: 'dirname $(dirname $(pwd))'
   register: setup_root
   changed_when: false
-  check_mode: no
+  check_mode: false
+
 - name: set resources
   set_fact:
     resources: '{{ setup_root.stdout }}/resources'
   changed_when: false
-  check_mode: no
+  check_mode: false

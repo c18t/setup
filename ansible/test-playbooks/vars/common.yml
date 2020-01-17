@@ -1,5 +1,4 @@
 ---
-
 # user home
 home: '{{ my_home | default(ansible_env.HOME) }}'
 # user name

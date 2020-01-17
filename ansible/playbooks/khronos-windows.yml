@@ -1,23 +1,23 @@
 ---
-
 - name: Windows
   hosts: local
   pre_tasks:
-  - include_vars: common.yml
-  roles: # 指定できる変数は各ロールの defaults/main.yml 参照
-  - role: os-setting-windows
-    tags: os-setting-windows
-  - role: chocolatey
-    tags: chocolatey
-  - role: scoop
-    tags: scoop
-  - role: vscode
-    tags: vscode
-  - role: software-windows
-    tags: software-windows
-  - role: command-line
-    tags: command-line
+    - include_vars: common.yml
+  roles:
+    - role: os-setting-windows
+      tags: os-setting-windows
+    - role: chocolatey
+      tags: chocolatey
+    - role: scoop
+      tags: scoop
+    - role: vscode
+      tags: vscode
+    - role: software-windows
+      tags: software-windows
+    - role: command-line
+      tags: command-line
   vars:
+    # 指定できる変数は各ロールの defaults/main.yml 参照
     # ansible
     ansible_user: '{{ win_username }}'
     ansible_password: '{{ win_password }}'
@@ -44,38 +44,39 @@
     # vscode
     vscode_extensions: extensions.yml
   vars_prompt:
-  - name: win_username
-    prompt: "Windows username"
-    private: no
-  - name: win_password
-    prompt: "Windows password"
-    private: yes
+    - name: win_username
+      prompt: 'Windows username'
+      private: false
+    - name: win_password
+      prompt: 'Windows password'
+      private: true
 
 - name: WSL
   hosts: local
   pre_tasks:
-  - include_vars: common.yml
-  - include: pre_tasks/set_resources.yml
+    - include_vars: common.yml
+    - include: pre_tasks/set_resources.yml
   handlers:
-  - include: handlers/handlers_wsl.yml
-  roles: # 指定できる変数は各ロールの defaults/main.yml 参照
-  - role: home
-    tags: home
-  - role: apt
-    tags: apt
-  - role: homebrew
-    tags: homebrew
-  - role: nvim
-    tags: nvim
-  - role: fish-shell
-    tags: fish-shell
-  - role: anyenv
-    tags: anyenv
-  - role: lang
-    tags: lang
-  - role: command-line
-    tags: command-line
+    - include: handlers/handlers_wsl.yml
+  roles:
+    - role: home
+      tags: home
+    - role: apt
+      tags: apt
+    - role: homebrew
+      tags: homebrew
+    - role: nvim
+      tags: nvim
+    - role: fish-shell
+      tags: fish-shell
+    - role: anyenv
+      tags: anyenv
+    - role: lang
+      tags: lang
+    - role: command-line
+      tags: command-line
   vars:
+    # 指定できる変数は各ロールの defaults/main.yml 参照
     # ansible
     ansible_python_interpreter: /home/linuxbrew/.linuxbrew/bin/python3
     # common
@@ -108,6 +109,6 @@
     php_build_config: configure_options-wsl
     php_make_arguments: -j 4
   vars_prompt:
-  - name: my_password
-    prompt: "WSL user password"
-    private: yes
+    - name: my_password
+      prompt: 'WSL user password'
+      private: true

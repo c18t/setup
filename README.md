@@ -24,7 +24,7 @@ PS > .\setup-windows.ps1 setup-khronos.sh -K
 
 ### brewfile
 
-*path:* ansible/roles/homebrew/vars/
+_path:_ ansible/roles/homebrew/vars/
 
 ```sh
 $ brew tap bundle && brew bundle dump && cat Brewfile
@@ -32,7 +32,7 @@ $ brew tap bundle && brew bundle dump && cat Brewfile
 
 ### choco.config
 
-*path:* ansible/roles/chocolatey/vars/
+_path:_ ansible/roles/chocolatey/vars/
 
 ```ps1
 PS > choco list --local-only `
@@ -44,21 +44,21 @@ PS > choco list --local-only `
 
 ### scoop export
 
-*path:* ansible/roles/scoop/vars/
+_path:_ ansible/roles/scoop/vars/
 
 ```ps1
 PS > scoop export `
   | ForEach-Object `
     -Begin { Write-Output "---" "scoop_packages:" } `
     -Process { $local:g = ""; `
-      if ($_ -match "\*global\*") { $g = ", global: yes"; } `
+      if ($_ -match "\*global\*") { $g = ", global: true"; } `
       Write-Output ("  - { name: "+($_ -split " ")[0]+$g+" }") `
     }
 ```
 
 ### VS Code extensions
 
-*path:* ansible/roles/vscode/vars/
+_path:_ ansible/roles/vscode/vars/
 
 ```sh
 $ code --list-extensions \
@@ -75,7 +75,7 @@ PS > code --list-extensions `
 
 ### fishfile
 
-*path:* resources/fisher-my-setup/
+_path:_ resources/fisher-my-setup/
 
 ```sh
 cat ~/.config/fish/fishfile
@@ -85,7 +85,7 @@ cat ~/.config/fish/fishfile
 
 ### ansible/roles/files/mas.sh
 
-@yumiduka - [mas-cliをAnsibleで管理する - Qiita](https://qiita.com/yumiduka/items/9c095b9f98be96b8763c)
+@yumiduka - [mas-cli を Ansible で管理する - Qiita](https://qiita.com/yumiduka/items/9c095b9f98be96b8763c)
 
 ### その他
 

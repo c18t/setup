@@ -1,5 +1,4 @@
 ---
-
 - include: includes/set_brew_prefix.yml
   when: ansible_os_family != "Windows"
 

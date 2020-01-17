@@ -1,30 +1,33 @@
 ---
-
 - name: check user's login shell (for MacOSX)
   shell: dscl . -read '/Users/{{ user }}' UserShell | grep -q '{{ fish_path }}'
   register: check_fish_is_login_shell
   failed_when: check_fish_is_login_shell.rc not in [0, 1]
   changed_when: false
-  check_mode: no
+  check_mode: false
 
-- block:
-  - name: find expect
-    shell: which expect
-    register: which_expect
-    changed_when: false
-    check_mode: no
-  - name: change login shell to fish
-    script: chsh.exp "{{ fish_path }}" "{{ my_password }}"
-    args:
-      executable: '{{ which_expect.stdout }}'
-  - shell: dscl . -read '/Users/{{ user }}' UserShell
-    register: recheck_fish_is_login_shell
-    changed_when: false
-    check_mode: no
-  - name: recheck user's login shell
-    shell: dscl . -read '/Users/{{ user }}' UserShell | grep -q '{{ fish_path }}'
-    changed_when: false
-    check_mode: no
+- name: change login shell to fish
+  block:
+    - name: find expect
+      shell: which expect
+      register: which_expect
+      changed_when: false
+      check_mode: false
+
+    - name: change login shell to fish
+      script: chsh.exp "{{ fish_path }}" "{{ my_password }}"
+      args:
+        executable: '{{ which_expect.stdout }}'
+
+    - shell: dscl . -read '/Users/{{ user }}' UserShell
+      register: recheck_fish_is_login_shell
+      changed_when: false
+      check_mode: false
+
+    - name: recheck user's login shell
+      shell: dscl . -read '/Users/{{ user }}' UserShell | grep -q '{{ fish_path }}'
+      changed_when: false
+      check_mode: false
   # GitHub Actionsだとログインシェルの変更がうまくいかないのでスキップ
   when: >
     (ansible_env.GITHUB_ACTIONS is not defined

@@ -1,12 +1,11 @@
 ---
-
 - name: make directories
   file:
     state: directory
-    follow: yes
+    follow: true
     path: '{{ item }}'
   with_items:
-  - '{{ home }}/.nimble/bin'
+    - '{{ home }}/.nimble/bin'
 
 - name: add .nimble/bin to fish_user_paths
   shell: set -U --append fish_user_paths "{{ home }}/.nimble/bin"

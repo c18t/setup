@@ -1,5 +1,4 @@
 ---
-
 - include: includes/set_fish_path.yml
 
 - include: includes/add_fish_to_shells.yml
@@ -23,7 +22,7 @@
   register: clear_fish_user_paths
   failed_when: clear_fish_user_paths.rc not in [0, 4]
   changed_when: false
-  check_mode: no
+  check_mode: false
   # 個別のロールで作成したパスも消してしまうので止める
   when: false
 

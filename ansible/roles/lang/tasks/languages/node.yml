@@ -1,5 +1,4 @@
 ---
-
 - name: assert node_versions
   assert:
     that: node_versions is not defined or node_versions is iterable
@@ -10,7 +9,7 @@
   register: check_nodenv
   failed_when: check_nodenv.rc not in [0, 1]
   changed_when: false
-  check_mode: no
+  check_mode: false
 
 - name: install nodenv
   shell: fish -l -c "anyenv install --skip-existing nodenv"
@@ -21,31 +20,35 @@
   shell: fish -l -c "nodenv root"
   register: nodenv_root
   changed_when: false
-  check_mode: no
+  check_mode: false
 
 - name: make default-packages
   copy:
     dest: '{{ nodenv_root.stdout }}/default-packages'
     content: ''
 
-- block:
-  - name: get installed node version list
-    shell: fish -l -c "nodenv versions"
-    register: installed_node_version
-    failed_when: installed_node_version.rc not in [0, 1]
-    changed_when: false
-    check_mode: no
-  - name: install node version
-    shell: fish -l -c "nodenv install {{ item }}"
-    when: installed_node_version.stdout is not regex("\\b"+item+"\\b")
-    with_items: '{{ node_versions }}'
-  - name: 'check global node version {{ node_versions[0] }}'
-    shell: fish -l -c "nodenv global | grep -qe \^{{ node_versions[0] }}\\\$"
-    register: check_nodenv_version
-    failed_when: check_nodenv_version.rc not in [0, 1]
-    changed_when: false
-    check_mode: no
-  - name: 'set global node version {{ node_versions[0] }}'
-    shell: fish -l -c "nodenv global {{ node_versions[0] }}"
-    when: check_nodenv_version.rc != 0
+- name: install node version
+  block:
+    - name: get installed node version list
+      shell: fish -l -c "nodenv versions"
+      register: installed_node_version
+      failed_when: installed_node_version.rc not in [0, 1]
+      changed_when: false
+      check_mode: false
+
+    - name: install node version
+      shell: fish -l -c "nodenv install {{ item }}"
+      when: installed_node_version.stdout is not regex("\\b"+item+"\\b")
+      with_items: '{{ node_versions }}'
+
+    - name: 'check global node version {{ node_versions[0] }}'
+      shell: fish -l -c "nodenv global | grep -qe \^{{ node_versions[0] }}\\\$"
+      register: check_nodenv_version
+      failed_when: check_nodenv_version.rc not in [0, 1]
+      changed_when: false
+      check_mode: false
+
+    - name: 'set global node version {{ node_versions[0] }}'
+      shell: fish -l -c "nodenv global {{ node_versions[0] }}"
+      when: check_nodenv_version.rc != 0
   when: node_versions is defined and node_versions | length > 0

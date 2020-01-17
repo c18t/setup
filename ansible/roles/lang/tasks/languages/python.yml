@@ -1,5 +1,4 @@
 ---
-
 - name: assert python_versions
   assert:
     that: python_versions is not defined or python_versions is iterable
@@ -10,31 +9,35 @@
   register: check_pyenv
   failed_when: check_pyenv.rc not in [0, 1]
   changed_when: false
-  check_mode: no
+  check_mode: false
 
 - name: install pyenv
   shell: fish -l -c "anyenv install --skip-existing pyenv"
   when: check_pyenv.rc != 0
   notify: update_global_path
 
-- block:
-  - name: get installed python version list
-    shell: fish -l -c "pyenv versions"
-    register: installed_python_version
-    failed_when: installed_python_version.rc not in [0, 1]
-    changed_when: false
-    check_mode: no
-  - name: install python version
-    shell: fish -l -c "pyenv install {{ item }}"
-    when: installed_python_version.stdout is not regex("\\b"+item+"\\b")
-    with_items: '{{ python_versions }}'
-  - name: 'check global python version {{ python_versions[0] }}'
-    shell: fish -l -c "pyenv global | grep -qe \^{{ python_versions[0] }}\\\$"
-    register: check_pyenv_version
-    failed_when: check_pyenv_version.rc not in [0, 1]
-    changed_when: false
-    check_mode: no
-  - name: 'set global python version {{ python_versions[0] }}'
-    shell: fish -l -c "pyenv global {{ python_versions[0] }}"
-    when: check_pyenv_version.rc != 0
+- name: install python version
+  block:
+    - name: get installed python version list
+      shell: fish -l -c "pyenv versions"
+      register: installed_python_version
+      failed_when: installed_python_version.rc not in [0, 1]
+      changed_when: false
+      check_mode: false
+
+    - name: install python version
+      shell: fish -l -c "pyenv install {{ item }}"
+      when: installed_python_version.stdout is not regex("\\b"+item+"\\b")
+      with_items: '{{ python_versions }}'
+
+    - name: 'check global python version {{ python_versions[0] }}'
+      shell: fish -l -c "pyenv global | grep -qe \^{{ python_versions[0] }}\\\$"
+      register: check_pyenv_version
+      failed_when: check_pyenv_version.rc not in [0, 1]
+      changed_when: false
+      check_mode: false
+
+    - name: 'set global python version {{ python_versions[0] }}'
+      shell: fish -l -c "pyenv global {{ python_versions[0] }}"
+      when: check_pyenv_version.rc != 0
   when: python_versions is defined and python_versions | length > 0

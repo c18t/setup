@@ -1,4 +1,3 @@
 ---
-
 # apt用変数設定ファイル: roles/apt/vars/{{ apt_config }}
 apt_config: null

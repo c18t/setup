@@ -1,46 +1,45 @@
 ---
-
 - name: install Backup and Sync
   win_package:
     path: https://dl.google.com/drive/installbackupandsync.exe
     product_id: '{93EBD8BA-7A14-4636-8F1F-E929ADF2C3A9}'
   # 進まなくなるので飛ばす
   when: false
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: install SQL Server Management Studio
   win_package:
     path: https://go.microsoft.com/fwlink/?linkid=2108895&clcid=0x411
     product_id: '{5013F9AC-80B3-4819-B8A6-CA19D4AF6D32}'
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: install Worlflowy
   win_package:
     path: https://github.com/workflowy/desktop/releases/download/v1.3.5-5665/WorkFlowy-Installer.exe
     product_id: '{338bed7b-1324-505d-8cb6-5c266cbaa6b3}'
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: install Excel Merge
   win_package:
     path: https://github.com/skanmera/ExcelMerge/releases/download/ver1.4.0/ExcelMergeSetup_v1.4.0.msi
     product_id: '{A31490C9-9AEC-48FE-A811-A29CDA531089}'
     expected_return_code: [0, 1603, 3010]
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: install Wacom tablet driver
   win_package:
     path: http://tablet.wacom.co.jp/download/driver/WacomTablet_6.3.38-2.exe
     product_id: 'Wacom Tablet Driver'
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: download GTK
   win_get_url:
     url: http://ftp.acc.umu.se/pub/GNOME/binaries/win64/gtk+/2.22/gtk+-bundle_2.22.1-20101229_win64.zip
     dest: '{{ ansible_env.TEMP }}\gtk+-bundle_2.22.1-20101229_win64.zip'
-    force: no
+    force: false
   register: download_gtk
   failed_when: download_gtk.status_code not in [200, 403]
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: Unzip a bz2 (BZip) file
   win_unzip:

@@ -1,33 +1,36 @@
 ---
+- name: Dock settings
+  block:
+    - name: dock settings autohide
+      osx_defaults:
+        domain: 'com.apple.dock'
+        key: 'autohide'
+        type: 'int'
+        value: 1
+      notify: restart_dock
 
-- block: # Dock settings
-  - name: dock settings autohide
-    osx_defaults:
-      domain: 'com.apple.dock'
-      key: 'autohide'
-      type: 'int'
-      value: 1
-    notify: restart_dock
-  - name: dock settings mineffect
-    osx_defaults:
-      domain: 'com.apple.dock'
-      key: 'mineffect'
-      type: 'string'
-      value: 'genie'
-    notify: restart_dock
-  - name: dock settings tilesize
-    osx_defaults:
-      domain: 'com.apple.dock'
-      key: 'tilesize'
-      type: 'float'
-      value: '{{ dock_tilesize }}'
-    notify: restart_dock
+    - name: dock settings mineffect
+      osx_defaults:
+        domain: 'com.apple.dock'
+        key: 'mineffect'
+        type: 'string'
+        value: 'genie'
+      notify: restart_dock
 
-- block: # Finder settings
-  - name: finder settings AppleShowAllFiles
-    osx_defaults:
-      domain: 'com.apple.finder'
-      key: 'AppleShowAllFiles'
-      type: 'string'
-      value: 'TRUE'
-    notify: restart_finder
+    - name: dock settings tilesize
+      osx_defaults:
+        domain: 'com.apple.dock'
+        key: 'tilesize'
+        type: 'float'
+        value: '{{ dock_tilesize }}'
+      notify: restart_dock
+
+- name: Finder settings
+  block:
+    - name: finder settings AppleShowAllFiles
+      osx_defaults:
+        domain: 'com.apple.finder'
+        key: 'AppleShowAllFiles'
+        type: 'string'
+        value: 'TRUE'
+      notify: restart_finder

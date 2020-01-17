@@ -1,25 +1,24 @@
 ---
-
 - name: download Ricty Diminished
   win_get_url:
     url: https://rictyfonts.github.io/files/ricty_diminished-4.1.1.tar.gz
     dest: '{{ ansible_env.TEMP }}\ricty_diminished-4.1.1.tar.gz'
-    force: no
+    force: false
   register: download_ricty_diminished
   failed_when: download_ricty_diminished.status_code not in [200, 403]
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: install PSCX
   win_psmodule:
     name: Pscx
     state: present
-    allow_clobber: yes
+    allow_clobber: true
 
 - name: unzip Ricty Diminished
   win_unzip:
     src: '{{ download_ricty_diminished.dest }}'
     dest: '{{ download_ricty_diminished.dest }}.unzip'
-    recurse: yes
+    recurse: true
     creates: '{{ download_ricty_diminished.dest }}.unzip'
 
 - name: install Ricty Diminished

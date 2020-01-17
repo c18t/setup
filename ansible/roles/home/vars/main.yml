@@ -1,7 +1,6 @@
 ---
-
 # standard directories
 standard_directories:
-- Applications
-- Archives
-- Projects
+  - Applications
+  - Archives
+  - Projects

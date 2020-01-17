@@ -1,5 +1,4 @@
 ---
-
 - name: assert homebrew role config
   assert:
     that: >
@@ -7,25 +6,26 @@
         (homebrew_config is string and homebrew_config != '')
     quiet: true
 
-- block:
-  - name: 'include roles/homebrew/vars/{{ homebrew_config }}'
-    include_vars: '{{ homebrew_config }}'
-  - name: assert brew_taps
-    assert:
-      that: brew_taps is not defined or brew_taps is iterable
-      quiet: true
-  - name: assert brew_fomulae
-    assert:
-      that: brew_fomulae is not defined or brew_fomulae is iterable
-      quiet: true
-  - name: assert brew_casks
-    assert:
-      that: brew_casks is not defined or brew_casks is iterable
-      quiet: true
-  - name: assert mas_apps
-    assert:
-      that: mas_apps is not defined or mas_apps is iterable
-      quiet: true
+- name: include homebrew role config
+  block:
+    - name: 'include roles/homebrew/vars/{{ homebrew_config }}'
+      include_vars: '{{ homebrew_config }}'
+    - name: assert brew_taps
+      assert:
+        that: brew_taps is not defined or brew_taps is iterable
+        quiet: true
+    - name: assert brew_fomulae
+      assert:
+        that: brew_fomulae is not defined or brew_fomulae is iterable
+        quiet: true
+    - name: assert brew_casks
+      assert:
+        that: brew_casks is not defined or brew_casks is iterable
+        quiet: true
+    - name: assert mas_apps
+      assert:
+        that: mas_apps is not defined or mas_apps is iterable
+        quiet: true
   when: homebrew_config is defined
 
 - name: check brew
@@ -33,31 +33,40 @@
   register: type_brew
   failed_when: type_brew.rc not in [0, 1, 126, 127]
   changed_when: false
-  check_mode: no
+  check_mode: false
 
-- block:
-  - name: install Homebrew
-    shell: ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    when: ansible_distribution == "MacOSX"
-  - name: install Linuxbrew
-    shell: |-
-      sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-      test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
-      echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
-    when: ansible_distribution != "MacOSX"
+- name: install Homebrew/Linuxbrew
+  block:
+    - name: install Homebrew
+      shell: ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+      when: ansible_distribution == "MacOSX"
+    - name: install Linuxbrew
+      shell: |-
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+        test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+        echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+      when: ansible_distribution != "MacOSX"
   when: type_brew.rc != 0
 
 - include: includes/set_brew_prefix.yml
 
-- set_fact: brew_distr=MacOSX
-- block:
-  - include: includes/brew_tasks.yml
-  ignore_errors: yes
+- name: set brew_distr as MacOSX
+  set_fact:
+    brew_distr: MacOSX
+
+- name: exec includes/brew_tasks.yml (for MacOSX)
+  block:
+    - include: includes/brew_tasks.yml
+  ignore_errors: true
   when: ansible_distribution == "MacOSX"
 
-- set_fact: brew_distr=other
-- block:
-  - include: includes/brew_tasks.yml
+- name: set brew_distr as other
+  set_fact:
+    brew_distr: other
+
+- name: exec includes/brew_tasks.yml (for other)
+  block:
+    - include: includes/brew_tasks.yml
   # environmentへのomitの指定がうまくいかないので ansible_distribution で場合分け
   environment:
     PATH: '{{ brew_prefix }}/bin:{{ ansible_env.PATH | default("") }}'
@@ -66,5 +75,5 @@
     C_INCLUDE_PATH: '{{ brew_prefix }}/include:{{ ansible_env.C_INCLUDE_PATH | default("") }}'
     CPLUS_INCLUDE_PATH: '{{ brew_prefix }}/include:{{ ansible_env.CPLUS_INCLUDE_PATH | default("") }}'
     OBJC_INCLUDE_PATH: '{{ brew_prefix }}/include:{{ ansible_env.OBJC_INCLUDE_PATH | default("") }}'
-  ignore_errors: yes
+  ignore_errors: true
   when: ansible_distribution != "MacOSX"

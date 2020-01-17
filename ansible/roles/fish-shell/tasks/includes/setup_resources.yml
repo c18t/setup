@@ -1,19 +1,19 @@
 ---
-
 - name: make directories
   file:
     state: directory
-    follow: yes
+    follow: true
     path: '{{ item }}'
   with_items:
-  - '{{ xdg_config_home }}/fish/completions'
-  - '{{ xdg_config_home }}/fish/conf.d'
-  - '{{ xdg_config_home }}/fish/functions'
+    - '{{ xdg_config_home }}/fish/completions'
+    - '{{ xdg_config_home }}/fish/conf.d'
+    - '{{ xdg_config_home }}/fish/functions'
 
 - name: set link items
   set_fact:
     link_items:
-    - { path: '{{ dotfiles }}/fish/{{ fish_shell_config }}', dest: '{{ xdg_config_home }}/fish/config.fish' }
+      - path: '{{ dotfiles }}/fish/{{ fish_shell_config }}'
+        dest: '{{ xdg_config_home }}/fish/config.fish'
 
 - name: check for the existence of link sources
   stat:
@@ -26,9 +26,9 @@
   become: true
   file:
     state: link
-    follow: no
-    force: yes
+    follow: false
+    force: true
     owner: '{{ user }}'
-    src:  '{{ item.path }}'
+    src: '{{ item.path }}'
     dest: '{{ item.dest }}'
   with_items: '{{ link_items }}'

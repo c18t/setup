@@ -1,5 +1,4 @@
 ---
-
 - name: check rustup
   shell: type rustup
   args:
@@ -7,22 +6,23 @@
   register: type_rustup
   failed_when: type_rustup.rc not in [0, 1, 126, 127]
   changed_when: false
-  check_mode: no
+  check_mode: false
 
-- block:
-  - name: download rustup installer
-    get_url:
-      url: https://sh.rustup.rs
-      dest: '{{ home }}/.rustup.sh'
-      mode: 0755
-  - name: install rustup
-    shell: '{{ home }}/.rustup.sh -y'
-    args:
-      executable: '{{ fish_path }}'
-  - name: delete rustup installer
-    file:
-      path: '{{ home }}/.rustup.sh'
-      state: absent
+- name: install rust
+  block:
+    - name: download rustup installer
+      get_url:
+        url: https://sh.rustup.rs
+        dest: '{{ home }}/.rustup.sh'
+        mode: 0755
+    - name: install rustup
+      shell: '{{ home }}/.rustup.sh -y'
+      args:
+        executable: '{{ fish_path }}'
+    - name: delete rustup installer
+      file:
+        path: '{{ home }}/.rustup.sh'
+        state: absent
   when: type_rustup.rc != 0
 
 - name: add .cargo/bin to fish_user_paths
@@ -44,7 +44,7 @@
     executable: '{{ fish_path }}'
   register: rust_config
   changed_when: false
-  check_mode: no
+  check_mode: false
 
 - name: make rust config
   copy:

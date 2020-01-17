@@ -1,25 +1,27 @@
 ---
-
 - name: check user's login shell (for other)
   shell: cat /etc/passwd | grep -q '{{ home }}:{{ fish_path }}'
   register: check_fish_is_login_shell
   failed_when: check_fish_is_login_shell.rc not in [0, 1]
   changed_when: false
-  check_mode: no
+  check_mode: false
 
-- block:
-  - name: find expect
-    shell: which expect
-    register: which_expect
-    changed_when: false
-    check_mode: no
-  - name: change login shell to fish
-    script: chsh.exp "{{ fish_path }}" "{{ my_password }}"
-    args:
-      executable: '{{ which_expect.stdout }}'
-  - name: recheck user's login shell
-    shell: cat /etc/passwd | grep -q '{{ home }}:{{ fish_path }}'
-    register: check_fish_is_login_shell
-    changed_when: false
-    check_mode: no
+- name: change login shell to fish
+  block:
+    - name: find expect
+      shell: which expect
+      register: which_expect
+      changed_when: false
+      check_mode: false
+
+    - name: change login shell to fish
+      script: chsh.exp "{{ fish_path }}" "{{ my_password }}"
+      args:
+        executable: '{{ which_expect.stdout }}'
+
+    - name: recheck user's login shell
+      shell: cat /etc/passwd | grep -q '{{ home }}:{{ fish_path }}'
+      register: check_fish_is_login_shell
+      changed_when: false
+      check_mode: false
   when: check_fish_is_login_shell.rc != 0

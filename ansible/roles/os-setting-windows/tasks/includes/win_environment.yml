@@ -1,17 +1,16 @@
 ---
-
 - name: set environment variables
   win_environment:
     level: '{{ item.level }}'
     name: '{{ item.name }}'
     value: '{{ item.value }}'
   with_items:
-  - { level: 'user', name: 'MSYS', value: 'winsymlinks:nativestrict' }
-  - { level: 'user', name: 'MSYS2_PATH_TYPE', value: 'inherit' }
-  - { level: 'user', name: 'EDITOR', value: '{{ editor }}' }
-  - { level: 'user', name: 'VISUAL', value: '{{ visual }}' }
-  - { level: 'user', name: 'TMP', value: '{{ temporary_home }}' }
-  - { level: 'user', name: 'TEMP', value: '{{ temporary_home }}' }
-  - { level: 'user', name: 'XDG_CACHE_HOME', value: '{{ xdg_cache_home }}' }
-  - { level: 'user', name: 'XDG_CONFIG_HOME', value: '{{ xdg_config_home }}' }
-  - { level: 'user', name: 'XDG_DATA_HOME', value: '{{ xdg_data_home }}' }
+    - { level: 'user', name: 'MSYS', value: 'winsymlinks:nativestrict' }
+    - { level: 'user', name: 'MSYS2_PATH_TYPE', value: 'inherit' }
+    - { level: 'user', name: 'EDITOR', value: '{{ editor }}' }
+    - { level: 'user', name: 'VISUAL', value: '{{ visual }}' }
+    - { level: 'user', name: 'TMP', value: '{{ temporary_home }}' }
+    - { level: 'user', name: 'TEMP', value: '{{ temporary_home }}' }
+    - { level: 'user', name: 'XDG_CACHE_HOME', value: '{{ xdg_cache_home }}' }
+    - { level: 'user', name: 'XDG_CONFIG_HOME', value: '{{ xdg_config_home }}' }
+    - { level: 'user', name: 'XDG_DATA_HOME', value: '{{ xdg_data_home }}' }

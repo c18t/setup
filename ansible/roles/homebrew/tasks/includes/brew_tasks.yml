@@ -1,9 +1,8 @@
 ---
-
 - name: update Homebrew/Linuxbrew and upgrade fomulae (for {{ brew_distr }})
   homebrew:
-    update_homebrew: yes
-    upgrade_all: yes
+    update_homebrew: true
+    upgrade_all: true
   # GitHub Actionsで止まるようになってしまったのでスキップ
   when: >
     ansible_env.GITHUB_ACTIONS is not defined

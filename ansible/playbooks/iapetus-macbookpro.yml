@@ -1,32 +1,31 @@
 ---
-
 - hosts: local
   pre_tasks:
-  - include_vars: common.yml
-  - include: pre_tasks/set_resources.yml
+    - include_vars: common.yml
+    - include: pre_tasks/set_resources.yml
   handlers:
-  - include: handlers/handlers_macos.yml
+    - include: handlers/handlers_macos.yml
   roles: # 指定できる変数は各ロールの defaults/main.yml 参照
-  - role: os-setting-macos
-    tags: os-setting-macos
-  - role: home
-    tags: home
-  - role: homebrew
-    tags: homebrew
-  - role: iterm2
-    tags: iterm2
-  - role: vscode
-    tags: vscode
-  - role: nvim
-    tags: nvim
-  - role: fish-shell
-    tags: fish-shell
-  - role: anyenv
-    tags: anyenv
-  - role: lang
-    tags: lang
-  - role: command-line
-    tags: command-line
+    - role: os-setting-macos
+      tags: os-setting-macos
+    - role: home
+      tags: home
+    - role: homebrew
+      tags: homebrew
+    - role: iterm2
+      tags: iterm2
+    - role: vscode
+      tags: vscode
+    - role: nvim
+      tags: nvim
+    - role: fish-shell
+      tags: fish-shell
+    - role: anyenv
+      tags: anyenv
+    - role: lang
+      tags: lang
+    - role: command-line
+      tags: command-line
   vars:
     # common
     my_editor: code
@@ -53,6 +52,6 @@
     php_build_config: configure_options-mac
     php_build_extra_make_arguments: -j 4
   vars_prompt:
-  - name: my_password
-    prompt: "User password"
-    private: yes
+    - name: my_password
+      prompt: 'User password'
+      private: true

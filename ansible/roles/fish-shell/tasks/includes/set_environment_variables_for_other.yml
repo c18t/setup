@@ -1,48 +1,53 @@
 ---
+- name: set_fact
+  block:
+    - name: echo LIBRARY_PATH (for other)
+      shell: echo $LIBRARY_PATH
+      args:
+        executable: '{{ fish_path }}'
+      register: echo_lib_path
+      changed_when: false
+      check_mode: false
 
-- block: # set_fact
-  - name: echo LIBRARY_PATH (for other)
-    shell: echo $LIBRARY_PATH
-    args:
-      executable: '{{ fish_path }}'
-    register: echo_lib_path
-    changed_when: false
-    check_mode: no
-  - name: echo LD_LIBRARY_PATH (for other)
-    shell: echo $LD_LIBRARY_PATH
-    args:
-      executable: '{{ fish_path }}'
-    register: echo_ld_lib_path
-    changed_when: false
-    check_mode: no
-  - name: echo C_INCLUDE_PATH (for other)
-    shell: echo $C_INCLUDE_PATH
-    args:
-      executable: '{{ fish_path }}'
-    register: echo_c_include_path
-    changed_when: false
-    check_mode: no
-  - name: echo CPLUS_INCLUDE_PATH (for other)
-    shell: echo $CPLUS_INCLUDE_PATH
-    args:
-      executable: '{{ fish_path }}'
-    register: echo_cplus_include_path
-    changed_when: false
-    check_mode: no
-  - name: echo OBJC_INCLUDE_PATH (for other)
-    shell: echo $OBJC_INCLUDE_PATH
-    args:
-      executable: '{{ fish_path }}'
-    register: echo_objc_include_path
-    changed_when: false
-    check_mode: no
-  - name: set [ld_]lib_path and [obj]c[plus]_include_path (for other)
-    set_fact:
-      lib_path: '{{ echo_lib_path.stdout }}'
-      ld_lib_path: '{{ echo_ld_lib_path.stdout }}'
-      c_include_path: '{{ echo_c_include_path.stdout }}'
-      cplus_include_path: '{{ echo_cplus_include_path.stdout }}'
-      objc_include_path: '{{ echo_objc_include_path.stdout }}'
+    - name: echo LD_LIBRARY_PATH (for other)
+      shell: echo $LD_LIBRARY_PATH
+      args:
+        executable: '{{ fish_path }}'
+      register: echo_ld_lib_path
+      changed_when: false
+      check_mode: false
+
+    - name: echo C_INCLUDE_PATH (for other)
+      shell: echo $C_INCLUDE_PATH
+      args:
+        executable: '{{ fish_path }}'
+      register: echo_c_include_path
+      changed_when: false
+      check_mode: false
+
+    - name: echo CPLUS_INCLUDE_PATH (for other)
+      shell: echo $CPLUS_INCLUDE_PATH
+      args:
+        executable: '{{ fish_path }}'
+      register: echo_cplus_include_path
+      changed_when: false
+      check_mode: false
+
+    - name: echo OBJC_INCLUDE_PATH (for other)
+      shell: echo $OBJC_INCLUDE_PATH
+      args:
+        executable: '{{ fish_path }}'
+      register: echo_objc_include_path
+      changed_when: false
+      check_mode: false
+
+    - name: set [ld_]lib_path and [obj]c[plus]_include_path (for other)
+      set_fact:
+        lib_path: '{{ echo_lib_path.stdout }}'
+        ld_lib_path: '{{ echo_ld_lib_path.stdout }}'
+        c_include_path: '{{ echo_c_include_path.stdout }}'
+        cplus_include_path: '{{ echo_cplus_include_path.stdout }}'
+        objc_include_path: '{{ echo_objc_include_path.stdout }}'
 
 - name: add Linuxbrew to LIBRARY_PATH (for other)
   shell: set -Ux LIBRARY_PATH "{{ item }}" $LIBRARY_PATH
@@ -50,8 +55,8 @@
     executable: '{{ fish_path }}'
   when: lib_path is not search(item)
   with_items:
-  - '{{ brew_prefix }}/lib'
-  - '/usr/lib/x86_64-linux-gnu' # linuxbrewのlibより先に読み込ませる(for curl)
+    - '{{ brew_prefix }}/lib'
+    - '/usr/lib/x86_64-linux-gnu' # linuxbrewのlibより先に読み込ませる(for curl)
 
 - name: add Linuxbrew to LD_LIBRARY_PATH (for other)
   shell: set -Ux LD_LIBRARY_PATH "{{ item }}" $LD_LIBRARY_PATH
@@ -59,8 +64,8 @@
     executable: '{{ fish_path }}'
   when: ld_lib_path is not search(item)
   with_items:
-  - '{{ brew_prefix }}/lib'
-  - '/usr/lib/x86_64-linux-gnu' # linuxbrewのlibより先に読み込ませる(for curl)
+    - '{{ brew_prefix }}/lib'
+    - '/usr/lib/x86_64-linux-gnu' # linuxbrewのlibより先に読み込ませる(for curl)
 
 - name: add Linuxbrew to C_INCLUDE_PATH (for other)
   shell: set -Ux C_INCLUDE_PATH "{{ item }}" $C_INCLUDE_PATH
@@ -68,7 +73,7 @@
     executable: '{{ fish_path }}'
   when: c_include_path is not search(item)
   with_items:
-  - '{{ brew_prefix }}/include'
+    - '{{ brew_prefix }}/include'
 
 - name: add Linuxbrew to CPLUS_INCLUDE_PATH (for other)
   shell: set -Ux CPLUS_INCLUDE_PATH "{{ item }}" $CPLUS_INCLUDE_PATH
@@ -76,7 +81,7 @@
     executable: '{{ fish_path }}'
   when: cplus_include_path is not search(item)
   with_items:
-  - '{{ brew_prefix }}/include'
+    - '{{ brew_prefix }}/include'
 
 - name: add Linuxbrew to OBJC_INCLUDE_PATH (for other)
   shell: set -Ux OBJC_INCLUDE_PATH "{{ item }}" $OBJC_INCLUDE_PATH
@@ -84,25 +89,25 @@
     executable: '{{ fish_path }}'
   when: objc_include_path is not search(item)
   with_items:
-  - '{{ brew_prefix }}/include'
+    - '{{ brew_prefix }}/include'
 
 - name: make PKG_CONFIG_PATH config (for other)
   copy:
     dest: '{{ xdg_config_home }}/fish/conf.d/{{ item }}.fish'
     content: set -gx PKG_CONFIG_PATH "{{ brew_prefix }}/opt/{{ item }}/lib/pkgconfig" $PKG_CONFIG_PATH
   with_items:
-  - curl-openssl
-  - icu4c
-  - krb5
-  - libedit
-  - libxml2
-  - libzip
-  - ncurses
-  - oniguruma
-  - openldap
-  - openssl@1.1
-  - readline
-  - sqlite
-  - tidy-html5
-  - unixodbc
-  - zlib
+    - curl-openssl
+    - icu4c
+    - krb5
+    - libedit
+    - libxml2
+    - libzip
+    - ncurses
+    - oniguruma
+    - openldap
+    - openssl@1.1
+    - readline
+    - sqlite
+    - tidy-html5
+    - unixodbc
+    - zlib

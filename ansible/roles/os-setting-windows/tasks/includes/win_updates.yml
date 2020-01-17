@@ -1,7 +1,6 @@
 ---
-
 - name: install all critical and security updates
   win_updates:
     category_names:
-    - CriticalUpdates
-    - SecurityUpdates
+      - CriticalUpdates
+      - SecurityUpdates

@@ -1,17 +1,16 @@
 ---
-
 - name: get fish path
   shell: which fish
   register: which_fish
   failed_when: which_fish.rc not in [0, 1]
   changed_when: false
-  check_mode: no
+  check_mode: false
 
 - name: get login user paths
   shell: SHELL="{{ which_fish.stdout }}" fish -l -c "uniq_path; string join ':' \$PATH"
   register: echo_path
   changed_when: false
-  check_mode: no
+  check_mode: false
   when: which_fish.rc == 0
 
 - name: set global path

@@ -1,38 +1,40 @@
 ---
-
 - name: 'get anyenv plugin path {{ plugin.name }}'
   shell: 'echo (anyenv root)/plugins/{{ plugin.name }}'
   args:
     executable: '{{ fish_path }}'
   register: anyenv_plugin_path
   changed_when: false
-  check_mode: no
+  check_mode: false
 
 - name: 'check anyenv plugin {{ plugin.name }}'
   stat:
     path: '{{ anyenv_plugin_path.stdout }}'
   register: check_anyenv_plugin
 
-- block: # install plugin {{ plugin.repo }}
-  - name: 'get anyenv plugin {{ plugin.repo }}'
-    shell: 'ghq get {{ plugin.repo }} | grep -i {{ plugin.name }}'
-    args:
-      executable: '{{ fish_path }}'
-    register: get_anyenv_plugin
-    failed_when: get_anyenv_plugin.rc not in [0, 1]
-    changed_when: get_anyenv_plugin.stdout is not search('exists')
-  - name: 'get anyenv plugin local repositry path {{ plugin.name }}'
-    shell: 'echo (ghq root)/(ghq list | grep -ie \\b{{ plugin.repo }}\$)'
-    args:
-      executable: '{{ fish_path }}'
-    register: anyenv_plugin_source_path
-    changed_when: false
-    check_mode: no
-  - name: 'install anyenv plugins {{ plugin.name }}'
-    file:
-      state: link
-      follow: no
-      force: yes
-      src:  '{{ anyenv_plugin_source_path.stdout }}'
-      dest: '{{ anyenv_plugin_path.stdout }}'
+- name: install plugin {{ plugin.repo }}
+  block:
+    - name: 'get anyenv plugin {{ plugin.repo }}'
+      shell: 'ghq get {{ plugin.repo }} | grep -i {{ plugin.name }}'
+      args:
+        executable: '{{ fish_path }}'
+      register: get_anyenv_plugin
+      failed_when: get_anyenv_plugin.rc not in [0, 1]
+      changed_when: get_anyenv_plugin.stdout is not search('exists')
+
+    - name: 'get anyenv plugin local repositry path {{ plugin.name }}'
+      shell: 'echo (ghq root)/(ghq list | grep -ie \\b{{ plugin.repo }}\$)'
+      args:
+        executable: '{{ fish_path }}'
+      register: anyenv_plugin_source_path
+      changed_when: false
+      check_mode: false
+
+    - name: 'install anyenv plugins {{ plugin.name }}'
+      file:
+        state: link
+        follow: false
+        force: true
+        src: '{{ anyenv_plugin_source_path.stdout }}'
+        dest: '{{ anyenv_plugin_path.stdout }}'
   when: not check_anyenv_plugin.stat.exists

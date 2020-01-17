@@ -1,5 +1,4 @@
 ---
-
 - include: includes/set_fish_path.yml
 
 - name: check anyenv
@@ -7,35 +6,36 @@
   args:
     executable: '{{ fish_path }}'
   changed_when: false
-  check_mode: no
+  check_mode: false
 
 - include: includes/set_fish_user_paths.yml
 
-- block:
-  - include: languages/erlang.yml
-    tags: erlang
-  - include: languages/elixir.yml
-    tags: elixir
-  - include: languages/go.yml
-    tags: go
-  - include: languages/haskell.yml
-    tags: haskell
-  - include: languages/lua.yml
-    tags: lua
-  - include: languages/nim.yml
-    tags: nim
-  - include: languages/node.yml
-    tags: node
-  - include: languages/perl.yml
-    tags: perl
-  - include: languages/php.yml
-    tags: php
-  - include: languages/python.yml
-    tags: python
-  - include: languages/ruby.yml
-    tags: ruby
-  - include: languages/rust.yml
-    tags: rust
+- name: setup languages
+  block:
+    - include: languages/erlang.yml
+      tags: erlang
+    - include: languages/elixir.yml
+      tags: elixir
+    - include: languages/go.yml
+      tags: go
+    - include: languages/haskell.yml
+      tags: haskell
+    - include: languages/lua.yml
+      tags: lua
+    - include: languages/nim.yml
+      tags: nim
+    - include: languages/node.yml
+      tags: node
+    - include: languages/perl.yml
+      tags: perl
+    - include: languages/php.yml
+      tags: php
+    - include: languages/python.yml
+      tags: python
+    - include: languages/ruby.yml
+      tags: ruby
+    - include: languages/rust.yml
+      tags: rust
   # NOTE: xenv系のコマンドが$(basename $SHELL)でシェルを判定することから
   #       ansibleを開始したシェルが$SHELLに入っていると失敗するため
   #       $SHELLを上書きする

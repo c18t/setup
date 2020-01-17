@@ -1,5 +1,4 @@
 ---
-
 # config: roles/command-line/vars/gem-packages.yml
 gem_config: gem-packages.yml
 # config: roles/command-line/vars/npm-packages.yml

@@ -1,9 +1,8 @@
 ---
-
 - hosts: local
   pre_tasks:
-  - include: pre_tasks/set_common_vars.yml
+    - include: pre_tasks/set_common_vars.yml
   roles:
-  - vscode
+    - vscode
   vars:
     vscode_extensions: tests/.test-null.yml

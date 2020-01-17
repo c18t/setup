@@ -1,5 +1,4 @@
 ---
-
 - name: assert pip packages config
   assert:
     that:
@@ -8,45 +7,51 @@
       - pip_config != ''
     quiet: true
 
-- block:
-  - name: 'include roles/command-line/vars/{{ pip_config }}'
-    include_vars: '{{ pip_config }}'
-  - name: assert pip_config
-    assert:
-      that: pip_config is not defined or pip_config is iterable
-      quiet: true
+- name: include pip packages config
+  block:
+    - name: 'include roles/command-line/vars/{{ pip_config }}'
+      include_vars: '{{ pip_config }}'
+    - name: assert pip_config
+      assert:
+        that: pip_config is not defined or pip_config is iterable
+        quiet: true
 
-- block:
-  - name: install python modules (for Windows)
-    win_shell: if (-Not(pip show {{ item }})) { pip install {{ item }}; }
-    register: pip_install
-    changed_when: pip_install.stdout is search('Successfully installed')
-    when: pip_packages is defined and pip_packages | length > 0
-    with_items: '{{ pip_packages }}'
+- name: install python modules (for Windows)
+  block:
+    - name: install python modules (for Windows)
+      win_shell: if (-Not(pip show {{ item }})) { pip install {{ item }}; }
+      register: pip_install
+      changed_when: pip_install.stdout is search('Successfully installed')
+      when: pip_packages is defined and pip_packages | length > 0
+      with_items: '{{ pip_packages }}'
   when: ansible_os_family == "Windows"
 
-- block:
-  - name: check python3 on Homebrew/Linuxbrew
-    shell: type '{{ brew_prefix }}/opt/python/bin/pip3' >/dev/null 2>&1 && echo {{ brew_prefix }}/opt/python/bin/pip3
-    register: type_pip3
-    failed_when: false
-    changed_when: false
-    check_mode: no
-  # MacOSXだとHomebrewでpip3が入らないのでシステムのpip3を使う
-  - name: check python3 on system
-    shell: which pip3
-    register: which_pip3
-    changed_when: false
-    check_mode: no
-    when: type_pip3.rc != 0
-  - name: set pip3 path
-    set_fact:
-      pip3_path: '{{ (type_pip3.rc == 0 and type_pip3.stdout) or which_pip3.stdout }}'
-  - name: install python modules
-    become: true
-    pip:
-      name: '{{ item }}'
-      executable: '{{ pip3_path }}'
-    when: pip_packages is defined and pip_packages | length > 0
-    with_items: '{{ pip_packages }}'
+- name: install python modules (for other)
+  block:
+    - name: check python3 on Homebrew/Linuxbrew
+      shell: type '{{ brew_prefix }}/opt/python/bin/pip3' >/dev/null 2>&1 && echo {{ brew_prefix }}/opt/python/bin/pip3
+      register: type_pip3
+      failed_when: false
+      changed_when: false
+      check_mode: false
+
+    # MacOSXだとHomebrewでpip3が入らないのでシステムのpip3を使う
+    - name: check python3 on system
+      shell: which pip3
+      register: which_pip3
+      changed_when: false
+      check_mode: false
+      when: type_pip3.rc != 0
+
+    - name: set pip3 path
+      set_fact:
+        pip3_path: '{{ (type_pip3.rc == 0 and type_pip3.stdout) or which_pip3.stdout }}'
+
+    - name: install python modules
+      become: true
+      pip:
+        name: '{{ item }}'
+        executable: '{{ pip3_path }}'
+      when: pip_packages is defined and pip_packages | length > 0
+      with_items: '{{ pip_packages }}'
   when: ansible_os_family != "Windows"

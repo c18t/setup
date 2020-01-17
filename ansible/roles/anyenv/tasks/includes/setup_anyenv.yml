@@ -1,17 +1,16 @@
 ---
-
 - name: make anyenv config directory
   file:
     state: directory
-    follow: yes
+    follow: true
     path: '{{ xdg_config_home }}/anyenv'
 
 - name: make anyenv resource directories
   file:
     state: directory
-    follow: yes
+    follow: true
     path: '{{ home }}/.anyenv/{{ item }}'
-  with_items: [ envs, shims, plugins ]
+  with_items: [envs, shims, plugins]
 
 - name: check anyenv-install
   shell: anyenv install -l
@@ -20,39 +19,43 @@
   register: check_anyenv_install
   failed_when: false
   changed_when: false
-  check_mode: no
+  check_mode: false
 
-- block: # install anyenv-install
-  - name: check anyenv-install local repositry
-    shell: 'ghq list | grep -iq \\b{{ anyenv_install_repository }}\$'
-    args:
-      executable: '{{ fish_path }}'
-    register: check_anyenv_install_local_repositry
-    failed_when: check_anyenv_install_local_repositry.rc not in [0, 1]
-    changed_when: false
-    check_mode: no
-  - name: get anyenv-install
-    shell: 'ghq get {{ anyenv_install_repository }} | grep -iqe \\banyenv-install\$'
-    args:
-      executable: '{{ fish_path }}'
-    register: get_anyenv_install
-    failed_when: get_anyenv_install.rc not in [0, 1]
-    changed_when: get_anyenv_install.stdout is not search('exists')
-    when: check_anyenv_install_local_repositry.rc != 0
-  - name: get anyenv-install local repositry path
-    shell: 'echo (ghq root)/(ghq list | grep -ie \\b{{ anyenv_install_repository }}\$)'
-    args:
-      executable: '{{ fish_path }}'
-    register: get_anyenv_install_source_path
-    changed_when: false
-    check_mode: no
-  - name: install anyenv-install
-    file:
-      state: link
-      follow: no
-      force: yes
-      src:  '{{ get_anyenv_install_source_path.stdout }}'
-      dest: '{{ xdg_config_home }}/anyenv/anyenv-install'
+- name: install anyenv-install
+  block:
+    - name: check anyenv-install local repositry
+      shell: 'ghq list | grep -iq \\b{{ anyenv_install_repository }}\$'
+      args:
+        executable: '{{ fish_path }}'
+      register: check_anyenv_install_local_repositry
+      failed_when: check_anyenv_install_local_repositry.rc not in [0, 1]
+      changed_when: false
+      check_mode: false
+
+    - name: get anyenv-install
+      shell: 'ghq get {{ anyenv_install_repository }} | grep -iqe \\banyenv-install\$'
+      args:
+        executable: '{{ fish_path }}'
+      register: get_anyenv_install
+      failed_when: get_anyenv_install.rc not in [0, 1]
+      changed_when: get_anyenv_install.stdout is not search('exists')
+      when: check_anyenv_install_local_repositry.rc != 0
+
+    - name: get anyenv-install local repositry path
+      shell: 'echo (ghq root)/(ghq list | grep -ie \\b{{ anyenv_install_repository }}\$)'
+      args:
+        executable: '{{ fish_path }}'
+      register: get_anyenv_install_source_path
+      changed_when: false
+      check_mode: false
+
+    - name: install anyenv-install
+      file:
+        state: link
+        follow: false
+        force: true
+        src: '{{ get_anyenv_install_source_path.stdout }}'
+        dest: '{{ xdg_config_home }}/anyenv/anyenv-install'
   when: check_anyenv_install.rc != 0
 
 - name: check anyenv update command
@@ -62,7 +65,8 @@
   register: check_anyenv_update
   failed_when: check_anyenv_update.rc not in [0, 1]
   changed_when: false
-  check_mode: no
+  check_mode: false
+
 - name: update anyenv
   shell: anyenv update | grep -iqv "\\bSkipping\\b\\|\\bUpdating\\b"
   args:

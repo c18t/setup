@@ -1,10 +1,9 @@
 ---
-
 - name: find fish
   shell: which fish
   register: which_fish
   changed_when: false
-  check_mode: no
+  check_mode: false
 
 - name: set fish_path
   set_fact:

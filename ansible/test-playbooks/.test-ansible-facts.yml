@@ -1,7 +1,6 @@
 ---
-
 - hosts: local
   pre_tasks:
-  - include: pre_tasks/set_common_vars.yml
+    - include: pre_tasks/set_common_vars.yml
   tasks:
-  - debug: var=ansible_facts
+    - debug: var=ansible_facts

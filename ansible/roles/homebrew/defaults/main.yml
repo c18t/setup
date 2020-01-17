@@ -1,4 +1,3 @@
 ---
-
 # homebrew用変数設定ファイル: roles/homebrew/vars/{{ homebrew_config }}
 homebrew_config: null

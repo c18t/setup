@@ -1,62 +1,61 @@
 ---
-
 code_install_extensions:
-- bierner.markdown-checkbox
-- bierner.markdown-preview-github-styles
-- bungcip.better-toml
-- casualjim.theme-desertex
-- chrisdias.vscode-opennewinstance
-- CoenraadS.bracket-pair-colorizer
-- darkriszty.markdown-table-prettify
-- dawhite.mustache
-- dbaeumer.vscode-eslint
-- donjayamanne.githistory
-- eamodio.gitlens
-- EFanZh.graphviz-preview
-- electrotype.windows-explorer-context-menu
-- EliverLara.andromeda
-- esbenp.prettier-vscode
-- fallenwood.vimL
-- felixfbecker.php-debug
-- gamunu.vscode-yarn
-- geeklearningio.graphviz-markdown-preview
-- IBM.output-colorizer
-- idleberg.badges
-- jebbs.plantuml
-- jinsihou.diff-tool
-- justusadam.language-haskell
-- kenhowardpdx.vscode-gist
-- kisstkondoros.vscode-codemetrics
-- kosz78.nim
-- kukushi.pasteurl
-- lextudio.restructuredtext
-- mattn.OpenVim
-- me-dutour-mathieu.vscode-github-actions
-- mechatroner.rainbow-csv
-- mitchdenny.ecdc
-- mjmcloug.vscode-elixir
-- mosapride.zenkaku
-- mrmlnc.vscode-apache
-- ms-azuretools.vscode-docker
-- MS-CEINTL.vscode-language-pack-ja
-- ms-python.python
-- ms-vscode-remote.remote-wsl
-- ms-vscode.cpptools
-- ms-vscode.csharp
-- ms-vscode.Go
-- ms-vscode.powershell
-- msjsdiag.cordova-tools
-- octref.vetur
-- oderwat.indent-rainbow
-- PKief.markdown-checkbox
-- redhat.vscode-yaml
-- shuworks.vscode-table-formatter
-- Stephanvs.dot
-- sysoev.language-stylus
-- thisismanta.stylus-supremacy
-- tomoki1207.pdf
-- Tyriar.sort-lines
-- vscode-icons-team.vscode-icons
-- vscodevim.vim
-- vscoss.vscode-ansible
-- wayou.vscode-todo-highlight
+  - bierner.markdown-checkbox
+  - bierner.markdown-preview-github-styles
+  - bungcip.better-toml
+  - casualjim.theme-desertex
+  - chrisdias.vscode-opennewinstance
+  - CoenraadS.bracket-pair-colorizer
+  - darkriszty.markdown-table-prettify
+  - dawhite.mustache
+  - dbaeumer.vscode-eslint
+  - donjayamanne.githistory
+  - eamodio.gitlens
+  - EFanZh.graphviz-preview
+  - electrotype.windows-explorer-context-menu
+  - EliverLara.andromeda
+  - esbenp.prettier-vscode
+  - fallenwood.vimL
+  - felixfbecker.php-debug
+  - gamunu.vscode-yarn
+  - geeklearningio.graphviz-markdown-preview
+  - IBM.output-colorizer
+  - idleberg.badges
+  - jebbs.plantuml
+  - jinsihou.diff-tool
+  - justusadam.language-haskell
+  - kenhowardpdx.vscode-gist
+  - kisstkondoros.vscode-codemetrics
+  - kosz78.nim
+  - kukushi.pasteurl
+  - lextudio.restructuredtext
+  - mattn.OpenVim
+  - me-dutour-mathieu.vscode-github-actions
+  - mechatroner.rainbow-csv
+  - mitchdenny.ecdc
+  - mjmcloug.vscode-elixir
+  - mosapride.zenkaku
+  - mrmlnc.vscode-apache
+  - ms-azuretools.vscode-docker
+  - MS-CEINTL.vscode-language-pack-ja
+  - ms-python.python
+  - ms-vscode-remote.remote-wsl
+  - ms-vscode.cpptools
+  - ms-vscode.csharp
+  - ms-vscode.Go
+  - ms-vscode.powershell
+  - msjsdiag.cordova-tools
+  - octref.vetur
+  - oderwat.indent-rainbow
+  - PKief.markdown-checkbox
+  - redhat.vscode-yaml
+  - shuworks.vscode-table-formatter
+  - Stephanvs.dot
+  - sysoev.language-stylus
+  - thisismanta.stylus-supremacy
+  - tomoki1207.pdf
+  - Tyriar.sort-lines
+  - vscode-icons-team.vscode-icons
+  - vscodevim.vim
+  - vscoss.vscode-ansible
+  - wayou.vscode-todo-highlight
