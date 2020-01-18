@@ -1,5 +1,7 @@
 ---
 pip_packages:
+  - autopep8
+  - flake8
   - jupyter
   - pre-commit
   - sphinx
