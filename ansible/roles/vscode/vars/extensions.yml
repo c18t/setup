@@ -2,6 +2,7 @@
 code_install_extensions:
   - bierner.markdown-checkbox
   - bierner.markdown-preview-github-styles
+  - bmalehorn.vscode-fish
   - bungcip.better-toml
   - casualjim.theme-desertex
   - chrisdias.vscode-opennewinstance
