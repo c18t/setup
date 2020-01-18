@@ -43,6 +43,7 @@
     scoop_config: scoop-khronos.yml
     # vscode
     vscode_extensions: extensions.yml
+    vscode_confing: settings-win.json
   vars_prompt:
     - name: win_username
       prompt: 'Windows username'

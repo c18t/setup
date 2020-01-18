@@ -1,3 +1,6 @@
 ---
 # vscode拡張リストファイル: roles/vscode/vars/{{ vscode_extensions }}
 vscode_extensions: null
+
+# vscode setting.json: roles/vscode/vars/{{ vscode_confing }}
+vscode_confing: null

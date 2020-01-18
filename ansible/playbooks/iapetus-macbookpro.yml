@@ -38,6 +38,7 @@
     homebrew_config: brewfile-iapetus.yml
     # vscode
     vscode_extensions: extensions.yml
+    vscode_confing: settings-mac.json
     # fish-shell
     fish_shell_config: config-mac.fish
     # lang

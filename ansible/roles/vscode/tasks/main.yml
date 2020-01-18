@@ -16,7 +16,12 @@
         quiet: true
   when: vscode_extensions is defined
 
-- name: install vscode extensions (for Windows)
+- name: assert vscode_confing
+  assert:
+    that: vscode_confing is string and vscode_confing != ''
+    quiet: true
+
+- name: settings for Windows
   block:
     - name: check vscode (for Windows)
       win_shell: gcm code -ErrorAction SilentlyContinue
@@ -32,28 +37,40 @@
       changed_when: install_vscode_ex.rc == 0
       with_items: '{{ code_install_extensions }}'
       when: type_code.rc == 0 and code_install_extensions | length > 0
+
+    - name: make setting directory (for Windows)
+      win_file:
+        state: directory
+        path: '{{ item }}'
+      with_items:
+        - '{{ my_xdg_cache_home }}\Code\User'
+
+    - name: link to settings.json (for Windows)
+      become: true
+      win_shell: >-
+        if (-Not(Test-Path "{{ item.dest }}")) {
+          New-Item -Type SymbolicLink -Value "{{ item.path }}" -Path "{{ item.dest }}"; exit 2
+        }
+      register: make_link
+      failed_when: make_link.rc not in [0, 2]
+      changed_when: make_link.rc == 2
+      with_items:
+        # setting.json
+        - path: '{{ dotfiles }}\vscode\{{ vscode_confing }}'
+          dest: '{{ my_xdg_cache_home }}\Code\User\settings.json'
   when: ansible_os_family == "Windows"
 
-- name: install vscode extensions (for other)
+- name: settings for MacOSX
   block:
-    - name: check cmd.exe (for WSL)
-      shell: type cmd.exe
-      register: type_cmd
-      failed_when: type_cmd.rc not in [0, 1, 126, 127]
-      changed_when: false
-      check_mode: false
-
-    - name: check vscode
+    - name: check vscode (for MacOSX)
       shell: type code
       register: type_code
       failed_when: type_code.rc not in [0, 1, 126, 127]
       changed_when: false
       check_mode: false
 
-    - name: install vscode extensions
+    - name: install vscode extensions (for MacOSX)
       shell: 'code --install-extension {{ item }} | grep -iq "successfully installed"'
-      args:
-        executable: '{{ (type_cmd.rc == 0 and "cmd.exe") or omit }}'
       register: install_vscode_ex
       failed_when: install_vscode_ex.rc not in [0, 1]
       changed_when: install_vscode_ex.rc == 0
@@ -64,4 +81,26 @@
           or ansible_env.GITHUB_ACTIONS != 'true')
           and
         type_code.rc == 0 and code_install_extensions | length > 0
-  when: ansible_os_family != "Windows"
+
+    - name: make setting directory (for MacOSX)
+      file:
+        state: directory
+        follow: true
+        path: '{{ item }}'
+      with_items:
+        - '{{ home }}/Library/Application Support/Code/User'
+
+    - name: link to settings.json (for MacOSX)
+      become: true
+      file:
+        state: link
+        follow: false
+        force: true
+        owner: '{{ user }}'
+        src: '{{ item.path }}'
+        dest: '{{ item.dest }}'
+      with_items:
+        # setting.json
+        - path: '{{ dotfiles }}/vscode/{{ vscode_confing }}'
+          dest: '{{ home }}/Library/Application Support/Code/User/settings.json'
+  when: ansible_distribution == "MacOSX"
