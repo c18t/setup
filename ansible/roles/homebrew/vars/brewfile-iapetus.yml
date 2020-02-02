@@ -27,6 +27,7 @@ brew_fomulae:
   - graphviz
   - hardlink-osx
   - haskell-stack
+  - helm
   - hub
   - icu4c # for phpenv
   - krb5 # for phpenv

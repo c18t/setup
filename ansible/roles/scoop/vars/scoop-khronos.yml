@@ -26,6 +26,7 @@ scoop_packages:
   - { name: gpg4win, global: true }
   - { name: gradle, global: true }
   - { name: graphviz, global: true }
+  - { name: helm, global: true }
   - { name: honeyview }
   - { name: inkscape }
   - { name: jmeter, global: true }
