@@ -15,6 +15,7 @@ scoop_packages:
   - { name: calibre }
   - { name: direnv, global: true }
   - { name: discord }
+  - { name: dotnet-sdk, global: true }
   - { name: firefox }
   - { name: firefox-nightly }
   - { name: fork }
@@ -22,6 +23,7 @@ scoop_packages:
   - { name: git, global: true }
   - { name: ghostscript, global: true }
   - { name: ghq, global: true }
+  - { name: go, global: true }
   - { name: googlechrome-dev }
   - { name: gpg4win, global: true }
   - { name: gradle, global: true }
