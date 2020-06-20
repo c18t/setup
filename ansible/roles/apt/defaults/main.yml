@@ -1,3 +1,12 @@
 ---
-# apt用変数設定ファイル: roles/apt/vars/{{ apt_config }}
-apt_config: null
+# apt-key用認証キーURL
+# . apt_keyモジュールのurlパラメータの値をリストで指定する
+apt_keys: []
+
+# 追加する外部リポジトリ
+# . apt_repositoryモジュールのrepoパラメーターの値をリストで指定する
+apt_repositories: []
+
+# 追加するパッケージ
+# . aptモジュールのnameパラメータの値をリストで指定する
+apt_packages: []
