@@ -46,6 +46,7 @@ code_install_extensions:
   - ms-vscode.Go
   - ms-vscode.powershell
   - msjsdiag.cordova-tools
+  - msjsdiag.debugger-for-chrome
   - octref.vetur
   - oderwat.indent-rainbow
   - PKief.markdown-checkbox
