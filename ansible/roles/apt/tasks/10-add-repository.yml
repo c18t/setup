@@ -3,10 +3,10 @@
   become: true
   apt_key:
     url: '{{ item }}'
-  with_items: '{{ apt_keys }}'
+  loop: '{{ apt_keys }}'
 
 - name: add apt repositories
   become: true
   apt_repository:
     repo: '{{ item }}'
-  with_items: '{{ apt_repositories }}'
+  loop: '{{ apt_repositories }}'
