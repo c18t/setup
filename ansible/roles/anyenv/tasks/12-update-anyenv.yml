@@ -1,0 +1,18 @@
+---
+- name: check anyenv update command
+  shell: anyenv commands | grep -iq \\bupdate\\b
+  args:
+    executable: '{{ fish_path }}'
+  register: check_anyenv_update
+  failed_when: check_anyenv_update.rc not in [0, 1]
+  changed_when: false
+  check_mode: false
+
+- name: update anyenv
+  shell: anyenv update | grep -iqv "\\bSkipping\\b\\|\\bUpdating\\b"
+  args:
+    executable: '{{ fish_path }}'
+  register: anyenv_update
+  failed_when: anyenv_update.rc not in [0, 1]
+  changed_when: anyenv_update.rc == 0
+  when: check_anyenv_update.rc == 0

@@ -1,9 +1,0 @@
----
-- include: includes/get_anyenv_source_path.yml
-
-- name: make anyenv directory
-  file:
-    state: directory
-    follow: true
-    path: '{{ anyenv_source_path }}/{{ item }}'
-  with_items: [envs, shims, plugins]

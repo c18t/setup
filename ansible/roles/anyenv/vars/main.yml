@@ -1,3 +1,7 @@
 ---
 # anyenv-install repository
 anyenv_install_repository: c18t/anyenv-install
+
+# anyenv-install plugins
+anyenv_install_plugins:
+  - { name: anyenv-update, repo: znz/anyenv-update }

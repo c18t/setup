@@ -1,5 +1,5 @@
 ---
-- name: 'get anyenv plugin path {{ plugin.name }}'
+- name: get anyenv plugin path {{ plugin.name }}
   shell: 'echo (anyenv root)/plugins/{{ plugin.name }}'
   args:
     executable: '{{ fish_path }}'
@@ -7,14 +7,14 @@
   changed_when: false
   check_mode: false
 
-- name: 'check anyenv plugin {{ plugin.name }}'
+- name: check anyenv plugin {{ plugin.name }}
   stat:
     path: '{{ anyenv_plugin_path.stdout }}'
   register: check_anyenv_plugin
 
 - name: install plugin {{ plugin.repo }}
   block:
-    - name: 'get anyenv plugin {{ plugin.repo }}'
+    - name: get anyenv plugin {{ plugin.repo }}
       shell: 'ghq get {{ plugin.repo }} | grep -i {{ plugin.name }}'
       args:
         executable: '{{ fish_path }}'
@@ -22,7 +22,7 @@
       failed_when: get_anyenv_plugin.rc not in [0, 1]
       changed_when: get_anyenv_plugin.stdout is not search('exists')
 
-    - name: 'get anyenv plugin local repositry path {{ plugin.name }}'
+    - name: get anyenv plugin local repositry path {{ plugin.name }}
       shell: 'echo (ghq root)/(ghq list | grep -ie \\b{{ plugin.repo }}\$)'
       args:
         executable: '{{ fish_path }}'
@@ -30,7 +30,7 @@
       changed_when: false
       check_mode: false
 
-    - name: 'install anyenv plugins {{ plugin.name }}'
+    - name: install anyenv plugins {{ plugin.name }}
       file:
         state: link
         follow: false
