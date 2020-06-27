@@ -1,0 +1,10 @@
+---
+- name: assert home_ssh_config
+  assert:
+    that: home_ssh_config is string and home_ssh_config != ''
+    quiet: true
+
+- name: assert home_git_config
+  assert:
+    that: home_git_config is string and home_git_config != ''
+    quiet: true

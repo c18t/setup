@@ -1,5 +1,8 @@
 ---
 # ssh config
-ssh_config: null
+# . シンボリックリンク作成時のリンク先ファイルパス
+home_ssh_config: null
+
 # .gitconfig
-git_config: null
+# . シンボリックリンク作成時のリンク先ファイルパス
+home_git_config: null
