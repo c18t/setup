@@ -1,0 +1,5 @@
+---
+- name: assert fish_shell_confing
+  assert:
+    that: fish_shell_confing is string and fish_shell_confing != ''
+    quiet: true

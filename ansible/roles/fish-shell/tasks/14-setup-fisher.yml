@@ -1,4 +1,6 @@
 ---
+- include: includes/set_fish_path.yml
+
 - name: check fisher
   shell: type fisher
   args:

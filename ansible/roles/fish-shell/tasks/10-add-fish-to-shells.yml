@@ -1,4 +1,6 @@
 ---
+- include: includes/set_fish_path.yml
+
 - name: check fish is enabled as login shells
   shell: cat /etc/shells | grep -q '{{ fish_path }}'
   register: fish_in_shells
