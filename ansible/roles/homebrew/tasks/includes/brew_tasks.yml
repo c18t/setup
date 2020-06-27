@@ -12,22 +12,27 @@
   homebrew_tap:
     name: '{{ homebrew_taps }}'
 
-- name: install Homebrew/Linuxbrew formurae (for {{ brew_distr }})
-  homebrew:
-    name: '{{ item }}'
+# - name: install Homebrew/Linuxbrew formurae (for {{ brew_distr }})
+#   homebrew:
+#     name: '{{ homebrew_fomulae }}'
+
+- name: homebrew_fomulae loop
+  include: includes/brew_fomulae.yml
   # どれかが失敗してもすべて実施されるように loop で指定
-  # Note: ansible.cfgの[defaults] squash_actions切っておくこと
   loop: '{{ homebrew_fomulae }}'
 
-- name: install Homebrew/Linuxbrew casks (for {{ brew_distr }})
-  homebrew_cask:
-    name: '{{ item }}'
+# - name: install Homebrew/Linuxbrew casks (for {{ brew_distr }})
+#   homebrew_cask:
+#     name: '{{ homebrew_casks }}'
+
+- name: homebrew_casks loop
+  include: includes/brew_casks.yml
   # どれかが失敗してもすべて実施されるように loop で指定
   loop: '{{ homebrew_casks }}'
 
 - name: mas install (for {{ brew_distr }})
-  script: 'mas.sh {{ item }}'
+  script: 'mas.sh {{ item.id }}'
   register: mas_result
   changed_when: mas_result.rc == 1
   failed_when: mas_result.rc not in [0, 1]
-  loop: '{{ mas_apps }}'
+  loop: '{{ homebrew_mas_apps }}'

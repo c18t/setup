@@ -12,5 +12,6 @@ homebrew_fomulae: []
 homebrew_casks: []
 
 # App Storeアプリリスト
-# masコマンドでインストールするアプリIDのリストを指定する
-homebrew_mas_apps: []
+# . id: masコマンドでインストールするアプリID
+# . name: アプリIDに対応するアプリ名称（ログ表示用）
+homebrew_mas_apps: [{ id: ~, name: ~ }]
