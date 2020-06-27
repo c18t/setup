@@ -1,0 +1,31 @@
+---
+- name: make directories
+  file:
+    state: directory
+    follow: true
+    path: '{{ item }}'
+  with_items:
+    - '{{ xdg_cache_home }}/nvim_backup'
+
+- name: set link items
+  set_fact:
+    link_items:
+      - { path: '{{ dotfiles }}/nvim', dest: '{{ xdg_config_home }}/nvim' }
+
+- name: check for the existence of link sources
+  stat:
+    path: '{{ item.path }}'
+  register: stat_link_source
+  failed_when: not stat_link_source.stat.exists or not stat_link_source.stat.isdir
+  with_items: '{{ link_items }}'
+
+- name: link to directory
+  become: true
+  file:
+    state: link
+    follow: false
+    force: true
+    owner: '{{ user }}'
+    src: '{{ item.path }}'
+    dest: '{{ item.dest }}'
+  with_items: '{{ link_items }}'
