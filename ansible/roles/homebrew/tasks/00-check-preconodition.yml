@@ -1,0 +1,20 @@
+---
+- name: assert homebrew_taps
+  assert:
+    that: homebrew_taps is iterable
+    quiet: true
+
+- name: assert homebrew_fomulae
+  assert:
+    that: homebrew_fomulae is iterable
+    quiet: true
+
+- name: assert homebrew_casks
+  assert:
+    that: homebrew_casks is iterable
+    quiet: true
+
+- name: assert homebrew_mas_apps
+  assert:
+    that: homebrew_mas_apps is iterable
+    quiet: true
