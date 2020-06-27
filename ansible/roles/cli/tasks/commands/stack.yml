@@ -1,20 +1,8 @@
 ---
-- name: assert stack packages config
+- name: assert stack_packages
   assert:
-    that:
-      - stack_config is defined
-      - stack_config is not none
-      - stack_config != ''
+    that: cli_stack_packages is iterable
     quiet: true
-
-- name: include stack packages config
-  block:
-    - name: 'include roles/command-line/vars/{{ stack_config }}'
-      include_vars: '{{ stack_config }}'
-    - name: assert stack_packages
-      assert:
-        that: stack_packages is not defined or stack_packages is iterable
-        quiet: true
 
 - name: install haskell packages (for Windows)
   block:
@@ -27,8 +15,7 @@
       win_shell: stack install {{ item }}
       register: stack_install
       changed_when: stack_install.stdout is regex('^\S+\s*>')
-      when: stack_packages is defined and stack_packages | length > 0
-      with_items: '{{ stack_packages }}'
+      loop: '{{ cli_stack_packages }}'
   when: ansible_os_family == "Windows"
 
 - name: install haskell packages (for other)
@@ -42,6 +29,5 @@
       shell: stack install {{ item }}
       register: stack_install
       changed_when: stack_install.stderr is regex('^\S+\s*>')
-      when: stack_packages is defined and stack_packages | length > 0
-      with_items: '{{ stack_packages }}'
+      loop: '{{ cli_stack_packages }}'
   when: ansible_os_family != "Windows"

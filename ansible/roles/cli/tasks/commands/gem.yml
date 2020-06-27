@@ -1,20 +1,8 @@
 ---
-- name: assert gem packages config
+- name: assert gem_packages
   assert:
-    that:
-      - gem_config is defined
-      - gem_config is not none
-      - gem_config != ''
+    that: cli_gem_packages is iterable
     quiet: true
-
-- name: include gem packages config
-  block:
-    - name: 'include roles/command-line/vars/{{ gem_config }}'
-      include_vars: '{{ gem_config }}'
-    - name: assert gem_packages
-      assert:
-        that: gem_packages is not defined or gem_packages is iterable
-        quiet: true
 
 - name: install rubygems (for Windows)
   block:
@@ -22,8 +10,7 @@
       win_shell: if (-Not(gem info --local {{ item }} | Select-String {{ item }})) { gem install --no-user-install {{ item }}; }
       register: gem_install
       changed_when: gem_install.stdout is search('Successfully installed')
-      when: gem_packages is defined and gem_packages | length > 0
-      with_items: '{{ gem_packages }}'
+      loop: '{{ cli_gem_packages }}'
   when: ansible_os_family == "Windows"
 
 - name: install rubygems (for other)
@@ -38,6 +25,5 @@
         name: '{{ item }}'
         user_install: false
         executable: '{{ brew_prefix }}/opt/ruby/bin/gem'
-      when: gem_packages is defined and gem_packages | length > 0
-      with_items: '{{ gem_packages }}'
+      loop: '{{ cli_gem_packages }}'
   when: ansible_os_family != "Windows"

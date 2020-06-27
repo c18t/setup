@@ -1,20 +1,8 @@
 ---
-- name: assert npm packages config
+- name: assert npm_packages
   assert:
-    that:
-      - npm_config is defined
-      - npm_config is not none
-      - npm_config != ''
+    that: cli_npm_packages is iterable
     quiet: true
-
-- name: include npm packages config
-  block:
-    - name: 'include roles/command-line/vars/{{ npm_config }}'
-      include_vars: '{{ npm_config }}'
-    - name: assert npm_packages
-      assert:
-        that: npm_packages is not defined or npm_packages is iterable
-        quiet: true
 
 - name: install node.js packages (for Windows)
   block:
@@ -22,8 +10,7 @@
       win_shell: 'if (-Not(npm list -g --depth=0 {{ item }} | Select-String -Pattern " {{ item }}@")) { npm install -g {{ item }}; }'
       register: npm_install
       changed_when: npm_install.stdout is search('\\+ '+item+'@')
-      when: npm_packages is defined and npm_packages | length > 0
-      with_items: '{{ npm_packages }}'
+      loop: '{{ cli_npm_packages }}'
   when: ansible_os_family == "Windows"
 
 - name: install node.js packages (for other)
@@ -38,6 +25,5 @@
         name: '{{ item }}'
         global: true
         executable: '{{ brew_prefix }}/bin/npm'
-      when: npm_packages is defined and npm_packages | length > 0
-      with_items: '{{ npm_packages }}'
+      loop: '{{ cli_npm_packages }}'
   when: ansible_os_family != "Windows"

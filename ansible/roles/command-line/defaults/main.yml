@@ -1,9 +1,0 @@
----
-# config: roles/command-line/vars/gem-packages.yml
-gem_config: gem-packages.yml
-# config: roles/command-line/vars/npm-packages.yml
-npm_config: npm-packages.yml
-# config: roles/command-line/vars/pip-packages.yml
-pip_config: pip-packages.yml
-# config: roles/command-line/vars/stack-packages.yml
-stack_config: stack-packages.yml

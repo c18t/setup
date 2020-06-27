@@ -1,20 +1,8 @@
 ---
-- name: assert pip packages config
+- name: assert pip_config
   assert:
-    that:
-      - pip_config is defined
-      - pip_config is not none
-      - pip_config != ''
+    that: cli_pip_config is iterable
     quiet: true
-
-- name: include pip packages config
-  block:
-    - name: 'include roles/command-line/vars/{{ pip_config }}'
-      include_vars: '{{ pip_config }}'
-    - name: assert pip_config
-      assert:
-        that: pip_config is not defined or pip_config is iterable
-        quiet: true
 
 - name: install python modules (for Windows)
   block:
@@ -22,8 +10,7 @@
       win_shell: if (-Not(pip show {{ item }})) { pip install {{ item }}; }
       register: pip_install
       changed_when: pip_install.stdout is search('Successfully installed')
-      when: pip_packages is defined and pip_packages | length > 0
-      with_items: '{{ pip_packages }}'
+      loop: '{{ cli_pip_packages }}'
   when: ansible_os_family == "Windows"
 
 - name: install python modules (for other)
@@ -52,6 +39,5 @@
       pip:
         name: '{{ item }}'
         executable: '{{ pip3_path }}'
-      when: pip_packages is defined and pip_packages | length > 0
-      with_items: '{{ pip_packages }}'
+      loop: '{{ cli_pip_packages }}'
   when: ansible_os_family != "Windows"
