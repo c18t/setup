@@ -28,7 +28,7 @@
     - name: install ruby version
       shell: fish -l -c "rbenv install {{ item }}"
       when: installed_ruby_version.stdout is not regex("\\b"+item+"\\b")
-      with_items: '{{ ruby_versions }}'
+      loop: '{{ ruby_versions }}'
 
     - name: 'check global ruby version {{ ruby_versions[0] }}'
       shell: fish -l -c "rbenv global | grep -qe \^{{ ruby_versions[0] }}\\\$"

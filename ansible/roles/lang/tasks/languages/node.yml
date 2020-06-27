@@ -39,7 +39,7 @@
     - name: install node version
       shell: fish -l -c "nodenv install {{ item }}"
       when: installed_node_version.stdout is not regex("\\b"+item+"\\b")
-      with_items: '{{ node_versions }}'
+      loop: '{{ node_versions }}'
 
     - name: 'check global node version {{ node_versions[0] }}'
       shell: fish -l -c "nodenv global | grep -qe \^{{ node_versions[0] }}\\\$"

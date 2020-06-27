@@ -16,7 +16,7 @@
     state: directory
     follow: true
     path: '{{ item }}'
-  with_items:
+  loop:
     - '{{ home }}/.local/bin'
 
 - name: add .local/bin to fish_user_paths for haskell-stack

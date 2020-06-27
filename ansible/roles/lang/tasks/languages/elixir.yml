@@ -28,7 +28,7 @@
     - name: install elixir version
       shell: fish -l -c "exenv install {{ item }}"
       when: installed_elixir_version.stdout is not regex("\\b"+item+"\\b")
-      with_items: '{{ elixir_versions }}'
+      loop: '{{ elixir_versions }}'
 
     - name: 'check global elixir version {{ elixir_versions[0] }}'
       shell: fish -l -c "exenv global | grep -qe \^{{ elixir_versions[0] }}\\\$"

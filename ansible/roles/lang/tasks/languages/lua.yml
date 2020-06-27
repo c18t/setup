@@ -28,7 +28,7 @@
     - name: install lua version
       shell: fish -l -c "luaenv install {{ item }}"
       when: installed_lua_version.stdout is not regex("\\b"+item+"\\b")
-      with_items: '{{ lua_versions }}'
+      loop: '{{ lua_versions }}'
 
     - name: 'check global lua version {{ lua_versions[0] }}'
       shell: fish -l -c "luaenv global | grep -qe \^{{ lua_versions[0] }}\\\$"

@@ -28,7 +28,7 @@
     - name: install python version
       shell: fish -l -c "pyenv install {{ item }}"
       when: installed_python_version.stdout is not regex("\\b"+item+"\\b")
-      with_items: '{{ python_versions }}'
+      loop: '{{ python_versions }}'
 
     - name: 'check global python version {{ python_versions[0] }}'
       shell: fish -l -c "pyenv global | grep -qe \^{{ python_versions[0] }}\\\$"
