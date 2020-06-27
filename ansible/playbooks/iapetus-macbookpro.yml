@@ -1,59 +1,217 @@
 ---
 - hosts: local
-  pre_tasks:
-    - include_vars: common.yml
-    - include: pre_tasks/set_resources.yml
-  handlers:
-    - include: handlers/handlers_macos.yml
-  roles:
-    - role: os-setting-macos
-      tags: os-setting-macos
-    - role: home
-      tags: home
-    - role: homebrew
-      tags: homebrew
-    - role: iterm2
-      tags: iterm2
-    - role: vscode
-      tags: vscode
-    - role: nvim
-      tags: nvim
-    - role: fish-shell
-      tags: fish-shell
-    - role: anyenv
-      tags: anyenv
-    - role: lang
-      tags: lang
-    - role: command-line
-      tags: command-line
-  vars:
-    # 指定できる変数は各ロールの defaults/main.yml 参照
-    # common
-    my_editor: code
-    my_visual: code
-    # home
-    ssh_config: config-prv
-    git_config: .gitconfig-prv
-    # homebrew
-    homebrew_config: brewfile-iapetus.yml
-    # vscode
-    vscode_extensions: extensions.yml
-    vscode_confing: settings-mac.json
-    # fish-shell
-    fish_shell_config: config-mac.fish
-    # lang
-    # wxはwxWidgetsを--enable-compat28オプションを付けてソースからビルドしないといけないので除外
-    # cf. https://erlang.org/doc/installation_guide/INSTALL.html#Advanced-configuration-and-build-of-ErlangOTP_Building_Building-with-wxErlang
-    erlang_option: >-
-      --enable-dynamic-ssl-lib
-      --with-ssl=/usr/local/opt/openssl@1.1
-      --with-odbc=/usr/local/opt/unixodbc
-      --without-wx
-    erlang_make_arguments: -j 4
-    perl_option: -j 4
-    php_build_config: configure_options-mac
-    php_build_extra_make_arguments: -j 4
   vars_prompt:
     - name: my_password
       prompt: 'User password'
       private: true
+  vars:
+    # common
+    my_editor: code
+    my_visual: code
+  pre_tasks:
+    - include_vars: common.yml
+    - include_vars: cli_tools.yml
+    - include: pre_tasks/set_resources.yml
+  handlers:
+    - include: handlers/handlers_macos.yml
+  roles:
+    - role: os-macos
+    - role: home
+      vars:
+        home_ssh_config: config-prv
+        home_git_config: .gitconfig-prv
+    - role: homebrew
+      vars:
+        homebrew_taps:
+          - buo/cask-upgrade
+          - homebrew/cask
+          - homebrew/cask-drivers
+          - homebrew/cask-fonts
+          - homebrew/cask-versions
+          - homebrew/core
+        homebrew_fomulae:
+          - ansible
+          - anyenv
+          - autoconf # for phpenv
+          - bats
+          - byobu
+          - bzip2 # for phpenv
+          - curl-openssl # for phpenv
+          - direnv
+          - docker
+          - fish
+          - fop # for erlenv
+          - fzf
+          - ghq
+          - git-secret
+          - git-secrets
+          - gradle
+          - graphviz
+          - hadolint
+          - hardlink-osx
+          - haskell-stack
+          - helm
+          - hub
+          - icu4c # for phpenv
+          - krb5 # for phpenv
+          - libedit # for phpenv
+          - libxml2 # for phpenv
+          - libzip # for phpenv
+          - mas
+          - ncurses # for erlenv
+          - neofetch
+          - neovim
+          - nim
+          - npm # for command-line
+          - oniguruma # for phpenv
+          - openldap # for phpenv
+          - openssl@1.1 # for erlenv
+          - peco
+          - pkg-config # for ansible, phpenv
+          - python # for command-line
+          - readline # for luaenv
+          - ruby # for command-line
+          - sqlite # for ansible, phpenv
+          - sshfs # depends osxfuse
+          - swagger-codegen
+          - tidy-html5 # for phpenv
+          - terminal-notifier # for fisherman/done
+          - the_platinum_searcher
+          - tree
+          - unixodbc # for erlenv
+          - zlib # for phpenv
+        homebrew_casks:
+          - android-studio
+          - cakebrew
+          - calibre
+          - docker
+          - firefox
+          - font-ricty-diminished
+          - fork
+          - gfortran
+          - gimp
+          - gitter
+          - google-chrome
+          - google-japanese-ime
+          - google-photos-backup-and-sync
+          - horndis
+          - inkscape
+          - iterm2
+          - kindle
+          - kitematic
+          - licecap
+          - mactex
+          - mnemosyne
+          - osxfuse
+          - powershell
+          - send-to-kindle
+          - sketch
+          - skype
+          - slack
+          - steam
+          - visual-studio
+          - visual-studio-code
+          - wacom-tablet
+          - workflowy
+          - xmind
+          - xquartz
+        homebrew_mas_apps:
+          - name: LINE
+            id: 539883307
+          - name: LINE WORKS
+            id: 1029784963
+          - name: LimeChat
+            id: 414030210
+          - name: Microsoft Remote Desktop
+            id: 1295203466
+          - name: Trello
+            id: 1278508951
+          - name: TweetDeck
+            id: 485812721
+          - name: Xcode
+            id: 497799835
+    - role: iterm2
+    - role: vscode
+      vars:
+        vscode_confing: settings-mac.json
+        vscode_extensions:
+          - bierner.markdown-checkbox
+          - bierner.markdown-preview-github-styles
+          - bmalehorn.vscode-fish
+          - bungcip.better-toml
+          - casualjim.theme-desertex
+          - chrisdias.vscode-opennewinstance
+          - CoenraadS.bracket-pair-colorizer
+          - darkriszty.markdown-table-prettify
+          - dawhite.mustache
+          - dbaeumer.vscode-eslint
+          - donjayamanne.githistory
+          - eamodio.gitlens
+          - EFanZh.graphviz-preview
+          - electrotype.windows-explorer-context-menu
+          - EliverLara.andromeda
+          - esbenp.prettier-vscode
+          - fallenwood.vimL
+          - felixfbecker.php-debug
+          - gamunu.vscode-yarn
+          - geeklearningio.graphviz-markdown-preview
+          - IBM.output-colorizer
+          - idleberg.badges
+          - jebbs.plantuml
+          - jinsihou.diff-tool
+          - justusadam.language-haskell
+          - kenhowardpdx.vscode-gist
+          - kisstkondoros.vscode-codemetrics
+          - kosz78.nim
+          - kukushi.pasteurl
+          - lextudio.restructuredtext
+          - mattn.OpenVim
+          - me-dutour-mathieu.vscode-github-actions
+          - mechatroner.rainbow-csv
+          - mitchdenny.ecdc
+          - mjmcloug.vscode-elixir
+          - mosapride.zenkaku
+          - mrmlnc.vscode-apache
+          - ms-azuretools.vscode-docker
+          - MS-CEINTL.vscode-language-pack-ja
+          - ms-python.python
+          - ms-vscode-remote.remote-wsl
+          - ms-vscode.cpptools
+          - ms-vscode.csharp
+          - ms-vscode.Go
+          - ms-vscode.powershell
+          - msjsdiag.cordova-tools
+          - msjsdiag.debugger-for-chrome
+          - octref.vetur
+          - oderwat.indent-rainbow
+          - PKief.markdown-checkbox
+          - redhat.vscode-yaml
+          - shuworks.vscode-table-formatter
+          - Stephanvs.dot
+          - sysoev.language-stylus
+          - thisismanta.stylus-supremacy
+          - tomoki1207.pdf
+          - Tyriar.sort-lines
+          - vscode-icons-team.vscode-icons
+          - vscodevim.vim
+          - vscoss.vscode-ansible
+          - wayou.vscode-todo-highlight
+    - role: nvim
+    - role: fish-shell
+      vars:
+        fish_shell_config: config-mac.fish
+    - role: anyenv
+    - role: lang
+      vars:
+        # wxはwxWidgetsを--enable-compat28オプションを付けてソースからビルドしないといけないので除外
+        # cf. https://erlang.org/doc/installation_guide/INSTALL.html#Advanced-configuration-and-build-of-ErlangOTP_Building_Building-with-wxErlang
+        erlang_option: >-
+          --enable-dynamic-ssl-lib
+          --with-ssl=/usr/local/opt/openssl@1.1
+          --with-odbc=/usr/local/opt/unixodbc
+          --without-wx
+        erlang_make_arguments: -j 4
+        perl_option: -j 4
+        php_build_config: configure_options-mac
+        php_build_extra_make_arguments: -j 4
+    - role: cli

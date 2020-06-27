@@ -1,23 +1,14 @@
 ---
 - name: Windows
   hosts: local
-  pre_tasks:
-    - include_vars: common.yml
-  roles:
-    - role: os-setting-windows
-      tags: os-setting-windows
-    - role: chocolatey
-      tags: chocolatey
-    - role: scoop
-      tags: scoop
-    - role: vscode
-      tags: vscode
-    - role: software-windows
-      tags: software-windows
-    - role: command-line
-      tags: command-line
+  vars_prompt:
+    - name: win_username
+      prompt: 'Windows username'
+      private: false
+    - name: win_password
+      prompt: 'Windows password'
+      private: true
   vars:
-    # 指定できる変数は各ロールの defaults/main.yml 参照
     # ansible
     ansible_user: '{{ win_username }}'
     ansible_password: '{{ win_password }}'
@@ -37,47 +28,162 @@
     my_xdg_cache_home: D:\Users\{{ user }}\AppData\Roaming
     my_xdg_config_home: D:\Users\{{ user }}\AppData\Local
     my_xdg_data_home: D:\Users\{{ user }}\AppData\Local
-    # chocolatey
-    chocolatey_config: chocolatey-khronos.yml
-    # scoop
-    scoop_config: scoop-khronos.yml
-    # vscode
-    vscode_extensions: extensions.yml
-    vscode_confing: settings-win.json
-  vars_prompt:
-    - name: win_username
-      prompt: 'Windows username'
-      private: false
-    - name: win_password
-      prompt: 'Windows password'
-      private: true
+  pre_tasks:
+    - include_vars: common.yml
+    - include_vars: cli_tools.yml
+  roles:
+    - role: os-windows
+    - role: chocolatey
+      vars:
+        chocolatey_packages:
+          - { name: adobereader } # scoop にない
+          - { name: chocolatey }
+          - { name: chocolateygui }
+          - { name: docker-desktop } # scoop にない
+          - { name: gitter } # scoop にない
+          - { name: GoogleChrome } # インストーラで入れたい
+          - { name: GoogleJapaneseInput }
+          - { name: iTunes }
+          - { name: limechat } # scoop にない
+          - { name: mnemosyne } # scoop にない
+          - { name: steam } # インストーラで入れたい
+          - { name: unity } # scoop にない
+          - { name: VirtualCloneDrive }
+          - { name: visualstudio-installer }
+    - role: scoop
+      vars:
+        scoop_buckets:
+          - main
+          - extras
+          - java
+        scoop_packages:
+          - { name: 7zip, global: true }
+          - { name: anaconda3, global: true }
+          - { name: android-studio }
+          - { name: arduino }
+          - { name: audacity }
+          - { name: autohotkey }
+          - { name: busybox, global: true }
+          - { name: calibre }
+          - { name: direnv, global: true }
+          - { name: discord }
+          - { name: firefox }
+          - { name: firefox-nightly }
+          - { name: fork }
+          - { name: gimp } # Windows Defender のリアルタイム保護が有効だと脅威とみなされて失敗する
+          - { name: git, global: true }
+          - { name: ghostscript, global: true }
+          - { name: ghq, global: true }
+          - { name: googlechrome-dev }
+          - { name: gpg4win, global: true }
+          - { name: gradle, global: true }
+          - { name: graphviz, global: true }
+          - { name: hadolint, global: true }
+          - { name: helm, global: true }
+          - { name: honeyview }
+          - { name: inkscape }
+          - { name: jmeter, global: true }
+          - { name: keepass }
+          - { name: linqpad }
+          - { name: makemkv }
+          - { name: msys2, global: true }
+          - { name: neofetch }
+          - { name: neovim }
+          - { name: nodejs, global: true }
+          - { name: obs-studio }
+          - { name: openjdk, global: true }
+          - { name: openssl, global: true }
+          - { name: opera }
+          - { name: perl, global: true }
+          - { name: plantuml, global: true }
+          - { name: qbittorrent }
+          - { name: ruby, global: true }
+          - { name: screentogif }
+          - { name: slack }
+          - { name: stack, global: true }
+          - { name: sudo }
+          - { name: teraterm }
+          - { name: vivaldi }
+          - { name: vlc }
+          - { name: vscode }
+          - { name: winmerge, global: true }
+          - { name: winscp, global: true }
+          - { name: xmind8 }
+    - role: vscode
+      vars:
+        vscode_confing: settings-win.json
+        vscode_extensions:
+          - bierner.markdown-checkbox
+          - bierner.markdown-preview-github-styles
+          - bmalehorn.vscode-fish
+          - bungcip.better-toml
+          - casualjim.theme-desertex
+          - chrisdias.vscode-opennewinstance
+          - CoenraadS.bracket-pair-colorizer
+          - darkriszty.markdown-table-prettify
+          - dawhite.mustache
+          - dbaeumer.vscode-eslint
+          - donjayamanne.githistory
+          - eamodio.gitlens
+          - EFanZh.graphviz-preview
+          - electrotype.windows-explorer-context-menu
+          - EliverLara.andromeda
+          - esbenp.prettier-vscode
+          - fallenwood.vimL
+          - felixfbecker.php-debug
+          - gamunu.vscode-yarn
+          - geeklearningio.graphviz-markdown-preview
+          - IBM.output-colorizer
+          - idleberg.badges
+          - jebbs.plantuml
+          - jinsihou.diff-tool
+          - justusadam.language-haskell
+          - kenhowardpdx.vscode-gist
+          - kisstkondoros.vscode-codemetrics
+          - kosz78.nim
+          - kukushi.pasteurl
+          - lextudio.restructuredtext
+          - mattn.OpenVim
+          - me-dutour-mathieu.vscode-github-actions
+          - mechatroner.rainbow-csv
+          - mitchdenny.ecdc
+          - mjmcloug.vscode-elixir
+          - mosapride.zenkaku
+          - mrmlnc.vscode-apache
+          - ms-azuretools.vscode-docker
+          - MS-CEINTL.vscode-language-pack-ja
+          - ms-python.python
+          - ms-vscode-remote.remote-wsl
+          - ms-vscode.cpptools
+          - ms-vscode.csharp
+          - ms-vscode.Go
+          - ms-vscode.powershell
+          - msjsdiag.cordova-tools
+          - msjsdiag.debugger-for-chrome
+          - octref.vetur
+          - oderwat.indent-rainbow
+          - PKief.markdown-checkbox
+          - redhat.vscode-yaml
+          - shuworks.vscode-table-formatter
+          - Stephanvs.dot
+          - sysoev.language-stylus
+          - thisismanta.stylus-supremacy
+          - tomoki1207.pdf
+          - Tyriar.sort-lines
+          - vscode-icons-team.vscode-icons
+          - vscodevim.vim
+          - vscoss.vscode-ansible
+          - wayou.vscode-todo-highlight
+    - role: software-windows
+    - role: cli
 
 - name: WSL
   hosts: local
-  pre_tasks:
-    - include_vars: common.yml
-    - include: pre_tasks/set_resources.yml
-  handlers:
-    - include: handlers/handlers_wsl.yml
-  roles:
-    - role: home
-      tags: home
-    - role: apt
-      tags: apt
-    - role: homebrew
-      tags: homebrew
-    - role: nvim
-      tags: nvim
-    - role: fish-shell
-      tags: fish-shell
-    - role: anyenv
-      tags: anyenv
-    - role: lang
-      tags: lang
-    - role: command-line
-      tags: command-line
+  vars_prompt:
+    - name: my_password
+      prompt: 'WSL user password'
+      private: true
   vars:
-    # 指定できる変数は各ロールの defaults/main.yml 参照
     # ansible
     ansible_python_interpreter: /home/linuxbrew/.linuxbrew/bin/python3
     # common
@@ -87,29 +193,86 @@
     my_xdg_config_home: '{{ home + "/AppData/Local" }}'
     my_xdg_cache_home: '{{ home + "/AppData/Roaming" }}'
     my_xdg_data_home: '{{ home + "/AppData/Local" }}'
-    # home
-    ssh_config: config-prv
-    git_config: .gitconfig-prv
-    # apt
-    apt_config: apt-khronos.yml
-    # homebrew
-    homebrew_config: brewfile-khronos.yml
-    # fish-shell
-    fish_shell_config: config-wsl.fish
-    # lang
-    # wxはwxWidgetsを--enable-compat28オプションを付けてソースからビルドしないといけないので除外
-    # cf. https://erlang.org/doc/installation_guide/INSTALL.html#Advanced-configuration-and-build-of-ErlangOTP_Building_Building-with-wxErlang
-    erlang_option: >-
-      --enable-dynamic-ssl-lib
-      --with-ssl=/home/linuxbrew/.linuxbrew/opt/openssl@1.1
-      --with-odbc=/home/linuxbrew/.linuxbrew/opt/unixodbc
-      --without-wx
-    erlang_make_arguments: -j 4
-    # makefileが見つからないエラーが出るので別名を指定
-    perl_option: -j 4 -Dfirstmakefile=GNUmakefile
-    php_build_config: configure_options-wsl
-    php_make_arguments: -j 4
-  vars_prompt:
-    - name: my_password
-      prompt: 'WSL user password'
-      private: true
+  pre_tasks:
+    - include_vars: common.yml
+    - include_vars: cli_tools.yml
+    - include: pre_tasks/set_resources.yml
+  handlers:
+    - include: handlers/handlers_wsl.yml
+  roles:
+    - role: home
+      vars:
+        home_sh_config: config-prv
+        home_git_config: .gitconfig-prv
+    - role: apt
+      vars:
+        apt_keys: []
+        apt_repositories: []
+        apt_packages: []
+    - role: homebrew
+      vars:
+        brew_taps:
+          - homebrew/core
+        brew_fomulae:
+          - ansible
+          - anyenv
+          - autoconf # for phpenv
+          - bats
+          - byobu
+          - bzip2 # for phpenv
+          - curl-openssl # for phpenv
+          - direnv
+          - fish
+          - fop # for erlenv
+          - fzf
+          - ghq
+          - git-secret
+          - git-secrets
+          - gradle
+          # - haskell-stack # 落ちるので apt で入れる
+          - hub
+          - icu4c # for phpenv
+          - krb5 # for phpenv
+          - libedit # for phpenv
+          - libxml2 # for phpenv
+          - libzip # for phpenv
+          - ncurses # for erlenv
+          - neofetch
+          - neovim
+          - nim
+          - npm # for command-line
+          - oniguruma # for phpenv
+          - openldap # for phpenv
+          - openssl@1.1 # for erlenv
+          - peco
+          - pkg-config # for ansible, phpenv
+          - python # for command-line
+          - readline # for luaenv
+          - ruby # for command-line
+          - sqlite # for ansible, phpenv
+          # - swagger-codegen
+          - tidy-html5 # for phpenv
+          - the_platinum_searcher
+          - tree
+          - unixodbc # for erlenv
+          - zlib # for phpenv
+    - role: nvim
+    - role: fish-shell
+      vars:
+        fish_shell_config: config-wsl.fish
+    - role: anyenv
+    - role: lang
+      vars:
+        # wxはwxWidgetsを--enable-compat28オプションを付けてソースからビルドしないといけないので除外
+        # cf. https://erlang.org/doc/installation_guide/INSTALL.html#Advanced-configuration-and-build-of-ErlangOTP_Building_Building-with-wxErlang
+        erlang_option: >-
+          --enable-dynamic-ssl-lib
+          --with-ssl=/home/linuxbrew/.linuxbrew/opt/openssl@1.1
+          --with-odbc=/home/linuxbrew/.linuxbrew/opt/unixodbc
+          --without-wx
+        erlang_make_arguments: -j 4
+        # makefileが見つからないエラーが出るので別名を指定
+        perl_option: -j 4 -Dfirstmakefile=GNUmakefile
+        php_build_config: configure_options-wsl
+        php_make_arguments: -j 4
+    - role: cli
