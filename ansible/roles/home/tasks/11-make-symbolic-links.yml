@@ -3,10 +3,10 @@
   set_fact:
     link_items:
       # ssh
-      - path: '{{ dotfiles }}/ssh/{{ ssh_config }}'
+      - path: '{{ dotfiles }}/ssh/{{ home_ssh_config }}'
         dest: '{{ home }}/.ssh/config'
       # git
-      - path: '{{ dotfiles }}/{{ git_config }}'
+      - path: '{{ dotfiles }}/{{ home_git_config }}'
         dest: '{{ home }}/.gitconfig'
 
 - name: check for the existence of link sources
