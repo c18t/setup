@@ -1,0 +1,6 @@
+---
+- name: install chocolatey
+  become: true
+  win_shell: if (-Not(gcm choco -ErrorAction SilentlyContinue)) { iwr -useb chocolatey.org/install.ps1 | iex; }
+  register: install_choco
+  changed_when: install_choco.stdout is search('is now ready.')

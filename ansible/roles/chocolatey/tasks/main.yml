@@ -1,29 +1,7 @@
 ---
-- name: assert chocolatey role config
-  assert:
-    that:
-      - chocolatey_config is defined
-      - chocolatey_config is not none
-      - chocolatey_config != ''
-    quiet: true
-
-- name: 'include roles/chocolatey/vars/{{ chocolatey_config }}'
-  include_vars: '{{ chocolatey_config }}'
-
-- name: assert chocolatey_packages
-  assert:
-    that: chocolatey_packages is not defined or chocolatey_packages is iterable
-    quiet: true
-
-- name: install chocolatey
-  become: true
-  win_shell: if (-Not(gcm choco -ErrorAction SilentlyContinue)) { iwr -useb chocolatey.org/install.ps1 | iex; }
-  register: install_choco
-  changed_when: install_choco.stdout is search('is now ready.')
-
-- name: install packages with chocolatey
-  win_chocolatey:
-    name: '{{ item.name }}'
-    install_args: '{{ item.install_args | default(omit) }}'
-  when: chocolatey_packages is defined and chocolatey_packages | length > 0
-  with_items: '{{ chocolatey_packages }}'
+- name: chocolatey role tasks
+  tags: chocolatey
+  block:
+    - include: 00-check-precondition.yml
+    - include: 10-install-chocolatey.yml
+    - include: 11-install-packages.yml

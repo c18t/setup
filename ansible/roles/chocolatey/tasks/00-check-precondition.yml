@@ -1,0 +1,5 @@
+---
+- name: assert chocolatey_packages
+  assert:
+    that: chocolatey_packages is iterable
+    quiet: true

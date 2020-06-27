@@ -1,0 +1,6 @@
+---
+- name: install packages with chocolatey
+  win_chocolatey:
+    name: '{{ item.name }}'
+    install_args: '{{ item.install_args | default(omit) }}'
+  loop: '{{ chocolatey_packages }}'
