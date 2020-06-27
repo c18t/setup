@@ -1,7 +1,7 @@
 ---
-- name: assert pip_config
+- name: assert cli_pip_packages
   assert:
-    that: cli_pip_config is iterable
+    that: cli_pip_packages is iterable
     quiet: true
 
 - name: install python modules (for Windows)
