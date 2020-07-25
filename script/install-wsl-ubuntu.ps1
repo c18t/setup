@@ -16,8 +16,8 @@ if (-Not (Get-AppPackage *CanonicalGroupLimited.Ubuntu*onWindows*)) {
     # ubuntuパッケージのインストール
     # cf. https://docs.microsoft.com/en-us/windows/wsl/install-manual
 
-    $appxPath = "$env:temp\Ubuntu-1804.appx"
-    Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu-1804 -OutFile $appxPath -UseBasicParsing
+    $appxPath = "$env:temp\Ubuntu-2004.appx"
+    Invoke-WebRequest -Uri https://aka.ms/wslubuntu2004 -OutFile $appxPath -UseBasicParsing
     if ($? -eq $False) {
         Write-Host "... failed!"
         throw "ubuntuパッケージのダウンロードに失敗しました。終了します。"
@@ -38,9 +38,9 @@ if (-Not (Get-Command -Name ubuntu -ErrorAction SilentlyContinue)) {
     Write-Host "add alias for ubuntu ..."
 
     # ubuntu.exe のエイリアスを作成
-    # $ubuntuPath = (Get-Command ubuntu1804.exe | Where-Object Name -eq ubuntu1804.exe).Path
-    Write-Output "Set-Alias -Name ubuntu -Value ubuntu1804.exe" | Add-Content $profile -Encoding Default
-    Write-Output "Set-Alias -Name ubuntu.exe -Value ubuntu1804.exe" | Add-Content $profile -Encoding Default
+    # $ubuntuPath = (Get-Command ubuntu2004.exe | Where-Object Name -eq ubuntu2004.exe).Path
+    Write-Output "Set-Alias -Name ubuntu -Value ubuntu2004.exe" | Add-Content $profile -Encoding Default
+    Write-Output "Set-Alias -Name ubuntu.exe -Value ubuntu2004.exe" | Add-Content $profile -Encoding Default
     . $profile
 
     Write-Host "... done!"
@@ -88,17 +88,17 @@ else {
     throw "ubuntuのセットアップに失敗しました。終了します。"
 }
 
-# ホームディレクトリの変更
-$username = Read-Host "Enter new UNIX username to change home directory"
-Write-Host "change $username home directory ..."
-$driveLetter = $env:USERPROFILE.Substring(0, 1).ToLower()
-$homeDirectory = $env:USERPROFILE -replace "\\", "/" -replace "^\w:", "/mnt/$driveLetter"
-ubuntu.exe run sudo perl -pi -E "'s<:/home/${username}:><:${homeDirectory}:>g'" /etc/passwd
-$result = $LASTEXITCODE
-if ($result -ne 0) {
-    Write-Host "... failed!"
-    throw "ubuntuのセットアップに失敗しました。終了します。"
-}
-Write-Host "... done!"
+# ホームディレクトリの変更 (ホームディレクトリをWindows側にすると起動が凄まじく遅いのでやめる)
+# $username = Read-Host "Enter new UNIX username to change home directory"
+# Write-Host "change $username home directory ..."
+# $driveLetter = $env:USERPROFILE.Substring(0, 1).ToLower()
+# $homeDirectory = $env:USERPROFILE -replace "\\", "/" -replace "^\w:", "/mnt/$driveLetter"
+# ubuntu.exe run sudo perl -pi -E "'s<:/home/${username}:><:${homeDirectory}:>g'" /etc/passwd
+# $result = $LASTEXITCODE
+# if ($result -ne 0) {
+#     Write-Host "... failed!"
+#     throw "ubuntuのセットアップに失敗しました。終了します。"
+# }
+# Write-Host "... done!"
 
 exit
