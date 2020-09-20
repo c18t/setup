@@ -4,9 +4,9 @@ set timeout -1
 set SH_COMMAND [lindex $argv 0]
 set PW [lindex $argv 1]
 
-spawn sh -c "${SH_COMMAND}"
+spawn bash -c "${SH_COMMAND}"
 expect {
-  -glob "Enter password for * to install *:*" {
+  -glob "* password for *:*" {
     send -- "${PW}\n"
   }
 }
