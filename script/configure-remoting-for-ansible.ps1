@@ -37,8 +37,9 @@ if ((Get-Service | Where-Object Name -eq "sshd").Status -ne "Running") {
 }
 
 # OpenSSHのデフォルトシェルを設定
-if (-Not ((Get-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -ErrorAction SilentlyContinue)
-    -And (Get-ItemPropertyValue  -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell) -Like "*powershell*")) {
+$existsDefaultShellSetting = Get-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -ErrorAction SilentlyContinue
+$defaultShellSettingIsPowerShell = (Get-ItemPropertyValue  -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell) -Like "*powershell*"
+if (-Not ($existsDefaultShellSetting -And $defaultShellSettingIsPowerShell)) {
     Write-Host "set OpenSSH default shell ..."
     $shellPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
     New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value  -PropertyType String -Force
