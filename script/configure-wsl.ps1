@@ -49,7 +49,7 @@ if (-Not (Get-WmiObject win32_product | Where-Object Name -eq "Windows Subsystem
         throw "WSL2カーネルアップデートパッケージのダウンロードに失敗しました。終了します。"
     }
 
-    $wsl2kernelPath /quiet /norestart
+    Invoke-Expression "$wsl2kernelPath /quiet /norestart"
     if ($? -eq $False) {
         Write-Host "... failed!"
         throw "WSL2カーネルのアップデートに失敗しました。終了します。"

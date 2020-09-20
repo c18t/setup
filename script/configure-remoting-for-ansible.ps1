@@ -7,37 +7,79 @@ if (([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]:
     exit $?
 }
 
-# WinRMの確認
+# OpenSSHの確認
 # cf. https://docs.ansible.com/ansible/latest/user_guide/windows_setup.html
 
 $reboot = $False
-if ([String]::IsNullOrWhiteSpace($(winrm enumerate winrm/config/Listener))) {
-    # WinRMのセットアップ
-    Write-Host "setup WinRM ..."
-    $url = "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"
-    $file = "$env:temp\ConfigureRemotingForAnsible.ps1"
-    (New-Object -TypeName System.Net.WebClient).DownloadFile($url, $file)
-    powershell -ExecutionPolicy ByPass -File $file
-    Remove-Item $file
-
-    # WinRMのセットアップ完了チェック
-    if ([String]::IsNullOrWhiteSpace($(winrm enumerate winrm/config/Listener))) {
+# OpenSSHサーバーのセットアップ
+if (-Not (Get-WindowsCapability -Online | Where-Object Name -eq "OpenSSH.Server~~~~0.0.1.0")) {
+    Write-Host "setup OpenSSH ..."
+    Add-WindowsCapability -Online -Name "OpenSSH.Server~~~~0.0.1.0"
+    if (-Not $?) {
         Write-Host "... failed!"
-        # インストールに失敗
-        throw "WinRMのセットアップに失敗しました。終了します。"
+        throw "Win32 OpenSSHのセットアップに失敗しました。終了します。"
     }
     Write-Host "... done!"
-
-    $reboot = $True
 }
 
-# WinRMの設定
-Write-Host "configure WinRT ..."
-winrm quickconfig -force
-Set-Item -Path WSMan:\localhost\Service\Auth\Basic -Value $True
-Write-Host "... done!"
+# sshdサービスのセットアップ
+if ((Get-Service | Where-Object Name -eq "ssh-agent").StartType -ne "Automatic") {
+    Set-Service ssh-agent -StartupType Automatic
+}
+if ((Get-Service | Where-Object Name -eq "ssh-agent").Status -ne "Running") {
+    Start-Service ssh-agent
+}
+if ((Get-Service | Where-Object Name -eq "sshd").StartType -ne "Automatic") {
+    Set-Service sshd -StartupType Automatic
+}
+if ((Get-Service | Where-Object Name -eq "sshd").Status -ne "Running") {
+    Start-Service sshd
+}
+
+# OpenSSHのデフォルトシェルを設定
+if (-Not ((Get-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -ErrorAction SilentlyContinue)
+    -And (Get-ItemPropertyValue  -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell) -Like "*powershell*")) {
+    Write-Host "set OpenSSH default shell ..."
+    $shellPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
+    New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value  -PropertyType String -Force
+    if (-Not $?) {
+        Write-Host "... failed!"
+        throw "Win32 OpenSSHのセットアップに失敗しました。終了します。"
+    }
+    Write-Host "restart OpenSSH ..."
+    Restart-Service sshd
+    Write-Host "... done!"
+}
 
 exit $(if ($reboot) { 1 } else { 0 })
+
+# if ([String]::IsNullOrWhiteSpace($(winrm enumerate winrm/config/Listener))) {
+#     # WinRMのセットアップ
+#     Write-Host "setup WinRM ..."
+#     $url = "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"
+#     $file = "$env:temp\ConfigureRemotingForAnsible.ps1"
+#     (New-Object -TypeName System.Net.WebClient).DownloadFile($url, $file)
+#     powershell -ExecutionPolicy ByPass -File $file
+#     Remove-Item $file
+
+#     # WinRMのセットアップ完了チェック
+#     if ([String]::IsNullOrWhiteSpace($(winrm enumerate winrm/config/Listener))) {
+#         Write-Host "... failed!"
+#         # インストールに失敗
+#         throw "WinRMのセットアップに失敗しました。終了します。"
+#     }
+#     Write-Host "... done!"
+
+#     $reboot = $True
+# }
+
+# # WinRMの設定
+# Write-Host "configure WinRT ..."
+# winrm quickconfig -force
+# Set-Item -Path WSMan:\localhost\Service\Auth\Basic -Value $True
+# Write-Host "... done!"
+
+# exit $(if ($reboot) { 1 } else { 0 })
 
 # # pythonの確認
 # if ((Get-Command -Name python -ErrorAction SilentlyContinue) -eq $Null) {
