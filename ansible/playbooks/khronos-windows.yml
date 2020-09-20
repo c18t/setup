@@ -36,18 +36,19 @@
     - role: chocolatey
       vars:
         chocolatey_packages:
+          # - { name: 1password } # なんか失敗する
           - { name: adobereader } # scoop にない
           - { name: chocolatey }
           - { name: chocolateygui }
           - { name: docker-desktop } # scoop にない
           - { name: gitter } # scoop にない
           - { name: GoogleChrome } # インストーラで入れたい
-          - { name: GoogleJapaneseInput }
+          # - { name: GoogleJapaneseInput } # なんか失敗する
           - { name: iTunes }
           - { name: limechat } # scoop にない
-          - { name: mnemosyne } # scoop にない
+          # - { name: mnemosyne } # scoop にない # なんか失敗する
           - { name: steam } # インストーラで入れたい
-          - { name: unity } # scoop にない
+          # - { name: unity } # scoop にない # unityhubで入れる
           - { name: VirtualCloneDrive }
           - { name: visualstudio-installer }
     - role: scoop
@@ -64,7 +65,7 @@
           - { name: audacity }
           - { name: autohotkey }
           - { name: busybox, global: true }
-          - { name: calibre }
+          # - { name: calibre } # なんか止まる
           - { name: direnv, global: true }
           - { name: discord }
           - { name: dotnet-sdk, global: true }
@@ -85,7 +86,6 @@
           - { name: honeyview }
           - { name: inkscape }
           - { name: jmeter, global: true }
-          - { name: keepass }
           - { name: linqpad }
           - { name: makemkv }
           - { name: msys2, global: true }
