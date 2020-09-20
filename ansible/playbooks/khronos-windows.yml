@@ -1,6 +1,6 @@
 ---
 - name: Windows
-  hosts: local
+  hosts: khronos
   vars_prompt:
     - name: win_username
       prompt: 'Windows username'
@@ -15,9 +15,8 @@
     ansible_become_method: runas
     ansible_become_user: '{{ win_username }}'
     ansible_become_password: '{{ win_password }}'
-    ansible_connection: winrm
-    ansible_winrm_transport: basic
-    ansible_winrm_server_cert_validation: ignore
+    ansible_connection: ssh
+    ansible_shell_type: powershell
     ansible_python_interpreter: /home/linuxbrew/.linuxbrew/bin/python3
     # common
     my_home: D:\Users\{{ user }}
