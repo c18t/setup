@@ -2,7 +2,7 @@
 --enable-exif
 --with-zlib
 --with-zlib-dir=/usr
---with-bz2
+--with-bz2=/home/linuxbrew/.linuxbrew/opt/bzip2
 --enable-intl
 --with-kerberos
 --with-openssl

@@ -14,7 +14,7 @@
   args:
     executable: '{{ fish_path }}'
   when: fish_user_paths is not search(item)
-  with_items:
+  loop:
     - '{{ home }}/Library/Android/sdk/tools'
     - '{{ home }}/Library/Android/sdk/platform-tools'
   notify: update_global_path
@@ -23,7 +23,7 @@
   copy:
     dest: '{{ xdg_config_home }}/fish/conf.d/{{ item }}.fish'
     content: set -gx PKG_CONFIG_PATH "{{ brew_prefix }}/opt/{{ item }}/lib/pkgconfig" $PKG_CONFIG_PATH
-  with_items:
+  loop:
     - curl-openssl
     - icu4c
     - krb5

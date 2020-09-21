@@ -1,0 +1,7 @@
+---
+- name: make temp directory
+  win_file:
+    state: directory
+    path: '{{ item }}'
+  with_items:
+    - '{{ temporary_home }}'

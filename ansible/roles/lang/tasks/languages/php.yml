@@ -39,7 +39,7 @@
     - name: install php version
       shell: fish -l -c "phpenv install --ini development --verbose {{ item }}"
       when: installed_php_version.stdout is not regex("\\b"+item+"\\b")
-      with_items: '{{ php_versions }}'
+      loop: '{{ php_versions }}'
       environment:
         PHP_BUILD_CONFIGURE_OPTS: '{{ php_build_configure_opts.stdout }}'
         PHP_BUILD_EXTRA_MAKE_ARGUMENTS: '{{ php_make_arguments }}'

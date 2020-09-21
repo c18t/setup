@@ -1,20 +1,12 @@
 ---
-- name: check anyenv
-  shell: type anyenv
-  changed_when: false
-  check_mode: false
-
-- name: check ghq
-  shell: type ghq
-  changed_when: false
-  check_mode: false
-
-- include: includes/set_fish_path.yml
-
-- include: includes/setup_anyenv.yml
-
-- include: includes/install_anyenv_plugins.yml
-  with_items:
-    - { name: anyenv-update, repo: znz/anyenv-update }
-  loop_control:
-    loop_var: plugin
+- name: anyenv role tasks
+  tags: anyenv
+  block:
+    - include: 00-check-precondition.yml
+    - include: 01-gather-facts.yml
+    - include: 10-setup-anyenv.yml
+    - include: 11-install-anyenv-plugins.yml
+      loop: '{{ anyenv_install_plugins }}'
+      loop_control:
+        loop_var: plugin
+    - include: 12-update-anyenv.yml

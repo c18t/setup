@@ -1,0 +1,8 @@
+---
+- include: includes/set_fish_path.yml
+
+- include: includes/change_login_shell_to_fish_for_MacOSX.yml
+  when: ansible_distribution == "MacOSX"
+
+- include: includes/change_login_shell_to_fish_for_other.yml
+  when: ansible_distribution != "MacOSX"

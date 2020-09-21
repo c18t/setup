@@ -1,0 +1,42 @@
+---
+- name: prepend to PATH
+  script: prependpath.vbs "{{ item.type }}" "{{ item.path }}"
+  args:
+    executable: cscript.exe
+  changed_when: false
+  loop:
+    # OSで用意しているlibssl.dllではpythonのsslモジュールが動かないので、scoopのものを使用する
+    - { type: 'System', path: 'C:\ProgramData\scoop\apps\openssl\current\bin' }
+
+- name: download translation for WinSCP
+  win_get_url:
+    url: https://winscp.net/translations/dll/5.15.9/jp.zip
+    dest: '{{ temporary_home }}\winscp_tran_5.15.9_jp.zip'
+    force: false
+  register: download_tran_winscp
+  ignore_errors: true
+
+- name: add translation for WinSCP
+  win_unzip:
+    src: '{{ temporary_home }}\winscp_tran_5.15.9_jp.zip'
+    dest: C:\ProgramData\scoop\apps\winscp\current\Translations
+  when: download_tran_winscp.changed == true
+
+# pre-commitで参照しているsqlite3パッケージが動かないので追加
+- name: find scoop\shims\sqlite3.dll
+  win_stat:
+    path: C:\ProgramData\scoop\shims\sqlite3.dll
+  register: find_sqlite3_dll
+
+- name: add sqlite3.dll to scoop\shims
+  block:
+    - name: download sqlite3.dll
+      win_get_url:
+        url: https://www.sqlite.org/2019/sqlite-dll-win64-x64-3300100.zip
+        dest: '{{ temporary_home }}\'
+        force: false
+    - name: add sqlite3.dll to scoop\shims
+      win_unzip:
+        src: '{{ temporary_home }}\sqlite-dll-win64-x64-3300100.zip'
+        dest: C:\ProgramData\scoop\shims
+  when: not find_sqlite3_dll.stat.exists

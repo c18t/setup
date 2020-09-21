@@ -1,0 +1,67 @@
+---
+- include: includes/set_fish_path.yml
+
+- name: check fisher
+  shell: type fisher
+  args:
+    executable: '{{ fish_path }}'
+  register: type_fisher
+  failed_when: type_fisher.rc not in [0, 1, 126, 127]
+  changed_when: false
+  check_mode: false
+
+- name: install fisher
+  block:
+    - name: install fisher
+      get_url:
+        url: https://git.io/fisher
+        dest: '{{ xdg_config_home }}/fish/functions/fisher.fish'
+
+    - name: find fisher
+      shell: type fisher
+      args:
+        executable: '{{ fish_path }}'
+      changed_when: false
+      check_mode: false
+  when: type_fisher.rc != 0
+
+- name: configure fisher with SHELL env
+  block:
+    - name: update fisher itself
+      shell: fish -l -c 'fisher self-update'
+      args:
+        executable: '{{ fish_path }}'
+      register: update_fisher
+      changed_when: update_fisher.stderr is not search('fisher is already up-to-date')
+
+    - name: install fish config
+      shell: fish -l -c 'fisher add "{{ resources }}/fisher-my-setup"'
+      args:
+        executable: '{{ fish_path }}'
+      register: install_fish_config
+      changed_when: false
+
+    - name: install fish config (for MacOSX)
+      shell: fish -l -c 'fisher add "{{ resources }}/fisher-my-setup-mac"'
+      args:
+        executable: '{{ fish_path }}'
+      register: install_fish_config_mac
+      changed_when: false
+      when: ansible_distribution == "MacOSX"
+
+    - name: check cmd.exe (for WSL)
+      shell: type cmd.exe
+      register: type_cmd
+      failed_when: type_cmd.rc not in [0, 1]
+      changed_when: false
+      check_mode: false
+
+    - name: install fish config (for WSL)
+      shell: fish -l -c 'fisher add "{{ resources }}/fisher-my-setup-wsl"'
+      args:
+        executable: '{{ fish_path }}'
+      register: install_fish_config_wsl
+      changed_when: false
+      when: type_cmd.rc == 0
+  environment:
+    SHELL: '{{ fish_path }}'

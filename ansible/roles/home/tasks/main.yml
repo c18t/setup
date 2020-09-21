@@ -1,63 +1,14 @@
 ---
-- name: check cmd.exe (for WSL)
-  shell: type cmd.exe
-  register: type_cmd
-  failed_when: type_cmd.rc not in [0, 1, 126, 127]
-  changed_when: false
-  check_mode: false
-
-- name: make standard directories
-  file:
-    state: directory
-    follow: true
-    path: '{{ home }}/{{ item }}'
-  with_items: '{{ standard_directories }}'
-
-- name: copy desktop.ini (for Windows)
-  copy:
-    src: '{{ item }}_desktop.ini'
-    dest: '{{ home }}/{{ item }}/desktop.ini'
-  when: type_cmd.rc == 0
-  with_items: '{{ standard_directories }}'
-
-- name: make config directories
-  file:
-    state: directory
-    follow: true
-    path: '{{ item }}'
-  with_items:
-    # XDG
-    - '{{ xdg_config_home }}'
-    - '{{ xdg_cache_home }}'
-    - '{{ xdg_data_home }}'
-    - '{{ home }}/.local'
-    # ssh
-    - '{{ home }}/.ssh'
-
-- name: set link items
-  set_fact:
-    link_items:
-      # ssh
-      - path: '{{ dotfiles }}/ssh/{{ ssh_config }}'
-        dest: '{{ home }}/.ssh/config'
-      # git
-      - path: '{{ dotfiles }}/{{ git_config }}'
-        dest: '{{ home }}/.gitconfig'
-
-- name: check for the existence of link sources
-  stat:
-    path: '{{ item.path }}'
-  register: stat_link_source
-  failed_when: not stat_link_source.stat.exists or stat_link_source.stat.isdir
-  with_items: '{{ link_items }}'
-
-- name: link to files
-  become: true
-  file:
-    state: link
-    follow: false
-    force: true
-    owner: '{{ user }}'
-    src: '{{ item.path }}'
-    dest: '{{ item.dest }}'
-  with_items: '{{ link_items }}'
+- name: home role tasks
+  tags: home
+  block:
+    - include: 00-check-precondition.yml
+    - include: 01-check-wsl.yml
+    - block:
+      - include: 10-make-directories-linux.yml
+      - include: 11-make-symbolic-links-linux.yml
+      when: ansible_os_family != "Windows"
+    - block:
+      - include: 10-make-directories-windows.yml
+      - include: 11-make-symbolic-links-windows.yml
+      when: ansible_os_family == "Windows"

@@ -1,0 +1,28 @@
+---
+# cli tools
+cli_gem_packages:
+  - asciidoctor
+cli_npm_packages:
+  - '@angular/cli'
+  - cordova
+  - create-react-app
+  - eslint
+  - express-generator
+  - firebase-tools
+  - markdownlint-cli
+  - prettier
+  - sass
+  - '@storybook/cli'
+  - stylus
+  - '@vue/cli'
+  - yarn
+cli_pip_packages:
+  - autopep8
+  - flake8
+  - jupyter
+  - pre-commit
+  - sphinx
+  - yamllint
+cli_stack_packages:
+  - pandoc
+  - ShellCheck

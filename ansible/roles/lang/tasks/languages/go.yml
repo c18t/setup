@@ -48,7 +48,7 @@
     - name: install go version
       shell: fish -l -c "goenv install {{ item }}"
       when: installed_go_version.stdout is not regex("\\b"+item+"\\b")
-      with_items: '{{ golang_versions }}'
+      loop: '{{ golang_versions }}'
 
     - name: 'check global go version {{ golang_versions[0] }}'
       shell: fish -l -c "goenv global | grep -qe \^{{ golang_versions[0] }}\\\$"

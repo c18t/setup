@@ -1,0 +1,15 @@
+---
+- name: assert apt_keys
+  assert:
+    that: apt_keys is iterable
+    quiet: true
+
+- name: assert apt_repositories
+  assert:
+    that: apt_repositories is iterable
+    quiet: true
+
+- name: assert apt_packages
+  assert:
+    that: apt_packages is iterable
+    quiet: true

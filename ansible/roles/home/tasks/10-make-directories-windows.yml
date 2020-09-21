@@ -1,0 +1,22 @@
+---
+- name: make standard directories
+  win_file:
+    state: directory
+    path: '{{ home }}/{{ item }}'
+  loop: '{{ home_standard_directories }}'
+
+- name: copy desktop.ini
+  win_copy:
+    src: '{{ item }}_desktop.ini'
+    dest: '{{ home }}\{{ item }}\desktop.ini'
+  loop: '{{ home_standard_directories }}'
+
+- name: make config directories
+  win_file:
+    state: directory
+    path: '{{ item }}'
+  with_items:
+    # XDG
+    - '{{ home }}\.local'
+    # ssh
+    - '{{ home }}\.ssh'

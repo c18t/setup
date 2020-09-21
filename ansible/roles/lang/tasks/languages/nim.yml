@@ -4,7 +4,7 @@
     state: directory
     follow: true
     path: '{{ item }}'
-  with_items:
+  loop:
     - '{{ home }}/.nimble/bin'
 
 - name: add .nimble/bin to fish_user_paths

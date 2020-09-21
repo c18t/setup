@@ -1,0 +1,39 @@
+---
+- name: assert stack_packages
+  assert:
+    that: cli_stack_packages is iterable
+    quiet: true
+
+- name: install haskell packages (for Windows)
+  block:
+    - name: check stack (for Windows)
+      win_shell: gcm stack -ErrorAction SilentlyContinue
+      changed_when: false
+      check_mode: false
+
+    - name: upgrade stack
+      win_shell: stack upgrade --binary-only
+
+    - name: install haskell packages (for Windows)
+      win_shell: stack install {{ item }}
+      register: stack_install
+      changed_when: stack_install.stdout is regex('^\S+\s*>')
+      loop: '{{ cli_stack_packages }}'
+  when: ansible_os_family == "Windows"
+
+- name: install haskell packages (for other)
+  block:
+    - name: check stack
+      shell: type stack
+      changed_when: false
+      check_mode: false
+
+    - name: upgrade stack
+      shell: stack upgrade --binary-only
+
+    - name: install haskell packages
+      shell: stack install {{ item }}
+      register: stack_install
+      changed_when: stack_install.stderr is regex('^\S+\s*>')
+      loop: '{{ cli_stack_packages }}'
+  when: ansible_os_family != "Windows"

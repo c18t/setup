@@ -1,0 +1,14 @@
+---
+- name: cli role tasks
+  tags: cli
+  block:
+    - include: includes/00-gather-facts.yml
+      when: ansible_os_family != "Windows"
+    - include: commands/gem.yml
+      tags: gem
+    - include: commands/npm.yml
+      tags: npm
+    - include: commands/pip.yml
+      tags: pip
+    - include: commands/stack.yml
+      tags: stack

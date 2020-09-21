@@ -58,13 +58,13 @@
             CPLUS_INCLUDE_PATH: '{{ get_brew_prefix.stdout }}/include:{{ ansible_env.CPLUS_INCLUDE_PATH | default("") }}'
             OBJC_INCLUDE_PATH: '{{ get_brew_prefix.stdout }}/include:{{ ansible_env.OBJC_INCLUDE_PATH | default("") }}'
           when: installed_perl_version.stdout is not regex("\\b"+item+"\\b")
-          with_items: '{{ perl_versions }}'
+          loop: '{{ perl_versions }}'
       when: type_cmd.rc == 0
 
     - name: install perl version (for other)
       shell: fish -l -c "plenv install {{ item }} {{ perl_option }}"
       when: type_cmd.rc != 0 and installed_perl_version.stdout is not regex("\\b"+item+"\\b")
-      with_items: '{{ perl_versions }}'
+      loop: '{{ perl_versions }}'
 
     - name: 'check global perl version {{ perl_versions[0] }}'
       shell: fish -l -c "plenv global | grep -qe \^{{ perl_versions[0] }}\\\$"

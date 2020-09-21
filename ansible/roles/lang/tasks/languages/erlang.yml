@@ -38,7 +38,7 @@
           and rm -rf ./otp_src_{{ item.version }};
           and rm -f otp_src_{{ item.version }}.tar.gz;"
       when: installed_erlang_version.stdout is not regex("\\b"+item.version+"\\b")
-      with_items: '{{ erlang_versions }}'
+      loop: '{{ erlang_versions }}'
 
     - name: 'check global erlang version {{ erlang_versions[0].version }}'
       shell: fish -l -c "erlenv global | grep -qe \^{{ erlang_versions[0].version }}\\\$"

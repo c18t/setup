@@ -1,5 +1,0 @@
----
-stack_packages:
-  - hadolint
-  - pandoc
-  - ShellCheck

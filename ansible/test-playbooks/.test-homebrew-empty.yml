@@ -1,8 +1,0 @@
----
-- hosts: local
-  pre_tasks:
-    - include: pre_tasks/set_common_vars.yml
-  roles:
-    - homebrew
-  vars:
-    homebrew_config: tests/.test-empty.yml

@@ -1,0 +1,35 @@
+---
+- name: set link items
+  set_fact:
+    link_items:
+      # XDG
+      - path: '{{ xdg_cache_home }}'
+        dest: '{{ default_xdg_cache_home }}'
+      - path: '{{ xdg_config_home }}'
+        dest: '{{ default_xdg_config_home }}'
+      - path: '{{ xdg_data_home }}'
+        dest: '{{ default_xdg_data_home }}'
+      # ssh
+      - path: '{{ dotfiles }}/ssh/{{ home_ssh_config }}'
+        dest: '{{ home }}/.ssh/config'
+      # git
+      - path: '{{ dotfiles }}/{{ home_git_config }}'
+        dest: '{{ home }}/.gitconfig'
+
+- name: check for the existence of link sources
+  win_stat:
+    path: '{{ item.path }}'
+  register: stat_link_source
+  failed_when: not stat_link_source.stat.exists
+  loop: '{{ link_items }}'
+
+- name: make links
+  become: true
+  win_shell: >-
+    if (-Not(Test-Path "{{ item.dest }}")) {
+      New-Item -Type SymbolicLink -Value "{{ item.path }}" -Path "{{ item.dest }}"; exit 2
+    }
+  register: make_link
+  failed_when: make_link.rc not in [0, 2]
+  changed_when: make_link.rc == 2
+  loop: '{{ link_items }}'

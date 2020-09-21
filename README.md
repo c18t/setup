@@ -20,6 +20,18 @@ $ ./setup-iapetus.sh -K
 PS > .\setup-windows.ps1 setup-khronos.sh -K
 ```
 
+##### Host
+
+```
+$ ./setup-khronos -e win_username=user -K -l khronos
+```
+
+##### WSL
+
+```
+$ ./setup-khronos -e win_username=user -K -l local
+```
+
 ## Update config
 
 ### brewfile

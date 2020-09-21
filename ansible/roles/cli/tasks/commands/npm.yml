@@ -1,0 +1,29 @@
+---
+- name: assert npm_packages
+  assert:
+    that: cli_npm_packages is iterable
+    quiet: true
+
+- name: install node.js packages (for Windows)
+  block:
+    - name: install node.js packages (for Windows)
+      win_shell: 'if (-Not(npm list -g --depth=0 {{ item }} | Select-String -Pattern " {{ item }}@")) { npm install -g {{ item }}; }'
+      register: npm_install
+      changed_when: npm_install.stdout is search('\\+ '+item+'@')
+      loop: '{{ cli_npm_packages }}'
+  when: ansible_os_family == "Windows"
+
+- name: install node.js packages (for other)
+  block:
+    - name: check npm
+      shell: type '{{ brew_prefix }}/bin/npm'
+      changed_when: false
+      check_mode: false
+
+    - name: install node.js packages
+      npm:
+        name: '{{ item }}'
+        global: true
+        executable: '{{ brew_prefix }}/bin/npm'
+      loop: '{{ cli_npm_packages }}'
+  when: ansible_os_family != "Windows"

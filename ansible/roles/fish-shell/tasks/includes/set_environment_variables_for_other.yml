@@ -1,6 +1,8 @@
 ---
 - name: set_fact
   block:
+    - include: includes/set_brew_prefix.yml
+
     - name: echo LIBRARY_PATH (for other)
       shell: echo $LIBRARY_PATH
       args:

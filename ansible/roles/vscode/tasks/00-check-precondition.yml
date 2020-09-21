@@ -1,0 +1,10 @@
+---
+- name: assert vscode_confing
+  assert:
+    that: vscode_confing is string and vscode_confing != ''
+    quiet: true
+
+- name: assert vscode_extensions
+  assert:
+    that: vscode_extensions is iterable
+    quiet: true

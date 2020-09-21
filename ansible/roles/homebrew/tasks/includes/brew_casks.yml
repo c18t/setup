@@ -1,0 +1,4 @@
+---
+- name: install Homebrew/Linuxbrew casks '{{ item }}' (for {{ brew_distr }})
+  homebrew_cask:
+    name: '{{ item }}'

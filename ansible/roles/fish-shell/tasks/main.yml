@@ -1,41 +1,11 @@
 ---
-- include: includes/set_fish_path.yml
-
-- include: includes/add_fish_to_shells.yml
-
-- include: includes/change_login_shell_to_fish_for_MacOSX.yml
-  when: ansible_distribution == "MacOSX"
-
-- include: includes/change_login_shell_to_fish_for_other.yml
-  when: ansible_distribution != "MacOSX"
-
-- include: includes/set_brew_prefix.yml
-
-- include: includes/setup_resources.yml
-
-- name: clear fish_user_paths
-  shell: >-
-    set -e -g fish_user_paths;
-    set -e -U fish_user_paths;
-  args:
-    executable: '{{ fish_path }}'
-  register: clear_fish_user_paths
-  failed_when: clear_fish_user_paths.rc not in [0, 4]
-  changed_when: false
-  check_mode: false
-  # 個別のロールで作成したパスも消してしまうので止める
-  when: false
-
-- include: includes/set_fish_user_paths.yml
-
-- include: includes/set_environment_variables.yml
-
-- include: includes/set_environment_variables_for_MacOSX.yml
-  when: ansible_distribution == "MacOSX"
-
-- include: includes/set_environment_variables_for_other.yml
-  when: ansible_distribution != "MacOSX"
-
-- include: includes/setup_fisher.yml
-
-- include: includes/setup_graphviz.yml
+- name: fish-shell role tasks
+  tags: fish-shell
+  block:
+    - include: 00-check-precondition.yml
+    - include: 10-add-fish-to-shells.yml
+    - include: 11-change-login-shell-to-fish.yml
+    - include: 12-setup-resources.yml
+    - include: 13-set-environment-variables.yml
+    - include: 14-setup-fisher.yml
+    - include: 15-setup-graphviz.yml
