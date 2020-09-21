@@ -4,14 +4,7 @@
     state: directory
     follow: true
     path: '{{ home }}/{{ item }}'
-  loop: '{{ standard_directories }}'
-
-- name: copy desktop.ini (for Windows)
-  copy:
-    src: '{{ item }}_desktop.ini'
-    dest: '{{ home }}/{{ item }}/desktop.ini'
-  when: type_cmd.rc == 0
-  loop: '{{ standard_directories }}'
+  loop: '{{ home_standard_directories }}'
 
 - name: make config directories
   file:
@@ -23,6 +16,5 @@
     - '{{ xdg_config_home }}'
     - '{{ xdg_cache_home }}'
     - '{{ xdg_data_home }}'
-    - '{{ home }}/.local'
     # ssh
     - '{{ home }}/.ssh'

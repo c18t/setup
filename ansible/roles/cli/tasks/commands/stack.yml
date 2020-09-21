@@ -11,6 +11,9 @@
       changed_when: false
       check_mode: false
 
+    - name: upgrade stack
+      win_shell: stack upgrade --binary-only
+
     - name: install haskell packages (for Windows)
       win_shell: stack install {{ item }}
       register: stack_install
@@ -24,6 +27,9 @@
       shell: type stack
       changed_when: false
       check_mode: false
+
+    - name: upgrade stack
+      shell: stack upgrade --binary-only
 
     - name: install haskell packages
       shell: stack install {{ item }}

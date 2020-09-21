@@ -32,6 +32,14 @@
     - include_vars: cli_tools.yml
   roles:
     - role: os-windows
+    - role: home
+      vars:
+        home_standard_directories:
+          - Applications
+          - Archives
+          - Projects
+        home_ssh_config: config-prv
+        home_git_config: .gitconfig-prv
     - role: chocolatey
       vars:
         chocolatey_packages:
@@ -175,8 +183,9 @@
           - vscodevim.vim
           - vscoss.vscode-ansible
           - wayou.vscode-todo-highlight
-    - role: software-windows
+    # - role: software-windows # 止まるのでコメントアウト
     - role: cli
+
 
 - name: WSL
   hosts: local
@@ -191,9 +200,6 @@
     my_editor: code
     my_visual: code
     my_temporary_home: '{{ "/mnt/d/Temp/" + (home | basename) }}'
-    my_xdg_config_home: '{{ home + "/AppData/Local" }}'
-    my_xdg_cache_home: '{{ home + "/AppData/Roaming" }}'
-    my_xdg_data_home: '{{ home + "/AppData/Local" }}'
   pre_tasks:
     - include_vars: common.yml
     - include_vars: cli_tools.yml
@@ -203,18 +209,23 @@
   roles:
     - role: home
       vars:
-        home_sh_config: config-prv
+        home_host_home: '{{ "/mnt/d/Users/" + (home | basename) }}'
+        home_standard_directories:
+          - Archives
+          - Projects
+        home_ssh_config: config-prv
         home_git_config: .gitconfig-prv
     - role: apt
       vars:
         apt_keys: []
         apt_repositories: []
-        apt_packages: []
+        apt_packages:
+          - haskell-stack
     - role: homebrew
       vars:
-        brew_taps:
+        homebrew_taps:
           - homebrew/core
-        brew_fomulae:
+        homebrew_fomulae:
           - ansible
           - anyenv
           - autoconf # for phpenv

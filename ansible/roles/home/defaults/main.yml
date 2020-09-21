@@ -1,4 +1,12 @@
 ---
+# host home (for wsl)
+# . ホストのホームディレクトリ
+home_host_home: null
+
+# standard directories
+# . ホームディレクトリに作成するフォルダ
+home_standard_directories: null
+
 # ssh config
 # . シンボリックリンク作成時のリンク先ファイルパス
 home_ssh_config: null

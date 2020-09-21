@@ -1,4 +1,20 @@
 ---
+- block:
+  - name: assert home_host_home
+    assert:
+      that: home_host_home is string and home_host_home != ''
+      quiet: true
+  - name: link to host google drive directory (for wsl)
+    become: true
+    file:
+      state: link
+      follow: false
+      force: true
+      owner: '{{ user }}'
+      src: '{{ home_host_home }}/GoogleDrive'
+      dest: '{{ home }}/GoogleDrive'
+  when: ansible_os_family != "Windows" and type_cmd.rc == 0
+
 - name: set link items
   set_fact:
     link_items:

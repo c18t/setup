@@ -18,6 +18,9 @@
     - role: os-macos
     - role: home
       vars:
+        home_standard_directories:
+          - Archives
+          - Projects
         home_ssh_config: config-prv
         home_git_config: .gitconfig-prv
     - role: homebrew

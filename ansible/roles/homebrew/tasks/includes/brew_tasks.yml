@@ -35,4 +35,5 @@
   register: mas_result
   changed_when: mas_result.rc == 1
   failed_when: mas_result.rc not in [0, 1]
+  when: item.id is not none
   loop: '{{ homebrew_mas_apps }}'
