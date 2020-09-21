@@ -23,6 +23,4 @@ cli_pip_packages:
   - pre-commit
   - sphinx
   - yamllint
-cli_stack_packages:
-  - pandoc
-  - ShellCheck
+cli_stack_packages: []

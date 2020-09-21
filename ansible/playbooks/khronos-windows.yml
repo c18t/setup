@@ -103,11 +103,13 @@
           - { name: openjdk, global: true }
           - { name: openssl, global: true }
           - { name: opera }
+          - { name: pandoc, global: true }
           - { name: perl, global: true }
           - { name: plantuml, global: true }
           - { name: qbittorrent }
           - { name: ruby, global: true }
           - { name: screentogif }
+          - { name: shellcheck, global: true }
           - { name: slack }
           - { name: stack, global: true }
           - { name: sudo }
@@ -256,12 +258,14 @@
           - oniguruma # for phpenv
           - openldap # for phpenv
           - openssl@1.1 # for erlenv
+          - pandoc
           - peco
           - pkg-config # for ansible, phpenv
           - python # for command-line
           - readline # for luaenv
           - ruby # for command-line
           - sqlite # for ansible, phpenv
+          - shellcheck
           # - swagger-codegen
           - tidy-html5 # for phpenv
           - the_platinum_searcher

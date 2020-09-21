@@ -69,6 +69,7 @@
           - oniguruma # for phpenv
           - openldap # for phpenv
           - openssl@1.1 # for erlenv
+          - pandoc
           - peco
           - pkg-config # for ansible, phpenv
           - python # for command-line
@@ -76,7 +77,8 @@
           - ruby # for command-line
           - sqlite # for ansible, phpenv
           - sshfs # depends osxfuse
-          - swagger-codegen
+          - shellcheck
+          # - swagger-codegen
           - tidy-html5 # for phpenv
           - terminal-notifier # for fisherman/done
           - the_platinum_searcher
