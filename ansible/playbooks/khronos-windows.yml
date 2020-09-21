@@ -72,7 +72,7 @@
           - { name: audacity }
           - { name: autohotkey }
           - { name: busybox, global: true }
-          # - { name: calibre } # なんか止まる
+          - { name: calibre }
           - { name: direnv, global: true }
           - { name: discord }
           - { name: dotnet-sdk, global: true }
