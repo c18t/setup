@@ -53,9 +53,9 @@
           # - { name: GoogleJapaneseInput } # なんか失敗する
           - { name: iTunes }
           - { name: limechat } # scoop にない
-          # - { name: mnemosyne } # scoop にない # なんか失敗する
+          # - { name: mnemosyne } # scoop にない # 404 not found
           - { name: steam } # インストーラで入れたい
-          # - { name: unity } # scoop にない # unityhubで入れる
+          - { name: unity-hub, ignore_checksums: true } # scoop にない
           - { name: VirtualCloneDrive }
           - { name: visualstudio-installer }
     - role: scoop

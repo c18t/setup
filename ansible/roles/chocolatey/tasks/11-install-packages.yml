@@ -3,4 +3,5 @@
   win_chocolatey:
     name: '{{ item.name }}'
     install_args: '{{ item.install_args | default(omit) }}'
+    ignore_checksums: '{{ item.ignore_checksums | default(omit) }}'
   loop: '{{ chocolatey_packages }}'
