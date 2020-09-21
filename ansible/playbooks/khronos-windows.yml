@@ -57,7 +57,6 @@
           - { name: steam } # インストーラで入れたい
           - { name: unity-hub, ignore_checksums: true } # scoop にない
           - { name: VirtualCloneDrive }
-          - { name: visualstudio-installer }
     - role: scoop
       vars:
         scoop_buckets:
