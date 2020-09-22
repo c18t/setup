@@ -198,8 +198,8 @@
     # ansible
     ansible_python_interpreter: /home/linuxbrew/.linuxbrew/bin/python3
     # common
-    my_editor: code
-    my_visual: code
+    my_editor: nvim
+    my_visual: nvim
     my_temporary_home: '{{ "/mnt/d/Temp/" + (home | basename) }}'
   pre_tasks:
     - include_vars: common.yml
