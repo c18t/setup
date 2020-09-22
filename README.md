@@ -36,15 +36,11 @@ $ ./setup-khronos -e win_username=user -K -l local
 
 ### brewfile
 
-_path:_ ansible/roles/homebrew/vars/
-
 ```sh
 $ brew tap bundle && brew bundle dump && cat Brewfile
 ```
 
 ### choco.config
-
-_path:_ ansible/roles/chocolatey/vars/
 
 ```ps1
 PS > choco list --local-only `
@@ -55,8 +51,6 @@ PS > choco list --local-only `
 ```
 
 ### scoop export
-
-_path:_ ansible/roles/scoop/vars/
 
 ```ps1
 PS > scoop export `
@@ -69,8 +63,6 @@ PS > scoop export `
 ```
 
 ### VS Code extensions
-
-_path:_ ansible/roles/vscode/vars/
 
 ```sh
 $ code --list-extensions \
