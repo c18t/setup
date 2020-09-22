@@ -45,6 +45,7 @@
         chocolatey_packages:
           # - { name: 1password } # なんか失敗する
           - { name: adobereader } # scoop にない
+          - { name: calibre } # scoop で失敗する
           - { name: chocolatey }
           - { name: chocolateygui }
           - { name: docker-desktop } # scoop にない
@@ -54,6 +55,7 @@
           - { name: iTunes }
           - { name: limechat } # scoop にない
           # - { name: mnemosyne } # scoop にない # 404 not found
+          - { name: sendtokindle } # scoop にない
           - { name: steam } # インストーラで入れたい
           - { name: unity-hub, ignore_checksums: true } # scoop にない
           - { name: VirtualCloneDrive }
@@ -71,14 +73,14 @@
           - { name: audacity }
           - { name: autohotkey }
           - { name: busybox, global: true }
-          - { name: calibre }
+          # - { name: calibre } # インストーラがパスが長すぎるって怒るせいで失敗する
           - { name: direnv, global: true }
           - { name: discord }
           - { name: dotnet-sdk, global: true }
           - { name: firefox }
           - { name: firefox-nightly }
           - { name: fork }
-          - { name: gimp } # Windows Defender のリアルタイム保護が有効だと脅威とみなされて失敗する
+          - { name: gimp }
           - { name: git, global: true }
           - { name: ghostscript, global: true }
           - { name: ghq, global: true }
@@ -101,7 +103,6 @@
           - { name: obs-studio }
           - { name: openjdk, global: true }
           - { name: openssl, global: true }
-          - { name: opera }
           - { name: pandoc, global: true }
           - { name: perl, global: true }
           - { name: plantuml, global: true }
@@ -109,6 +110,7 @@
           - { name: ruby, global: true }
           - { name: screentogif }
           - { name: shellcheck, global: true }
+          - { name: shotcut }
           - { name: slack }
           - { name: stack, global: true }
           - { name: sudo }
