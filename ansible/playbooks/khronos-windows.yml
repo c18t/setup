@@ -67,61 +67,66 @@
           - extras
           - java
         scoop_packages:
-          - { name: 7zip, global: true }
-          - { name: anaconda3, global: true }
+          - { name: 7zip }
+          - { name: anaconda3 }
           - { name: android-studio }
           - { name: arduino }
           - { name: audacity }
           - { name: autohotkey }
-          - { name: busybox, global: true }
+          - { name: busybox }
           # - { name: calibre } # インストーラがパスが長すぎるって怒るせいで失敗する
-          - { name: direnv, global: true }
+          - { name: direnv }
           - { name: discord }
           - { name: dotnet-sdk, global: true }
           - { name: firefox }
           - { name: firefox-nightly }
           - { name: fork }
+          - { name: gcloud }
+          - { name: ghostscript }
+          - { name: ghq }
           - { name: gimp }
-          - { name: git, global: true }
-          - { name: ghostscript, global: true }
-          - { name: ghq, global: true }
-          - { name: go, global: true }
+          - { name: git }
+          - { name: go }
           - { name: googlechrome-dev }
-          - { name: gpg4win, global: true }
-          - { name: gradle, global: true }
-          - { name: graphviz, global: true }
-          - { name: hadolint, global: true }
-          - { name: helm, global: true }
+          - { name: gpg4win }
+          - { name: gradle }
+          - { name: graphviz }
+          - { name: hadolint }
+          - { name: helm }
           - { name: honeyview }
+          - { name: hub }
+          - { name: imgburn }
           - { name: inkscape }
-          - { name: jmeter, global: true }
+          - { name: innounp }
+          - { name: jmeter }
           - { name: linqpad }
           - { name: makemkv }
-          - { name: msys2, global: true }
+          - { name: msys2 }
           - { name: neofetch }
           - { name: neovim }
-          - { name: nodejs, global: true }
+          - { name: nodejs }
           - { name: obs-studio }
           - { name: openjdk, global: true }
           - { name: openssl, global: true }
-          - { name: pandoc, global: true }
-          - { name: perl, global: true }
-          - { name: plantuml, global: true }
+          - { name: pandoc }
+          - { name: perl }
+          - { name: plantuml }
           - { name: qbittorrent }
-          - { name: ruby, global: true }
+          - { name: ruby }
           - { name: screentogif }
-          - { name: shellcheck, global: true }
+          - { name: shellcheck }
           - { name: shotcut }
           - { name: slack }
-          - { name: stack, global: true }
+          - { name: stack }
           - { name: sudo }
           - { name: teraterm }
           - { name: vivaldi }
           - { name: vlc }
           - { name: vscode }
-          - { name: winmerge, global: true }
-          - { name: winscp, global: true }
+          - { name: winmerge }
+          - { name: winscp }
           - { name: xmind8 }
+          - { name: youtube-dl }
     - role: vscode
       vars:
         vscode_confing: settings-win.json
@@ -183,8 +188,8 @@
           - git-secrets
           - gradle
           # - haskell-stack # 落ちるので apt で入れる
-          - hub
           - icu4c # for phpenv
+          - kerl # for erlenv
           - krb5 # for phpenv
           - libedit # for phpenv
           - libxml2 # for phpenv
@@ -196,6 +201,7 @@
           - npm # for command-line
           - oniguruma # for phpenv
           - openldap # for phpenv
+          - openjdk
           - openssl@1.1 # for erlenv
           - pandoc
           - peco
@@ -210,6 +216,7 @@
           - the_platinum_searcher
           - tree
           - unixodbc # for erlenv
+          - volta
           - zlib # for phpenv
     - role: nvim
     - role: fish-shell
@@ -218,14 +225,6 @@
     - role: anyenv
     - role: lang
       vars:
-        # wxはwxWidgetsを--enable-compat28オプションを付けてソースからビルドしないといけないので除外
-        # cf. https://erlang.org/doc/installation_guide/INSTALL.html#Advanced-configuration-and-build-of-ErlangOTP_Building_Building-with-wxErlang
-        erlang_option: >-
-          --enable-dynamic-ssl-lib
-          --with-ssl=/home/linuxbrew/.linuxbrew/opt/openssl@1.1
-          --with-odbc=/home/linuxbrew/.linuxbrew/opt/unixodbc
-          --without-wx
-        erlang_make_arguments: -j 4
         # makefileが見つからないエラーが出るので別名を指定
         perl_option: -j 4 -Dfirstmakefile=GNUmakefile
         php_build_config: configure_options-wsl

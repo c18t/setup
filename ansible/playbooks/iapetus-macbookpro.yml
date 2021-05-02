@@ -52,7 +52,6 @@
           - gradle
           - graphviz
           - hadolint
-          - hardlink-osx
           - haskell-stack
           - helm
           - hub
@@ -69,6 +68,7 @@
           - nim
           - npm # for command-line
           - oniguruma # for phpenv
+          - openjdk
           - openldap # for phpenv
           - openssl@1.1 # for erlenv
           - pandoc
@@ -95,16 +95,18 @@
           - discord
           - docker
           - firefox
-          - font-ricty-diminished
           - font-hackgen
           - font-hackgen-nerd
+          - font-ricty-diminished
           - fork
           - gfortran
           - gimp
           - gitter
           - google-chrome
+          - google-cloud-sdk
           - google-japanese-ime
           - google-photos-backup-and-sync
+          - gpg-suite-no-mail
           - horndis
           - inkscape
           - iterm2
