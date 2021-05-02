@@ -125,70 +125,92 @@
       vars:
         vscode_confing: settings-win.json
         vscode_extensions:
+          - actboy168.lua-debug
+          - bierner.github-markdown-preview
           - bierner.markdown-checkbox
+          - bierner.markdown-emoji
           - bierner.markdown-preview-github-styles
+          - bierner.markdown-yaml-preamble
           - bmalehorn.vscode-fish
           - bungcip.better-toml
           - casualjim.theme-desertex
           - chrisdias.vscode-opennewinstance
-          - CoenraadS.bracket-pair-colorizer
-          - darkriszty.markdown-table-prettify
+          - christian-kohler.path-intellisense
+          - chrmarti.regex
+          - CoenraadS.bracket-pair-colorizer-2
           - dawhite.mustache
           - dbaeumer.vscode-eslint
           - donjayamanne.githistory
           - eamodio.gitlens
-          - EFanZh.graphviz-preview
+          - ecmel.vscode-html-css
+          - EditorConfig.EditorConfig
+          - eiminsasete.apacheconf-snippets
           - electrotype.windows-explorer-context-menu
           - EliverLara.andromeda
+          - emilast.LogFileHighlighter
           - esbenp.prettier-vscode
-          - fallenwood.vimL
+          - evilz.vscode-reveal
+          - fabiospampinato.vscode-todo-plus
           - felixfbecker.php-debug
-          - gamunu.vscode-yarn
+          - formulahendry.auto-close-tag
+          - formulahendry.auto-complete-tag
+          - formulahendry.auto-rename-tag
           - geeklearningio.graphviz-markdown-preview
+          - golang.go
+          - hediet.vscode-drawio
+          - humao.rest-client
           - IBM.output-colorizer
           - idleberg.badges
+          - JakeBecker.elixir-ls
           - jebbs.plantuml
           - jinsihou.diff-tool
+          - joaompinto.vscode-graphviz
           - justusadam.language-haskell
           - kenhowardpdx.vscode-gist
           - kisstkondoros.vscode-codemetrics
-          - kosz78.nim
           - kukushi.pasteurl
-          - lextudio.restructuredtext
-          - mattn.OpenVim
+          - L13RARY.l13-diff
           - me-dutour-mathieu.vscode-github-actions
           - mechatroner.rainbow-csv
+          - mhutchie.git-graph
           - mitchdenny.ecdc
-          - mjmcloug.vscode-elixir
           - mosapride.zenkaku
-          - mrmlnc.vscode-apache
           - ms-azuretools.vscode-docker
           - MS-CEINTL.vscode-language-pack-ja
+          - ms-dotnettools.csharp
           - ms-python.python
+          - ms-toolsai.jupyter
           - ms-vscode-remote.remote-wsl
-          - ms-vscode.cpptools
-          - ms-vscode.csharp
-          - ms-vscode.Go
           - ms-vscode.powershell
           - msjsdiag.cordova-tools
           - msjsdiag.debugger-for-chrome
+          - nickdemayo.vscode-json-editor
+          - nimsaem.nimvscode
           - octref.vetur
           - oderwat.indent-rainbow
           - PKief.markdown-checkbox
+          - pranaygp.vscode-css-peek
+          - rafaelmaiolla.diff
           - redhat.vscode-yaml
+          - rogalmic.bash-debug
+          - ryu1kn.partial-diff
+          - shardulm94.trailing-spaces
           - shuworks.vscode-table-formatter
-          - Stephanvs.dot
+          - SirTobi.code-clip-ring
+          - stevencl.addDocComments
           - sysoev.language-stylus
           - thisismanta.stylus-supremacy
+          - tintinweb.graphviz-interactive-preview
           - tomoki1207.pdf
+          - tomoki1207.vscode-input-sequence
           - Tyriar.sort-lines
           - vscode-icons-team.vscode-icons
           - vscodevim.vim
-          - vscoss.vscode-ansible
-          - wayou.vscode-todo-highlight
+          - wix.vscode-import-cost
+          - wmaurer.change-case
+          - zxh404.vscode-proto3
     # - role: software-windows # 止まるのでコメントアウト
     - role: cli
-
 
 - name: WSL
   hosts: local

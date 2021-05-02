@@ -16,19 +16,19 @@ $ ./setup-iapetus.sh -K
 
 #### Khronos
 
-```powershell
+```ps1
 PS > .\setup-windows.ps1 setup-khronos.sh -K
 ```
 
 ##### Host
 
-```
+```sh
 $ ./setup-khronos -e win_username=user -K -l khronos
 ```
 
 ##### WSL
 
-```
+```sh
 $ ./setup-khronos -e win_username=user -K -l local
 ```
 
@@ -66,14 +66,14 @@ PS > scoop export `
 
 ```sh
 $ code --list-extensions \
-  | awk 'BEGIN { print "---";  print "code_install_extensions:" }
+  | awk 'BEGIN { print "---"; print "vscode_extensions:" }
     { print "  - "$1 }'
 ```
 
 ```ps1
 PS > code --list-extensions `
   | ForEach-Object `
-    -Begin { Write-Output "---" "code_install_extensions:" } `
+    -Begin { Write-Output "---" "vscode_extensions:" } `
     -Process { Write-Output "  - $_" }
 ```
 
