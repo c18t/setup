@@ -4,6 +4,11 @@
     that: erlang_versions is not defined or erlang_versions is iterable
     quiet: true
 
+- name: check kerl
+  shell: type kerl
+  changed_when: false
+  check_mode: false
+
 - name: check erlenv
   shell: fish -l -c "anyenv envs | grep -qe \^erlenv\\\$"
   register: check_erlenv
@@ -18,6 +23,10 @@
 
 - name: install erlang version
   block:
+    - name: update erlang release list
+      shell: fish -l -c "kerl update releases"
+      changed_when: false
+
     - name: get installed erlang version list
       shell: fish -l -c "erlenv releases"
       register: installed_erlang_version
@@ -26,28 +35,18 @@
       check_mode: false
 
     - name: install erlang version
-      shell: >-
-        fish -l -c "cd {{ home }};
-          and curl -Lo otp_src_{{ item.version }}.tar.gz {{ item.source }};
-          and tar zxf otp_src_{{ item.version }}.tar.gz;
-          and cd otp_src_{{ item.version }};
-          and ./configure --prefix={{ home }}/.anyenv/envs/erlenv/releases/{{ item.version }} {{ erlang_option }};
-          and make {{ erlang_make_arguments }};
-          and make install;
-          and cd ../;
-          and rm -rf ./otp_src_{{ item.version }};
-          and rm -f otp_src_{{ item.version }}.tar.gz;"
-      when: installed_erlang_version.stdout is not regex("\\b"+item.version+"\\b")
+      include_tasks: erlang/install_erlang_version.yml
+      when: installed_erlang_version.stdout is not regex("\\b"+item+"\\b")
       loop: '{{ erlang_versions }}'
 
-    - name: 'check global erlang version {{ erlang_versions[0].version }}'
-      shell: fish -l -c "erlenv global | grep -qe \^{{ erlang_versions[0].version }}\\\$"
+    - name: 'check global erlang version {{ erlang_versions[0] }}'
+      shell: fish -l -c "erlenv global | grep -qe \^{{ erlang_versions[0] }}\\\$"
       register: check_erlenv_version
       failed_when: check_erlenv_version.rc not in [0, 1]
       changed_when: false
       check_mode: false
 
-    - name: 'set global erlang version {{ erlang_versions[0].version }}'
-      shell: fish -l -c "erlenv global {{ erlang_versions[0].version }}"
+    - name: 'set global erlang version {{ erlang_versions[0] }}'
+      shell: fish -l -c "erlenv global {{ erlang_versions[0] }}"
       when: check_erlenv_version.rc != 0
   when: erlang_versions is defined and erlang_versions | length > 0

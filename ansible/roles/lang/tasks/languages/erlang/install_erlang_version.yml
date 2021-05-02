@@ -1,0 +1,12 @@
+---
+- name: get built erlang version list
+  shell: kerl list builds
+  register: built_erlang_version
+  failed_when: built_erlang_version.rc not in [0, 1]
+  changed_when: false
+  check_mode: false
+- name: build erlang version
+  shell: kerl build "{{ item }}" "{{ item }}"
+  when: built_erlang_version.stdout is not regex("\\b"+item+"\\b")
+- name: install built erlang
+  shell: kerl install "{{ item }}" "{{ home }}/.anyenv/envs/erlenv/releases/{{ item }}"

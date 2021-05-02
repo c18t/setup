@@ -57,6 +57,7 @@
           - helm
           - hub
           - icu4c # for phpenv
+          - kerl # for erlenv
           - krb5 # for phpenv
           - libedit # for phpenv
           - libxml2 # for phpenv
@@ -85,6 +86,7 @@
           - the_platinum_searcher
           - tree
           - unixodbc # for erlenv
+          - volta
           - zlib # for phpenv
         homebrew_casks:
           - android-studio
@@ -151,14 +153,6 @@
     - role: anyenv
     - role: lang
       vars:
-        # wxはwxWidgetsを--enable-compat28オプションを付けてソースからビルドしないといけないので除外
-        # cf. https://erlang.org/doc/installation_guide/INSTALL.html#Advanced-configuration-and-build-of-ErlangOTP_Building_Building-with-wxErlang
-        erlang_option: >-
-          --enable-dynamic-ssl-lib
-          --with-ssl=/usr/local/opt/openssl@1.1
-          --with-odbc=/usr/local/opt/unixodbc
-          --without-wx
-        erlang_make_arguments: -j 4
         perl_option: -j 4
         php_build_config: configure_options-mac
         php_build_extra_make_arguments: -j 4
