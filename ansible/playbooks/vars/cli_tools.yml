@@ -10,6 +10,7 @@ cli_npm_packages:
   - express-generator
   - firebase-tools
   - markdownlint-cli
+  - pnpm
   - prettier
   - sass
   - '@storybook/cli'
