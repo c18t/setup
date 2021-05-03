@@ -13,10 +13,9 @@
 - name: install fisher
   block:
     - name: install fisher
-      get_url:
-        url: https://git.io/fisher
-        dest: '{{ xdg_config_home }}/fish/functions/fisher.fish'
-
+      shell: fish -l -c 'curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher'
+      args:
+        executable: '{{ fish_path }}'
     - name: find fisher
       shell: type fisher
       args:
@@ -28,24 +27,36 @@
 - name: configure fisher with SHELL env
   block:
     - name: update fisher itself
-      shell: fish -l -c 'fisher self-update'
+      shell: fish -l -c 'fisher update jorgebucaran/fisher'
       args:
         executable: '{{ fish_path }}'
-      register: update_fisher
-      changed_when: update_fisher.stderr is not search('fisher is already up-to-date')
+      changed_when: false
+
+    - name: cp fish_plugin file
+      copy:
+        src: '{{ resources }}/fisher-my-setup/fish_plugins'
+        dest: '{{ xdg_config_home }}/fish/fish_plugins'
+        follow: no
+      changed_when: false
+
+    - name: update fisher plugins
+      shell: fish -l -c 'fisher update'
+      args:
+        executable: '{{ fish_path }}'
+      register: update_fisher_plugins
+      failed_when: update_fisher_plugins.stderr is search('Cannot install')
+      changed_when: false
 
     - name: install fish config
-      shell: fish -l -c 'fisher add "{{ resources }}/fisher-my-setup"'
+      shell: fish -l -c 'fisher install "{{ resources }}/fisher-my-setup"'
       args:
         executable: '{{ fish_path }}'
-      register: install_fish_config
       changed_when: false
 
     - name: install fish config (for MacOSX)
-      shell: fish -l -c 'fisher add "{{ resources }}/fisher-my-setup-mac"'
+      shell: fish -l -c 'fisher install "{{ resources }}/fisher-my-setup-mac"'
       args:
         executable: '{{ fish_path }}'
-      register: install_fish_config_mac
       changed_when: false
       when: ansible_distribution == "MacOSX"
 
@@ -57,10 +68,9 @@
       check_mode: false
 
     - name: install fish config (for WSL)
-      shell: fish -l -c 'fisher add "{{ resources }}/fisher-my-setup-wsl"'
+      shell: fish -l -c 'fisher install "{{ resources }}/fisher-my-setup-wsl"'
       args:
         executable: '{{ fish_path }}'
-      register: install_fish_config_wsl
       changed_when: false
       when: type_cmd.rc == 0
   environment:

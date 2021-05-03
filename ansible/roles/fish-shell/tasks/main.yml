@@ -9,3 +9,4 @@
     - include: 13-set-environment-variables.yml
     - include: 14-setup-fisher.yml
     - include: 15-setup-graphviz.yml
+    - include: 16-setup-anyenv.yml
