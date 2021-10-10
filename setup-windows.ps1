@@ -19,14 +19,14 @@ $Current = Split-Path $PSCommandPath
 $reboot = $False
 
 # WSLの有効化
-powershell.exe -File "$Current\script\configure-wsl.ps1"
-if ($? -eq $False) { exit 1 }
-if ($LASTEXITCODE -eq 1) { $reboot = $True }
+powershell -File "$Current\script\configure-wsl.ps1"
+if ($LASTEXITCODE -eq -1) { $reboot = $True }
+elseif (-Not $?) { exit 1 }
 
 # Ansibleによる設定の受付準備
-powershell.exe -File "$Current\script\configure-remoting-for-ansible.ps1"
-if ($? -eq $False) { exit 1 }
-if ($LASTEXITCODE -eq 1) { $reboot = $True }
+powershell -File "$Current\script\configure-openssh.ps1"
+if ($LASTEXITCODE -eq -1) { $reboot = $True }
+elseif (-Not $?) { exit 1 }
 
 if ($reboot) {
     $scriptName = Split-Path -Leaf $PSCommandPath
@@ -34,14 +34,13 @@ if ($reboot) {
 }
 else {
     # ubuntuのインストール
-    powershell.exe -File "$Current\script\install-wsl-ubuntu.ps1"
+    powershell -File "$Current\script\install-wsl-ubuntu.ps1"
     if ($? -eq $False) { exit 1 }
-    . $profile
 
     # セットアップコマンドの実行
     $driveLetter = $Current.Substring(0, 1).ToLower()
     $wslPath = "$Current\$setupScript" -replace "\\", "/" -replace "^\w:", "/mnt/$driveLetter"
-    ubuntu.exe run bash "$wslPath" "-e win_username=$env:USERNAME" $setupScriptArgs
+    ubuntu run bash "$wslPath" "-e win_username=$env:USERNAME" $setupScriptArgs
     if ($? -eq $False) { exit 1 }
 }
 

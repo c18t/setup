@@ -9,40 +9,10 @@ if (([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]:
 
 $Current = Split-Path $PSCommandPath
 
-# ubuntuの確認
-if (-Not (Get-AppPackage *CanonicalGroupLimited.Ubuntu*onWindows*)) {
-    Write-Host "install ubuntu package ..."
-
-    # ubuntuパッケージのインストール
-    # cf. https://docs.microsoft.com/en-us/windows/wsl/install-manual
-
-    $appxPath = "$env:temp\Ubuntu-2004.appx"
-    Invoke-WebRequest -Uri https://aka.ms/wslubuntu2004 -OutFile $appxPath -UseBasicParsing
-    if ($? -eq $False) {
-        Write-Host "... failed!"
-        throw "ubuntuパッケージのダウンロードに失敗しました。終了します。"
-    }
-
-    Add-AppxPackage $appxPath
-    if ($? -eq $False) {
-        Write-Host "... failed!"
-        throw "ubuntuのインストールに失敗しました。終了します。"
-    }
-
-    Remove-Item $appxPath
-
-    Write-Host "... done!"
-}
-
+# Ubuntuパッケージの確認
 if (-Not (Get-Command -Name ubuntu -ErrorAction SilentlyContinue)) {
-    Write-Host "add alias for ubuntu ..."
-
-    # ubuntu.exe のエイリアスを作成
-    # $ubuntuPath = (Get-Command ubuntu2004.exe | Where-Object Name -eq ubuntu2004.exe).Path
-    Write-Output "Set-Alias -Name ubuntu -Value ubuntu2004.exe" | Add-Content $profile -Encoding Default
-    Write-Output "Set-Alias -Name ubuntu.exe -Value ubuntu2004.exe" | Add-Content $profile -Encoding Default
-    . $profile
-
+    Write-Host "install ubuntu package ..."
+    wsl --install -d Ubuntu
     Write-Host "... done!"
 }
 
@@ -63,14 +33,14 @@ if (-Not (Get-Command -Name ubuntu -ErrorAction SilentlyContinue)) {
 Write-Host "install ubuntu ..."
 # 権限エラー。MSYS2/expectではWindows Storeアプリは操作できないのかもしれない
 # expect.exe -f "$Current\install-wsl-ubuntu.exp" "$encodedCommand" "$username" "$password"
-ubuntu.exe install
+ubuntu install
 Write-Host "... done!"
 
 # セットアップコマンドの実行
 Write-Host "configure ubuntu ..."
 $driveLetter = $Current.Substring(0, 1).ToLower()
 $wslPath = "$Current\make-wsl-config.sh" -replace "\\", "/" -replace "^\w:", "/mnt/$driveLetter"
-ubuntu.exe run bash "$wslPath"
+ubuntu run bash "$wslPath"
 $result = $LASTEXITCODE
 if ($result -eq 0) {
     Write-Host "... done!"
@@ -85,7 +55,7 @@ elseif ($result -eq 1) {
 }
 else {
     Write-Host "... failed!"
-    throw "ubuntuのセットアップに失敗しました。終了します。"
+    throw "Ubuntuのセットアップに失敗しました。終了します。"
 }
 
 # ホームディレクトリの変更 (ホームディレクトリをWindows側にすると起動が凄まじく遅いのでやめる)
