@@ -7,7 +7,7 @@ if ! [ -e /etc/wsl.conf ]; then
     # umask: マウントした全ファイルおよびフォルダのパーミッションのマスク
     #        他のユーザーからの書き込みを制限する
     #        umask=22: 777 -> 755
-    # cf. https://docs.microsoft.com/en-us/windows/wsl/wsl-config
+    # cf. https://docs.microsoft.com/en-us/windows/wsl/wsl-config#per-distribution-configuration-options-with-wslconf
     {
         echo '[automount]'
         echo 'options = "metadata,umask=22"'
