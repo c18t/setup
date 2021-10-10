@@ -3,4 +3,5 @@
   win_shell: scoop bucket add {{ item }}
   register: add_bucket
   changed_when: add_bucket.stdout is search('was added successfully.')
+  failed_when: add_bucket.rc != 0
   loop: '{{ scoop_buckets }}'
