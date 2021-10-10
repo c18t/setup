@@ -1,7 +1,7 @@
 ---
-- name: chocolatey role tasks
-  tags: chocolatey
+- name: winget role tasks
+  tags: winget
   block:
     - include: 00-check-precondition.yml
-    - include: 10-install-chocolatey.yml
+    - include: 10-upgrade-packages.yml
     - include: 11-install-packages.yml

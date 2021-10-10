@@ -1,0 +1,12 @@
+---
+- name: check package {{ item.name }} exists
+  become: true
+  win_shell: winget list -e --id '{{ item.name }}'
+  register: check_package
+  changed_when: false
+  failed_when: false
+
+- name: install package {{ item.name }}
+  become: true
+  win_shell: winget install -e --id '{{ item.name }}' {{ item.force | default(false) | ternary('--force', '') }}
+  when: check_package.rc != 0

@@ -1,0 +1,3 @@
+---
+- include: includes/install-package.yml
+  loop: '{{ winget_packages }}'

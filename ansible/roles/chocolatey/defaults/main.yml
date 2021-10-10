@@ -1,6 +1,0 @@
----
-# chocolateyパッケージリスト
-# . name: win_chocolateyパッケージのnameパラメータの値を指定する
-# . install_args: win_chocolateyパッケージのinstall_argsパラメータの値を指定する（キー省略時omit）
-chocolatey_packages:
-  - { name: chocolatey }

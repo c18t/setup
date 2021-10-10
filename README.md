@@ -17,6 +17,7 @@ $ ./setup-iapetus.sh -K
 #### Khronos
 
 ```ps1
+PS > Set-ExecutionPolicy RemoteSigned
 PS > .\setup-windows.ps1 setup-khronos.sh -K
 ```
 
@@ -38,16 +39,6 @@ $ ./setup-khronos -e win_username=user -K -l local
 
 ```sh
 $ brew tap bundle && brew bundle dump && cat Brewfile
-```
-
-### choco.config
-
-```ps1
-PS > choco list --local-only `
-  | Select-String -NotMatch "packages installed" `
-  | ForEach-Object `
-    -Begin { Write-Output "---" "chocolatey_packages:" } `
-    -Process { Write-Output ("  - { name: "+($_ -split " ")[0]+" }") }
 ```
 
 ### scoop export

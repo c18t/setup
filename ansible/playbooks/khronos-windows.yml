@@ -34,6 +34,25 @@
     - include_vars: vscode_extensions.yml
   roles:
     - role: os-windows
+    - role: winget
+      vars:
+        winget_packages:
+          - { name: AgileBits.1Password }
+          - { name: Amazon.SendToKindle }
+          - { name: Apple.iTunes }
+          - { name: calibre.calibre }
+          - { name: Docker.DockerDesktop }
+          - { name: ElaborateBytes.VirtualCloneDrive }
+          - { name: Gitlab.Gitter }
+          - { name: Google.Chrome }
+          - { name: Google.Chrome.Dev }
+          - { name: Google.Drive }
+          # - { name: Google.JapaneseIME, become: false, force: true } # ハッシュが一致しない
+          - { name: Microsoft.SQLServerManagementStudio }
+          - { name: Microsoft.VisualStudio.2022.Community-Preview }
+          - { name: PeterBienstman.Mnemosyne }
+          - { name: UnityTechnologies.UnityHub }
+          - { name: Valve.Steam }
     - role: home
       vars:
         home_standard_directories:
@@ -42,25 +61,6 @@
           - Projects
         home_ssh_config: config-prv
         home_git_config: .gitconfig-prv
-    - role: chocolatey
-      vars:
-        chocolatey_packages:
-          # - { name: 1password } # なんか失敗する
-          - { name: adobereader } # scoop にない
-          - { name: calibre } # scoop で失敗する
-          - { name: chocolatey }
-          - { name: chocolateygui }
-          - { name: docker-desktop } # scoop にない
-          - { name: gitter } # scoop にない
-          - { name: GoogleChrome } # インストーラで入れたい
-          # - { name: GoogleJapaneseInput } # なんか失敗する
-          - { name: iTunes }
-          - { name: limechat } # scoop にない
-          # - { name: mnemosyne } # scoop にない # 404 not found
-          - { name: sendtokindle } # scoop にない
-          - { name: steam } # インストーラで入れたい
-          - { name: unity-hub, ignore_checksums: true } # scoop にない
-          - { name: VirtualCloneDrive }
     - role: scoop
       vars:
         scoop_buckets:
