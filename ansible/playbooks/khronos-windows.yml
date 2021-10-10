@@ -19,14 +19,15 @@
     ansible_shell_type: powershell
     ansible_python_interpreter: /home/linuxbrew/.linuxbrew/bin/python3
     # common
-    my_home: D:\Users\{{ user }}
+    my_home: C:\Users\{{ user }}
     my_user: '{{ win_username }}'
     my_editor: code
     my_visual: code
-    my_temporary_home: D:\Temp\{{ user }}
-    my_xdg_cache_home: D:\Users\{{ user }}\AppData\Roaming
-    my_xdg_config_home: D:\Users\{{ user }}\AppData\Local
-    my_xdg_data_home: D:\Users\{{ user }}\AppData\Local
+    # my_temporary_home: D:\Temp\{{ user }}
+    my_xdg_cache_home: C:\Users\{{ user }}\AppData\Roaming
+    my_xdg_config_home: C:\Users\{{ user }}\AppData\Local
+    my_xdg_data_home: C:\Users\{{ user }}\AppData\Local
+    my_google_drive: G:\マイドライブ
   pre_tasks:
     - include_vars: common.yml
     - include_vars: cli_tools.yml
