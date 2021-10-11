@@ -224,10 +224,10 @@
       vars:
         fish_shell_config: config-wsl.fish
     - role: anyenv
-    - role: lang
-      vars:
-        # makefileが見つからないエラーが出るので別名を指定
-        perl_option: -j 4 -Dfirstmakefile=GNUmakefile
-        php_build_config: configure_options-wsl
-        php_make_arguments: -j 4
+    # - role: lang
+    #   vars:
+    #     # makefileが見つからないエラーが出るので別名を指定
+    #     perl_option: -j 4 -Dfirstmakefile=GNUmakefile
+    #     php_build_config: configure_options-wsl
+    #     php_make_arguments: -j 4
     - role: cli
