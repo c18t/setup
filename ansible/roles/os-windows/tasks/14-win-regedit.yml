@@ -1,0 +1,87 @@
+---
+- name: explorer
+  block:
+    - name: show file extension
+      win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: HideFileExt
+        data: 0
+        type: dword
+    - name: show hidden files
+      win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: Hidden
+        data: 1
+        type: dword
+    - name: launch to pc
+      win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: LaunchTo
+        data: 1
+        type: dword
+    - name: hide recent files
+      win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer
+        name: ShowRecent
+        data: 0
+        type: dword
+    - name: hide frequently used folders
+      win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer
+        name: ShowFrequent
+        data: 0
+        type: dword
+    - name: disable showing all folders
+      win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: NavPaneShowAllFolders
+        data: 0
+        type: dword
+    - name: disable navpanel expanding to current folder
+      win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: NavPaneExpandToCurrentFolder
+        data: 0
+        type: dword
+    - name: set taskbar size to medium
+      win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: TaskbarSi
+        data: 1
+        type: dword
+    - name: set taskbar alignment to the left
+      win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: TaskbarAl
+        data: 0
+        type: dword
+    - name: hide search button
+      win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: SearchboxTaskbarMode
+        data: 0
+        type: dword
+    - name: hide taskview button
+      win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: ShowTaskViewButton
+        data: 0
+        type: dword
+    - name: hide widgets button
+      win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: TaskbarDa
+        data: 0
+        type: dword
+    - name: hide chat button
+      win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: TaskbarMn
+        data: 0
+        type: dword
+    - name: show taskbar badge
+      win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: TaskbarBadges
+        data: 1
+        type: dword

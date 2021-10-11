@@ -146,7 +146,6 @@
     # common
     my_editor: nvim
     my_visual: nvim
-    my_temporary_home: '{{ "/mnt/d/Temp/" + (home | basename) }}'
   pre_tasks:
     - include_vars: common.yml
     - include_vars: cli_tools.yml
@@ -154,11 +153,11 @@
   handlers:
     - include: handlers/handlers_wsl.yml
   roles:
+    - role: wsl
     - role: home
       vars:
-        home_host_home: '{{ "/mnt/d/Users/" + (home | basename) }}'
+        home_host_home: '{{ "/mnt/c/Users/" + (home | basename) }}'
         home_standard_directories:
-          - Archives
           - Projects
         home_ssh_config: config-prv
         home_git_config: .gitconfig-prv

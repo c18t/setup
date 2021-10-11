@@ -1,0 +1,6 @@
+---
+- name: configure fonts to use Windows one
+  become: true
+  copy:
+    src: 'fonts_local.conf'
+    dest: '/etc/fonts/local.conf'
