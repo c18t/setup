@@ -95,6 +95,7 @@
           - { name: hadolint }
           - { name: helm }
           - { name: honeyview }
+          - { name: hwmonitor }
           - { name: hub }
           - { name: imgburn }
           - { name: inkscape }
