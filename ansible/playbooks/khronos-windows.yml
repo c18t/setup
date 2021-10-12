@@ -107,6 +107,7 @@
           - { name: neofetch }
           - { name: neovim }
           - { name: nodejs }
+          - { name: notion }
           - { name: obs-studio }
           - { name: openjdk, global: true }
           - { name: openssl, global: true }
