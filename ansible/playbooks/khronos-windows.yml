@@ -48,6 +48,7 @@
           - { name: Google.Chrome.Dev }
           - { name: Google.Drive }
           # - { name: Google.JapaneseIME, become: false, force: true } # ハッシュが一致しない
+          - { name: Microsoft.PowerShell }
           - { name: Microsoft.SQLServerManagementStudio }
           - { name: Microsoft.VisualStudio.2022.Community-Preview }
           - { name: PeterBienstman.Mnemosyne }
