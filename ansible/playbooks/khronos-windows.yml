@@ -89,7 +89,6 @@
           - { name: gimp }
           - { name: git }
           - { name: go }
-          - { name: googlechrome-dev }
           - { name: gpg4win }
           - { name: gradle }
           - { name: graphviz }
@@ -117,6 +116,7 @@
           - { name: plantuml }
           - { name: qbittorrent }
           - { name: ruby }
+          - { name: rufus }
           - { name: screentogif }
           - { name: shellcheck }
           - { name: shotcut }
