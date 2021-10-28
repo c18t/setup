@@ -6,7 +6,7 @@
 
 - name: install scoop dependencies
   become: true
-  win_shell: 'if ((scoop info {{ item }}) -match "Installed: No") { scoop install {{ item }} --global; }'
+  win_shell: 'if ((scoop info {{ item }}) -match "Installed: No") { scoop install {{ item }}; }'
   register: install_scoop_dependency
   changed_when: install_scoop_dependency.stdout is search('was installed successfully!')
   loop: [git]
