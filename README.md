@@ -76,6 +76,14 @@ _path:_ ansible/playbooks/files/fisher-my-setup/
 cat ~/.config/fish/fishfile
 ```
 
+### Visual Studio
+
+_path:_ ansible/playbooks/files/visual-studio/.vsconfig
+
+```ps1
+PS > & "C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer\\setup.exe" export -p --channelId VisualStudio.17.Preview --productId Microsoft.VisualStudio.Product.Community --config .vsconfig
+```
+
 ## Copyrights
 
 ### ansible/roles/files/mas.sh

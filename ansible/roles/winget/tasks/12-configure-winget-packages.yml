@@ -1,0 +1,32 @@
+---
+- name: prepend to PATH
+  script: prependpath.vbs "{{ item.type }}" "{{ item.path }}"
+  args:
+    executable: cscript.exe
+  changed_when: false
+  loop: []
+
+- name: setup Visual Studio
+  block:
+    - name: copy files to remote
+      copy:
+        src: 'visual-studio/'
+        dest: '{{ temporary_home }}/visual-studio/'
+
+    - name: find Visual Studio
+      win_shell: .\vswhere.exe -all -prerelease -latest -format json
+      args:
+        chdir: C:\Program Files (x86)\Microsoft Visual Studio\Installer
+      register: find_vs
+      changed_when: false
+      ignore_errors: true
+
+    - name: get information on latest installed version of Visual Studio
+      set_fact:
+        vs_info: '{{ find_vs.stdout | from_json | first | default(none) }}'
+
+    - name: install components for Visual Studio
+      become: true
+      win_shell: '& "{{ vs_info.properties.setupEngineFilePath }}" modify -p --norestart --channelId {{ vs_info.channelId }} --productId {{ vs_info.productId }} --config "{{ temporary_home }}\visual-studio\.vsconfig"'
+      changed_when: false
+      when: vs_info is mapping
