@@ -37,18 +37,21 @@
       copy:
         src: 'fisher-my-setup/'
         dest: '{{ temporary_home }}/fisher-my-setup/'
+      changed_when: false
 
     - name: copy files to remote (for MacOSX)
       copy:
         src: 'fisher-my-setup-mac/'
         dest: '{{ temporary_home }}/fisher-my-setup-mac/'
       when: ansible_distribution == "MacOSX"
+      changed_when: false
 
     - name: copy files to remote (for WSL)
       copy:
         src: 'fisher-my-setup-wsl/'
         dest: '{{ temporary_home }}/fisher-my-setup-wsl/'
       when: type_cmd.rc == 0
+      changed_when: false
 
 - name: configure fisher with SHELL env
   block:

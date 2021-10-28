@@ -8,6 +8,7 @@
     # common
     my_editor: code
     my_visual: code
+    my_temporary_home: /tmp
   pre_tasks:
     - tags: always
       block:
