@@ -8,5 +8,6 @@
 - name: add apt repositories
   become: true
   apt_repository:
-    repo: '{{ item }}'
+    repo: '{{ item.repo }}'
+    filename: '{{ item.filename | default(omit) }}'
   loop: '{{ apt_repositories }}'
