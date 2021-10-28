@@ -52,6 +52,7 @@
           - { name: Microsoft.SQLServerManagementStudio }
           - { name: Microsoft.VisualStudio.2022.Community-Preview }
           - { name: PeterBienstman.Mnemosyne }
+          - { name: ShiningLight.OpenSSLLight }
           - { name: UnityTechnologies.UnityHub }
           - { name: Valve.Steam }
     - role: home
@@ -110,7 +111,6 @@
           - { name: notion }
           - { name: obs-studio }
           - { name: openjdk, global: true }
-          - { name: openssl, global: true }
           - { name: pandoc }
           - { name: perl }
           - { name: plantuml }
