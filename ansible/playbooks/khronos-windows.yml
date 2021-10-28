@@ -51,7 +51,7 @@
           - { name: Microsoft.PowerShell }
           - { name: Microsoft.SQLServerManagementStudio }
           - { name: Microsoft.VisualStudio.2022.Community-Preview }
-          - { name: PeterBienstman.Mnemosyne }
+          - { name: PeterBienstman.Mnemosyne, list_id: Mnemosyne_is1 }
           - { name: ShiningLight.OpenSSLLight }
           - { name: UnityTechnologies.UnityHub }
           - { name: Valve.Steam }
