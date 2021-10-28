@@ -29,9 +29,11 @@
     my_xdg_data_home: C:\Users\{{ user }}\AppData\Local
     my_google_drive: G:\マイドライブ
   pre_tasks:
-    - include_vars: common.yml
-    - include_vars: cli_tools.yml
-    - include_vars: vscode_extensions.yml
+    - tags: always
+      block:
+        - include_vars: common.yml
+        - include_vars: cli_tools.yml
+        - include_vars: vscode_extensions.yml
   roles:
     - role: os-windows
     - role: winget
@@ -150,9 +152,10 @@
     my_editor: nvim
     my_visual: nvim
   pre_tasks:
-    - include_vars: common.yml
-    - include_vars: cli_tools.yml
-    - include: pre_tasks/set_resources.yml
+    - tags: always
+      block:
+        - include_vars: common.yml
+        - include_vars: cli_tools.yml
   handlers:
     - include: handlers/handlers_wsl.yml
   roles:
