@@ -19,4 +19,4 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Run setup-iapetus.sh
-        run: ./setup-iapetus.sh --skip-tags=lang -e my_password= -e dotfiles=$(pwd)/resources/tests/dotfiles
+        run: ./setup-iapetus.sh --skip-tags=lang -e my_password= -e dotfiles=$(pwd)/ansible/playbooks/files/tests/dotfiles

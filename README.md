@@ -24,13 +24,13 @@ PS > .\setup-windows.ps1 setup-khronos.sh -K
 ##### Host
 
 ```sh
-$ ./setup-khronos -e win_username=user -K -l khronos
+$ ./setup-khronos.sh -e win_username=user -K -l khronos
 ```
 
 ##### WSL
 
 ```sh
-$ ./setup-khronos -e win_username=user -K -l local
+$ ./setup-khronos.sh -e win_username=user -K -l local
 ```
 
 ## Update config
@@ -70,7 +70,7 @@ PS > code --list-extensions `
 
 ### fishfile
 
-_path:_ resources/fisher-my-setup/
+_path:_ ansible/playbooks/files/fisher-my-setup/
 
 ```sh
 cat ~/.config/fish/fishfile

@@ -10,6 +10,13 @@
   changed_when: false
   check_mode: false
 
+- name: check cmd.exe (for WSL)
+  shell: type cmd.exe
+  register: type_cmd
+  failed_when: type_cmd.rc not in [0, 1]
+  changed_when: false
+  check_mode: false
+
 - name: install fisher
   block:
     - name: install fisher
@@ -24,6 +31,25 @@
       check_mode: false
   when: type_fisher.rc != 0
 
+- name: copy files to remote
+  block:
+    - name: copy files to remote
+      copy:
+        src: 'fisher-my-setup/'
+        dest: '{{ temporary_home }}/fisher-my-setup/'
+
+    - name: copy files to remote (for MacOSX)
+      copy:
+        src: 'fisher-my-setup-mac/'
+        dest: '{{ temporary_home }}/fisher-my-setup-mac/'
+      when: ansible_distribution == "MacOSX"
+
+    - name: copy files to remote (for WSL)
+      copy:
+        src: 'fisher-my-setup-wsl/'
+        dest: '{{ temporary_home }}/fisher-my-setup-wsl/'
+      when: type_cmd.rc == 0
+
 - name: configure fisher with SHELL env
   block:
     - name: update fisher itself
@@ -34,7 +60,7 @@
 
     - name: cp fish_plugin file
       copy:
-        src: '{{ resources }}/fisher-my-setup/fish_plugins'
+        src: 'fisher-my-setup/fish_plugins'
         dest: '{{ xdg_config_home }}/fish/fish_plugins'
         follow: no
       changed_when: false
@@ -48,27 +74,20 @@
       changed_when: false
 
     - name: install fish config
-      shell: fish -l -c 'fisher install "{{ resources }}/fisher-my-setup"'
+      shell: fish -l -c 'fisher install "{{ temporary_home }}/fisher-my-setup"'
       args:
         executable: '{{ fish_path }}'
       changed_when: false
 
     - name: install fish config (for MacOSX)
-      shell: fish -l -c 'fisher install "{{ resources }}/fisher-my-setup-mac"'
+      shell: fish -l -c 'fisher install "{{ temporary_home }}/fisher-my-setup-mac"'
       args:
         executable: '{{ fish_path }}'
       changed_when: false
       when: ansible_distribution == "MacOSX"
 
-    - name: check cmd.exe (for WSL)
-      shell: type cmd.exe
-      register: type_cmd
-      failed_when: type_cmd.rc not in [0, 1]
-      changed_when: false
-      check_mode: false
-
     - name: install fish config (for WSL)
-      shell: fish -l -c 'fisher install "{{ resources }}/fisher-my-setup-wsl"'
+      shell: fish -l -c 'fisher install "{{ temporary_home }}/fisher-my-setup-wsl"'
       args:
         executable: '{{ fish_path }}'
       changed_when: false

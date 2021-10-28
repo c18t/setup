@@ -151,6 +151,7 @@
     # common
     my_editor: nvim
     my_visual: nvim
+    my_temporary_home: /tmp
   pre_tasks:
     - tags: always
       block:

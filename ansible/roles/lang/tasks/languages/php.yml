@@ -27,7 +27,7 @@
 
     # - name: set php_build_config_path
     #   set_fact:
-    #     php_build_config_path: '{{ resources }}/php-build/{{ php_build_config }}'
+    #     php_build_config_path: '{{ temporary_home }}/php-build/{{ php_build_config }}'
     #   when: php_build_config is string and php_build_config != ''
     # - name: set php_build_configure_opts
     #   shell: '[ -e "{{ php_build_config_path }}" ] && cat "{{ php_build_config_path }}"'
