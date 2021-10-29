@@ -20,7 +20,7 @@
       - path: '{{ dotfiles }}/ssh/{{ home_ssh_config }}'
         dest: '{{ home }}/.ssh/config'
       # git
-      - path: '{{ dotfiles }}/{{ home_git_config }}'
+      - path: '{{ dotfiles }}/git/{{ home_git_config }}'
         dest: '{{ home }}/.gitconfig'
 
 - name: check for the existence of directory link source

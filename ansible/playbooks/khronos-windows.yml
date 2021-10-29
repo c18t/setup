@@ -64,7 +64,7 @@
           - Archives
           - Projects
         home_ssh_config: config-prv
-        home_git_config: .gitconfig-prv
+        home_git_config: .gitconfig-prv-win
     - role: scoop
       vars:
         scoop_buckets:
