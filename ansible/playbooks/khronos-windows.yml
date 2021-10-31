@@ -43,6 +43,7 @@
           - { name: Amazon.SendToKindle }
           - { name: Apple.iTunes }
           - { name: calibre.calibre }
+          - { name: Discord.Discord }
           - { name: Docker.DockerDesktop }
           - { name: ElaborateBytes.VirtualCloneDrive }
           - { name: Gitlab.Gitter }
@@ -81,7 +82,6 @@
           - { name: busybox }
           # - { name: calibre } # インストーラがパスが長すぎるって怒るせいで失敗する
           - { name: direnv }
-          - { name: discord }
           - { name: dotnet-sdk, global: true }
           - { name: firefox }
           - { name: firefox-nightly }
