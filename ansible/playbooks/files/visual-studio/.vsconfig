@@ -87,6 +87,7 @@
     "Microsoft.VisualStudio.ComponentGroup.UWP.Support",
     "Microsoft.VisualStudio.Workload.Universal",
     "Microsoft.VisualStudio.Component.Unity",
-    "Microsoft.VisualStudio.Workload.Data"
+    "Microsoft.VisualStudio.Workload.Data",
+    "Microsoft.NetCore.Component.Runtime.3.1"
   ]
 }

@@ -82,7 +82,6 @@
           - { name: busybox }
           # - { name: calibre } # インストーラがパスが長すぎるって怒るせいで失敗する
           - { name: direnv }
-          - { name: dotnet-sdk, global: true }
           - { name: ffmpeg }
           - { name: firefox }
           - { name: firefox-nightly }
