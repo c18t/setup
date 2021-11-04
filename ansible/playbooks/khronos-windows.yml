@@ -117,6 +117,7 @@
           - { name: pandoc }
           - { name: perl }
           - { name: plantuml }
+          - { name: powertoys }
           - { name: qbittorrent }
           - { name: ruby }
           - { name: rufus }
