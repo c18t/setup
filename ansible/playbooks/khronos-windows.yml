@@ -203,6 +203,7 @@
           - git-secrets
           - gradle
           # - haskell-stack # 落ちるので apt で入れる
+          - hadolint
           - icu4c # for phpenv
           - kerl # for erlenv
           - krb5 # for phpenv
