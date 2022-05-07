@@ -35,7 +35,7 @@
           - homebrew/cask-fonts
           - homebrew/cask-versions
           - homebrew/core
-        homebrew_fomulae:
+        homebrew_formulae:
           - ansible
           - anyenv
           - autoconf # for phpenv

@@ -4,9 +4,9 @@
     that: homebrew_taps is iterable
     quiet: true
 
-- name: assert homebrew_fomulae
+- name: assert homebrew_formulae
   assert:
-    that: homebrew_fomulae is iterable
+    that: homebrew_formulae is iterable
     quiet: true
 
 - name: assert homebrew_casks

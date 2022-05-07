@@ -5,7 +5,7 @@ homebrew_taps: []
 
 # homebrewパッケージ
 # . homebrewモジュールのnameパラメーターのリストを指定する
-homebrew_fomulae: []
+homebrew_formulae: []
 
 # homebrew caskパッケージ
 # . homebrew_caskモジュールのnameパラメーターのリストを指定する

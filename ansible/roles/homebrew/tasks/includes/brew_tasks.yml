@@ -1,5 +1,5 @@
 ---
-- name: update Homebrew/Linuxbrew and upgrade fomulae (for {{ brew_distr }})
+- name: update Homebrew/Linuxbrew and upgrade formulae (for {{ brew_distr }})
   homebrew:
     update_homebrew: true
     upgrade_all: true
@@ -12,14 +12,16 @@
   homebrew_tap:
     name: '{{ homebrew_taps }}'
 
-# - name: install Homebrew/Linuxbrew formurae (for {{ brew_distr }})
+# - name: install Homebrew/Linuxbrew formulae (for {{ brew_distr }})
 #   homebrew:
-#     name: '{{ homebrew_fomulae }}'
+#     name: '{{ homebrew_formulae }}'
 
-- name: homebrew_fomulae loop
-  include: includes/brew_fomulae.yml
+- name: homebrew_formulae loop
+  include_tasks: includes/brew_formulae.yml
   # どれかが失敗してもすべて実施されるように loop で指定
-  loop: '{{ homebrew_fomulae }}'
+  loop: '{{ homebrew_formulae }}'
+  loop_control:
+    loop_var: formulae
 
 # - name: install Homebrew/Linuxbrew casks (for {{ brew_distr }})
 #   homebrew_cask:
