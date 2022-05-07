@@ -53,9 +53,9 @@
           # - { name: Google.JapaneseIME, become: false, force: true } # ハッシュが一致しない
           - { name: Microsoft.PowerShell }
           - { name: Microsoft.SQLServerManagementStudio }
-          - { name: Microsoft.VisualStudio.2022.Community-Preview }
+          - { name: Microsoft.VisualStudio.2022.Community }
           - { name: PeterBienstman.Mnemosyne, list_id: Mnemosyne_is1 }
-          - { name: ShiningLight.OpenSSLLight }
+          # - { name: ShiningLight.OpenSSL.Light } # 登録情報古すぎてリンク切れ
           - { name: UnityTechnologies.UnityHub }
           - { name: Valve.Steam }
     - role: home
@@ -113,6 +113,7 @@
           - { name: notion }
           - { name: obs-studio }
           - { name: openjdk, global: true }
+          - { name: openssl, global: true }
           - { name: pandoc }
           - { name: perl }
           - { name: plantuml }
