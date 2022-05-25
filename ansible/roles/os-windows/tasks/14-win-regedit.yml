@@ -85,3 +85,12 @@
         name: TaskbarBadges
         data: 1
         type: dword
+
+- name: comand prompt
+  block:
+    - name: disable UNC check
+      win_regedit:
+        path: HKLM:\SOFTWARE\Microsoft\Command Processor
+        name: DisableUNCCheck
+        data: 1
+        type: dword
