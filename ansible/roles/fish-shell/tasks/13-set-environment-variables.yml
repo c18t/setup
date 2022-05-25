@@ -1,7 +1,7 @@
 ---
-- include: includes/set_brew_prefix.yml
-- include: includes/set_fish_path.yml
-- include: includes/set_fish_user_paths.yml
+- include_tasks: includes/set_brew_prefix.yml
+- include_tasks: includes/set_fish_path.yml
+- include_tasks: includes/set_fish_user_paths.yml
 
 - name: set environment variables
   shell: >-
@@ -19,8 +19,8 @@
   changed_when: false
   check_mode: false
 
-- include: includes/set_environment_variables_for_MacOSX.yml
+- include_tasks: includes/set_environment_variables_for_MacOSX.yml
   when: ansible_distribution == "MacOSX"
 
-- include: includes/set_environment_variables_for_other.yml
+- include_tasks: includes/set_environment_variables_for_other.yml
   when: ansible_distribution != "MacOSX"

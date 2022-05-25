@@ -2,13 +2,13 @@
 - name: home role tasks
   tags: home
   block:
-    - include: 00-check-precondition.yml
-    - include: 01-check-wsl.yml
+    - include_tasks: 00-check-precondition.yml
+    - include_tasks: 01-check-wsl.yml
     - block:
-      - include: 10-make-directories-linux.yml
-      - include: 11-make-symbolic-links-linux.yml
+      - include_tasks: 10-make-directories-linux.yml
+      - include_tasks: 11-make-symbolic-links-linux.yml
       when: ansible_os_family != "Windows"
     - block:
-      - include: 10-make-directories-windows.yml
-      - include: 11-make-symbolic-links-windows.yml
+      - include_tasks: 10-make-directories-windows.yml
+      - include_tasks: 11-make-symbolic-links-windows.yml
       when: ansible_os_family == "Windows"

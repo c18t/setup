@@ -160,7 +160,7 @@
         - include_vars: common.yml
         - include_vars: cli_tools.yml
   handlers:
-    - include: handlers/handlers_wsl.yml
+    - import_tasks: handlers/handlers_wsl.yml
   roles:
     - role: wsl
     - role: home

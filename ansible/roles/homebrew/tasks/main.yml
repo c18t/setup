@@ -2,6 +2,6 @@
 - name: homebrew role tasks
   tags: homebrew
   block:
-    - include: 00-check-precondition.yml
-    - include: 10-install-homebrew.yml
-    - include: 11-install-and-upgrade-applications.yml
+    - include_tasks: 00-check-precondition.yml
+    - include_tasks: 10-install-homebrew.yml
+    - include_tasks: 11-install-and-upgrade-applications.yml

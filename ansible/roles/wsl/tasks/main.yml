@@ -2,4 +2,4 @@
 - name: WSL role tasks
   tags: wsl
   block:
-    - include: 10-install-fonts.yml
+    - include_tasks: 10-install-fonts.yml

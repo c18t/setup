@@ -2,11 +2,11 @@
 - name: fish-shell role tasks
   tags: fish-shell
   block:
-    - include: 00-check-precondition.yml
-    - include: 10-add-fish-to-shells.yml
-    - include: 11-change-login-shell-to-fish.yml
-    - include: 12-setup-resources.yml
-    - include: 13-set-environment-variables.yml
-    - include: 14-setup-fisher.yml
-    - include: 15-setup-graphviz.yml
-    - include: 16-setup-anyenv.yml
+    - include_tasks: 00-check-precondition.yml
+    - include_tasks: 10-add-fish-to-shells.yml
+    - include_tasks: 11-change-login-shell-to-fish.yml
+    - include_tasks: 12-setup-resources.yml
+    - include_tasks: 13-set-environment-variables.yml
+    - include_tasks: 14-setup-fisher.yml
+    - include_tasks: 15-setup-graphviz.yml
+    - include_tasks: 16-setup-anyenv.yml

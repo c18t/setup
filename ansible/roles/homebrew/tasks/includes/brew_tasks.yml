@@ -28,7 +28,7 @@
 #     name: '{{ homebrew_casks }}'
 
 - name: homebrew_casks loop
-  include: includes/brew_casks.yml
+  include_tasks: includes/brew_casks.yml
   # どれかが失敗してもすべて実施されるように loop で指定
   loop: '{{ homebrew_casks }}'
 

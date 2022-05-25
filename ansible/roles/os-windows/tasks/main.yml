@@ -2,10 +2,10 @@
 - name: os-windows role tasks
   tags: os-windows
   block:
-    - include: 10-setup-resources.yml
-    - include: 11-win-environment.yml
-    - include: 12-win-updates.yml
-    - include: 13-install-fonts.yml
+    - include_tasks: 10-setup-resources.yml
+    - include_tasks: 11-win-environment.yml
+    - include_tasks: 12-win-updates.yml
+    - include_tasks: 13-install-fonts.yml
       # fontのインストールを再度行おうとすると止まるので一旦止め
       when: false
-    - include: 14-win-regedit.yml
+    - include_tasks: 14-win-regedit.yml

@@ -1,9 +1,9 @@
 ---
-- include: includes/set_brew_prefix.yml
+- include_tasks: includes/set_brew_prefix.yml
 
 - name: exec includes/brew_tasks.yml (for MacOSX)
   block:
-    - include: includes/brew_tasks.yml
+    - include_tasks: includes/brew_tasks.yml
       vars:
         brew_distr: MacOSX
   ignore_errors: true
@@ -11,7 +11,7 @@
 
 - name: exec includes/brew_tasks.yml (for other)
   block:
-    - include: includes/brew_tasks.yml
+    - include_tasks: includes/brew_tasks.yml
       vars:
         brew_distr: other
   # environmentへのomitの指定がうまくいかないので ansible_distribution で場合分け

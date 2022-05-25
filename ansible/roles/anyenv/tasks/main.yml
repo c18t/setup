@@ -2,11 +2,11 @@
 - name: anyenv role tasks
   tags: anyenv
   block:
-    - include: 00-check-precondition.yml
-    - include: 01-gather-facts.yml
-    - include: 10-setup-anyenv.yml
-    - include: 11-install-anyenv-plugins.yml
+    - include_tasks: 00-check-precondition.yml
+    - include_tasks: 01-gather-facts.yml
+    - include_tasks: 10-setup-anyenv.yml
+    - include_tasks: 11-install-anyenv-plugins.yml
       loop: '{{ anyenv_install_plugins }}'
       loop_control:
         loop_var: plugin
-    - include: 12-update-anyenv.yml
+    - include_tasks: 12-update-anyenv.yml

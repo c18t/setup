@@ -2,6 +2,6 @@
 - name: vscode role tasks
   tags: vscode
   block:
-    - include: 00-check-precondition.yml
-    - include: 10-configure-for-macos.yml
-    - include: 10-configure-for-windows.yml
+    - include_tasks: 00-check-precondition.yml
+    - include_tasks: 10-configure-for-macos.yml
+    - include_tasks: 10-configure-for-windows.yml

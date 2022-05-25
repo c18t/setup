@@ -2,7 +2,7 @@
 - name: winget role tasks
   tags: winget
   block:
-    - include: 00-check-precondition.yml
-    - include: 10-upgrade-packages.yml
-    - include: 11-install-packages.yml
-    - include: 12-configure-winget-packages.yml
+    - include_tasks: 00-check-precondition.yml
+    - include_tasks: 10-upgrade-packages.yml
+    - include_tasks: 11-install-packages.yml
+    - include_tasks: 12-configure-winget-packages.yml

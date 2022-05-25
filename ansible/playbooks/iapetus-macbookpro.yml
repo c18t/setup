@@ -16,7 +16,7 @@
         - include_vars: cli_tools.yml
         - include_vars: vscode_extensions.yml
   handlers:
-    - include: handlers/handlers_macos.yml
+    - import_tasks: handlers/handlers_macos.yml
   roles:
     - role: os-macos
     - role: home
