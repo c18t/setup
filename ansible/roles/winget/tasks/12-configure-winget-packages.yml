@@ -23,7 +23,7 @@
 
     - name: get information on latest installed version of Visual Studio
       set_fact:
-        vs_info: '{{ find_vs.stdout | from_json | first | default(none) }}'
+        vs_info: '{{ find_vs.stdout | default("[]") | from_json | first | default(none) }}'
 
     - name: install components for Visual Studio
       become: true

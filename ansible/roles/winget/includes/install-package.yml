@@ -9,4 +9,4 @@
 - name: install package {{ item.name }}
   become: true
   win_shell: winget install -e --id '{{ item.name }}' {{ item.force | default(false) | ternary('--force', '') }}
-  when: check_package.rc != 0
+  when: check_package is failed
