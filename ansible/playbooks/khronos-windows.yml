@@ -45,6 +45,7 @@
           - { name: calibre.calibre }
           - { name: Discord.Discord }
           - { name: Docker.DockerDesktop }
+          - { name: Doist.Todoist }
           - { name: ElaborateBytes.VirtualCloneDrive }
           - { name: Gitlab.Gitter }
           - { name: Google.Chrome }
@@ -95,6 +96,7 @@
           - { name: gpg4win }
           - { name: gradle }
           - { name: graphviz }
+          - { name: gsudo }
           - { name: hadolint }
           - { name: helm }
           - { name: honeyview }
