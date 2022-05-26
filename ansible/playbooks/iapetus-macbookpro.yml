@@ -80,7 +80,7 @@
           - readline # for luaenv
           - ruby # for command-line
           - sqlite # for ansible, phpenv
-          - sshfs # depends osxfuse
+          - gromgit/fuse/sshfs # depends macfuse
           - shellcheck
           # - swagger-codegen
           - tidy-html5 # for phpenv
@@ -115,10 +115,10 @@
           - kindle
           - kitematic
           - licecap
+          - macfuse
           - mactex
           - mnemosyne
           - notion
-          - osxfuse
           - powershell
           - send-to-kindle
           - sketch
