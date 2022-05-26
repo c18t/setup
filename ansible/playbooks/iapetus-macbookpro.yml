@@ -125,6 +125,7 @@
           - skype
           - slack
           - steam
+          - todoist
           - unity-hub
           - visual-studio
           - visual-studio-code
@@ -135,12 +136,12 @@
         homebrew_mas_apps:
           - name: LINE
             id: 539883307
-          - name: LINE WORKS
-            id: 1029784963
           - name: LimeChat
             id: 414030210
           - name: Microsoft Remote Desktop
             id: 1295203466
+          - name: Steam Link
+            id: 1246969117
           - name: Trello
             id: 1278508951
           - name: TweetDeck
