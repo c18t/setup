@@ -1,9 +1,0 @@
----
-# scoop backetのリスト
-# . bucket名のリストを指定する
-scoop_buckets: []
-
-# インストールするscoop packageのリスト
-# . name: scoopパッケージ名
-# . global: 全ユーザー向けにインストールする場合はtrue、ログインユーザーのみにインストールする場合はfalse
-scoop_packages: [{ name: ~, global: true }]

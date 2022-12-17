@@ -5,24 +5,9 @@ argument_specs:
     options:
       scoop_buckets:
         type: list
-        elements: dict
+        elements: str
         required: false
         default: []
-        options:
-          name:
-            type: str
-            required: true
-            description: 'Name of the Scoop bucket.'
-          repo:
-            type: str
-            required: false
-            description: 'Git repository that contains the scoop bucket.'
-          state:
-            type: str
-            required: false
-            choices: ['absent', 'present']
-            default: present
-            description: 'State of the Scoop bucket.'
         description: 'List of bucket settings.'
 
       scoop_packages:
