@@ -13,12 +13,14 @@
     force: false
   register: download_tran_winscp
   ignore_errors: true
+  when: false
 
 - name: add translation for WinSCP
   win_unzip:
     src: '{{ temporary_home }}\winscp_tran_5.15.9_jp.zip'
     dest: C:\ProgramData\scoop\apps\winscp\current\Translations
-  when: download_tran_winscp.changed == true
+  # when: download_tran_winscp.changed == true
+  when: false
 
 # pre-commitで参照しているsqlite3パッケージが動かないので追加
 - name: find scoop\shims\sqlite3.dll
