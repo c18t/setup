@@ -1,8 +1,5 @@
 ---
 - name: install packages
-  become: '{{ item.global | default(omit) }}'
-  win_shell: scoop install {{ item.name }} {{ (item.global is defined and item.global and '--global') or '' }}
-  register: install_package
-  changed_when: install_package.stdout is search('was installed successfully!')
+  community.windows.win_scoop: '{{ item }}'
   loop: '{{ scoop_packages }}'
   ignore_errors: true

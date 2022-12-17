@@ -2,7 +2,7 @@
 - name: scoop role tasks
   tags: scoop
   block:
-    - include_tasks: 00-check-precondition.yml
+    # - include_tasks: 00-check-precondition.yml
     - include_tasks: 10-install-scoop.yml
     - include_tasks: 11-add-backets.yml
     - include_tasks: 12-install-packages.yml
