@@ -1,5 +1,5 @@
 ---
-- name: set link directory items
+- name: set link directory or file items
   set_fact:
     link_dir_items:
       # Google Drive
@@ -13,17 +13,15 @@
       - path: '{{ xdg_data_home }}'
         dest: '{{ default_xdg_data_home }}'
 
-- name: set link file items
-  set_fact:
     link_file_items:
       # ssh
-      - path: '{{ dotfiles }}/ssh/{{ home_ssh_config }}'
-        dest: '{{ home }}/.ssh/config'
+      - path: '{{ home_ssh_config }}'
+        dest: '{{ default_ssh_config }}'
       # git
-      - path: '{{ dotfiles }}/git/{{ home_git_config }}'
-        dest: '{{ home }}/.gitconfig'
+      - path: '{{ home_git_config }}'
+        dest: '{{ default_git_config }}'
 
-- name: check for the existence of directory link source
+- name: check that directory link sources
   win_stat:
     path: '{{ item.path }}'
   register: stat_link_source_dir
@@ -41,7 +39,7 @@
   changed_when: make_dir_link.rc == 2
   loop: '{{ link_dir_items }}'
 
-- name: check for the existence of file link source
+- name: check that file link sources
   win_stat:
     path: '{{ item.path }}'
   register: stat_link_source_file

@@ -1,7 +1,0 @@
----
-- name: check cmd.exe (for WSL)
-  shell: type cmd.exe
-  register: type_cmd
-  failed_when: type_cmd.rc not in [0, 1, 126, 127]
-  changed_when: false
-  check_mode: false

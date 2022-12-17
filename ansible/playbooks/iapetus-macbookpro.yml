@@ -17,16 +17,20 @@
         - include_vars: vscode_extensions.yml
   handlers:
     - import_tasks: handlers/handlers_macos.yml
-  roles:
-    - role: os-macos
-    - role: home
+  tasks:
+    - import_role:
+        name: os-macos
+    - import_role:
+        name: home
+        tasks_from: macos
       vars:
         home_standard_directories:
           - Archives
           - Projects
-        home_ssh_config: config-prv
-        home_git_config: .gitconfig-prv
-    - role: homebrew
+        home_ssh_config: '{{ dotfiles }}/ssh/config-prv'
+        home_git_config: '{{ dotfiles }}/git/.gitconfig-prv'
+    - import_role:
+        name: homebrew
       vars:
         homebrew_taps:
           - buo/cask-upgrade
@@ -146,18 +150,25 @@
             id: 1278508951
           - name: Xcode
             id: 497799835
-    - role: iterm2
-    - role: vscode
+    - import_role:
+        name: iterm2
+    - import_role:
+        name: vscode
       vars:
         vscode_confing: settings-mac.json
-    - role: nvim
-    - role: fish-shell
+    - import_role:
+        name: nvim
+    - import_role:
+        name: fish-shell
       vars:
         fish_shell_config: config-mac.fish
-    - role: anyenv
-    - role: lang
+    - import_role:
+        name: anyenv
+    - import_role:
+        name: lang
       vars:
         perl_option: -j 4
         php_build_config: configure_options-mac
         php_build_extra_make_arguments: -j 4
-    - role: cli
+    - import_role:
+        name: cli
