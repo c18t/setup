@@ -43,12 +43,14 @@
         winget_packages:
           - { name: AgileBits.1Password }
           - { name: Amazon.SendToKindle }
+          - { name: Anaconda.Anaconda3 }
           - { name: Apple.iTunes }
           - { name: calibre.calibre }
           - { name: Discord.Discord }
           - { name: Docker.DockerDesktop }
           - { name: Doist.Todoist }
           - { name: ElaborateBytes.VirtualCloneDrive }
+          - { name: Fork.Fork }
           - { name: Gitlab.Gitter }
           - { name: Google.Chrome }
           - { name: Google.Chrome.Dev }
@@ -80,10 +82,10 @@
           - java
         scoop_packages:
           - { name: 7zip }
-          - { name: anaconda3 }
+          # - { name: anaconda3 } # インストールが終わらないのでwingetに移動
           - { name: android-studio }
           - { name: arduino }
-          - { name: audacity }
+          # - { name: audacity } # scoop のマニフェストが古い
           - { name: autohotkey }
           - { name: busybox }
           # - { name: calibre } # インストーラがパスが長すぎるって怒るせいで失敗する
@@ -91,7 +93,7 @@
           - { name: ffmpeg }
           - { name: firefox }
           - { name: firefox-nightly }
-          - { name: fork }
+          # - { name: fork } # scoopからインストールすると動かないのでwingetに移動
           - { name: gcloud }
           - { name: ghostscript }
           - { name: ghq }
