@@ -8,8 +8,8 @@ fi
 
 pushd "$(dirname "$0")" >&3 || exit $?
     # install ansible
-    echo "call ./script/install-ansible-macos.sh" >&3
-    ./script/install-ansible-macos.sh
+    echo "call ./script/macos/install-ansible-macos.sh" >&3
+    ./script/macos/install-ansible-macos.sh
     result=$?
     if [ $result -ne 0 ]; then
         popd >&3 || exit $?

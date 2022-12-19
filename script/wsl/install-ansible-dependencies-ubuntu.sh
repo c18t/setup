@@ -19,11 +19,11 @@ PYTHON3_APT=$?
 
 echo -n "check sshpass ..." >&3
 apt show sshpass 2>&3 | grep -iq '\binstalled:\s\+yes\b'
-SSHPASS_APT=$?
-([ $SSHPASS_APT -eq 0 ] && echo "ok." || echo "no.") >&3
+SSHPASS=$?
+([ $SSHPASS -eq 0 ] && echo "ok." || echo "no.") >&3
 
-# install expect, python3-apt
-if [ $EXPECT -ne 0 ] || [ $PYTHON3_APT -ne 0 ] || [ $SSHPASS_APT -ne 0 ]; then
+# install expect, python3-apt, sshpass
+if [ $EXPECT -ne 0 ] || [ $PYTHON3_APT -ne 0 ] || [ $SSHPASS -ne 0 ]; then
     echo install ansible dependencies ...
     sudo apt update -y \
         && sudo apt install -y expect python3-apt sshpass

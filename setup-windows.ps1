@@ -3,6 +3,7 @@
 $setupScriptArgs = $Args
 
 Set-ExecutionPolicy Bypass -Scope Process -Force
+$ErrorActionPreference = "Stop"
 
 # 管理者権限の確認
 if (([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator) -eq $False) {
@@ -19,12 +20,12 @@ $Current = Split-Path $PSCommandPath
 $reboot = $False
 
 # WSLの有効化
-powershell -File "$Current\script\configure-wsl.ps1"
+powershell -File "$Current\script\windows\configure-wsl.ps1"
 if ($LASTEXITCODE -eq -1) { $reboot = $True }
 elseif (-Not $?) { exit 1 }
 
 # Ansibleによる設定の受付準備
-powershell -File "$Current\script\configure-openssh.ps1"
+powershell -File "$Current\script\windows\configure-openssh.ps1"
 if ($LASTEXITCODE -eq -1) { $reboot = $True }
 elseif (-Not $?) { exit 1 }
 
@@ -34,7 +35,7 @@ if ($reboot) {
 }
 else {
     # ubuntuのインストール
-    powershell -File "$Current\script\install-wsl-ubuntu.ps1"
+    powershell -File "$Current\script\windows\install-wsl-ubuntu.ps1"
     if ($? -eq $False) { exit 1 }
 
     # セットアップコマンドの実行

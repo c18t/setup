@@ -15,7 +15,7 @@ BREW=$?
 # install homebrew
 if [ $BREW -ne 0 ]; then
     echo install homebrew ...
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     result=$?
     if [ $result -eq 0 ]; then
         echo ... done!

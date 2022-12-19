@@ -18,6 +18,16 @@ pushd "$(dirname "$0")" >&3 || exit $?
     APT_BUILD_ESSENTIAL=$?
     ([ $APT_BUILD_ESSENTIAL -eq 0 ] && echo "ok." || echo "no.") >&3
 
+    echo -n "check procps ..." >&3
+    apt show procps 2>/dev/null | grep -iq '\binstalled:\s\+yes\b'
+    APT_PROCPS=$?
+    ([ $APT_PROCPS -eq 0 ] && echo "ok." || echo "no.") >&3
+
+    echo -n "check curl ..." >&3
+    apt show curl 2>/dev/null | grep -iq '\binstalled:\s\+yes\b'
+    APT_CURL=$?
+    ([ $APT_CURL -eq 0 ] && echo "ok." || echo "no.") >&3
+
     echo -n "check file ..." >&3
     apt show file 2>/dev/null | grep -iq '\binstalled:\s\+yes\b'
     APT_FILE=$?
@@ -28,10 +38,10 @@ pushd "$(dirname "$0")" >&3 || exit $?
     APT_GIT=$?
     ([ $APT_GIT -eq 0 ] && echo "ok." || echo "no.") >&3
 
-    if [ $APT_BUILD_ESSENTIAL -ne 0 ] || [ $APT_FILE -ne 0 ] || [ $APT_GIT -ne 0 ]; then
+    if [ $APT_BUILD_ESSENTIAL -ne 0 ] || [ $APT_PROCPS -ne 0 ] || [ $APT_CURL -ne 0 ] || [ $APT_FILE -ne 0 ] || [ $APT_GIT -ne 0 ]; then
         echo install ansible dependencies ...
         sudo apt update -y \
-            && sudo apt install -y build-essential file git
+            && sudo apt install -y build-essential procps curl file git
         result=$?
         if [ $result -eq 0 ]; then
             echo ... done!
@@ -48,7 +58,7 @@ pushd "$(dirname "$0")" >&3 || exit $?
     if ! type brew >/dev/null 2>&1; then
         echo install linuxbrew ...
         echo -n "Password for $USER to install linuxbrew: "; IFS= read -r -s PW; echo
-        expect -f ./install-linuxbrew.exp "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)" "${PW}"
+        expect -f ./install-linuxbrew.exp "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" "${PW}"
         result=$?
         if [ $result -eq 0 ]; then
             echo ... done!

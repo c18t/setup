@@ -10,8 +10,8 @@ fi
 
 pushd "$(dirname "$0")" >&3 || exit $?
     # install ansible
-    echo "call ./script/install-ansible-ubuntu.sh" >&3
-    ./script/install-ansible-ubuntu.sh
+    echo "call ./script/wsl/install-ansible-ubuntu.sh" >&3
+    ./script/wsl/install-ansible-ubuntu.sh
     result=$?
     if [ $result -ne 0 ]; then
         popd >&3 || exit $?
