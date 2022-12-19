@@ -11,7 +11,7 @@ expect {
   }
 }
 expect {
-  -glob "Press RETURN to continue or any other key to abort" {
+  -glob "Press * to continue or any other key to abort" {
     send -- "\n"
   }
 }
