@@ -113,8 +113,8 @@
           - { name: inkscape }
           - { name: innounp }
           - { name: jmeter }
-          - { name: linqpad }
-          - { name: makemkv }
+          # - { name: linqpad } # scoop のマニフェストが古い
+          # - { name: makemkv } # scoop のマニフェストが古い
           - { name: msys2 }
           - { name: neofetch }
           - { name: neovim }
