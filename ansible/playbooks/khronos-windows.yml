@@ -154,7 +154,7 @@
         name: cli
 
 - name: WSL
-  hosts: khronos_wsl
+  hosts: local
   vars_prompt:
     - name: my_password
       prompt: 'WSL user password'
@@ -183,22 +183,16 @@
         home_host_home: '{{ "/mnt/c/Users/" + (home | basename) }}'
         home_standard_directories:
           - Projects
-        home_ssh_config: config-prv
-        home_git_config: .gitconfig-prv
+        home_ssh_config: '{{ dotfiles }}/ssh/config-prv'
+        home_git_config: '{{ dotfiles }}/git/.gitconfig-prv'
     - import_role:
         name: apt
       vars:
         apt_keys:
           - https://dl-ssl.google.com/linux/linux_signing_key.pub
         apt_repositories:
-          - repo: |
-              deb http://dk.archive.ubuntu.com/ubuntu/ xenial main
-              deb http://dk.archive.ubuntu.com/ubuntu/ xenial univers
-            filename: ubuntu-xenial
-          - {
-              repo: 'deb http://dl.google.com/linux/chrome/deb/ stable main',
-              filename: 'google-chrome',
-            }
+          - repo: 'deb http://dl.google.com/linux/chrome/deb/ stable main'
+            filename: 'google-chrome'
         apt_packages:
           - google-chrome-stable
           - haskell-stack
