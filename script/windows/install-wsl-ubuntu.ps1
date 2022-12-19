@@ -19,7 +19,7 @@ Write-Host "... done!"
 # セットアップコマンドの実行
 Write-Host "configure ubuntu ..."
 $driveLetter = $Current.Substring(0, 1).ToLower()
-$wslPath = "$Current\make-wsl-config.sh" -replace "\\", "/" -replace "^\w:", "/mnt/$driveLetter"
+$wslPath = "$Current\make-wsl-config.sh" -replace "\\", "/" -replace "^\w:", "/mnt/$driveLetter" -replace "^//wsl.localhost/Ubuntu", ""
 ubuntu run bash "$wslPath"
 $result = $LASTEXITCODE
 if ($result -eq 0) {

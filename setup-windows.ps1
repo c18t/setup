@@ -40,7 +40,7 @@ else {
 
     # セットアップコマンドの実行
     $driveLetter = $Current.Substring(0, 1).ToLower()
-    $wslPath = "$Current\$setupScript" -replace "\\", "/" -replace "^\w:", "/mnt/$driveLetter"
+    $wslPath = "$Current\$setupScript" -replace "\\", "/" -replace "^\w:", "/mnt/$driveLetter" -replace "^//wsl.localhost/Ubuntu", ""
     ubuntu run bash "$wslPath" "-e win_username=$env:USERNAME" $setupScriptArgs
     if ($? -eq $False) { exit 1 }
 }
