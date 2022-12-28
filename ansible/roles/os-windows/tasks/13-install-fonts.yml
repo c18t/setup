@@ -8,11 +8,15 @@
   failed_when: download_ricty_diminished.status_code not in [200, 403]
   ignore_errors: true
 
+# - name: install PSCX
+#   win_psmodule:
+#     name: Pscx
+#     state: present
+#     allow_clobber: true
+
 - name: install PSCX
-  win_psmodule:
-    name: Pscx
-    state: present
-    allow_clobber: true
+  win_shell: Install-Package pscx -Force -AllowClobber
+  register: install_pscx
 
 - name: unzip Ricty Diminished
   win_unzip:
@@ -28,5 +32,5 @@
     $ShellApp = New-Object -ComObject Shell.Application; `
     $FontsFolder = $ShellApp.NameSpace($ShellAppFontNamespace); `
     foreach ($Font in $Fonts) { `
-      $FontsFolder.CopyHere($Font.FullName); `
+      $FontsFolder.CopyHere($Font.FullName, $ShellAppFontNamespace); `
     }

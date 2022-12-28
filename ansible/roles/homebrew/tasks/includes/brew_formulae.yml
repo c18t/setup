@@ -1,4 +1,4 @@
 ---
-- name: install Homebrew/Linuxbrew formulae '{{ formulae }}' (for {{ brew_distr }})
+- name: "install Homebrew/Linuxbrew formulae '{{ formulae }}' (for {{ brew_distr }})"
   homebrew:
     name: '{{ formulae }}'

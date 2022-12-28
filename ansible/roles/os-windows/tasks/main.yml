@@ -6,6 +6,6 @@
     - include_tasks: 11-win-environment.yml
     - include_tasks: 12-win-updates.yml
     - include_tasks: 13-install-fonts.yml
-      # fontのインストールを再度行おうとすると止まるので一旦止め
+      # fontのインストール方法が変わった為停止
       when: false
     - include_tasks: 14-win-regedit.yml
