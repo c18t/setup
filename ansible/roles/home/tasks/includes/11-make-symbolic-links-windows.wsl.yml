@@ -6,7 +6,7 @@
     follow: false
     force: true
     owner: '{{ user }}'
-    src: '{{ home_host_home }}/GoogleDrive'
+    src: '/mnt/g/マイドライブ'
     dest: '{{ home }}/GoogleDrive'
 
 - import_tasks: 11-make-symbolic-links.yml
