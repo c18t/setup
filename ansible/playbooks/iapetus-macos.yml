@@ -68,6 +68,7 @@
           - libxml2 # for phpenv
           - libzip # for phpenv
           - mas
+          - mise
           - ncurses # for erlenv
           - neofetch
           - neovim
@@ -162,6 +163,10 @@
         name: fish-shell
       vars:
         fish_shell_config: config-mac.fish
+    - import_role:
+        name: mise
+      vars:
+        mise_config: '{{ dotfiles }}/mise/config-macos.toml'
     - import_role:
         name: anyenv
     - import_role:

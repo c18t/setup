@@ -1,0 +1,9 @@
+---
+argument_specs:
+  main:
+    short_description: default entry point
+    options:
+      mise_config:
+        type: path
+        required: true
+        description: 'Source path of ~/.config/mise/config.toml to be linked.'
