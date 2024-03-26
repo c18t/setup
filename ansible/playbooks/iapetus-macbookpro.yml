@@ -68,6 +68,7 @@
           - libxml2 # for phpenv
           - libzip # for phpenv
           - mas
+          - molecule
           - ncurses # for erlenv
           - neofetch
           - neovim
@@ -76,7 +77,7 @@
           - oniguruma # for phpenv
           - openjdk
           - openldap # for phpenv
-          - openssl@1.1 # for erlenv
+          - openssl@3 # for erlenv
           - pandoc
           - peco
           - pkg-config # for ansible, phpenv
@@ -96,7 +97,6 @@
           - zlib # for phpenv
         homebrew_casks:
           - android-studio
-          - cakebrew
           - calibre
           - discord
           - docker
@@ -116,8 +116,6 @@
           - horndis
           - inkscape
           - iterm2
-          - kindle
-          - kitematic
           - licecap
           - macfuse
           - mactex
@@ -138,6 +136,8 @@
           - xmind
           - xquartz
         homebrew_mas_apps:
+          - name: kindle
+            id: 302584613
           - name: LINE
             id: 539883307
           - name: LimeChat
