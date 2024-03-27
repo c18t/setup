@@ -1,10 +1,4 @@
 ---
-elixir_versions:
-  - '1.11.3'
-
-erlang_versions:
-  - '23.3.2'
-
 lua_versions:
   - '5.4.3'
 

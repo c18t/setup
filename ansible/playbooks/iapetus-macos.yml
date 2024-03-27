@@ -41,14 +41,14 @@
           - homebrew/core
         homebrew_formulae:
           - ansible
-          - autoconf # for phpenv
+          - autoconf # for asdf-erlang, phpenv
           - bats
           - byobu
           - bzip2 # for phpenv
           - curl-openssl # for phpenv
           - docker
           - fish
-          - fop # for erlenv
+          - fop # for asdf-erlang
           - fzf
           - ghq
           - git-secret
@@ -60,21 +60,21 @@
           - helm
           - hub
           - icu4c # for phpenv
-          - kerl # for erlenv
+          - kerl # for asdf-erlang
           - krb5 # for phpenv
           - libedit # for phpenv
           - libxml2 # for phpenv
+          - libxslt # for asdf-erlang
           - libzip # for phpenv
           - mas
           - mise
-          - ncurses # for erlenv
           - neofetch
           - neovim
           - nim
           - oniguruma # for phpenv
           - openjdk
           - openldap # for phpenv
-          - openssl@1.1 # for erlenv
+          - openssl@3 # for asdf-erlang >25.1
           - pandoc
           - peco
           - pkg-config # for ansible, phpenv
@@ -86,7 +86,7 @@
           - terminal-notifier # for fisherman/done
           - the_platinum_searcher
           - tree
-          - unixodbc # for erlenv
+          - wxwidgets # for asdf-erlang
           - zlib # for phpenv
         homebrew_casks:
           - android-studio
@@ -164,6 +164,7 @@
         mise_default_python_packages: '{{ dotfiles }}/mise/.default-python-packages'
         mise_default_npm_packages: '{{ dotfiles }}/mise/.default-npm-packages'
         mise_default_gems: '{{ dotfiles }}/mise/.default-gems'
+        mise_default_mix_commands: '{{ dotfiles }}/mise/.default-mix-commands'
     - import_role:
         name: anyenv
     - import_role:

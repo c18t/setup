@@ -29,13 +29,13 @@
     - krb5
     - libedit
     - libxml2
+    - libxslt
     - libzip
     - ncurses
     - oniguruma
     - openldap
-    - openssl@1.1
+    - openssl@3
     - readline
     - sqlite
     - tidy-html5
-    - unixodbc
     - zlib

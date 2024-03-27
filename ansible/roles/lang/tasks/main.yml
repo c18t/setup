@@ -5,10 +5,6 @@
     - include_tasks: 00-gather-facts.yml
     - include_tasks: 01-check-precondition.yml
     - block:
-        - include_tasks: languages/erlang.yml
-          tags: erlang
-        - include_tasks: languages/elixir.yml
-          tags: elixir
         - include_tasks: languages/haskell.yml
           tags: haskell
         - include_tasks: languages/lua.yml
