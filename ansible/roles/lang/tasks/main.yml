@@ -15,8 +15,6 @@
           tags: lua
         - include_tasks: languages/nim.yml
           tags: nim
-        - include_tasks: languages/node.yml
-          tags: node
         - include_tasks: languages/perl.yml
           tags: perl
         - include_tasks: languages/php.yml

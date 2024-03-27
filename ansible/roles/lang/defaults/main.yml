@@ -8,9 +8,6 @@ erlang_versions:
 lua_versions:
   - '5.4.3'
 
-node_versions:
-  - '14.16.1'
-
 perl_versions:
   - '5.32.1'
 perl_option: ''

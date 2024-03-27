@@ -2,19 +2,6 @@
 # cli tools
 cli_gem_packages:
   - asciidoctor
-cli_npm_packages:
-  - '@angular/cli'
-  - cordova
-  - create-react-app
-  - eslint
-  - express-generator
-  - firebase-tools
-  - pnpm
-  - prettier
-  - sass
-  - '@storybook/cli'
-  - stylus
-  - '@vue/cli'
-  - yarn
+cli_npm_packages: []
 cli_pip_packages: []
 cli_stack_packages: []

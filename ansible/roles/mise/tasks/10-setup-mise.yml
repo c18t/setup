@@ -8,6 +8,8 @@
         dest: '{{ home }}/.default-go-packages'
       - path: '{{ mise_default_python_packages }}'
         dest: '{{ home }}/.default-python-packages'
+      - path: '{{ mise_default_npm_packages }}'
+        dest: '{{ home }}/.default-npm-packages'
 
 - name: check that link sources exists
   stat:

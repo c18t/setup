@@ -15,3 +15,7 @@ argument_specs:
         type: path
         required: true
         description: 'Source path of ~/.default-python-packages to be linked.'
+      mise_default_npm_packages:
+        type: path
+        required: true
+        description: 'Source path of ~/.default-npm-packages to be linked.'

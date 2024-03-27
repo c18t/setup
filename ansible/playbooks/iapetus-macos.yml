@@ -71,7 +71,6 @@
           - neofetch
           - neovim
           - nim
-          - npm # for command-line
           - oniguruma # for phpenv
           - openjdk
           - openldap # for phpenv
@@ -79,7 +78,6 @@
           - pandoc
           - peco
           - pkg-config # for ansible, phpenv
-          - python # for command-line
           - readline # for luaenv
           - ruby # for command-line
           - sqlite # for ansible, phpenv
@@ -90,7 +88,6 @@
           - the_platinum_searcher
           - tree
           - unixodbc # for erlenv
-          - volta
           - zlib # for phpenv
         homebrew_casks:
           - android-studio
@@ -166,6 +163,7 @@
         mise_config: '{{ dotfiles }}/mise/config-macos.toml'
         mise_default_go_packages: '{{ dotfiles }}/mise/.default-go-packages'
         mise_default_python_packages: '{{ dotfiles }}/mise/.default-python-packages'
+        mise_default_npm_packages: '{{ dotfiles }}/mise/.default-npm-packages'
     - import_role:
         name: anyenv
     - import_role:
