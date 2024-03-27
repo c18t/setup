@@ -21,8 +21,6 @@
           tags: perl
         - include_tasks: languages/php.yml
           tags: php
-        - include_tasks: languages/python.yml
-          tags: python
         - include_tasks: languages/ruby.yml
           tags: ruby
         - include_tasks: languages/rust.yml

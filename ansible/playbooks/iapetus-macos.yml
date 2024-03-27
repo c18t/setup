@@ -164,6 +164,8 @@
         name: mise
       vars:
         mise_config: '{{ dotfiles }}/mise/config-macos.toml'
+        mise_default_go_packages: '{{ dotfiles }}/mise/.default-go-packages'
+        mise_default_python_packages: '{{ dotfiles }}/mise/.default-python-packages'
     - import_role:
         name: anyenv
     - import_role:

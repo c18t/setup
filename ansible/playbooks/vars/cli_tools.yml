@@ -16,9 +16,5 @@ cli_npm_packages:
   - stylus
   - '@vue/cli'
   - yarn
-cli_pip_packages:
-  - autopep8
-  - flake8
-  - jupyter
-  - sphinx
+cli_pip_packages: []
 cli_stack_packages: []

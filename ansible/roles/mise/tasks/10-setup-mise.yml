@@ -4,6 +4,10 @@
     link_items:
       - path: '{{ mise_config }}'
         dest: '{{ xdg_config_home }}/mise/config.toml'
+      - path: '{{ mise_default_go_packages }}'
+        dest: '{{ home }}/.default-go-packages'
+      - path: '{{ mise_default_python_packages }}'
+        dest: '{{ home }}/.default-python-packages'
 
 - name: check that link sources exists
   stat:

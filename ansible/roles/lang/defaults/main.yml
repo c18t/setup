@@ -20,8 +20,5 @@ php_versions:
 php_build_config: ''
 php_make_arguments: ''
 
-python_versions:
-  - 'anaconda3-2020.11'
-
 ruby_versions:
   - '3.0.1'

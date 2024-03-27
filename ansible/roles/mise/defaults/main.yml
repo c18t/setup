@@ -1,3 +1,5 @@
 ---
 # defaults file for mise
 mise_config: null
+mise_default_go_packages: null
+mise_default_python_packages: null

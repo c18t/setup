@@ -7,3 +7,11 @@ argument_specs:
         type: path
         required: true
         description: 'Source path of ~/.config/mise/config.toml to be linked.'
+      mise_default_go_packages:
+        type: path
+        required: true
+        description: 'Source path of ~/.default-go-packages to be linked.'
+      mise_default_python_packages:
+        type: path
+        required: true
+        description: 'Source path of ~/.default-python-packages to be linked.'
