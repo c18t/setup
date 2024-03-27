@@ -84,7 +84,6 @@
           - ruby # for command-line
           - sqlite # for ansible, phpenv
           - gromgit/fuse/sshfs # depends macfuse
-          - shellcheck
           # - swagger-codegen
           - tidy-html5 # for phpenv
           - terminal-notifier # for fisherman/done

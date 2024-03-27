@@ -9,7 +9,6 @@ cli_npm_packages:
   - eslint
   - express-generator
   - firebase-tools
-  - markdownlint-cli
   - pnpm
   - prettier
   - sass
@@ -21,7 +20,5 @@ cli_pip_packages:
   - autopep8
   - flake8
   - jupyter
-  - pre-commit
   - sphinx
-  - yamllint
 cli_stack_packages: []
