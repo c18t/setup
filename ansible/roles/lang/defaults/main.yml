@@ -5,9 +5,6 @@ elixir_versions:
 erlang_versions:
   - '23.3.2'
 
-golang_versions:
-  - '1.16.3'
-
 lua_versions:
   - '5.4.3'
 
