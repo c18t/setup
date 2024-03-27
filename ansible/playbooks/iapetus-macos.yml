@@ -41,53 +41,61 @@
           - homebrew/core
         homebrew_formulae:
           - ansible
-          - autoconf # for asdf-erlang, phpenv
+          - autoconf # for asdf-erlang, asdf-php
+          - automake # for asdf-php
           - bats
+          - bison # for asdf-php
           - byobu
-          - bzip2 # for phpenv
-          - curl-openssl # for phpenv
           - docker
           - fish
           - fop # for asdf-erlang
+          - freetype # for asdf-php
           - fzf
+          - gd # for asdf-php
+          - gettext # for asdf-php
           - ghq
           - git-secret
           - git-secrets
+          - gmp # for asdf-php
           - gradle
           - graphviz
           - hadolint
           - haskell-stack
           - helm
           - hub
-          - icu4c # for phpenv
+          - icu4c # for asdf-php
+          - imagemagick # for asdf-php
           - kerl # for asdf-erlang
-          - krb5 # for phpenv
-          - libedit # for phpenv
-          - libxml2 # for phpenv
+          - krb5 # for asdf-php
+          - libedit # for asdf-php
+          - libiconv # for asdf-php
+          - libjpeg # for asdf-php
+          - libpng # for asdf-php
+          - libsodium # for asdf-php
+          - libxml2 # for asdf-php
           - libxslt # for asdf-erlang
-          - libzip # for phpenv
+          - libzip # for asdf-php
           - mas
           - mise
           - neofetch
           - neovim
           - nim
-          - oniguruma # for phpenv
           - openjdk
-          - openldap # for phpenv
-          - openssl@3 # for asdf-erlang >25.1
+          - openssl@1.1 # for asdf-erlang, asdf-php
+          - openssl@3 # for asdf-erlang >25.1, asdf-php
           - pandoc
           - peco
-          - pkg-config # for ansible, phpenv
+          - pkg-config # for ansible, asdf-php
+          - re2c # for asdf-php
           - readline # for luaenv
-          - sqlite # for ansible, phpenv
+          - sqlite # for ansible
           - gromgit/fuse/sshfs # depends macfuse
           # - swagger-codegen
-          - tidy-html5 # for phpenv
           - terminal-notifier # for fisherman/done
           - the_platinum_searcher
           - tree
           - wxwidgets # for asdf-erlang
-          - zlib # for phpenv
+          - zlib # for asdf-php
         homebrew_casks:
           - android-studio
           - cakebrew

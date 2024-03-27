@@ -2,10 +2,5 @@
 lua_versions:
   - '5.4.3'
 
-php_versions:
-  - '8.0.3'
-php_build_config: ''
-php_make_arguments: ''
-
 ruby_versions:
   - '3.0.1'
