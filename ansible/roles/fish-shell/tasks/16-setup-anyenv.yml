@@ -1,6 +1,0 @@
----
-- name: update anyenvrc
-  shell: update_anyenvrc
-  args:
-    executable: '{{ fish_path }}'
-  changed_when: false

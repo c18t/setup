@@ -9,4 +9,3 @@
     - include_tasks: 13-set-environment-variables.yml
     - include_tasks: 14-setup-fisher.yml
     - include_tasks: 15-setup-graphviz.yml
-    - include_tasks: 16-setup-anyenv.yml
