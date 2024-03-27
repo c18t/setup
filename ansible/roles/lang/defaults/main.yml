@@ -1,6 +1,0 @@
----
-lua_versions:
-  - '5.4.3'
-
-ruby_versions:
-  - '3.0.1'

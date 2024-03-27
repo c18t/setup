@@ -13,7 +13,6 @@
     - tags: always
       block:
         - include_vars: common.yml
-        - include_vars: cli_tools.yml
         - include_vars: vscode_extensions.yml
   handlers:
     - import_tasks: handlers/handlers_macos.yml
@@ -174,13 +173,3 @@
         mise_default_gems: '{{ dotfiles }}/mise/.default-gems'
         mise_default_mix_commands: '{{ dotfiles }}/mise/.default-mix-commands'
         mise_default_perl_modules: '{{ dotfiles }}/mise/.default-perl-modules'
-    - import_role:
-        name: anyenv
-    - import_role:
-        name: lang
-      vars:
-        perl_option: -j 4
-        php_build_config: configure_options-mac
-        php_build_extra_make_arguments: -j 4
-    - import_role:
-        name: cli

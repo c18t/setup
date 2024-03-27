@@ -32,7 +32,6 @@
     - tags: always
       block:
         - include_vars: common.yml
-        - include_vars: cli_tools.yml
         - include_vars: vscode_extensions.yml
   tasks:
     - import_role:
@@ -150,8 +149,6 @@
         vscode_confing: settings-win.json
     # - import_role:
     #     name: software-windows # 止まるのでコメントアウト
-    - import_role:
-        name: cli
 
 - name: WSL
   hosts: local
@@ -264,5 +261,3 @@
     #     perl_option: -j 4 -Dfirstmakefile=GNUmakefile
     #     php_build_config: configure_options-wsl
     #     php_make_arguments: -j 4
-    - import_role:
-        name: cli
