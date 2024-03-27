@@ -6,3 +6,4 @@ mise_default_python_packages: null
 mise_default_npm_packages: null
 mise_default_gems: null
 mise_default_mix_commands: null
+mise_default_perl_modules: null

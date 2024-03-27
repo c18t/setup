@@ -2,10 +2,6 @@
 lua_versions:
   - '5.4.3'
 
-perl_versions:
-  - '5.32.1'
-perl_option: ''
-
 php_versions:
   - '8.0.3'
 php_build_config: ''

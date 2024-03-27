@@ -165,6 +165,7 @@
         mise_default_npm_packages: '{{ dotfiles }}/mise/.default-npm-packages'
         mise_default_gems: '{{ dotfiles }}/mise/.default-gems'
         mise_default_mix_commands: '{{ dotfiles }}/mise/.default-mix-commands'
+        mise_default_perl_modules: '{{ dotfiles }}/mise/.default-perl-modules'
     - import_role:
         name: anyenv
     - import_role:

@@ -14,6 +14,8 @@
         dest: '{{ home }}/.default-gems'
       - path: '{{ mise_default_mix_commands }}'
         dest: '{{ home }}/.default-mix-commands'
+      - path: '{{ mise_default_perl_modules }}'
+        dest: '{{ home }}/.default-perl-modules'
 
 - name: check that link sources exists
   stat:

@@ -27,3 +27,7 @@ argument_specs:
         type: path
         required: true
         description: 'Source path of ~/.default-mix-commands to be linked.'
+      mise_default_perl_modules:
+        type: path
+        required: true
+        description: 'Source path of ~/.default-perl-modules to be linked.'
