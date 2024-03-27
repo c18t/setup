@@ -41,13 +41,11 @@
           - homebrew/core
         homebrew_formulae:
           - ansible
-          - anyenv
           - autoconf # for phpenv
           - bats
           - byobu
           - bzip2 # for phpenv
           - curl-openssl # for phpenv
-          - direnv
           - docker
           - fish
           - fop # for erlenv
