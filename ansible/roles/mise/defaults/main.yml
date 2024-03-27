@@ -4,3 +4,4 @@ mise_config: null
 mise_default_go_packages: null
 mise_default_python_packages: null
 mise_default_npm_packages: null
+mise_default_gems: null

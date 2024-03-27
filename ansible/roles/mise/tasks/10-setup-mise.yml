@@ -10,6 +10,8 @@
         dest: '{{ home }}/.default-python-packages'
       - path: '{{ mise_default_npm_packages }}'
         dest: '{{ home }}/.default-npm-packages'
+      - path: '{{ mise_default_gems }}'
+        dest: '{{ home }}/.default-gems'
 
 - name: check that link sources exists
   stat:

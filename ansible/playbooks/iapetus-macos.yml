@@ -79,7 +79,6 @@
           - peco
           - pkg-config # for ansible, phpenv
           - readline # for luaenv
-          - ruby # for command-line
           - sqlite # for ansible, phpenv
           - gromgit/fuse/sshfs # depends macfuse
           # - swagger-codegen
@@ -164,6 +163,7 @@
         mise_default_go_packages: '{{ dotfiles }}/mise/.default-go-packages'
         mise_default_python_packages: '{{ dotfiles }}/mise/.default-python-packages'
         mise_default_npm_packages: '{{ dotfiles }}/mise/.default-npm-packages'
+        mise_default_gems: '{{ dotfiles }}/mise/.default-gems'
     - import_role:
         name: anyenv
     - import_role:

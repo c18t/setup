@@ -1,7 +1,6 @@
 ---
 # cli tools
-cli_gem_packages:
-  - asciidoctor
+cli_gem_packages: []
 cli_npm_packages: []
 cli_pip_packages: []
 cli_stack_packages: []

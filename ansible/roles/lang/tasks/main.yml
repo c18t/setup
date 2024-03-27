@@ -19,8 +19,6 @@
           tags: perl
         - include_tasks: languages/php.yml
           tags: php
-        - include_tasks: languages/ruby.yml
-          tags: ruby
         - include_tasks: languages/rust.yml
           tags: rust
       # NOTE: xenv系のコマンドが$(basename $SHELL)でシェルを判定することから
