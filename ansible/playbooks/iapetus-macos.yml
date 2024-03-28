@@ -76,6 +76,7 @@
           - libzip # for asdf-php
           - mas
           - mise
+          - molecule
           - neofetch
           - neovim
           - nim
@@ -97,7 +98,6 @@
           - zlib # for asdf-php
         homebrew_casks:
           - android-studio
-          - cakebrew
           - calibre
           - discord
           - docker
@@ -117,8 +117,6 @@
           - horndis
           - inkscape
           - iterm2
-          - kindle
-          - kitematic
           - licecap
           - macfuse
           - mactex
@@ -139,6 +137,8 @@
           - xmind
           - xquartz
         homebrew_mas_apps:
+          - name: kindle
+            id: 302584613
           - name: LINE
             id: 539883307
           - name: LimeChat
