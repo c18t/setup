@@ -18,7 +18,7 @@ pushd "$(dirname "$0")" >&3 || exit $?
 
     # configure with ansible
     pushd ./ansible >&3 || exit $?
-        PLAYBOOK=./playbooks/iapetus-macbookpro.yml
+        PLAYBOOK=./playbooks/iapetus-macos.yml
         echo "call ansible-playbook $PLAYBOOK $*" >&3
         ansible-playbook "$PLAYBOOK" "$@"
         result=$?

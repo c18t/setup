@@ -1,0 +1,33 @@
+---
+argument_specs:
+  main:
+    short_description: default entry point
+    options:
+      mise_config:
+        type: path
+        required: true
+        description: 'Source path of ~/.config/mise/config.toml to be linked.'
+      mise_default_go_packages:
+        type: path
+        required: true
+        description: 'Source path of ~/.default-go-packages to be linked.'
+      mise_default_python_packages:
+        type: path
+        required: true
+        description: 'Source path of ~/.default-python-packages to be linked.'
+      mise_default_npm_packages:
+        type: path
+        required: true
+        description: 'Source path of ~/.default-npm-packages to be linked.'
+      mise_default_gems:
+        type: path
+        required: true
+        description: 'Source path of ~/.default-gems to be linked.'
+      mise_default_mix_commands:
+        type: path
+        required: true
+        description: 'Source path of ~/.default-mix-commands to be linked.'
+      mise_default_perl_modules:
+        type: path
+        required: true
+        description: 'Source path of ~/.default-perl-modules to be linked.'

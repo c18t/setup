@@ -1,0 +1,175 @@
+---
+- hosts: local
+  vars_prompt:
+    - name: my_password
+      prompt: 'User password'
+      private: true
+  vars:
+    # common
+    my_editor: code
+    my_visual: code
+    my_temporary_home: /tmp
+  pre_tasks:
+    - tags: always
+      block:
+        - include_vars: common.yml
+        - include_vars: vscode_extensions.yml
+  handlers:
+    - import_tasks: handlers/handlers_macos.yml
+  tasks:
+    - import_role:
+        name: os-macos
+    - import_role:
+        name: home
+        tasks_from: macos
+      vars:
+        home_standard_directories:
+          - Archives
+          - Projects
+        home_ssh_config: '{{ dotfiles }}/ssh/config-prv'
+        home_git_config: '{{ dotfiles }}/git/.gitconfig-prv'
+    - import_role:
+        name: homebrew
+      vars:
+        homebrew_taps:
+          - buo/cask-upgrade
+          - homebrew/cask
+          - homebrew/cask-drivers
+          - homebrew/cask-fonts
+          - homebrew/cask-versions
+          - homebrew/core
+        homebrew_formulae:
+          - ansible
+          - autoconf # for asdf-erlang, asdf-php
+          - automake # for asdf-php
+          - bats
+          - bison # for asdf-php
+          - byobu
+          - docker
+          - fish
+          - fop # for asdf-erlang
+          - freetype # for asdf-php
+          - fzf
+          - gd # for asdf-php
+          - gettext # for asdf-php
+          - ghq
+          - git-secret
+          - git-secrets
+          - gmp # for asdf-php
+          - gradle
+          - graphviz
+          - hadolint
+          - haskell-stack
+          - helm
+          - hub
+          - icu4c # for asdf-php
+          - imagemagick # for asdf-php
+          - kerl # for asdf-erlang
+          - krb5 # for asdf-php
+          - libedit # for asdf-php
+          - libiconv # for asdf-php
+          - libjpeg # for asdf-php
+          - libpng # for asdf-php
+          - libsodium # for asdf-php
+          - libxml2 # for asdf-php
+          - libxslt # for asdf-erlang
+          - libzip # for asdf-php
+          - mas
+          - mise
+          - molecule
+          - neofetch
+          - neovim
+          - nim
+          - openjdk
+          - openssl@1.1 # for asdf-erlang, asdf-php
+          - openssl@3 # for asdf-erlang >25.1, asdf-php
+          - pandoc
+          - peco
+          - pkg-config # for ansible, asdf-php
+          - re2c # for asdf-php
+          - readline # for luaenv
+          - sqlite # for ansible
+          - gromgit/fuse/sshfs # depends macfuse
+          # - swagger-codegen
+          - terminal-notifier # for fisherman/done
+          - the_platinum_searcher
+          - tree
+          - wxwidgets # for asdf-erlang
+          - zlib # for asdf-php
+        homebrew_casks:
+          - android-studio
+          - calibre
+          - discord
+          - docker
+          - firefox
+          - font-hackgen
+          - font-hackgen-nerd
+          - font-ricty-diminished
+          - fork
+          - gfortran
+          - gimp
+          - gitter
+          - google-chrome
+          - google-cloud-sdk
+          - google-japanese-ime
+          - google-photos-backup-and-sync
+          - gpg-suite-no-mail
+          - horndis
+          - inkscape
+          - iterm2
+          - licecap
+          - macfuse
+          - mactex
+          - mnemosyne
+          - notion
+          - powershell
+          - send-to-kindle
+          - sketch
+          - skype
+          - slack
+          - steam
+          - todoist
+          - unity-hub
+          - visual-studio
+          - visual-studio-code
+          - wacom-tablet
+          - workflowy
+          - xmind
+          - xquartz
+        homebrew_mas_apps:
+          - name: kindle
+            id: 302584613
+          - name: LINE
+            id: 539883307
+          - name: LimeChat
+            id: 414030210
+          - name: Microsoft Remote Desktop
+            id: 1295203466
+          - name: Steam Link
+            id: 1246969117
+          - name: Trello
+            id: 1278508951
+          - name: Xcode
+            id: 497799835
+    - import_role:
+        name: iterm2
+    - import_role:
+        name: vscode
+      vars:
+        vscode_confing: settings-mac.json
+    - import_role:
+        name: nvim
+    - import_role:
+        name: fish-shell
+      vars:
+        fish_shell_config: config-mac.fish
+    - import_role:
+        name: mise
+      vars:
+        mise_config: '{{ dotfiles }}/mise/config-macos.toml'
+        mise_default_go_packages: '{{ dotfiles }}/mise/.default-go-packages'
+        mise_default_python_packages: '{{ dotfiles }}/mise/.default-python-packages'
+        mise_default_npm_packages: '{{ dotfiles }}/mise/.default-npm-packages'
+        mise_default_gems: '{{ dotfiles }}/mise/.default-gems'
+        mise_default_mix_commands: '{{ dotfiles }}/mise/.default-mix-commands'
+        mise_default_perl_modules: '{{ dotfiles }}/mise/.default-perl-modules'

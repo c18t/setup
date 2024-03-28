@@ -1,0 +1,23 @@
+galaxy_info:
+  author: ɯ̹t͡ɕʲi
+  namespace: c18t
+  role_name: anyenv
+  description: setup anyenv.
+  license: CC0
+
+  min_ansible_version: '2.13'
+
+  # If this a Container Enabled role, provide the minimum Ansible Container version.
+  # min_ansible_container_version:
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
+    - name: macOS
+      versions:
+        - all
+
+  galaxy_tags: []
+
+dependencies: []

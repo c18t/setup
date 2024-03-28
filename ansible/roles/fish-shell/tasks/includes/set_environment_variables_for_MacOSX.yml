@@ -24,18 +24,19 @@
     dest: '{{ xdg_config_home }}/fish/conf.d/{{ item }}.fish'
     content: set -gx PKG_CONFIG_PATH "{{ brew_prefix }}/opt/{{ item }}/lib/pkgconfig" $PKG_CONFIG_PATH
   loop:
-    - curl-openssl
+    - freetype
+    - gd
+    - gmp
     - icu4c
+    - imagemagick
     - krb5
     - libedit
+    - libpng
+    - libsodium
     - libxml2
     - libzip
-    - ncurses
-    - oniguruma
-    - openldap
     - openssl@1.1
+    - openssl@3
     - readline
     - sqlite
-    - tidy-html5
-    - unixodbc
     - zlib

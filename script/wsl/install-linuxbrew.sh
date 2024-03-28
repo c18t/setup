@@ -39,7 +39,7 @@ pushd "$(dirname "$0")" >&3 || exit $?
     ([ $APT_GIT -eq 0 ] && echo "ok." || echo "no.") >&3
 
     if [ $APT_BUILD_ESSENTIAL -ne 0 ] || [ $APT_PROCPS -ne 0 ] || [ $APT_CURL -ne 0 ] || [ $APT_FILE -ne 0 ] || [ $APT_GIT -ne 0 ]; then
-        echo install ansible dependencies ...
+        echo install linuxbrew dependencies ...
         sudo apt update -y \
             && sudo apt install -y build-essential procps curl file git
         result=$?

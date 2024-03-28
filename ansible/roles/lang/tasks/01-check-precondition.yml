@@ -1,7 +1,0 @@
----
-- name: check anyenv
-  shell: type anyenv
-  args:
-    executable: '{{ fish_path }}'
-  changed_when: false
-  check_mode: false

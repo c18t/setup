@@ -1,0 +1,19 @@
+[tools]
+pre-commit = "latest"
+shellcheck = "latest"
+yamllint = "latest"
+markdownlint-cli2 = "latest"
+
+[tasks.setup]
+description = "Setup project"
+depends = ["setup:mise"]
+run = "mise run setup:pre-commit"
+
+[tasks."setup:mise"]
+description = "Setup project mise"
+run = "mise install -y"
+
+[tasks."setup:pre-commit"]
+description = "Setup project pre-commit"
+depends = ["setup:mise"]
+run = "pre-commit install"
