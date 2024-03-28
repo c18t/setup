@@ -167,7 +167,6 @@
     - tags: always
       block:
         - include_vars: common.yml
-        - include_vars: cli_tools.yml
   handlers:
     - import_tasks: handlers/handlers_wsl.yml
   tasks:
@@ -192,7 +191,6 @@
             filename: 'google-chrome'
         apt_packages:
           - google-chrome-stable
-          - haskell-stack
     - import_role:
         name: homebrew
       vars:
@@ -200,52 +198,44 @@
           - homebrew/core
         homebrew_formulae:
           - ansible
-          - anyenv
-          - autoconf # for phpenv
-          - bats
+          - autoconf # for asdf-erlang, asdf-php
+          - automake # for asdf-php
+          - bison # for asdf-php
           - byobu
-          - bzip2 # for phpenv
-          - curl-openssl # for phpenv
-          - direnv
+          - docker
           - fish
-          - fop # for erlenv
-          - fzf
-          - ghq
+          - fop # for asdf-erlang
+          - freetype # for asdf-php
+          - gd # for asdf-php
+          - gettext # for asdf-php
           - git-secret
           - git-secrets
-          - gradle
-          # - haskell-stack # 落ちるので apt で入れる
-          - hadolint
-          - icu4c # for phpenv
-          - kerl # for erlenv
-          - krb5 # for phpenv
-          - libedit # for phpenv
-          - libxml2 # for phpenv
-          - libzip # for phpenv
-          - ncurses # for erlenv
+          - gmp # for asdf-php
+          - graphviz
+          - icu4c # for asdf-php
+          - imagemagick # for asdf-php
+          - kerl # for asdf-erlang
+          - krb5 # for asdf-php
+          - libedit # for asdf-php
+          - libjpeg # for asdf-php
+          - libpng # for asdf-php
+          - libsodium # for asdf-php
+          - libxml2 # for asdf-php
+          - libxslt # for asdf-erlang
+          - libzip # for asdf-php
+          - mise
+          - molecule
           - neofetch
-          - neovim
-          - nim
-          - npm # for command-line
-          - oniguruma # for phpenv
-          - openldap # for phpenv
           - openjdk
-          - openssl@1.1 # for erlenv
-          - pandoc
-          - peco
-          - pkg-config # for ansible, phpenv
-          - python # for command-line
-          - readline # for luaenv
-          - ruby # for command-line
-          - sqlite # for ansible, phpenv
-          - shellcheck
-          # - swagger-codegen
-          - tidy-html5 # for phpenv
-          - the_platinum_searcher
+          - openssl@1.1 # for asdf-erlang, asdf-php
+          - openssl@3 # for asdf-erlang >25.1, asdf-php
+          - pkg-config # for ansible, asdf-php
+          - re2c # for asdf-php
+          - readline # for asdf-erlang, asdf-php
+          - sqlite # for ansible
           - tree
-          - unixodbc # for erlenv
-          - volta
-          - zlib # for phpenv
+          - wxwidgets # for asdf-erlang
+          - zlib # for asdf-php
     - import_role:
         name: nvim
     - import_role:
