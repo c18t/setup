@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 result=0
 
-# make wsl.conf
-if ! [ -e /etc/wsl.conf ]; then
+# update wsl.conf
+if ! [ -e /etc/wsl.conf ] || ! grep -q '\[automount\]' /etc/wsl.conf ; then
     # metadata: WSLでchmodを可能にする
     # umask: マウントした全ファイルおよびフォルダのパーミッションのマスク
     #        他のユーザーからの書き込みを制限する
