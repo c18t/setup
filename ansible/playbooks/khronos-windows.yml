@@ -242,3 +242,13 @@
         name: fish-shell
       vars:
         fish_shell_config: config-wsl.fish
+    - import_role:
+        name: mise
+      vars:
+        mise_config: '{{ dotfiles }}/mise/config-wsl.toml'
+        mise_default_go_packages: '{{ dotfiles }}/mise/.default-go-packages'
+        mise_default_python_packages: '{{ dotfiles }}/mise/.default-python-packages'
+        mise_default_npm_packages: '{{ dotfiles }}/mise/.default-npm-packages'
+        mise_default_gems: '{{ dotfiles }}/mise/.default-gems'
+        mise_default_mix_commands: '{{ dotfiles }}/mise/.default-mix-commands'
+        mise_default_perl_modules: '{{ dotfiles }}/mise/.default-perl-modules'
