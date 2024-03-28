@@ -33,7 +33,6 @@
       vars:
         homebrew_taps:
           - buo/cask-upgrade
-          - homebrew/cask
           - homebrew/cask-drivers
           - homebrew/cask-fonts
           - homebrew/cask-versions
@@ -42,26 +41,18 @@
           - ansible
           - autoconf # for asdf-erlang, asdf-php
           - automake # for asdf-php
-          - bats
           - bison # for asdf-php
           - byobu
           - docker
           - fish
           - fop # for asdf-erlang
           - freetype # for asdf-php
-          - fzf
           - gd # for asdf-php
           - gettext # for asdf-php
-          - ghq
           - git-secret
           - git-secrets
           - gmp # for asdf-php
-          - gradle
           - graphviz
-          - hadolint
-          - haskell-stack
-          - helm
-          - hub
           - icu4c # for asdf-php
           - imagemagick # for asdf-php
           - kerl # for asdf-erlang
@@ -78,21 +69,15 @@
           - mise
           - molecule
           - neofetch
-          - neovim
-          - nim
           - openjdk
           - openssl@1.1 # for asdf-erlang, asdf-php
           - openssl@3 # for asdf-erlang >25.1, asdf-php
-          - pandoc
-          - peco
           - pkg-config # for ansible, asdf-php
           - re2c # for asdf-php
-          - readline # for luaenv
+          - readline # for asdf-erlang, asdf-php
           - sqlite # for ansible
-          - gromgit/fuse/sshfs # depends macfuse
-          # - swagger-codegen
+          - gromgit/fuse/sshfs-mac # depends macfuse
           - terminal-notifier # for fisherman/done
-          - the_platinum_searcher
           - tree
           - wxwidgets # for asdf-erlang
           - zlib # for asdf-php
