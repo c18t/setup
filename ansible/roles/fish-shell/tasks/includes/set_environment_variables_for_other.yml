@@ -97,21 +97,12 @@
   copy:
     dest: '{{ xdg_config_home }}/fish/conf.d/{{ item }}.fish'
     content: set -gx PKG_CONFIG_PATH "{{ brew_prefix }}/opt/{{ item }}/lib/pkgconfig" $PKG_CONFIG_PATH
+  with_items: []
+
+- name: add other PKG_CONFIG_PATH config (for other)
+  copy:
+    dest: '{{ xdg_config_home }}/fish/conf.d/{{ item.name }}.fish'
+    content: set -gx PKG_CONFIG_PATH "{{ item.path }}/pkgconfig" $PKG_CONFIG_PATH
   with_items:
-    - freetype
-    - gd
-    - gmp
-    - icu4c
-    - imagemagick
-    - krb5
-    - libedit
-    - libpng
-    - libsodium
-    - libxml2
-    - libxslt
-    - libzip
-    - openssl@1.1
-    - openssl@3
-    - readline
-    - sqlite
-    - zlib
+    - name: 'zzz_x86_64-linux-gnu'
+      path: '/usr/lib/x86_64-linux-gnu'

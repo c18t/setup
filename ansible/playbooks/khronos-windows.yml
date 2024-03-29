@@ -191,6 +191,21 @@
             filename: 'google-chrome'
         apt_packages:
           - google-chrome-stable
+          - autoconf # for asdf-erlang
+          - build-essential # for ansible, asdf-erlang
+          - fop # for asdf-erlang
+          - libgl1-mesa-dev # for asdf-erlang
+          - libglu1-mesa-dev # for asdf-erlang
+          - libncurses-dev # for asdf-erlang
+          - libncurses5-dev # for asdf-erlang
+          - libpng-dev # for asdf-erlang
+          - libssl-dev # for asdf-erlang
+          - libwxgtk3.0-gtk3-dev # for asdf-erlang
+          - libwxgtk-webview3.0-gtk3-dev # for asdf-erlang
+          - openjdk-11-jdk # for asdf-erlang
+          - m4 # for asdf-erlang
+          - unixodbc-dev # for asdf-erlang
+          - xsltproc # for asdf-erlang
     - import_role:
         name: homebrew
       vars:
@@ -198,44 +213,16 @@
           - homebrew/core
         homebrew_formulae:
           - ansible
-          - autoconf # for asdf-erlang, asdf-php
-          - automake # for asdf-php
-          - bison # for asdf-php
           - byobu
           - docker
           - fish
-          - fop # for asdf-erlang
-          - freetype # for asdf-php
-          - gd # for asdf-php
-          - gettext # for asdf-php
           - git-secret
           - git-secrets
-          - gmp # for asdf-php
           - graphviz
-          - icu4c # for asdf-php
-          - imagemagick # for asdf-php
-          - kerl # for asdf-erlang
-          - krb5 # for asdf-php
-          - libedit # for asdf-php
-          - libjpeg # for asdf-php
-          - libpng # for asdf-php
-          - libsodium # for asdf-php
-          - libxml2 # for asdf-php
-          - libxslt # for asdf-erlang
-          - libzip # for asdf-php
           - mise
           - molecule
           - neofetch
-          - openjdk
-          - openssl@1.1 # for asdf-erlang, asdf-php
-          - openssl@3 # for asdf-erlang >25.1, asdf-php
-          - pkg-config # for ansible, asdf-php
-          - re2c # for asdf-php
-          - readline # for asdf-erlang, asdf-php
-          - sqlite # for ansible
           - tree
-          - wxwidgets # for asdf-erlang
-          - zlib # for asdf-php
     - import_role:
         name: nvim
     - import_role:

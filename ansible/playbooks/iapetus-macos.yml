@@ -69,12 +69,11 @@
           - mise
           - molecule
           - neofetch
-          - openjdk
           - openssl@1.1 # for asdf-erlang, asdf-php
           - openssl@3 # for asdf-erlang >25.1, asdf-php
           - pkg-config # for ansible, asdf-php
           - re2c # for asdf-php
-          - readline # for asdf-erlang, asdf-php
+          - readline # for asdf-erlang
           - sqlite # for ansible
           - gromgit/fuse/sshfs-mac # depends macfuse
           - terminal-notifier # for fisherman/done
