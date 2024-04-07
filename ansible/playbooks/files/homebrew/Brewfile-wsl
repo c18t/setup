@@ -1,0 +1,29 @@
+tap "homebrew/bundle"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.12"
+# Automate deployment, configuration, and upgrading
+brew "ansible"
+# Text-based window manager and terminal multiplexer
+brew "byobu"
+# Pack, ship and run any application as a lightweight container
+brew "docker"
+# User-friendly command-line shell for UNIX-like operating systems
+brew "fish"
+# Bash-tool to store the private data inside a git repo
+brew "git-secret"
+# Prevents you from committing sensitive information to a git repo
+brew "git-secrets"
+# Graph visualization software from AT&T and Bell Labs
+brew "graphviz"
+# Update of iperf: measures TCP, UDP, and SCTP bandwidth
+brew "iperf3"
+# Text-based web browser
+brew "lynx"
+# Polyglot runtime manager (asdf rust clone)
+brew "mise"
+# Automated testing for Ansible roles
+brew "molecule"
+# Fast, highly customisable system info script
+brew "neofetch"
+# Display directories as trees (with optional color/HTML output)
+brew "tree"

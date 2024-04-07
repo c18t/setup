@@ -143,10 +143,6 @@
           - { name: winscp }
           - { name: xmind8 }
           - { name: youtube-dl }
-    - import_role:
-        name: vscode
-      vars:
-        vscode_confing: settings-win.json
     # - import_role:
     #     name: software-windows # 止まるのでコメントアウト
 
@@ -209,20 +205,7 @@
     - import_role:
         name: homebrew
       vars:
-        homebrew_taps:
-          - homebrew/core
-        homebrew_formulae:
-          - ansible
-          - byobu
-          - docker
-          - fish
-          - git-secret
-          - git-secrets
-          - graphviz
-          - mise
-          - molecule
-          - neofetch
-          - tree
+        homebrew_brewfile: '{{ playbook_dir }}/files/homebrew/Brewfile-wsl'
     - import_role:
         name: nvim
     - import_role:
