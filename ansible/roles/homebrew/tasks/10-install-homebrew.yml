@@ -6,15 +6,6 @@
   changed_when: false
   check_mode: false
 
-- name: install Homebrew/Linuxbrew
-  block:
-    - name: install Homebrew
-      shell: ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-      when: ansible_distribution == "MacOSX"
-    - name: install Linuxbrew
-      shell: |-
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-        test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
-        echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
-      when: ansible_distribution != "MacOSX"
+- name: install Homebrew
+  shell: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   when: type_brew.rc != 0

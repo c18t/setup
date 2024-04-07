@@ -1,17 +1,4 @@
 ---
-# brew tapリスト
-# . homebrew_tapモジュールのnameパラメーターのリストを指定する
-homebrew_taps: []
-
-# homebrewパッケージ
-# . homebrewモジュールのnameパラメーターのリストを指定する
-homebrew_formulae: []
-
-# homebrew caskパッケージ
-# . homebrew_caskモジュールのnameパラメーターのリストを指定する
-homebrew_casks: []
-
-# App Storeアプリリスト
-# . id: masコマンドでインストールするアプリID
-# . name: アプリIDに対応するアプリ名称（ログ表示用）
-homebrew_mas_apps: [{ id: ~, name: ~ }]
+# brewfile
+# . brewfile
+homebrew_brewfile: ''

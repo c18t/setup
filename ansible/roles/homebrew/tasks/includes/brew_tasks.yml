@@ -1,5 +1,5 @@
 ---
-- name: update Homebrew/Linuxbrew and upgrade formulae (for {{ brew_distr }})
+- name: update Homebrew and upgrade formulae (for {{ brew_distr }})
   homebrew:
     update_homebrew: true
     upgrade_all: true
@@ -8,34 +8,7 @@
     ansible_env.GITHUB_ACTIONS is not defined
       or ansible_env.GITHUB_ACTIONS != 'true'
 
-- name: Homebrew/Linuxbrew tap (for {{ brew_distr }})
-  homebrew_tap:
-    name: '{{ homebrew_taps }}'
-
-# - name: install Homebrew/Linuxbrew formulae (for {{ brew_distr }})
-#   homebrew:
-#     name: '{{ homebrew_formulae }}'
-
-- name: homebrew_formulae loop
-  include_tasks: includes/brew_formulae.yml
-  # どれかが失敗してもすべて実施されるように loop で指定
-  loop: '{{ homebrew_formulae }}'
-  loop_control:
-    loop_var: formulae
-
-# - name: install Homebrew/Linuxbrew casks (for {{ brew_distr }})
-#   homebrew_cask:
-#     name: '{{ homebrew_casks }}'
-
-- name: homebrew_casks loop
-  include_tasks: includes/brew_casks.yml
-  # どれかが失敗してもすべて実施されるように loop で指定
-  loop: '{{ homebrew_casks }}'
-
-- name: mas install (for {{ brew_distr }})
-  script: 'mas.sh {{ item.id }}'
-  register: mas_result
-  changed_when: mas_result.rc == 1
-  failed_when: mas_result.rc not in [0, 1]
-  when: item.id is not none
-  loop: '{{ homebrew_mas_apps }}'
+- name: brew bundle install --file "{{ homebrew_brewfile | basename }}" (for {{ brew_distr }})
+  shell: brew bundle install -v --no-lock --file "{{ homebrew_brewfile }}"
+  register: brew_bundle
+  changed_when: brew_bundle.rc == 0 and brew_bundle.stdout is search('It is not currently installed')
