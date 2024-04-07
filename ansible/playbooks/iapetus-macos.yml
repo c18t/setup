@@ -35,10 +35,6 @@
     - import_role:
         name: iterm2
     - import_role:
-        name: vscode
-      vars:
-        vscode_confing: settings-mac.json
-    - import_role:
         name: nvim
     - import_role:
         name: fish-shell

@@ -1,8 +1,0 @@
----
-# vscode setting.jsonパス
-# . シンボリックリンク作成時のリンク先ファイルパス
-vscode_confing: null
-
-# vscode拡張のリスト
-# . 拡張機能のIDをリストで指定する
-vscode_extensions: []
