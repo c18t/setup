@@ -9,7 +9,7 @@
 #### Iapetus
 
 ```sh
-$ ./setup-iapetus.sh -K
+./setup-iapetus.sh -K
 ```
 
 ### Windows
@@ -24,21 +24,44 @@ PS > .\setup-windows.ps1 setup-khronos.sh -K
 ##### Host
 
 ```sh
-$ ./setup-khronos.sh -e win_username=user -K -l khronos
+./setup-khronos.sh -e win_username=user -K -l khronos
 ```
 
 ##### WSL
 
 ```sh
-$ ./setup-khronos.sh -e win_username=user -K -l local
+./setup-khronos.sh -e win_username=user -K -l local
 ```
 
 ## Update config
 
-### brewfile
+### fishfile
+
+_path:_ ansible/playbooks/files/fisher-my-setup/
 
 ```sh
-$ brew tap bundle && brew bundle dump && cat Brewfile
+cat ~/.config/fish/fish_plugins
+```
+
+### brewfile
+
+_path (for macOS):_ ansible/playbooks/files/homebrew/Brewfile-mac
+
+_path (for WSL):_ ansible/playbooks/files/homebrew/Brewfile-wsl
+
+```sh
+brew bundle dump --describe
+```
+
+### VS Code extensions
+
+```sh
+code --list-extensions | awk '{ print "vscode \""$1"\"" }'
+```
+
+```ps1
+PS > code --list-extensions `
+  | ForEach-Object -Process { Write-Output "vscode ""$_""" }
 ```
 
 ### scoop export
@@ -53,29 +76,6 @@ PS > scoop export `
     }
 ```
 
-### VS Code extensions
-
-```sh
-$ code --list-extensions \
-  | awk 'BEGIN { print "---"; print "vscode_extensions:" }
-    { print "  - "$1 }'
-```
-
-```ps1
-PS > code --list-extensions `
-  | ForEach-Object `
-    -Begin { Write-Output "---" "vscode_extensions:" } `
-    -Process { Write-Output "  - $_" }
-```
-
-### fishfile
-
-_path:_ ansible/playbooks/files/fisher-my-setup/
-
-```sh
-cat ~/.config/fish/fishfile
-```
-
 ### Visual Studio
 
 _path:_ ansible/playbooks/files/visual-studio/.vsconfig
@@ -85,11 +85,5 @@ PS > & "C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer\\setup.exe" 
 ```
 
 ## Copyrights
-
-### ansible/roles/files/mas.sh
-
-@yumiduka - [mas-cli を Ansible で管理する - Qiita](https://qiita.com/yumiduka/items/9c095b9f98be96b8763c)
-
-### その他
 
 [LICENSE](./LICENSE)
