@@ -1,17 +1,17 @@
 ---
-- include_tasks: includes/set_brew_prefix.yml
+- import_tasks: includes/set_brew_prefix.yml
 
 - name: exec includes/brew_tasks.yml (for MacOSX)
   block:
-    - include_tasks: includes/brew_tasks.yml
+    - import_tasks: includes/brew_tasks.yml
       vars:
         brew_distr: MacOSX
   ignore_errors: true
-  when: ansible_distribution == "MacOSX"
+  when: type_brew.rc == 0 and ansible_distribution == "MacOSX"
 
 - name: exec includes/brew_tasks.yml (for other)
   block:
-    - include_tasks: includes/brew_tasks.yml
+    - import_tasks: includes/brew_tasks.yml
       vars:
         brew_distr: other
   # environmentへのomitの指定がうまくいかないので ansible_distribution で場合分け
@@ -23,4 +23,4 @@
     CPLUS_INCLUDE_PATH: '{{ brew_prefix }}/include:{{ ansible_env.CPLUS_INCLUDE_PATH | default("") }}'
     OBJC_INCLUDE_PATH: '{{ brew_prefix }}/include:{{ ansible_env.OBJC_INCLUDE_PATH | default("") }}'
   ignore_errors: true
-  when: ansible_distribution != "MacOSX"
+  when: type_brew.rc == 0 and ansible_distribution != "MacOSX"
