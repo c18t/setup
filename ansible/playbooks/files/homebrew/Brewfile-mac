@@ -83,6 +83,8 @@ brew "sqlite" # for ansible
 brew "terminal-notifier"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
+# Homebrew, but with Docker images
+brew "whalebrew"
 # Cross-platform C++ GUI toolkit
 brew "wxwidgets" # for asdf-erlang
 # General-purpose lossless data-compression library

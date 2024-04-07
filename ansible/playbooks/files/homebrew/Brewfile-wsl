@@ -27,3 +27,5 @@ brew "molecule"
 brew "neofetch"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
+# Homebrew, but with Docker images
+brew "whalebrew"
