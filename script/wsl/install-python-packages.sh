@@ -35,7 +35,7 @@ PYWINRM=$?
 # install python pacakges for ansible
 if [ $PYWINRM -ne 0 ]; then
     echo install python pacakges for ansible ...
-    pip3 install --break-system-package pywinrm 
+    pip3 install --break-system-packages pywinrm
     result=$?
     if [ $result -eq 0 ]; then
         echo ... done!
