@@ -8,12 +8,12 @@ if [ -n "$VERBOSE" ]; then
 fi
 
 echo -n "check python3 ..." >&3
-type pip3 >/dev/null 2>&1
-PIP3=$?
-([ $PIP3 -eq 0 ] && echo "ok." || echo "no.") >&3
+brew info python | grep -q 'Not installed' >/dev/null 2>&1
+NOPYTHON3=$?
+([ $NOPYTHON3 -ne 0 ] && echo "ok." || echo "no.") >&3
 
 # install python3
-if [ $PIP3 -ne 0 ]; then
+if [ $NOPYTHON3 -eq 0 ]; then
     echo install python3 ...
     brew install python
     result=$?
@@ -35,7 +35,7 @@ PYWINRM=$?
 # install python pacakges for ansible
 if [ $PYWINRM -ne 0 ]; then
     echo install python pacakges for ansible ...
-    pip3 install --break-system-package pywinrm 
+    pip3 install --break-system-packages pywinrm
     result=$?
     if [ $result -eq 0 ]; then
         echo ... done!

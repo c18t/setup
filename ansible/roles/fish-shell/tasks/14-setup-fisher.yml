@@ -12,6 +12,8 @@
 
 - name: check cmd.exe (for WSL)
   shell: type cmd.exe
+  args:
+    executable: '{{ fish_path }}'
   register: type_cmd
   failed_when: type_cmd.rc not in [0, 1]
   changed_when: false

@@ -2,11 +2,16 @@
 
 set NEW_SHELL [lindex $argv 0]
 set PW [lindex $argv 1]
+set USER [lindex $argv 2]
 
-spawn chsh -s ${NEW_SHELL}
-expect {
-  -glob "Password*:*" {
-    send -- "${PW}\n"
+if { $USER != "" } {
+  spawn chsh -s "${NEW_SHELL}" "${USER}"
+} else {
+  spawn chsh -s "${NEW_SHELL}"
+  expect {
+    -glob "Password*:*" {
+      send -- "${PW}\n"
+    }
   }
 }
 

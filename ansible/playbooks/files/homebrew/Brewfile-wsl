@@ -1,6 +1,6 @@
 tap "homebrew/bundle"
 # Interpreted, interactive, object-oriented programming language
-brew "python@3.12"
+brew "python"
 # Automate deployment, configuration, and upgrading
 brew "ansible"
 # Text-based window manager and terminal multiplexer

@@ -1,0 +1,9 @@
+[tools]
+usage = "latest"
+go = "latest"
+node = "latest"
+ghq = "latest"
+neovim = "latest"
+
+[settings]
+experimental = true

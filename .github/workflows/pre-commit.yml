@@ -1,0 +1,21 @@
+---
+name: pre-commit
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+      - name: setup python for pre-commit action
+        uses: actions/setup-python@v5
+      - name: install linter with mise
+        uses: jdx/mise-action@v2
+        with:
+          experimental: true
+      - name: check
+        uses: pre-commit/action@v3.0.1
