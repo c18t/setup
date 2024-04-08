@@ -1,5 +1,8 @@
 # setup
 
+[![setup](https://github.com/c18t/setup/actions/workflows/setup.yml/badge.svg)](https://github.com/c18t/setup/actions/workflows/setup.yml)
+[![pre-commit](https://github.com/c18t/setup/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/c18t/setup/actions/workflows/pre-commit.yml)
+
 環境のセットアップスクリプト
 
 ## How to use
