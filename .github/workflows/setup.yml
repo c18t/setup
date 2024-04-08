@@ -1,0 +1,46 @@
+---
+name: setup
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 1 * *'
+
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/**'
+      - 'ansible/playbooks/**'
+      - 'ansible/roles/**'
+      - 'script/**'
+      - 'setup-*.sh'
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/**'
+      - 'ansible/playbooks/**'
+      - 'ansible/roles/**'
+      - 'script/**'
+      - 'setup-*.sh'
+
+jobs:
+  setup-iapetus:
+    runs-on: macos-latest
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+      - name: run setup script
+        run: ./setup-iapetus.sh -e my_password= -e dotfiles="$(pwd)/ansible/playbooks/files/tests/dotfiles"
+
+  setup-khronos-wsl:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+      - name: run setup script
+        run: ./setup-khronos.sh -l local -e win_username= -e win_password= -e my_password= -e dotfiles="$(pwd)/ansible/playbooks/files/tests/dotfiles"

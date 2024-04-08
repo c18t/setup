@@ -35,6 +35,12 @@ PS > .\setup-windows.ps1 setup-khronos.sh -K
 
 ## Update config
 
+### setup project
+
+```sh
+mise run setup
+```
+
 ### fishfile
 
 _path:_ ansible/playbooks/files/fisher-my-setup/

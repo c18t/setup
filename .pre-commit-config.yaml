@@ -15,3 +15,8 @@ repos:
     hooks:
       - id: shellcheck
       - id: yamllint
+
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.6.27
+    hooks:
+      - id: actionlint-system
