@@ -31,7 +31,7 @@
     - import_role:
         name: homebrew
       vars:
-        homebrew_brewfile: '{{ playbook_dir }}/files/homebrew/Brewfile-mac'
+        homebrew_brewfile: '{{ my_homebrew_brewfile | default(playbook_dir + "/files/homebrew/Brewfile-mac") }}'
     - import_role:
         name: iterm2
     - import_role:

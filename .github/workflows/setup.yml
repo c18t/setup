@@ -34,7 +34,7 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v4
       - name: run setup script
-        run: VERBOSE=1 ./setup-iapetus.sh -vvv -e my_password= -e dotfiles="$(pwd)/ansible/playbooks/files/tests/dotfiles"
+        run: VERBOSE=1 ./setup-iapetus.sh -vvv -e my_password= -e my_homebrew_brewfile="$(pwd)/ansible/playbooks/files/tests/homebrew/Brewfile-mac-test" -e dotfiles="$(pwd)/ansible/playbooks/files/tests/dotfiles"
 
   setup-khronos-wsl:
     runs-on: ubuntu-latest
