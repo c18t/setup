@@ -15,7 +15,8 @@
       check_mode: false
 
     - name: change login shell to fish
-      script: common/chsh.exp "{{ fish_path }}" "{{ my_password }}"
+      script: common/chsh.exp "{{ fish_path }}" "{{ my_password }}" "{{ user }}"
+      become: true
       args:
         executable: '{{ which_expect.stdout }}'
 
