@@ -1,0 +1,6 @@
+---
+- name: WSL role tasks
+  tags: wsl
+  block:
+    - include_tasks: 10-install-fonts.yaml
+    - include_tasks: 11-make-fstab.yaml

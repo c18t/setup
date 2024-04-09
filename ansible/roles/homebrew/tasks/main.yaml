@@ -1,0 +1,7 @@
+---
+- name: homebrew role tasks
+  tags: homebrew
+  block:
+    # - import_tasks: 00-check-precondition.yaml
+    - import_tasks: 10-install-homebrew.yaml
+    - import_tasks: 11-install-and-upgrade-applications.yaml

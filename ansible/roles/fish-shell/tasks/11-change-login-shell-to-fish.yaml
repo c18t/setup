@@ -1,0 +1,8 @@
+---
+- include_tasks: includes/set_fish_path.yaml
+
+- include_tasks: includes/change_login_shell_to_fish_for_MacOSX.yaml
+  when: ansible_distribution == "MacOSX"
+
+- include_tasks: includes/change_login_shell_to_fish_for_other.yaml
+  when: ansible_distribution != "MacOSX"

@@ -9,4 +9,4 @@
     src: '/mnt/g/マイドライブ'
     dest: '{{ home }}/GoogleDrive'
 
-- import_tasks: 11-make-symbolic-links.yml
+- import_tasks: 11-make-symbolic-links.yaml

@@ -1,6 +1,0 @@
----
-- name: home role tasks for WSL
-  tags: home
-  block:
-    - include_tasks: includes/10-make-directories.yml
-    - include_tasks: includes/11-make-symbolic-links-windows.wsl.yml

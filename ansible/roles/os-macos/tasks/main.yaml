@@ -1,0 +1,6 @@
+---
+- name: os-macos role tasks
+  tags: os-macos
+  block:
+    - include_tasks: 10-dock.yaml
+    - include_tasks: 11-finder.yaml

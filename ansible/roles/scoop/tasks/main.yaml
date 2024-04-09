@@ -1,0 +1,8 @@
+---
+- name: scoop role tasks
+  tags: scoop
+  block:
+    - include_tasks: 10-install-scoop.yaml
+    - include_tasks: 11-add-backets.yaml
+    - include_tasks: 12-install-packages.yaml
+    - include_tasks: 13-configure-scoop-packages.yaml

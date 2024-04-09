@@ -1,0 +1,8 @@
+---
+- name: apt role tasks
+  tags: apt
+  block:
+    - include_tasks: 00-check-precondition.yaml
+    - include_tasks: 10-add-repositories.yaml
+    - include_tasks: 11-update-and-upgrade.yaml
+    - include_tasks: 12-install-packages.yaml

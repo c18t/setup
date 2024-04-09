@@ -31,8 +31,8 @@
   pre_tasks:
     - tags: always
       block:
-        - include_vars: common.yml
-        - include_vars: vscode_extensions.yml
+        - include_vars: common.yaml
+        - include_vars: vscode_extensions.yaml
   tasks:
     - import_role:
         name: os-windows
@@ -162,9 +162,9 @@
   pre_tasks:
     - tags: always
       block:
-        - include_vars: common.yml
+        - include_vars: common.yaml
   handlers:
-    - import_tasks: handlers/handlers_wsl.yml
+    - import_tasks: handlers/handlers_wsl.yaml
   tasks:
     - import_role:
         name: wsl

@@ -1,3 +1,0 @@
----
-- include_tasks: includes/install-package.yml
-  loop: '{{ winget_packages }}'

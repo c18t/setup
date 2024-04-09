@@ -1,0 +1,7 @@
+---
+# tasks file for mise
+- name: mise role tasks
+  tags: mise
+  block:
+    - import_tasks: 01-gather-facts.yaml
+    - import_tasks: 10-setup-mise.yaml

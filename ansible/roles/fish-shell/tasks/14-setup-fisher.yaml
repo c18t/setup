@@ -1,5 +1,5 @@
 ---
-- include_tasks: includes/set_fish_path.yml
+- include_tasks: includes/set_fish_path.yaml
 
 - name: check fisher
   shell: type fisher

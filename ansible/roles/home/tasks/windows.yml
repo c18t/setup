@@ -1,6 +1,0 @@
----
-- name: home role tasks for Windows
-  tags: home
-  block:
-    - include_tasks: includes/10-make-directories-windows.yml
-    - include_tasks: includes/11-make-symbolic-links-windows.yml

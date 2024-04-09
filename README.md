@@ -1,7 +1,7 @@
 # setup
 
-[![setup](https://github.com/c18t/setup/actions/workflows/setup.yml/badge.svg)](https://github.com/c18t/setup/actions/workflows/setup.yml)
-[![pre-commit](https://github.com/c18t/setup/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/c18t/setup/actions/workflows/pre-commit.yml)
+[![setup](https://github.com/c18t/setup/actions/workflows/setup.yaml/badge.svg)](https://github.com/c18t/setup/actions/workflows/setup.yaml)
+[![pre-commit](https://github.com/c18t/setup/actions/workflows/pre-commit.yaml/badge.svg)](https://github.com/c18t/setup/actions/workflows/pre-commit.yaml)
 
 環境のセットアップスクリプト
 

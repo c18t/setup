@@ -1,0 +1,8 @@
+---
+- name: winget role tasks
+  tags: winget
+  block:
+    - include_tasks: 00-check-precondition.yaml
+    - include_tasks: 10-upgrade-packages.yaml
+    - include_tasks: 11-install-packages.yaml
+    - include_tasks: 12-configure-winget-packages.yaml
