@@ -20,9 +20,13 @@
       args:
         executable: '{{ which_expect.stdout }}'
 
+    - shell: cat /etc/passwd | grep -e '^{{ user }}:'
+      register: recheck_fish_is_login_shell
+      changed_when: false
+      check_mode: false
+
     - name: recheck user's login shell
-      shell: cat /etc/passwd | grep -q '{{ home }}:{{ fish_path }}'
-      register: check_fish_is_login_shell
+      shell: echo {{ recheck_fish_is_login_shell.stdout }} | grep -q '{{ home }}:{{ fish_path }}'
       changed_when: false
       check_mode: false
   when: check_fish_is_login_shell.rc != 0

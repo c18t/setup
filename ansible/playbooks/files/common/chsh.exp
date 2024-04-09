@@ -8,14 +8,16 @@ if { $USER != "" } {
   spawn chsh -s "${NEW_SHELL}" "${USER}"
 } else {
   spawn chsh -s "${NEW_SHELL}"
-  expect {
-    -glob "Password*:*" {
-      send -- "${PW}\n"
-    }
-  }
 }
 
 expect {
+  -glob "Password*:*" {
+    send -- "${PW}\n"
+    exp_continue
+  }
+  -glob "chsh:*" {
+    exit 1
+  }
   eof {
     exit 0
   }

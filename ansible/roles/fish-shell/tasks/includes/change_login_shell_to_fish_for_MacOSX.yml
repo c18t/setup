@@ -25,12 +25,7 @@
       check_mode: false
 
     - name: recheck user's login shell
-      shell: dscl . -read '/Users/{{ user }}' UserShell | grep -q '{{ fish_path }}'
+      shell: echo {{ recheck_fish_is_login_shell.stdout }} | grep -q '{{ fish_path }}'
       changed_when: false
       check_mode: false
-  # GitHub Actionsだとログインシェルの変更がうまくいかないのでスキップ
-  when: >
-    (ansible_env.GITHUB_ACTIONS is not defined
-      or ansible_env.GITHUB_ACTIONS != 'true')
-      and
-    check_fish_is_login_shell.rc != 0
+  when: check_fish_is_login_shell.rc != 0
