@@ -1,5 +1,0 @@
----
-- name: assert fish_shell_config
-  assert:
-    that: fish_shell_config is string and fish_shell_config != ''
-    quiet: true

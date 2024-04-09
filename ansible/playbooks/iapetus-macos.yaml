@@ -37,7 +37,7 @@
     - import_role:
         name: nvim
     - import_role:
-        name: fish-shell
+        name: fish
       vars:
         fish_shell_config: config-mac.fish
     - import_role:

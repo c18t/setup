@@ -1,8 +1,7 @@
 ---
-- name: fish-shell role tasks
-  tags: fish-shell
+- name: fish role tasks
+  tags: fish
   block:
-    - include_tasks: 00-check-precondition.yaml
     - include_tasks: 10-add-fish-to-shells.yaml
     - include_tasks: 11-change-login-shell-to-fish.yaml
     - include_tasks: 12-setup-resources.yaml

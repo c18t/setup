@@ -1,0 +1,20 @@
+---
+argument_specs:
+  main:
+    short_description: default entry point
+    options:
+      apt_keys:
+        type: list
+        element: str
+        required: true
+        description: 'List of apt key url.'
+      apt_repositories:
+        type: list
+        element: obj
+        required: true
+        description: 'List of apt repositories.'
+      apt_packages:
+        type: list
+        element: str
+        required: true
+        description: 'List of packages.'
