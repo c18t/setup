@@ -17,5 +17,7 @@ jobs:
         uses: jdx/mise-action@v2
         with:
           experimental: true
-      - name: check
+      - name: run pre-commit
         uses: pre-commit/action@v3.0.1
+      - name: run ansible-lint
+        uses: ansible/ansible-lint@v24.2.2
