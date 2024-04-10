@@ -1,6 +1,6 @@
 ---
 - name: update Homebrew and upgrade formulae (for {{ brew_distr }})
-  homebrew:
+  community.general.homebrew:
     update_homebrew: true
     upgrade_all: true
   # GitHub Actionsで止まるようになってしまったのでスキップ

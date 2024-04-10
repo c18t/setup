@@ -4,6 +4,8 @@ tap "homebrew/cask-fonts" # for font installation
 tap "homebrew/cask-versions" # for beta fomulae
 # Automate deployment, configuration, and upgrading
 brew "ansible"
+# Checks ansible playbooks for practices and behaviour
+brew "ansible-lint"
 # Automatic configure script builder
 brew "autoconf" # for asdf-erlang, asdf-php
 # Tool for generating GNU Standards-compliant Makefiles

@@ -1,0 +1,63 @@
+---
+# .ansible-lint
+
+profile: null # min, basic, moderate,safety, shared, production
+
+# exclude_paths included in this file are parsed relative to this file's location
+# and not relative to the CWD of execution. CLI arguments passed to the --exclude
+# option are parsed relative to the CWD of execution.
+exclude_paths:
+  # うまくいかないので無視
+  - ansible/roles/homebrew/tasks/includes/brew_tasks.yaml
+
+use_default_rules: true
+# Load custom rules from this specific folder
+# rulesdir:
+#   - ./rule/directory/
+
+# Ansible-lint does not automatically load rules that have the 'opt-in' tag.
+# You must enable opt-in rules by listing each rule 'id' below.
+enable_list:
+  - args
+  - empty-string-compare # opt-in
+  - no-log-password # opt-in
+  - no-same-owner # opt-in
+  - name[prefix] # opt-in
+  # add yaml here if you want to avoid ignoring yaml checks when yamllint
+  # library is missing. Normally its absence just skips using that rule.
+  - yaml
+# Report only a subset of tags and fully ignore any others
+# tags:
+#   - jinja[spacing]
+
+# Ansible-lint does not fail on warnings from the rules or tags listed below
+warn_list:
+  - skip_this_tag
+  - experimental # experimental is included in the implicit list
+  # - role-name
+  # - yaml[document-start]  # you can also use sub-rule matches
+
+# Some rules can transform files to fix (or make it easier to fix) identified
+# errors. `ansible-lint --fix` will reformat YAML files and run these transforms.
+# By default it will run all transforms (effectively `write_list: ["all"]`).
+# You can disable running transforms by setting `write_list: ["none"]`.
+# Or only enable a subset of rule transforms by listing rules/tags here.
+# write_list:
+#   - all
+
+# Offline mode disables installation of requirements.yml and schema refreshing
+offline: false
+
+# Uncomment to enforce action validation with tasks, usually is not
+# needed as Ansible syntax check also covers it.
+# skip_action_validation: false
+
+# List of additional kind:pattern to be added at the top of the default
+# match list, first match determines the file kind.
+#kinds:
+  # - playbook: "**/examples/*.{yml,yaml}"
+  # - galaxy: "**/folder/galaxy.yml"
+  # - tasks: "**/tasks/*.yml"
+  # - vars: "**/vars/*.yml"
+  # - meta: "**/meta/main.yml"
+  # - yaml: "**/*.yaml-too"
