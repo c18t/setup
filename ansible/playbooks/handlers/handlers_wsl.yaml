@@ -1,4 +1,5 @@
 ---
 # update global path
-- name: update_global_path
-  debug: msg="I have nothing to do."
+- name: UpdateGlobalPath
+  ansible.builtin.debug:
+    msg: I have nothing to do.

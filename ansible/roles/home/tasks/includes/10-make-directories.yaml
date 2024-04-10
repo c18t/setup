@@ -1,16 +1,18 @@
 ---
-- name: make standard directories
-  file:
+- name: 10-make-directories | Make standard directories
+  ansible.builtin.file:
     state: directory
     follow: true
     path: '{{ home }}/{{ item }}'
+    mode: 0755
   loop: '{{ home_standard_directories }}'
 
-- name: make config directories
-  file:
+- name: 10-make-directories | Make config directories
+  ansible.builtin.file:
     state: directory
     follow: true
     path: '{{ item }}'
+    mode: 0755
   loop:
     # XDG
     - '{{ xdg_config_home }}'

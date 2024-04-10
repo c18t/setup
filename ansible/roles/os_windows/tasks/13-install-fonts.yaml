@@ -1,6 +1,6 @@
 ---
-- name: download Ricty Diminished
-  win_get_url:
+- name: 13-install-fonts | Download Ricty Diminished
+  ansible.windows.win_get_url:
     url: https://rictyfonts.github.io/files/ricty_diminished-4.1.1.tar.gz
     dest: '{{ ansible_env.TEMP }}\ricty_diminished-4.1.1.tar.gz'
     force: false
@@ -14,21 +14,23 @@
 #     state: present
 #     allow_clobber: true
 
-- name: install PSCX
-  win_shell: Install-Package pscx -Force -AllowClobber
+- name: 13-install-fonts | Install PSCX
+  ansible.windows.win_shell: Install-Package pscx -Force -AllowClobber
   register: install_pscx
 
-- name: unzip Ricty Diminished
-  win_unzip:
+- name: 13-install-fonts | Unzip Ricty Diminished
+  community.windows.win_unzip:
     src: '{{ download_ricty_diminished.dest }}'
     dest: '{{ download_ricty_diminished.dest }}.unzip'
     recurse: true
     creates: '{{ download_ricty_diminished.dest }}.unzip'
 
-- name: install Ricty Diminished
-  win_shell: |-
+- name: 13-install-fonts | Install Ricty Diminished
+  ansible.windows.win_shell: |-
     $ShellAppFontNamespace = 0x14; `
-    $Fonts = Get-ChildItem -Path "{{ download_ricty_diminished.dest }}.unzip\*" -Include ('*.fon','*.otf','*.ttc','*.ttf'); `
+    $Fonts = Get-ChildItem `
+      -Path "{{ download_ricty_diminished.dest }}.unzip\*" `
+      -Include ('*.fon','*.otf','*.ttc','*.ttf'); `
     $ShellApp = New-Object -ComObject Shell.Application; `
     $FontsFolder = $ShellApp.NameSpace($ShellAppFontNamespace); `
     foreach ($Font in $Fonts) { `

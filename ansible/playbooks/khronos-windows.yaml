@@ -1,5 +1,5 @@
 ---
-- name: Windows
+- name: Setup Khoronos (Windows)
   hosts: khronos
   vars_prompt:
     - name: win_username
@@ -29,14 +29,17 @@
     my_xdg_data_home: C:\Users\{{ user }}\AppData\Local
     my_google_drive: G:\マイドライブ
   pre_tasks:
-    - tags: always
+    - name: Run always
+      tags: always
       block:
-        - include_vars: common.yaml
-        - include_vars: vscode_extensions.yaml
+        - name: Include common vars
+          ansible.builtin.include_vars: common.yaml
   tasks:
-    - import_role:
-        name: os-windows
-    - import_role:
+    - name: Import os_windows
+      ansible.builtin.import_role:
+        name: os_windows
+    - name: Import winget
+      ansible.builtin.import_role:
         name: winget
       vars:
         winget_packages:
@@ -54,15 +57,16 @@
           - { name: Google.Chrome }
           - { name: Google.Chrome.Dev }
           - { name: Google.Drive }
-          # - { name: Google.JapaneseIME, become: false, force: true } # ハッシュが一致しない
+          # ハッシュが一致しない
+          # - { name: Google.JapaneseIME, become: false, force: true }
           - { name: Microsoft.PowerShell }
           - { name: Microsoft.SQLServerManagementStudio }
           - { name: Microsoft.VisualStudio.2022.Community }
           - { name: PeterBienstman.Mnemosyne, list_id: Mnemosyne_is1 }
-          # - { name: ShiningLight.OpenSSL.Light } # 登録情報古すぎてリンク切れ
           - { name: UnityTechnologies.UnityHub }
           - { name: Valve.Steam }
-    - import_role:
+    - name: Import home
+      ansible.builtin.import_role:
         name: home
         tasks_from: windows
       vars:
@@ -70,9 +74,10 @@
           - Applications
           - Archives
           - Projects
-        home_ssh_config: '{{ dotfiles }}/ssh/config-prv'
-        home_git_config: '{{ dotfiles }}/git/.gitconfig-prv-win'
-    - import_role:
+        home_my_ssh_config: '{{ dotfiles }}/ssh/config-prv'
+        home_my_git_config: '{{ dotfiles }}/git/.gitconfig-prv-win'
+    - name: Import scoop
+      ansible.builtin.import_role:
         name: scoop
       vars:
         scoop_buckets:
@@ -143,10 +148,8 @@
           - { name: winscp }
           - { name: xmind8 }
           - { name: youtube-dl }
-    # - import_role:
-    #     name: software-windows # 止まるのでコメントアウト
 
-- name: WSL
+- name: Setup Khronos (WSL)
   hosts: local
   vars_prompt:
     - name: my_password
@@ -160,24 +163,30 @@
     my_visual: nvim
     my_temporary_home: /tmp
   pre_tasks:
-    - tags: always
+    - name: Run always
+      tags: always
       block:
-        - include_vars: common.yaml
+        - name: Include common vars
+          ansible.builtin.include_vars: common.yaml
   handlers:
-    - import_tasks: handlers/handlers_wsl.yaml
+    - name: Include handlers
+      ansible.builtin.import_tasks: handlers/handlers_wsl.yaml
   tasks:
-    - import_role:
+    - name: Import wsl
+      ansible.builtin.import_role:
         name: wsl
-    - import_role:
+    - name: Import home
+      ansible.builtin.import_role:
         name: home
         tasks_from: windows.wsl
       vars:
         home_host_home: '{{ "/mnt/c/Users/" + (home | basename) }}'
         home_standard_directories:
           - Projects
-        home_ssh_config: '{{ dotfiles }}/ssh/config-prv'
-        home_git_config: '{{ dotfiles }}/git/.gitconfig-prv'
-    - import_role:
+        home_my_ssh_config: '{{ dotfiles }}/ssh/config-prv'
+        home_my_git_config: '{{ dotfiles }}/git/.gitconfig-prv'
+    - name: Import apt
+      ansible.builtin.import_role:
         name: apt
       vars:
         apt_keys:
@@ -202,23 +211,34 @@
           - m4 # for asdf-erlang
           - unixodbc-dev # for asdf-erlang
           - xsltproc # for asdf-erlang
-    - import_role:
+    - name: Import homebrew
+      ansible.builtin.import_role:
         name: homebrew
       vars:
         homebrew_brewfile: '{{ playbook_dir }}/files/homebrew/Brewfile-wsl'
-    - import_role:
+    - name: Import nvim
+      ansible.builtin.import_role:
         name: nvim
-    - import_role:
+    - name: Import fish
+      ansible.builtin.import_role:
         name: fish
       vars:
         fish_shell_config: config-wsl.fish
-    - import_role:
+    - name: Import mise
+      ansible.builtin.import_role:
         name: mise
       vars:
-        mise_config: '{{ dotfiles }}/mise/config-wsl.toml'
-        mise_default_go_packages: '{{ dotfiles }}/mise/.default-go-packages'
-        mise_default_python_packages: '{{ dotfiles }}/mise/.default-python-packages'
-        mise_default_npm_packages: '{{ dotfiles }}/mise/.default-npm-packages'
-        mise_default_gems: '{{ dotfiles }}/mise/.default-gems'
-        mise_default_mix_commands: '{{ dotfiles }}/mise/.default-mix-commands'
-        mise_default_perl_modules: '{{ dotfiles }}/mise/.default-perl-modules'
+        mise_config:
+          '{{ dotfiles }}/mise/config-wsl.toml'
+        mise_default_go_packages:
+          '{{ dotfiles }}/mise/.default-go-packages'
+        mise_default_python_packages:
+          '{{ dotfiles }}/mise/.default-python-packages'
+        mise_default_npm_packages:
+          '{{ dotfiles }}/mise/.default-npm-packages'
+        mise_default_gems:
+          '{{ dotfiles }}/mise/.default-gems'
+        mise_default_mix_commands:
+          '{{ dotfiles }}/mise/.default-mix-commands'
+        mise_default_perl_modules:
+          '{{ dotfiles }}/mise/.default-perl-modules'

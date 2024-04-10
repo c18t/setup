@@ -1,4 +1,4 @@
 ---
 # fish config
 # . シンボリックリンク作成時のリンク先ファイルパス
-fish_shell_config: null
+fish_shell_config: config.fish

@@ -1,22 +1,23 @@
 ---
-- include_tasks: includes/set_fish_path.yaml
+- name: 10-add-fish-to-shells | Get fish path
+  ansible.builtin.include_tasks: includes/set_fish_path.yaml
 
-- name: check fish is enabled as login shells
-  shell: cat /etc/shells | grep -q '{{ fish_path }}'
+- name: 10-add-fish-to-shells | Check fish is enabled as login shells
+  ansible.builtin.shell: cat /etc/shells | grep -q '{{ fish_path }}'
   register: fish_in_shells
   failed_when: fish_in_shells.rc not in [0, 1]
   changed_when: false
   check_mode: false
 
-- name: add fish to shells
-  block:
-    - name: add fish to shells
-      become: true
-      shell: echo {{ fish_path }} | tee -a /etc/shells
-      register: add_fish_in_shells
-
-    - name: recheck fish is enabled as login shells
-      shell: cat /etc/shells | grep -q '{{ fish_path }}'
-      changed_when: false
-      check_mode: false
+- name: 10-add-fish-to-shells | Add fish to shells
   when: fish_in_shells.rc != 0
+  block:
+    - name: 10-add-fish-to-shells | Add fish to shells
+      become: true
+      ansible.builtin.shell: echo {{ fish_path }} | tee -a /etc/shells
+      register: add_fish_in_shells
+      changed_when: add_fish_in_shells.rc == 0
+
+    - name: 10-add-fish-to-shells | Recheck fish is enabled as login shells
+      ansible.builtin.shell: cat /etc/shells | grep -q '{{ fish_path }}'
+      changed_when: false

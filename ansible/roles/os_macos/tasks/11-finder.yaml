@@ -1,0 +1,8 @@
+---
+- name: 11-finder | Finder settings AppleShowAllFiles
+  community.general.osx_defaults:
+    domain: com.apple.finder
+    key: AppleShowAllFiles
+    type: string
+    value: 'TRUE'
+  notify: RestartFinder

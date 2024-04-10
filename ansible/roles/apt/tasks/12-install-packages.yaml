@@ -1,6 +1,6 @@
 ---
-- name: install packages with apt
+- name: 12-install-packages | Install packages with apt
   become: true
-  apt:
+  ansible.builtin.apt:
     name: '{{ item }}'
   loop: '{{ apt_packages }}'

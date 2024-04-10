@@ -1,8 +1,12 @@
 ---
-- name: scoop role tasks
+- name: Scoop role tasks
   tags: scoop
   block:
-    - include_tasks: 10-install-scoop.yaml
-    - include_tasks: 11-add-backets.yaml
-    - include_tasks: 12-install-packages.yaml
-    - include_tasks: 13-configure-scoop-packages.yaml
+    - name: Install scoop
+      ansible.builtin.include_tasks: 10-install-scoop.yaml
+    - name: Add scoop buckets
+      ansible.builtin.include_tasks: 11-add-backets.yaml
+    - name: Install scoop packages
+      ansible.builtin.include_tasks: 12-install-packages.yaml
+    - name: Configure scoop packages
+      ansible.builtin.include_tasks: 13-configure-scoop-packages.yaml

@@ -1,5 +1,5 @@
 ---
 argument_specs:
   main:
-    short_description: main entry point
+    short_description: default entry point
     options: {}

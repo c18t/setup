@@ -10,12 +10,12 @@ argument_specs:
         default: []
         description: 'List of directory names to be created.'
 
-      home_ssh_config:
+      home_my_ssh_config:
         type: path
         required: true
         description: 'Source path of ~/.ssh/config to be linked.'
 
-      home_git_config:
+      home_my_git_config:
         type: path
         required: true
         description: 'Source path of ~/.gitconfig to be linked.'

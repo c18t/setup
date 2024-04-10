@@ -1,7 +1,10 @@
 ---
-- name: apt role tasks
+- name: Apt role tasks
   tags: apt
   block:
-    - include_tasks: 10-add-repositories.yaml
-    - include_tasks: 11-update-and-upgrade.yaml
-    - include_tasks: 12-install-packages.yaml
+    - name: Add apt repository
+      ansible.builtin.include_tasks: 10-add-repositories.yaml
+    - name: Update and upgrade apt packages
+      ansible.builtin.include_tasks: 11-update-and-upgrade.yaml
+    - name: Install apt packages
+      ansible.builtin.include_tasks: 12-install-packages.yaml

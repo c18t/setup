@@ -24,7 +24,9 @@ argument_specs:
             type: str
             required: false
             choices: ['32bit', '64bit']
-            description: 'Force Scoop to install the package of a specific process architecture.'
+            description: >-
+              Force Scoop to install the package of a specific process
+              architecture.
           global:
             type: bool
             required: false

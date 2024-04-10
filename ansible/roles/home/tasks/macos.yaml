@@ -1,6 +1,8 @@
 ---
-- name: home role tasks for macOS
+- name: macos | Home role tasks for macOS
   tags: home
   block:
-    - include_tasks: includes/10-make-directories.yaml
-    - include_tasks: includes/11-make-symbolic-links.yaml
+    - name: macos | Make directories for macOS
+      ansible.builtin.import_tasks: includes/10-make-directories.yaml
+    - name: macos | Make symbolic links for macOS
+      ansible.builtin.import_tasks: includes/11-make-symbolic-links.yaml

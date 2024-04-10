@@ -1,6 +1,6 @@
 ---
-- name: set environment variables
-  win_environment:
+- name: 11-win-environment | Set environment variables
+  ansible.windows.win_environment:
     level: '{{ item.level }}'
     name: '{{ item.name }}'
     value: '{{ item.value }}'

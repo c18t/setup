@@ -1,0 +1,34 @@
+---
+- name: change_login_shell_macos | Check user's login shell (for macOSX)
+  ansible.builtin.shell:
+    dscl . -read '/Users/{{ user }}' UserShell | grep -q '{{ fish_path }}'
+  register: check_fish_is_login_shell
+  failed_when: check_fish_is_login_shell.rc not in [0, 1]
+  changed_when: false
+  check_mode: false
+
+- name: change_login_shell_macos | Change login shell to fish
+  when: check_fish_is_login_shell.rc != 0
+  block:
+    - name: change_login_shell_macos | Find expect
+      ansible.builtin.command: which expect
+      register: which_expect
+      changed_when: false
+
+    - name: change_login_shell_macos | Change login shell to fish
+      ansible.builtin.script:
+        common/chsh.exp "{{ fish_path }}" "{{ my_password }}" ""
+      args:
+        executable: '{{ which_expect.stdout }}'
+
+    - name: change_login_shell_macos | Read current UserShell
+      ansible.builtin.command: dscl . -read '/Users/{{ user }}' UserShell
+      register: recheck_fish_is_login_shell
+      changed_when: false
+      check_mode: false
+
+    - name: change_login_shell_macos | Recheck user's login shell
+      ansible.builtin.shell: >-
+        echo {{ recheck_fish_is_login_shell.stdout }}
+        | grep -q '{{ fish_path }}'
+      changed_when: false

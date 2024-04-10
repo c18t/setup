@@ -1,0 +1,6 @@
+---
+- name: Windows OS tests
+  hosts: localhost
+  remote_user: root
+  roles:
+    - os_windows

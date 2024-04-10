@@ -1,14 +1,14 @@
 ---
-- name: check imgcat
-  shell: type imgcat
-  register: type_imgcat
-  failed_when: type_imgcat.rc not in [0, 1, 126, 127]
+- name: 10-install-imgcat | Check imgcat
+  ansible.builtin.command: which imgcat
+  register: which_imgcat
+  failed_when: which_imgcat.rc not in [0, 1, 126, 127]
   changed_when: false
   check_mode: false
 
-- name: install imgcat
-  get_url:
+- name: 10-install-imgcat | Install imgcat
+  ansible.builtin.get_url:
     url: https://iterm2.com/utilities/imgcat
     dest: /usr/local/bin/imgcat
     mode: 0755
-  when: type_imgcat.rc != 0
+  when: which_imgcat.rc != 0

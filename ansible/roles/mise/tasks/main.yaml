@@ -1,7 +1,9 @@
 ---
 # tasks file for mise
-- name: mise role tasks
+- name: Mise role tasks
   tags: mise
   block:
-    - import_tasks: 01-gather-facts.yaml
-    - import_tasks: 10-setup-mise.yaml
+    - name: Gather facts
+      ansible.builtin.import_tasks: 01-gather-facts.yaml
+    - name: Setup mise
+      ansible.builtin.import_tasks: 10-setup-mise.yaml

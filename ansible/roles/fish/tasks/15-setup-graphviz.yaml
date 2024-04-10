@@ -1,13 +1,15 @@
 ---
-- name: find graphviz dot
-  shell: which dot
+- name: 15-setup-graphviz | Find graphviz dot
+  ansible.builtin.shell: which dot
+  args:
+    executable: '{{ fish_path }}'
   register: which_dot
   changed_when: false
   failed_when: false
   check_mode: false
 
-- name: check GRAPHVIZ_DOT
-  shell: echo $GRAPHVIZ_DOT
+- name: 15-setup-graphviz | Check GRAPHVIZ_DOT
+  ansible.builtin.shell: echo $GRAPHVIZ_DOT
   args:
     executable: '{{ fish_path }}'
   register: echo_dot
@@ -15,8 +17,9 @@
   failed_when: false
   check_mode: false
 
-- name: set environment variables GRAPHVIZ_DOT
-  shell: set -Ux GRAPHVIZ_DOT {{ which_dot.stdout }}
+- name: 15-setup-graphviz | Set environment variables GRAPHVIZ_DOT
+  ansible.builtin.shell: set -Ux GRAPHVIZ_DOT {{ which_dot.stdout }}
   args:
     executable: '{{ fish_path }}'
   when: which_dot.rc == 0 and echo_dot.stdout != which_dot.stdout
+  changed_when: true

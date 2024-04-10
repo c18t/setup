@@ -1,6 +1,6 @@
 ---
-- name: add backets
-  win_shell: scoop bucket add {{ item }}
+- name: 11-add-backets | Add scoop backets
+  ansible.windows.win_shell: scoop bucket add {{ item }}
   register: add_bucket
   changed_when: add_bucket.stdout is search('was added successfully.')
   failed_when: add_bucket.rc > 1

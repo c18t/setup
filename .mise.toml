@@ -6,7 +6,7 @@ markdownlint-cli2 = "latest"
 "go:github.com/rhysd/actionlint/cmd/actionlint" = "latest"
 
 [env]
-ANSIBLE_HOME = "./ansible"
+'_'.file = ".env"
 
 [tasks.setup]
 description = "Setup project"

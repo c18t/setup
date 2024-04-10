@@ -1,6 +1,8 @@
 ---
-- name: home role tasks for WSL
+- name: windows.wsl | Home role tasks for WSL
   tags: home
   block:
-    - include_tasks: includes/10-make-directories.yaml
-    - include_tasks: includes/11-make-symbolic-links-windows.wsl.yaml
+    - name: windows.wsl | Make directories for WSL
+      ansible.builtin.import_tasks: includes/10-make-directories.yaml
+    - name: windows.wsl | Make symbolic links for WSL
+      ansible.builtin.import_tasks: includes/11-make-symbolic-links-windows.wsl.yaml

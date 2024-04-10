@@ -1,0 +1,24 @@
+---
+- name: 10-dock | Dock settings autohide
+  community.general.osx_defaults:
+    domain: com.apple.dock
+    key: autohide
+    type: int
+    value: '1'
+  notify: RestartDock
+
+- name: 10-dock | Dock settings mineffect
+  community.general.osx_defaults:
+    domain: com.apple.dock
+    key: mineffect
+    type: string
+    value: genie
+  notify: RestartDock
+
+- name: 10-dock | Dock settings tilesize
+  community.general.osx_defaults:
+    domain: com.apple.dock
+    key: tilesize
+    type: float
+    value: '{{ os_macos_dock_tilesize }}'
+  notify: RestartDock

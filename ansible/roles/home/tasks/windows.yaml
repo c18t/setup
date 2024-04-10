@@ -1,6 +1,8 @@
 ---
-- name: home role tasks for Windows
+- name: windows | Home role tasks for Windows
   tags: home
   block:
-    - include_tasks: includes/10-make-directories-windows.yaml
-    - include_tasks: includes/11-make-symbolic-links-windows.yaml
+    - name: windows | Make directories for Windows
+      ansible.builtin.include_tasks: includes/10-make-directories-windows.yaml
+    - name: windows | Make symbolic links for Windows
+      ansible.builtin.include_tasks: includes/11-make-symbolic-links-windows.yaml

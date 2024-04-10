@@ -1,6 +1,8 @@
 ---
-- name: configure fstab
+- name: 11-make-fstab | Configure fstab
   become: true
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: '/etc/fstab'
-    line: 'G:\マイドライブ /mnt/g drvfs metadata,noatime,uid=1000,gid=1000,defaults 0 0'
+    line: >-
+      G:\マイドライブ /mnt/g drvfs
+      metadata,noatime,uid=1000,gid=1000,defaults 0 0

@@ -1,7 +1,7 @@
 ---
-- name: upgrade all packages
+- name: 10-upgrade-packages | Upgrade all packages
   become: true
-  win_shell: winget upgrade --all
+  ansible.windows.win_shell: winget upgrade --all
   register: upgrade_all
   changed_when: upgrade_all.stdout is not search('適用可能な更新は見つかりませんでした。')
   failed_when: upgrade_all.rc not in [0, 1]

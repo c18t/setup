@@ -1,0 +1,8 @@
+---
+- name: MacOS role tasks
+  tags: os_macos
+  block:
+    - name: Configure Dock
+      ansible.builtin.include_tasks: 10-dock.yaml
+    - name: Condigure Finder
+      ansible.builtin.include_tasks: 11-finder.yaml

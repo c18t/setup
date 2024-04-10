@@ -1,8 +1,12 @@
 ---
-- name: winget role tasks
+- name: WinGet role tasks
   tags: winget
   block:
-    - include_tasks: 00-check-precondition.yaml
-    - include_tasks: 10-upgrade-packages.yaml
-    - include_tasks: 11-install-packages.yaml
-    - include_tasks: 12-configure-winget-packages.yaml
+    - name: Check precondition
+      ansible.builtin.include_tasks: 00-check-precondition.yaml
+    - name: Upgrade packages
+      ansible.builtin.include_tasks: 10-upgrade-packages.yaml
+    - name: Install packages
+      ansible.builtin.include_tasks: 11-install-packages.yaml
+    - name: Configure WinGet packages
+      ansible.builtin.include_tasks: 12-configure-winget-packages.yaml

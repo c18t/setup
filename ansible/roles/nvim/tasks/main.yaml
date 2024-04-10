@@ -1,5 +1,6 @@
 ---
-- name: nvim role tasks
+- name: NeoVim role tasks
   tags: nvim
   block:
-    - include_tasks: 10-configure.yaml
+    - name: Configure NeoVim
+      ansible.builtin.include_tasks: 10-configure.yaml

@@ -1,14 +1,22 @@
 ---
-- name: update Homebrew and upgrade formulae (for {{ brew_distr }})
+- name: >-
+    brew_tasks | Update Homebrew and upgrade formulae
+    (for {{ brew_distr }})
   community.general.homebrew:
     update_homebrew: true
     upgrade_all: true
   # GitHub Actionsで止まるようになってしまったのでスキップ
-  when: >
+  when: >-
     ansible_env.GITHUB_ACTIONS is not defined
       or ansible_env.GITHUB_ACTIONS != 'true'
 
-- name: brew bundle install --file "{{ homebrew_brewfile | basename }}" (for {{ brew_distr }})
-  shell: brew bundle install -v --no-lock --file "{{ homebrew_brewfile }}"
+- name: >-
+    brew_tasks | Install with brew bundle
+    ({{ "file: " + (homebrew_brewfile | basename) + ", for " + (brew_distr) }})
+  ansible.builtin.command: >-
+    brew bundle install -v --no-lock --file "{{ homebrew_brewfile }}"
   register: brew_bundle
-  changed_when: brew_bundle.rc == 0 and brew_bundle.stdout is search('It is not currently installed')
+  changed_when: >-
+    brew_bundle.rc == 0 and brew_bundle.stdout
+      is search('It is not currently installed')
+  ignore_errors: true

@@ -1,13 +1,13 @@
 ---
-- name: add apt keys
+- name: 10-add-repositories | Add apt keys
   become: true
-  apt_key:
+  ansible.builtin.apt_key:
     url: '{{ item }}'
   loop: '{{ apt_keys }}'
 
-- name: add apt repositories
+- name: 10-add-repositories | Add apt repositories
   become: true
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: '{{ item.repo }}'
     filename: '{{ item.filename | default(omit) }}'
   loop: '{{ apt_repositories }}'

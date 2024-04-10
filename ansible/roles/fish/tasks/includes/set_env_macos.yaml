@@ -1,28 +1,31 @@
 ---
-- name: set environment variables (for MacOSX)
-  shell: >-
+- name: set_env_macos | Set environment variables (for MacOSX)
+  ansible.builtin.shell: >-
     set -Ux ANDROID_HOME {{ home }}/Library/Android/sdk;
     set -Ux ANDRIOD_SDK_ROOT {{ home }}/Library/Android/sdk;
     set -Ux ANDRIOD_AVD_HOME {{ home }}/.android/avd;
   args:
     executable: '{{ fish_path }}'
   changed_when: false
-  check_mode: false
 
-- name: add tools to fish_user_paths (for MacOSX)
-  shell: set -U fish_user_paths $fish_user_paths "{{ item }}"
+- name: set_env_macos | Add tools to fish_user_paths (for MacOSX)
+  ansible.builtin.shell: set -U fish_user_paths $fish_user_paths "{{ item }}"
   args:
     executable: '{{ fish_path }}'
   when: fish_user_paths is not search(item)
+  changed_when: true
+  notify: UpdateGlobalPath
   loop:
     - '{{ home }}/Library/Android/sdk/tools'
     - '{{ home }}/Library/Android/sdk/platform-tools'
-  notify: update_global_path
 
-- name: make PKG_CONFIG_PATH config (for MacOSX)
-  copy:
+- name: set_env_macos | Make PKG_CONFIG_PATH config (for MacOSX)
+  ansible.builtin.copy:
     dest: '{{ xdg_config_home }}/fish/conf.d/{{ item }}.fish'
-    content: set -gx PKG_CONFIG_PATH "{{ brew_prefix }}/opt/{{ item }}/lib/pkgconfig" $PKG_CONFIG_PATH
+    content: >
+      set -gx PKG_CONFIG_PATH
+      "{{ brew_prefix }}/opt/{{ item }}/lib/pkgconfig" $PKG_CONFIG_PATH
+    mode: 0644
   loop:
     - freetype
     - gd

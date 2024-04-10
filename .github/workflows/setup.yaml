@@ -41,7 +41,7 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v4
       - name: run setup script
-        run: |
+        run: |-
           bash -c "./setup-iapetus.sh ${VERBOSE_OPTION} \
             -e my_password= \
             -e my_homebrew_brewfile='$(pwd)/ansible/playbooks/files/tests/homebrew/Brewfile-mac-test' \
@@ -57,12 +57,12 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v4
       - name: run setup script
-        run: |
+        run: |-
           bash -c "./setup-khronos.sh -l local ${VERBOSE_OPTION} \
             -e win_username= \
             -e win_password= \
             -e my_password= \
-            -e dotfiles='$(pwd)/ansible/playbooks/files/tests/dotfiles'" \
+            -e dotfiles='$(pwd)/ansible/playbooks/files/tests/dotfiles'"
         env:
           VERBOSE: ${{ inputs.verbose && 1 }}
           VERBOSE_OPTION: ${{ inputs.verbose && '-vvv' || '' }}

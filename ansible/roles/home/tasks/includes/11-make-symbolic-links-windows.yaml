@@ -1,56 +1,60 @@
 ---
-- name: set link directory or file items
-  set_fact:
+- name: 11-make-symbolic-links-windows | Set link directory or file items
+  ansible.builtin.set_fact:
     link_dir_items:
       # Google Drive
       - path: '{{ my_google_drive }}'
-        dest: '{{ default_google_drive }}'
+        dest: '{{ home_google_drive }}'
       # XDG
       - path: '{{ xdg_cache_home }}'
-        dest: '{{ default_xdg_cache_home }}'
+        dest: '{{ home_xdg_cache_home }}'
       - path: '{{ xdg_config_home }}'
-        dest: '{{ default_xdg_config_home }}'
+        dest: '{{ home_xdg_config_home }}'
       - path: '{{ xdg_data_home }}'
-        dest: '{{ default_xdg_data_home }}'
+        dest: '{{ home_xdg_data_home }}'
 
     link_file_items:
       # ssh
-      - path: '{{ home_ssh_config }}'
-        dest: '{{ default_ssh_config }}'
+      - path: '{{ home_my_ssh_config }}'
+        dest: '{{ home_ssh_config }}'
       # git
-      - path: '{{ home_git_config }}'
-        dest: '{{ default_git_config }}'
+      - path: '{{ home_my_git_config }}'
+        dest: '{{ home_git_config }}'
 
-- name: check that directory link sources
-  win_stat:
+- name: 11-make-symbolic-links-windows | Check that directory link sources
+  ansible.windows.win_stat:
     path: '{{ item.path }}'
   register: stat_link_source_dir
   failed_when: not stat_link_source_dir.stat.exists
   loop: '{{ link_dir_items }}'
 
-- name: make directory links
+- name: 11-make-symbolic-links-windows | Make directory links
   become: true
-  win_shell: >-
-    if (-Not(Test-Path "{{ item.dest }}")) {
-      New-Item -Type SymbolicLink -Value "{{ item.path }}" -Path "{{ item.dest }}"; exit 2
+  ansible.windows.win_shell: >-
+    if (-Not(Test-Path "{{ item.dest }}")) { `
+      New-Item -Type SymbolicLink `
+        -Value "{{ item.path }}" `
+        -Path "{{ item.dest }}"; exit 2 `
     }
   register: make_dir_link
   failed_when: make_dir_link.rc not in [0, 2]
   changed_when: make_dir_link.rc == 2
   loop: '{{ link_dir_items }}'
 
-- name: check that file link sources
-  win_stat:
+- name: 11-make-symbolic-links-windows | Check that file link sources
+  ansible.windows.win_stat:
     path: '{{ item.path }}'
   register: stat_link_source_file
   failed_when: not stat_link_source_file.stat.exists
   loop: '{{ link_file_items }}'
 
-- name: make file links
+- name: 11-make-symbolic-links-windows | Make file links
   become: true
-  win_shell: >-
-    if (-Not(Test-Path "{{ item.dest }}")) {
-      New-Item -Type SymbolicLink -Value "{{ item.path }}" -Path "{{ item.dest }}"; exit 2
+  ansible.windows.win_shell: >-
+    if (-Not(Test-Path "{{ item.dest }}")) { `
+      New-Item -Type SymbolicLink `
+        -Value "{{ item.path }}" `
+        -Path "{{ item.dest }}"; exit 2 `
     }
   register: make_file_link
   failed_when: make_file_link.rc not in [0, 2]

@@ -1,12 +1,20 @@
 ---
-- name: install scoop
-  win_shell: if (-Not(gcm scoop -ErrorAction SilentlyContinue)) { iwr -useb get.scoop.sh | iex; }
+- name: 10-install-scoop | Install scoop
+  ansible.windows.win_shell: >-
+    if (-Not(gcm scoop -ErrorAction SilentlyContinue))
+    { iwr -useb get.scoop.sh | iex; }
   register: install_scoop
-  changed_when: install_scoop.stdout is search('Scoop was installed successfully!')
+  changed_when: >-
+    install_scoop.stdout
+    is search('Scoop was installed successfully!')
 
-- name: install scoop dependencies
+- name: 10-install-scoop | Install scoop dependencies
   become: true
-  win_shell: 'if ((scoop info {{ item }}) -match "Installed: No") { scoop install {{ item }}; }'
+  ansible.windows.win_shell: >-
+    if ((scoop info {{ item }}) -match "Installed: No")
+    { scoop install {{ item }}; }
   register: install_scoop_dependency
-  changed_when: install_scoop_dependency.stdout is search('was installed successfully!')
+  changed_when: >-
+    install_scoop_dependency.stdout
+    is search('was installed successfully!')
   loop: [git]

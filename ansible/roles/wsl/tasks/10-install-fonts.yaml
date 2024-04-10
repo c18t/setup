@@ -1,6 +1,7 @@
 ---
-- name: configure fonts to use Windows one
+- name: 10-install-fonts | Configure fonts to use Windows one
   become: true
-  copy:
+  ansible.builtin.copy:
     src: 'fonts_local.conf'
     dest: '/etc/fonts/local.conf'
+    mode: 0644
