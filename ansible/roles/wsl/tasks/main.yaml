@@ -3,8 +3,8 @@
   tags: wsl
   block:
     - name: Configure fonts
-      ansible.builtin.include_tasks:
+      ansible.builtin.import_tasks:
         10-install-fonts.yaml
     - name: Configure fstab
-      ansible.builtin.include_tasks:
+      ansible.builtin.import_tasks:
         11-make-fstab.yaml

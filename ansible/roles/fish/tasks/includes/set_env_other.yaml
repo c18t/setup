@@ -2,7 +2,7 @@
 - name: set_env_other | Set_fact
   block:
     - name: set_env_other | Get brew prefix
-      ansible.builtin.include_tasks: includes/set_brew_prefix.yaml
+      ansible.builtin.import_tasks: includes/set_brew_prefix.yaml
 
     - name: set_env_other | Echo LIBRARY_PATH (for other)
       ansible.builtin.shell: echo $LIBRARY_PATH

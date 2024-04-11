@@ -3,14 +3,14 @@
   tags: fish
   block:
     - name: Add fish to shells
-      ansible.builtin.include_tasks: 10-add-fish-to-shells.yaml
+      ansible.builtin.import_tasks: 10-add-fish-to-shells.yaml
     - name: Change login shell to fish
-      ansible.builtin.include_tasks: 11-change-login-shell-to-fish.yaml
+      ansible.builtin.import_tasks: 11-change-login-shell-to-fish.yaml
     - name: Setup fish resources
-      ansible.builtin.include_tasks: 12-setup-resources.yaml
+      ansible.builtin.import_tasks: 12-setup-resources.yaml
     - name: Set environment variables
-      ansible.builtin.include_tasks: 13-set-environment-variables.yaml
+      ansible.builtin.import_tasks: 13-set-environment-variables.yaml
     - name: Setup fisher
-      ansible.builtin.include_tasks: 14-setup-fisher.yaml
+      ansible.builtin.import_tasks: 14-setup-fisher.yaml
     - name: Setup graphviz
-      ansible.builtin.include_tasks: 15-setup-graphviz.yaml
+      ansible.builtin.import_tasks: 15-setup-graphviz.yaml

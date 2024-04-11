@@ -3,4 +3,4 @@
   tags: nvim
   block:
     - name: Configure NeoVim
-      ansible.builtin.include_tasks: 10-configure.yaml
+      ansible.builtin.import_tasks: 10-configure.yaml

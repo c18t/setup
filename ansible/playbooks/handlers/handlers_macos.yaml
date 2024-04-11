@@ -11,4 +11,4 @@
 
 # update global path
 - name: UpdateGlobalPath
-  ansible.builtin.include_tasks: includes/set_global_path.yaml
+  ansible.builtin.import_tasks: includes/set_global_path.yaml

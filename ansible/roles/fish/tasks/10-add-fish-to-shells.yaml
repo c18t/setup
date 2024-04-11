@@ -1,6 +1,6 @@
 ---
 - name: 10-add-fish-to-shells | Get fish path
-  ansible.builtin.include_tasks: includes/set_fish_path.yaml
+  ansible.builtin.import_tasks: includes/set_fish_path.yaml
 
 - name: 10-add-fish-to-shells | Check fish is enabled as login shells
   ansible.builtin.shell: cat /etc/shells | grep -q '{{ fish_path }}'

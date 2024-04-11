@@ -1,10 +1,10 @@
 ---
 - name: 13-set-environment-variables | Get brew prefix
-  ansible.builtin.include_tasks: includes/set_brew_prefix.yaml
+  ansible.builtin.import_tasks: includes/set_brew_prefix.yaml
 - name: 13-set-environment-variables | Get fish path
-  ansible.builtin.include_tasks: includes/set_fish_path.yaml
+  ansible.builtin.import_tasks: includes/set_fish_path.yaml
 - name: 13-set-environment-variables | Get fish user path
-  ansible.builtin.include_tasks: includes/set_fish_user_paths.yaml
+  ansible.builtin.import_tasks: includes/set_fish_user_paths.yaml
 
 - name: 13-set-environment-variables | Set environment variables
   ansible.builtin.shell: >-
@@ -21,9 +21,9 @@
   changed_when: false
 
 - name: 13-set-environment-variables | Set environment variables for macOS
-  ansible.builtin.include_tasks: includes/set_env_macos.yaml
+  ansible.builtin.import_tasks: includes/set_env_macos.yaml
   when: ansible_distribution == "MacOSX"
 
 - name: 13-set-environment-variables | Set environment variables for other
-  ansible.builtin.include_tasks: includes/set_env_other.yaml
+  ansible.builtin.import_tasks: includes/set_env_other.yaml
   when: ansible_distribution != "MacOSX"

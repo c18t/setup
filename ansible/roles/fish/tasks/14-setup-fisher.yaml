@@ -1,6 +1,6 @@
 ---
 - name: 14-setup-fisher | Get fish path
-  ansible.builtin.include_tasks: includes/set_fish_path.yaml
+  ansible.builtin.import_tasks: includes/set_fish_path.yaml
 
 - name: 14-setup-fisher | Check fisher
   ansible.builtin.shell: type fisher
