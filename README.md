@@ -41,6 +41,7 @@ PS > .\setup-windows.ps1 setup-khronos.sh -K
 ### setup project
 
 ```sh
+mise trust
 mise run setup
 ```
 
