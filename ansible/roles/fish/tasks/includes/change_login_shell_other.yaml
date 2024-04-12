@@ -16,9 +16,9 @@
       changed_when: false
 
     - name: change_login_shell_other | Change login shell to fish
+      become: true
       ansible.builtin.script:
         common/chsh.exp "{{ fish_path }}" "{{ my_password }}" "{{ user }}"
-      become: true
       args:
         executable: '{{ which_expect.stdout }}'
 
