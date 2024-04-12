@@ -3,6 +3,8 @@ tap "homebrew/bundle"
 brew "python"
 # Automate deployment, configuration, and upgrading
 brew "ansible"
+# Checks ansible playbooks for practices and behaviour
+brew "ansible-lint"
 # Text-based window manager and terminal multiplexer
 brew "byobu"
 # Pack, ship and run any application as a lightweight container

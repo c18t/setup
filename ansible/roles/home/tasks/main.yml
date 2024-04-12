@@ -1,7 +1,0 @@
----
-- name: home role tasks
-  tags: home
-  assert:
-    quiet: true
-    that: false
-    msg: you shoud specify the entrypoint name with tasks_from.

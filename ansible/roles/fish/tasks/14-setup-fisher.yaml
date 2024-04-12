@@ -1,0 +1,110 @@
+---
+- name: 14-setup-fisher | Get fish path
+  ansible.builtin.import_tasks: includes/set_fish_path.yaml
+
+- name: 14-setup-fisher | Check fisher
+  ansible.builtin.shell: type fisher
+  args:
+    executable: '{{ fish_path }}'
+  register: type_fisher
+  failed_when: type_fisher.rc not in [0, 1, 126, 127]
+  changed_when: false
+  check_mode: false
+
+- name: 14-setup-fisher | Check cmd.exe (for WSL)
+  ansible.builtin.shell: type cmd.exe
+  args:
+    executable: '{{ fish_path }}'
+  register: type_cmd
+  failed_when: type_cmd.rc not in [0, 1]
+  changed_when: false
+  check_mode: false
+
+- name: 14-setup-fisher | Install fisher
+  when: type_fisher.rc != 0
+  block:
+    - name: 14-setup-fisher | Install fisher
+      ansible.builtin.shell: >-
+        fish -l -c 'curl -sL https://git.io/fisher
+        | source && fisher install jorgebucaran/fisher'
+      args:
+        executable: '{{ fish_path }}'
+      changed_when: true
+    - name: 14-setup-fisher | Find fisher
+      ansible.builtin.shell: type fisher
+      args:
+        executable: '{{ fish_path }}'
+      changed_when: false
+
+- name: 14-setup-fisher | Copy files to remote
+  block:
+    - name: 14-setup-fisher | Copy files to remote
+      ansible.builtin.copy:
+        src: 'fisher-my-setup/'
+        dest: '{{ temporary_home }}/fisher-my-setup/'
+        mode: 0755
+      changed_when: false
+
+    - name: 14-setup-fisher | Copy files to remote (for MacOSX)
+      ansible.builtin.copy:
+        src: 'fisher-my-setup-mac/'
+        dest: '{{ temporary_home }}/fisher-my-setup-mac/'
+        mode: 0755
+      when: ansible_distribution == "MacOSX"
+      changed_when: false
+
+    - name: 14-setup-fisher | Copy files to remote (for WSL)
+      ansible.builtin.copy:
+        src: 'fisher-my-setup-wsl/'
+        dest: '{{ temporary_home }}/fisher-my-setup-wsl/'
+        mode: 0755
+      when: type_cmd.rc == 0
+      changed_when: false
+
+- name: 14-setup-fisher | Configure fisher with SHELL env
+  environment:
+    SHELL: '{{ fish_path }}'
+  block:
+    - name: 14-setup-fisher | Update fisher itself
+      ansible.builtin.shell: fish -l -c 'fisher update jorgebucaran/fisher'
+      args:
+        executable: '{{ fish_path }}'
+      changed_when: false
+
+    - name: 14-setup-fisher | Copy fish_plugin file
+      ansible.builtin.copy:
+        src: 'fisher-my-setup/fish_plugins'
+        dest: '{{ xdg_config_home }}/fish/fish_plugins'
+        mode: 0644
+        follow: no
+
+    - name: 14-setup-fisher | Update fisher plugins
+      ansible.builtin.shell: fish -l -c 'fisher update'
+      args:
+        executable: '{{ fish_path }}'
+      register: update_fisher_plugins
+      failed_when: update_fisher_plugins.stderr is search('Cannot install')
+      changed_when: false
+
+    - name: 14-setup-fisher | Install fish config
+      ansible.builtin.shell:
+        fish -l -c 'fisher install "{{ temporary_home }}/fisher-my-setup"'
+      args:
+        executable: '{{ fish_path }}'
+      changed_when: false
+
+    - name: 14-setup-fisher | Install fish config (for MacOSX)
+      ansible.builtin.shell:
+        fish -l -c 'fisher install "{{ temporary_home }}/fisher-my-setup-mac"'
+      args:
+        executable: '{{ fish_path }}'
+      changed_when: false
+      when: ansible_distribution == "MacOSX"
+
+    - name: 14-setup-fisher | Install fish config (for WSL)
+      ansible.builtin.shell:
+        fish -l -c 'fisher install "{{ temporary_home }}/fisher-my-setup-wsl"'
+      args:
+        executable: '{{ fish_path }}'
+      changed_when: false
+      when: type_cmd.rc == 0

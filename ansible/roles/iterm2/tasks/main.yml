@@ -1,5 +1,0 @@
----
-- name: iterm2 role tasks
-  tags: iterm2
-  block:
-    - include_tasks: 10-install-imgcat.yml

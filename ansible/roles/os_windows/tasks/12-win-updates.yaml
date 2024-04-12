@@ -1,0 +1,6 @@
+---
+- name: 12-win-updates | Install all critical and security updates
+  ansible.windows.win_updates:
+    category_names:
+      - CriticalUpdates
+      - SecurityUpdates

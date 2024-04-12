@@ -1,0 +1,96 @@
+---
+- name: 14-win-regedit | Explorer
+  block:
+    - name: 14-win-regedit | Show file extension
+      ansible.windows.win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: HideFileExt
+        data: 0
+        type: dword
+    - name: 14-win-regedit | Show hidden files
+      ansible.windows.win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: Hidden
+        data: 1
+        type: dword
+    - name: 14-win-regedit | Launch to pc
+      ansible.windows.win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: LaunchTo
+        data: 1
+        type: dword
+    - name: 14-win-regedit | Hide recent files
+      ansible.windows.win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer
+        name: ShowRecent
+        data: 0
+        type: dword
+    - name: 14-win-regedit | Hide frequently used folders
+      ansible.windows.win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer
+        name: ShowFrequent
+        data: 0
+        type: dword
+    - name: 14-win-regedit | Disable showing all folders
+      ansible.windows.win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: NavPaneShowAllFolders
+        data: 0
+        type: dword
+    - name: 14-win-regedit | Disable navpanel expanding to current folder
+      ansible.windows.win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: NavPaneExpandToCurrentFolder
+        data: 0
+        type: dword
+    - name: 14-win-regedit | Set taskbar size to medium
+      ansible.windows.win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: TaskbarSi
+        data: 1
+        type: dword
+    - name: 14-win-regedit | Set taskbar alignment to the left
+      ansible.windows.win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: TaskbarAl
+        data: 0
+        type: dword
+    - name: 14-win-regedit | Hide search button
+      ansible.windows.win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: SearchboxTaskbarMode
+        data: 0
+        type: dword
+    - name: 14-win-regedit | Hide taskview button
+      ansible.windows.win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: ShowTaskViewButton
+        data: 0
+        type: dword
+    - name: 14-win-regedit | Hide widgets button
+      ansible.windows.win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: TaskbarDa
+        data: 0
+        type: dword
+    - name: 14-win-regedit | Hide chat button
+      ansible.windows.win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: TaskbarMn
+        data: 0
+        type: dword
+    - name: 14-win-regedit | Show taskbar badge
+      ansible.windows.win_regedit:
+        path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        name: TaskbarBadges
+        data: 1
+        type: dword
+
+- name: 14-win-regedit | Comand prompt
+  block:
+    - name: 14-win-regedit | Disable UNC check
+      ansible.windows.win_regedit:
+        path: HKLM:\SOFTWARE\Microsoft\Command Processor
+        name: DisableUNCCheck
+        data: 1
+        type: dword

@@ -1,0 +1,4 @@
+---
+- name: 11-install-packages | Install pacakges
+  ansible.builtin.include_tasks: includes/install-package.yaml
+  loop: '{{ winget_packages }}'

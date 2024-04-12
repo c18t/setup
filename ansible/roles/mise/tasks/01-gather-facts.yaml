@@ -1,0 +1,10 @@
+---
+- name: 01-gather-facts | Find fish
+  ansible.builtin.command: which fish
+  register: which_fish
+  changed_when: false
+  check_mode: false
+
+- name: 01-gather-facts | Set fish_path
+  ansible.builtin.set_fact:
+    fish_path: '{{ which_fish.stdout }}'

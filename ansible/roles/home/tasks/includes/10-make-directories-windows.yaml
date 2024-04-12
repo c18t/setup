@@ -1,0 +1,22 @@
+---
+- name: 10-make-directories-windows | Make standard directories
+  ansible.windows.win_file:
+    state: directory
+    path: '{{ home }}/{{ item }}'
+  loop: '{{ home_standard_directories }}'
+
+- name: 10-make-directories-windows | Copy desktop.ini
+  ansible.windows.win_copy:
+    src: '{{ item }}_desktop.ini'
+    dest: '{{ home }}\{{ item }}\desktop.ini'
+  loop: '{{ home_standard_directories }}'
+
+- name: 10-make-directories-windows | Make config directories
+  ansible.windows.win_file:
+    state: directory
+    path: '{{ item }}'
+  with_items:
+    # XDG
+    - '{{ home }}\.local'
+    # ssh
+    - '{{ home }}\.ssh'

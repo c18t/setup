@@ -5,6 +5,9 @@ yamllint = "latest"
 markdownlint-cli2 = "latest"
 "go:github.com/rhysd/actionlint/cmd/actionlint" = "latest"
 
+[env]
+'_'.file = ".env"
+
 [tasks.setup]
 description = "Setup project"
 depends = ["setup:mise"]

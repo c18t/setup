@@ -1,8 +1,0 @@
----
-- name: finder settings AppleShowAllFiles
-  osx_defaults:
-    domain: com.apple.finder
-    key: AppleShowAllFiles
-    type: string
-    value: 'TRUE'
-  notify: restart_finder

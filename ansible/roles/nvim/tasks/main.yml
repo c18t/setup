@@ -1,5 +1,0 @@
----
-- name: nvim role tasks
-  tags: nvim
-  block:
-    - include_tasks: 10-configure.yml

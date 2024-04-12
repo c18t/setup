@@ -1,0 +1,13 @@
+---
+- name: 11-make-symbolic-links-windows.wsl | Link to host google drive directory
+  become: true
+  ansible.builtin.file:
+    state: link
+    follow: false
+    force: true
+    owner: '{{ user }}'
+    src: '/mnt/g/マイドライブ'
+    dest: '{{ home }}/GoogleDrive'
+
+- name: 11-make-symbolic-links-windows.wsl | Make symbolic links
+  ansible.builtin.import_tasks: 11-make-symbolic-links.yaml

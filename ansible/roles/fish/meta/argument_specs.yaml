@@ -1,0 +1,9 @@
+---
+argument_specs:
+  main:
+    short_description: default entry point
+    options:
+      fish_shell_config:
+        type: str
+        required: true
+        description: 'config.fish file name.'

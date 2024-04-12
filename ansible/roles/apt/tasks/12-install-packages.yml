@@ -1,6 +1,0 @@
----
-- name: install packages with apt
-  become: true
-  apt:
-    name: '{{ item }}'
-  loop: '{{ apt_packages }}'

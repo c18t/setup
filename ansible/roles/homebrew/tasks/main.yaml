@@ -1,0 +1,8 @@
+---
+- name: Homebrew role tasks
+  tags: homebrew
+  block:
+    - name: Install homebrew
+      ansible.builtin.import_tasks: 10-install-homebrew.yaml
+    - name: Install apps with homebrew
+      ansible.builtin.import_tasks: 11-install-and-upgrade-applications.yaml

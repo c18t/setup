@@ -20,10 +20,10 @@ pushd "$(dirname "$0")" >&3 || exit $?
 
     # configure with ansible
     pushd ./ansible >&3 || exit $?
-        PLAYBOOK=./playbooks/khronos-windows.yml
+        PLAYBOOK=./playbooks/khronos-windows.yaml
         echo "call ansible-playbook \"$PLAYBOOK\" $*" >&3
         # パーミッションの都合で読み込めないので明示的にansible.cfgを指定
-        ANSIBLE_CONFIG=ansible.cfg ansible-playbook "$PLAYBOOK" "$@"
+        ANSIBLE_CONFIG=ansible.cfg ANSIBLE_HOME=. ansible-playbook "$PLAYBOOK" "$@"
         result=$?
     popd >&3 || exit $?
 

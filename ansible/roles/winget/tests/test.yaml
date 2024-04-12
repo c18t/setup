@@ -1,0 +1,6 @@
+---
+- name: WinGet tests
+  hosts: localhost
+  remote_user: root
+  roles:
+    - winget

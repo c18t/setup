@@ -1,0 +1,20 @@
+galaxy_info:
+  author: ɯ̹t͡ɕʲi
+  namespace: c18t
+  role_name: home
+  description: setup my home directory.
+  license: CC0
+
+  min_ansible_version: '2.13'
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
+    - name: macOS
+      versions:
+        - all
+
+  galaxy_tags: []
+
+dependencies: []

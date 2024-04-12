@@ -1,0 +1,6 @@
+---
+- name: Scoop tests
+  hosts: localhost
+  remote_user: root
+  roles:
+    - scoop

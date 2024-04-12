@@ -1,0 +1,6 @@
+---
+- name: Mise tests
+  hosts: localhost
+  remote_user: root
+  roles:
+    - mise

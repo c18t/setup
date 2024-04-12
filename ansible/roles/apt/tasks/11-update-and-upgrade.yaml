@@ -1,0 +1,11 @@
+---
+- name: 11-update-and-upgrade | Update apt cache
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: 11-update-and-upgrade | Upgrade packages
+  become: true
+  ansible.builtin.apt:
+    upgrade: safe

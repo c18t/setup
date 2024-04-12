@@ -1,5 +1,0 @@
----
-- name: assert winget_packages
-  assert:
-    that: winget_packages is iterable
-    quiet: true

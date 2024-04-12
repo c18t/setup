@@ -1,0 +1,6 @@
+---
+- name: Homebrew tests
+  hosts: localhost
+  remote_user: root
+  roles:
+    - homebrew

@@ -1,0 +1,7 @@
+---
+- name: Home role tasks
+  tags: home
+  ansible.builtin.assert:
+    quiet: true
+    that: false
+    msg: you shoud specify the entrypoint name with tasks_from.

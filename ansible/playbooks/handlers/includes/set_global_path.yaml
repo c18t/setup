@@ -1,0 +1,21 @@
+---
+- name: set_global_path | Get fish path
+  ansible.builtin.command: which fish
+  register: which_fish
+  failed_when: which_fish.rc not in [0, 1]
+  changed_when: false
+  check_mode: false
+
+- name: set_global_path | Get login user paths
+  ansible.builtin.shell: >-
+    SHELL="{{ which_fish.stdout }}"
+    fish -l -c "uniq_path; string join ':' \$PATH"
+  register: echo_path
+  changed_when: false
+  when: which_fish.rc == 0
+
+- name: set_global_path | set global path
+  become: true
+  ansible.builtin.command:
+    /bin/launchctl config user path "{{ echo_path.stdout }}"
+  when: which_fish.rc == 0

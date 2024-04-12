@@ -1,0 +1,71 @@
+---
+- name: Setup Iapetus
+  hosts: local
+  vars_prompt:
+    - name: my_password
+      prompt: 'User password'
+      private: true
+  vars:
+    # common
+    my_editor: code
+    my_visual: code
+    my_temporary_home: /tmp
+  pre_tasks:
+    - name: Run always
+      tags: always
+      block:
+        - name: Include common vars
+          ansible.builtin.include_vars: common.yaml
+  handlers:
+    - name: Iclude handlers
+      ansible.builtin.import_tasks: handlers/handlers_macos.yaml
+  tasks:
+    - name: Import os_macos
+      ansible.builtin.import_role:
+        name: os_macos
+    - name: Import home
+      ansible.builtin.import_role:
+        name: home
+        tasks_from: macos
+      vars:
+        home_standard_directories:
+          - Archives
+          - Projects
+        home_my_ssh_config: '{{ dotfiles }}/ssh/config-prv'
+        home_my_git_config: '{{ dotfiles }}/git/.gitconfig-prv'
+    - name: Import homebrew
+      ansible.builtin.import_role:
+        name: homebrew
+      vars:
+        homebrew_brewfile: >-
+          {{ my_homebrew_brewfile
+          | default(playbook_dir + "/files/homebrew/Brewfile-mac") }}
+    - name: Import iterm2
+      ansible.builtin.import_role:
+        name: iterm2
+    - name: Import nvim
+      ansible.builtin.import_role:
+        name: nvim
+    - name: Import fish
+      ansible.builtin.import_role:
+        name: fish
+      vars:
+        fish_shell_config: config-mac.fish
+    - name: Import mise
+      ansible.builtin.import_role:
+        name: mise
+      vars:
+        mise_config:
+          '{{ dotfiles }}/mise/config-macos.toml'
+        mise_default_go_packages:
+          '{{ dotfiles }}/mise/.default-go-packages'
+        mise_default_python_packages:
+          '{{ dotfiles }}/mise/.default-python-packages'
+        mise_default_npm_packages:
+          '{{ dotfiles }}/mise/.default-npm-packages'
+        mise_default_gems:
+          '{{ dotfiles }}/mise/.default-gems'
+        mise_default_mix_commands:
+          '{{ dotfiles }}/mise/.default-mix-commands'
+        mise_default_perl_modules:
+          '{{ dotfiles }}/mise/.default-perl-modules'

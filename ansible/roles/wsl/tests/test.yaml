@@ -1,0 +1,6 @@
+---
+- name: WSL tests
+  hosts: localhost
+  remote_user: root
+  roles:
+    - wsl

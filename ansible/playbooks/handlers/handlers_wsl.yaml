@@ -1,0 +1,6 @@
+---
+# update global path
+- name: Update global path
+  listen: update_global_path
+  ansible.builtin.debug:
+    msg: I have nothing to do.

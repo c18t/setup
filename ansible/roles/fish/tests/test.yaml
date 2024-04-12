@@ -1,0 +1,6 @@
+---
+- name: Fish tests
+  hosts: localhost
+  remote_user: root
+  roles:
+    - fish

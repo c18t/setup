@@ -1,0 +1,5 @@
+---
+- name: 00-check-precondition | Assert winget_packages
+  ansible.builtin.assert:
+    that: winget_packages is iterable
+    quiet: true

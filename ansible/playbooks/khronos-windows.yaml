@@ -1,0 +1,244 @@
+---
+- name: Setup Khoronos (Windows)
+  hosts: khronos
+  vars_prompt:
+    - name: win_username
+      prompt: 'Windows username'
+      private: false
+    - name: win_password
+      prompt: 'Windows password'
+      private: true
+  vars:
+    # ansible
+    ansible_user: '{{ win_username }}'
+    ansible_password: '{{ win_password }}'
+    ansible_become_method: runas
+    ansible_become_user: '{{ win_username }}'
+    ansible_become_password: '{{ win_password }}'
+    ansible_connection: ssh
+    ansible_shell_type: powershell
+    ansible_python_interpreter: /home/linuxbrew/.linuxbrew/bin/python3
+    # common
+    my_home: C:\Users\{{ user }}
+    my_user: '{{ win_username }}'
+    my_editor: code
+    my_visual: code
+    # my_temporary_home: D:\Temp\{{ user }}
+    my_xdg_cache_home: C:\Users\{{ user }}\AppData\Roaming
+    my_xdg_config_home: C:\Users\{{ user }}\AppData\Local
+    my_xdg_data_home: C:\Users\{{ user }}\AppData\Local
+    my_google_drive: G:\マイドライブ
+  pre_tasks:
+    - name: Run always
+      tags: always
+      block:
+        - name: Include common vars
+          ansible.builtin.include_vars: common.yaml
+  tasks:
+    - name: Import os_windows
+      ansible.builtin.import_role:
+        name: os_windows
+    - name: Import winget
+      ansible.builtin.import_role:
+        name: winget
+      vars:
+        winget_packages:
+          - { name: AgileBits.1Password }
+          - { name: Amazon.SendToKindle }
+          - { name: Anaconda.Anaconda3 }
+          - { name: Apple.iTunes }
+          - { name: calibre.calibre }
+          - { name: Discord.Discord }
+          - { name: Docker.DockerDesktop }
+          - { name: Doist.Todoist }
+          - { name: ElaborateBytes.VirtualCloneDrive }
+          - { name: Fork.Fork }
+          - { name: Gitlab.Gitter }
+          - { name: Google.Chrome }
+          - { name: Google.Chrome.Dev }
+          - { name: Google.Drive }
+          # ハッシュが一致しない
+          # - { name: Google.JapaneseIME, become: false, force: true }
+          - { name: Microsoft.PowerShell }
+          - { name: Microsoft.SQLServerManagementStudio }
+          - { name: Microsoft.VisualStudio.2022.Community }
+          - { name: PeterBienstman.Mnemosyne, list_id: Mnemosyne_is1 }
+          - { name: UnityTechnologies.UnityHub }
+          - { name: Valve.Steam }
+    - name: Import home
+      ansible.builtin.import_role:
+        name: home
+        tasks_from: windows
+      vars:
+        home_standard_directories:
+          - Applications
+          - Archives
+          - Projects
+        home_my_ssh_config: '{{ dotfiles }}/ssh/config-prv'
+        home_my_git_config: '{{ dotfiles }}/git/.gitconfig-prv-win'
+    - name: Import scoop
+      ansible.builtin.import_role:
+        name: scoop
+      vars:
+        scoop_buckets:
+          - main
+          - extras
+          - java
+        scoop_packages:
+          - { name: 7zip }
+          # - { name: anaconda3 } # インストールが終わらないのでwingetに移動
+          - { name: android-studio }
+          - { name: arduino }
+          # - { name: audacity } # scoop のマニフェストが古い
+          - { name: autohotkey }
+          - { name: busybox }
+          # - { name: calibre } # インストーラがパスが長すぎるって怒るせいで失敗する
+          - { name: direnv }
+          - { name: ffmpeg }
+          - { name: firefox }
+          - { name: firefox-nightly }
+          # - { name: fork } # scoopからインストールすると動かないのでwingetに移動
+          - { name: gcloud }
+          - { name: ghostscript }
+          - { name: ghq }
+          - { name: gimp }
+          - { name: git }
+          - { name: go }
+          - { name: gpg4win }
+          - { name: gradle }
+          - { name: graphviz }
+          - { name: gsudo }
+          - { name: hadolint }
+          - { name: helm }
+          - { name: honeyview }
+          - { name: hwmonitor }
+          - { name: hub }
+          - { name: imgburn }
+          - { name: inkscape }
+          - { name: innounp }
+          - { name: jmeter }
+          # - { name: linqpad } # scoop のマニフェストが古い
+          # - { name: makemkv } # scoop のマニフェストが古い
+          - { name: msys2 }
+          - { name: neofetch }
+          - { name: neovim }
+          - { name: nodejs }
+          - { name: notion }
+          - { name: obs-studio }
+          - { name: openjdk, global: true }
+          - { name: openssl, global: true }
+          - { name: pandoc }
+          - { name: perl }
+          - { name: plantuml }
+          - { name: powertoys }
+          - { name: qbittorrent }
+          - { name: ruby }
+          - { name: rufus }
+          - { name: screentogif }
+          - { name: shellcheck }
+          - { name: shotcut }
+          - { name: slack }
+          - { name: stack }
+          - { name: sudo }
+          - { name: teraterm }
+          - { name: vivaldi }
+          - { name: vlc }
+          - { name: vscode }
+          - { name: winmerge }
+          - { name: winscp }
+          - { name: xmind8 }
+          - { name: youtube-dl }
+
+- name: Setup Khronos (WSL)
+  hosts: local
+  vars_prompt:
+    - name: my_password
+      prompt: 'WSL user password'
+      private: true
+  vars:
+    # ansible
+    ansible_python_interpreter: /home/linuxbrew/.linuxbrew/bin/python3
+    # common
+    my_editor: nvim
+    my_visual: nvim
+    my_temporary_home: /tmp
+  pre_tasks:
+    - name: Run always
+      tags: always
+      block:
+        - name: Include common vars
+          ansible.builtin.include_vars: common.yaml
+  handlers:
+    - name: Include handlers
+      ansible.builtin.import_tasks: handlers/handlers_wsl.yaml
+  tasks:
+    - name: Import wsl
+      ansible.builtin.import_role:
+        name: wsl
+    - name: Import home
+      ansible.builtin.import_role:
+        name: home
+        tasks_from: windows.wsl
+      vars:
+        home_host_home: '{{ "/mnt/c/Users/" + (home | basename) }}'
+        home_standard_directories:
+          - Projects
+        home_my_ssh_config: '{{ dotfiles }}/ssh/config-prv'
+        home_my_git_config: '{{ dotfiles }}/git/.gitconfig-prv'
+    - name: Import apt
+      ansible.builtin.import_role:
+        name: apt
+      vars:
+        apt_keys:
+          - https://dl-ssl.google.com/linux/linux_signing_key.pub
+        apt_repositories:
+          - repo: 'deb http://dl.google.com/linux/chrome/deb/ stable main'
+            filename: 'google-chrome'
+        apt_packages:
+          - google-chrome-stable
+          - autoconf # for asdf-erlang
+          - build-essential # for ansible, asdf-erlang
+          - fop # for asdf-erlang
+          - libgl1-mesa-dev # for asdf-erlang
+          - libglu1-mesa-dev # for asdf-erlang
+          - libncurses-dev # for asdf-erlang
+          - libncurses5-dev # for asdf-erlang
+          - libpng-dev # for asdf-erlang
+          - libssl-dev # for asdf-erlang
+          - libwxgtk3.0-gtk3-dev # for asdf-erlang
+          - libwxgtk-webview3.0-gtk3-dev # for asdf-erlang
+          - openjdk-11-jdk # for asdf-erlang
+          - m4 # for asdf-erlang
+          - unixodbc-dev # for asdf-erlang
+          - xsltproc # for asdf-erlang
+    - name: Import homebrew
+      ansible.builtin.import_role:
+        name: homebrew
+      vars:
+        homebrew_brewfile: '{{ playbook_dir }}/files/homebrew/Brewfile-wsl'
+    - name: Import nvim
+      ansible.builtin.import_role:
+        name: nvim
+    - name: Import fish
+      ansible.builtin.import_role:
+        name: fish
+      vars:
+        fish_shell_config: config-wsl.fish
+    - name: Import mise
+      ansible.builtin.import_role:
+        name: mise
+      vars:
+        mise_config:
+          '{{ dotfiles }}/mise/config-wsl.toml'
+        mise_default_go_packages:
+          '{{ dotfiles }}/mise/.default-go-packages'
+        mise_default_python_packages:
+          '{{ dotfiles }}/mise/.default-python-packages'
+        mise_default_npm_packages:
+          '{{ dotfiles }}/mise/.default-npm-packages'
+        mise_default_gems:
+          '{{ dotfiles }}/mise/.default-gems'
+        mise_default_mix_commands:
+          '{{ dotfiles }}/mise/.default-mix-commands'
+        mise_default_perl_modules:
+          '{{ dotfiles }}/mise/.default-perl-modules'

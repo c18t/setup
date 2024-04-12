@@ -1,0 +1,68 @@
+---
+name: setup
+
+on:
+  workflow_dispatch:
+    inputs:
+      verbose:
+        description: 'verbose logs'
+        required: true
+        type: boolean
+        default: true
+
+  schedule:
+    - cron: '0 0 1 * *'
+
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/**'
+      - 'ansible/playbooks/**'
+      - 'ansible/roles/**'
+      - 'script/**'
+      - 'setup-*.sh'
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/**'
+      - 'ansible/playbooks/**'
+      - 'ansible/roles/**'
+      - 'script/**'
+      - 'setup-*.sh'
+
+jobs:
+  setup-iapetus:
+    runs-on: macos-latest
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+      - name: run setup script
+        run: |-
+          bash -c "./setup-iapetus.sh ${VERBOSE_OPTION} \
+            -e my_password= \
+            -e my_homebrew_brewfile='$(pwd)/ansible/playbooks/files/tests/homebrew/Brewfile-mac-test' \
+            -e dotfiles='$(pwd)/ansible/playbooks/files/tests/dotfiles'"
+        env:
+          VERBOSE: ${{ inputs.verbose && 1 }}
+          VERBOSE_OPTION: ${{ inputs.verbose && '-vvv' || '' }}
+
+  setup-khronos-wsl:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+      - name: run setup script
+        run: |-
+          bash -c "./setup-khronos.sh -l local ${VERBOSE_OPTION} \
+            -e win_username= \
+            -e win_password= \
+            -e my_password= \
+            -e dotfiles='$(pwd)/ansible/playbooks/files/tests/dotfiles'"
+        env:
+          VERBOSE: ${{ inputs.verbose && 1 }}
+          VERBOSE_OPTION: ${{ inputs.verbose && '-vvv' || '' }}

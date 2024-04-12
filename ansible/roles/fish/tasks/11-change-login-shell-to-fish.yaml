@@ -1,0 +1,11 @@
+---
+- name: 11-change-login-shell-to-fish | Get fish path
+  ansible.builtin.import_tasks: includes/set_fish_path.yaml
+
+- name: 11-change-login-shell-to-fish | Change login shell for macOS
+  ansible.builtin.import_tasks: includes/change_login_shell_macos.yaml
+  when: ansible_distribution == "MacOSX"
+
+- name: 11-change-login-shell-to-fish | Change login shell for other
+  ansible.builtin.import_tasks: includes/change_login_shell_other.yaml
+  when: ansible_distribution != "MacOSX"
