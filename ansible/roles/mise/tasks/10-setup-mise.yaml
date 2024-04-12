@@ -52,4 +52,4 @@
   register: mise_install
   changed_when:
     mise_install.stderr is not search('mise all runtimes are installed')
-  notify: UpdateGlobalPath
+  notify: update_global_path

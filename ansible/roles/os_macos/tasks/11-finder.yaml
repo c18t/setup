@@ -5,4 +5,4 @@
     key: AppleShowAllFiles
     type: string
     value: 'TRUE'
-  notify: RestartFinder
+  notify: restart_finder

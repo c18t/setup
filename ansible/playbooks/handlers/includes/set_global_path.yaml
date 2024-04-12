@@ -6,7 +6,7 @@
   changed_when: false
   check_mode: false
 
-- name: update_global_path | Get login user paths
+- name: set_global_path | Get login user paths
   ansible.builtin.shell: >-
     SHELL="{{ which_fish.stdout }}"
     fish -l -c "uniq_path; string join ':' \$PATH"
@@ -14,7 +14,7 @@
   changed_when: false
   when: which_fish.rc == 0
 
-- name: set global path
+- name: set_global_path | set global path
   become: true
   ansible.builtin.command:
     /bin/launchctl config user path "{{ echo_path.stdout }}"

@@ -14,7 +14,7 @@
     executable: '{{ fish_path }}'
   when: fish_user_paths is not search(item)
   changed_when: true
-  notify: UpdateGlobalPath
+  notify: update_global_path
   loop:
     - '{{ home }}/Library/Android/sdk/tools'
     - '{{ home }}/Library/Android/sdk/platform-tools'
