@@ -50,6 +50,5 @@
     chdir: '{{ home }}'
     executable: '{{ fish_path }}'
   register: mise_install
-  changed_when:
-    mise_install.stderr is not search('mise all runtimes are installed')
+  changed_when: mise_install.stderr is not search('mise all runtimes are installed')
   notify: update_global_path

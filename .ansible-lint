@@ -32,5 +32,8 @@ warn_list:
   - ignore-errors
   - risky-shell-pipe
 
+skip_list:
+  - yaml[line-length]
+
 # Offline mode disables installation of requirements.yml and schema refreshing
 offline: false

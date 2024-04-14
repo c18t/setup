@@ -101,8 +101,7 @@
     SHELL: '{{ fish_path }}'
   block:
     - name: 14-setup-fisher | Update fisher itself
-      ansible.builtin.shell:
-        fish -l -c 'fisher update jorgebucaran/fisher'
+      ansible.builtin.shell: fish -l -c 'fisher update jorgebucaran/fisher'
       args:
         executable: '{{ fish_path }}'
       changed_when: false
