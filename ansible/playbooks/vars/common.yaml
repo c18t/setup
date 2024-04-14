@@ -7,8 +7,7 @@ user: '{{ my_user | default(ansible_env.USER) }}'
 editor: '{{ my_editor | default(ansible_env.EDITOR) | default(None) }}'
 visual: '{{ my_visual | default(ansible_env.VISUAL) | default(None) }}'
 # temporary
-temporary_home:
-  '{{ my_temporary_home | default(ansible_env.TEMP) | default(None) }}'
+temporary_home: '{{ my_temporary_home | default(ansible_env.TEMP) | default(None) }}'
 # XDG
 xdg_config_home: >-
   {{ my_xdg_config_home

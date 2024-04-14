@@ -1,7 +1,6 @@
 ---
 - name: change_login_shell_other | Check user's login shell (for other)
-  ansible.builtin.shell:
-    cat /etc/passwd | grep -q '{{ home }}:{{ fish_path }}'
+  ansible.builtin.shell: cat /etc/passwd | grep -q '{{ home }}:{{ fish_path }}'
   register: check_fish_is_login_shell
   failed_when: check_fish_is_login_shell.rc not in [0, 1]
   changed_when: false
@@ -17,8 +16,7 @@
 
     - name: change_login_shell_other | Change login shell to fish
       become: true
-      ansible.builtin.script:
-        common/chsh.exp "{{ fish_path }}" "{{ my_password }}" "{{ user }}"
+      ansible.builtin.script: common/chsh.exp "{{ fish_path }}" "{{ my_password }}" "{{ user }}"
       args:
         executable: '{{ which_expect.stdout }}'
 

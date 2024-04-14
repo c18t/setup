@@ -90,4 +90,5 @@ $RECYCLE.BIN/
 
 # End of https://www.gitignore.io/api/code,vim,windows,macos
 
+ansible/galaxy_cache
 ansible/tmp

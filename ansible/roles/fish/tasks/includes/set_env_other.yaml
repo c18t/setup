@@ -63,8 +63,7 @@
     - '/usr/lib/x86_64-linux-gnu' # linuxbrewのlibより先に読み込ませる(for curl)
 
 - name: set_env_other | Add Linuxbrew to LD_LIBRARY_PATH (for other)
-  ansible.builtin.shell:
-    set -Ux LD_LIBRARY_PATH "{{ item }}" $LD_LIBRARY_PATH
+  ansible.builtin.shell: set -Ux LD_LIBRARY_PATH "{{ item }}" $LD_LIBRARY_PATH
   args:
     executable: '{{ fish_path }}'
   when: ld_lib_path is not search(item)
@@ -74,8 +73,7 @@
     - '/usr/lib/x86_64-linux-gnu' # linuxbrewのlibより先に読み込ませる(for curl)
 
 - name: set_env_other | Add Linuxbrew to C_INCLUDE_PATH (for other)
-  ansible.builtin.shell:
-    set -Ux C_INCLUDE_PATH "{{ item }}" $C_INCLUDE_PATH
+  ansible.builtin.shell: set -Ux C_INCLUDE_PATH "{{ item }}" $C_INCLUDE_PATH
   args:
     executable: '{{ fish_path }}'
   when: c_include_path is not search(item)
@@ -84,8 +82,7 @@
     - '{{ brew_prefix }}/include'
 
 - name: set_env_other | Add Linuxbrew to CPLUS_INCLUDE_PATH (for other)
-  ansible.builtin.shell:
-    set -Ux CPLUS_INCLUDE_PATH "{{ item }}" $CPLUS_INCLUDE_PATH
+  ansible.builtin.shell: set -Ux CPLUS_INCLUDE_PATH "{{ item }}" $CPLUS_INCLUDE_PATH
   args:
     executable: '{{ fish_path }}'
   when: cplus_include_path is not search(item)
@@ -94,8 +91,7 @@
     - '{{ brew_prefix }}/include'
 
 - name: set_env_other | Add Linuxbrew to OBJC_INCLUDE_PATH (for other)
-  ansible.builtin.shell:
-    set -Ux OBJC_INCLUDE_PATH "{{ item }}" $OBJC_INCLUDE_PATH
+  ansible.builtin.shell: set -Ux OBJC_INCLUDE_PATH "{{ item }}" $OBJC_INCLUDE_PATH
   args:
     executable: '{{ fish_path }}'
   when: objc_include_path is not search(item)
