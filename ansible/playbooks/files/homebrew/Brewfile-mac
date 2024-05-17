@@ -1,7 +1,6 @@
 tap "buo/cask-upgrade" # for `brew cu` command
 tap "gromgit/fuse" # for sshfs-mac
 tap "homebrew/cask-fonts" # for font installation
-tap "homebrew/cask-versions" # for beta fomulae
 # Automate deployment, configuration, and upgrading
 brew "ansible"
 # Checks ansible playbooks for practices and behaviour
@@ -22,6 +21,8 @@ brew "fish"
 brew "fop" # for asdf-erlang
 # Software library to render fonts
 brew "freetype" # for asdf-php
+# GNU compiler collection
+brew "gfortran" # part of gcc
 # Graphics library to dynamically manipulate images
 brew "gd" # for asdf-php
 # GNU internationalization (i18n) and localization (l10n) library
@@ -70,6 +71,8 @@ brew "mise"
 brew "molecule"
 # Fast, highly customisable system info script
 brew "neofetch"
+# Regular expressions library
+brew "oniguruma" # for asdf-php
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@1.1" # for asdf-erlang, asdf-php
 brew "openssl@3" # for asdf-erlang, asdf-php
@@ -113,8 +116,6 @@ cask "font-hackgen-nerd"
 cask "font-ricty-diminished"
 # GIT client
 cask "fork"
-# GNU compiler collection
-cask "gfortran" # part of gcc
 # Free and open-source image editor
 cask "gimp"
 # Web browser
@@ -128,7 +129,7 @@ cask "google-japanese-ime"
 # Tools to protect your files
 cask "gpg-suite-no-mail"
 # Android USB tethering driver
-cask "horndis"
+#cask "horndis"
 # Vector graphics editor
 cask "inkscape"
 # Terminal emulator as alternative to Apple's Terminal app
@@ -137,24 +138,24 @@ cask "iterm2"
 cask "licecap"
 # File system integration
 cask "macfuse"
-# Full TeX Live distribution with GUI applications
-cask "mactex"
+# Full TeX Live distribution without GUI applications
+cask "mactex-no-gui"
 # Minimal installer for conda
 cask "miniconda"
 # Open source implementation of Microsoft's .NET Framework
-cask "mono-mdk"
+#cask "mono-mdk-for-visual-studio" # install with "visual-studio"
 # App to write, plan, collaborate, and get organised
 cask "notion"
 # Command-line shell and scripting language
 cask "powershell"
 # Flexible software sketchbook and a language for learning how to code
 cask "processing"
+# All-in-one bookmark manager
+cask "raindropio"
 # Video chat, voice call and instant messaging application
 cask "skype"
 # Team communication and collaboration software
 cask "slack"
-# Video game digital distribution service
-cask "steam"
 # To-do list
 cask "todoist"
 # Management tool for Unity
@@ -168,7 +169,7 @@ cask "wacom-tablet"
 # Mind mapping and brainstorming tool
 cask "xmind"
 mas "Kindle", id: 302584613
-mas "LimeChat", id: 414030210
+#mas "LimeChat", id: 414030210
 mas "LINE", id: 539883307
 mas "Microsoft Excel", id: 462058435
 mas "Microsoft Remote Desktop", id: 1295203466
