@@ -1,15 +1,15 @@
 ---
 - name: Restart Dock
-  listen: restart_dock
+  listen: RestartDock
   ansible.builtin.command: killall 'Dock'
   changed_when: true
 
 - name: Restart Finder
-  listen: restart_finder
+  listen: RestartFinder
   ansible.builtin.command: killall 'Finder'
   changed_when: true
 
 - name: Update global path
-  listen: update_global_path
+  listen: UpdateGlobalPath
   # import_tasksにすると通知を受け取れなくなる
   ansible.builtin.include_tasks: includes/set_global_path.yaml

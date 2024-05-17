@@ -1,5 +1,5 @@
 ---
-- name: 11-make-symbolic-links | Set link items
+- name: includes | 11-make-symbolic-links | Set link items
   ansible.builtin.set_fact:
     link_items:
       # ssh
@@ -9,14 +9,14 @@
       - path: '{{ home_my_git_config }}'
         dest: '{{ home }}/.gitconfig'
 
-- name: 11-make-symbolic-links | Check that link sources exists
+- name: includes | 11-make-symbolic-links | Check that link sources exists
   ansible.builtin.stat:
     path: '{{ item.path }}'
   register: stat_link_source
   failed_when: not stat_link_source.stat.exists or stat_link_source.stat.isdir
   loop: '{{ link_items }}'
 
-- name: 11-make-symbolic-links | Link to files
+- name: includes | 11-make-symbolic-links | Link to files
   become: true
   ansible.builtin.file:
     state: link

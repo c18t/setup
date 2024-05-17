@@ -1,5 +1,5 @@
 ---
-- name: 11-make-symbolic-links-windows | Set link directory or file items
+- name: includes | 11-make-symbolic-links-windows | Set link directory or file items
   ansible.builtin.set_fact:
     link_dir_items:
       # Google Drive
@@ -21,14 +21,14 @@
       - path: '{{ home_my_git_config }}'
         dest: '{{ home_git_config }}'
 
-- name: 11-make-symbolic-links-windows | Check that directory link sources
+- name: includes | 11-make-symbolic-links-windows | Check that directory link sources
   ansible.windows.win_stat:
     path: '{{ item.path }}'
   register: stat_link_source_dir
   failed_when: not stat_link_source_dir.stat.exists
   loop: '{{ link_dir_items }}'
 
-- name: 11-make-symbolic-links-windows | Make directory links
+- name: includes | 11-make-symbolic-links-windows | Make directory links
   become: true
   ansible.windows.win_shell: >-
     if (-Not(Test-Path "{{ item.dest }}")) { `
@@ -41,14 +41,14 @@
   changed_when: make_dir_link.rc == 2
   loop: '{{ link_dir_items }}'
 
-- name: 11-make-symbolic-links-windows | Check that file link sources
+- name: includes | 11-make-symbolic-links-windows | Check that file link sources
   ansible.windows.win_stat:
     path: '{{ item.path }}'
   register: stat_link_source_file
   failed_when: not stat_link_source_file.stat.exists
   loop: '{{ link_file_items }}'
 
-- name: 11-make-symbolic-links-windows | Make file links
+- name: includes | 11-make-symbolic-links-windows | Make file links
   become: true
   ansible.windows.win_shell: >-
     if (-Not(Test-Path "{{ item.dest }}")) { `

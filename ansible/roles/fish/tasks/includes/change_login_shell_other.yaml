@@ -1,32 +1,32 @@
 ---
-- name: change_login_shell_other | Check user's login shell (for other)
+- name: includes | change_login_shell_other | Check user's login shell (for other)
   ansible.builtin.shell: cat /etc/passwd | grep -q '{{ home }}:{{ fish_path }}'
   register: check_fish_is_login_shell
   failed_when: check_fish_is_login_shell.rc not in [0, 1]
   changed_when: false
   check_mode: false
 
-- name: change_login_shell_other | Change login shell to fish
+- name: includes | change_login_shell_other | Change login shell to fish
   when: check_fish_is_login_shell.rc != 0
   block:
-    - name: change_login_shell_other | Find expect
+    - name: includes | change_login_shell_other | Find expect
       ansible.builtin.command: which expect
       register: which_expect
       changed_when: false
 
-    - name: change_login_shell_other | Change login shell to fish
+    - name: includes | change_login_shell_other | Change login shell to fish
       become: true
       ansible.builtin.script: common/chsh.exp "{{ fish_path }}" "{{ my_password }}" "{{ user }}"
       args:
         executable: '{{ which_expect.stdout }}'
 
-    - name: change_login_shell_other | Read current usershell
+    - name: includes | change_login_shell_other | Read current usershell
       ansible.builtin.shell: cat /etc/passwd | grep -e '^{{ user }}:'
       register: recheck_fish_is_login_shell
       changed_when: false
       check_mode: false
 
-    - name: change_login_shell_other | Recheck user's login shell
+    - name: includes | change_login_shell_other | Recheck user's login shell
       ansible.builtin.shell: >-
         echo {{ recheck_fish_is_login_shell.stdout }}
         | grep -q '{{ home }}:{{ fish_path }}'

@@ -51,4 +51,4 @@
     executable: '{{ fish_path }}'
   register: mise_install
   changed_when: mise_install.stderr is search('✓ installed')
-  notify: update_global_path
+  notify: UpdateGlobalPath
