@@ -1,6 +1,6 @@
 ---
 - name: >-
-    brew_tasks | Update Homebrew and upgrade formulae
+    includes | brew_tasks | Update Homebrew and upgrade formulae
     (for {{ brew_distr }})
   community.general.homebrew:
     update_homebrew: true
@@ -11,7 +11,7 @@
       or ansible_env.GITHUB_ACTIONS != 'true'
 
 - name: >-
-    brew_tasks | Install with brew bundle
+    includes | brew_tasks | Install with brew bundle
     ({{ "file: " + (homebrew_brewfile | basename) + ", for " + (brew_distr) }})
   ansible.builtin.command: >-
     brew bundle install -v --no-lock --file "{{ homebrew_brewfile }}"

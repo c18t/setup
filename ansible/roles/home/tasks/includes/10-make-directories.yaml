@@ -1,5 +1,5 @@
 ---
-- name: 10-make-directories | Make standard directories
+- name: includes | 10-make-directories | Make standard directories
   ansible.builtin.file:
     state: directory
     follow: true
@@ -7,7 +7,7 @@
     mode: 0755
   loop: '{{ home_standard_directories }}'
 
-- name: 10-make-directories | Make config directories
+- name: includes | 10-make-directories | Make config directories
   ansible.builtin.file:
     state: directory
     follow: true

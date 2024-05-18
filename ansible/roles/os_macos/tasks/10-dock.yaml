@@ -5,7 +5,7 @@
     key: autohide
     type: int
     value: '1'
-  notify: restart_dock
+  notify: RestartDock
 
 - name: 10-dock | Dock settings mineffect
   community.general.osx_defaults:
@@ -13,7 +13,7 @@
     key: mineffect
     type: string
     value: genie
-  notify: restart_dock
+  notify: RestartDock
 
 - name: 10-dock | Dock settings tilesize
   community.general.osx_defaults:
@@ -21,4 +21,4 @@
     key: tilesize
     type: float
     value: '{{ os_macos_dock_tilesize }}'
-  notify: restart_dock
+  notify: RestartDock
