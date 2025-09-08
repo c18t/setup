@@ -10,17 +10,17 @@
 
 - name: 10-configure | Set link items
   ansible.builtin.set_fact:
-    link_items:
+    nvim_link_items:
       - { path: '{{ dotfiles }}/nvim', dest: '{{ xdg_config_home }}/nvim' }
 
 - name: 10-configure | Check for the existence of link sources
   ansible.builtin.stat:
     path: '{{ item.path }}'
-  register: stat_link_source
+  register: nvim_stat_link_source
   failed_when: >-
-    not stat_link_source.stat.exists
-    or not stat_link_source.stat.isdir
-  with_items: '{{ link_items }}'
+    not nvim_stat_link_source.stat.exists
+    or not nvim_stat_link_source.stat.isdir
+  with_items: '{{ nvim_link_items }}'
 
 - name: 10-configure | Link to directory
   become: true
@@ -31,4 +31,4 @@
     owner: '{{ user }}'
     src: '{{ item.path }}'
     dest: '{{ item.dest }}'
-  with_items: '{{ link_items }}'
+  with_items: '{{ nvim_link_items }}'

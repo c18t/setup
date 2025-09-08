@@ -10,7 +10,7 @@
 
 - name: 10-setup-mise | Set link items
   ansible.builtin.set_fact:
-    link_items:
+    mise_link_items:
       - path: '{{ mise_config }}'
         dest: '{{ xdg_config_home }}/mise/config.toml'
       - path: '{{ mise_default_go_packages }}'
@@ -29,9 +29,9 @@
 - name: 10-setup-mise | Check that link sources exists
   ansible.builtin.stat:
     path: '{{ item.path }}'
-  register: stat_link_source
-  failed_when: not stat_link_source.stat.exists or stat_link_source.stat.isdir
-  loop: '{{ link_items }}'
+  register: mise_stat_link_source
+  failed_when: not mise_stat_link_source.stat.exists or mise_stat_link_source.stat.isdir
+  loop: '{{ mise_link_items }}'
 
 - name: 10-setup-mise | Link to files
   become: true
@@ -42,13 +42,13 @@
     owner: '{{ user }}'
     src: '{{ item.path }}'
     dest: '{{ item.dest }}'
-  loop: '{{ link_items }}'
+  loop: '{{ mise_link_items }}'
 
 - name: 10-setup-mise | Setup tools with mise
   ansible.builtin.shell: mise install -y
   args:
     chdir: '{{ home }}'
-    executable: '{{ fish_path }}'
+    executable: '{{ mise_fish_path }}'
   register: mise_install
   changed_when: mise_install.stderr is search('✓ installed')
   notify: UpdateGlobalPath

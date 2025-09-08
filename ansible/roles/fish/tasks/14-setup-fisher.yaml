@@ -6,8 +6,8 @@
   ansible.builtin.shell: type fisher
   args:
     executable: '{{ fish_path }}'
-  register: type_fisher
-  failed_when: type_fisher.rc not in [0, 1, 126, 127]
+  register: fish_type_fisher
+  failed_when: fish_type_fisher.rc not in [0, 1, 126, 127]
   changed_when: false
   check_mode: false
 
@@ -15,26 +15,26 @@
   ansible.builtin.shell: type cmd.exe
   args:
     executable: '{{ fish_path }}'
-  register: type_cmd
-  failed_when: type_cmd.rc not in [0, 1]
+  register: fish_type_cmd
+  failed_when: fish_type_cmd.rc not in [0, 1]
   changed_when: false
   check_mode: false
 
 - name: 14-setup-fisher | Stat temporary home
   ansible.builtin.stat:
     path: '{{ temporary_home }}'
-  register: stat_temp_home
+  register: fish_stat_temp_home
   check_mode: false
 
 - name: 14-setup-fisher | Resolve temporary home
   ansible.builtin.set_fact:
-    resolved_temp: >-
-      {{ stat_temp_home.stat.lnk_source
-      if stat_temp_home.stat.islnk
-      else stat_temp_home.stat.path }}
+    fish_resolved_temp: >-
+      {{ fish_stat_temp_home.stat.lnk_source
+      if fish_stat_temp_home.stat.islnk
+      else fish_stat_temp_home.stat.path }}
 
 - name: 14-setup-fisher | Install fisher
-  when: type_fisher.rc != 0
+  when: fish_type_fisher.rc != 0
   block:
     - name: 14-setup-fisher | Install fisher
       ansible.builtin.shell: >-
@@ -54,14 +54,14 @@
     - name: 14-setup-fisher | Copy files to remote
       ansible.builtin.copy:
         src: 'fisher-my-setup/'
-        dest: '{{ resolved_temp }}/fisher-my-setup/'
+        dest: '{{ fish_resolved_temp }}/fisher-my-setup/'
         mode: 0755
       changed_when: false
 
     - name: 14-setup-fisher | Append fish config
       ansible.builtin.lineinfile:
-        path: '{{ resolved_temp }}/fisher-my-setup/fish_plugins'
-        line: '{{ resolved_temp }}/fisher-my-setup'
+        path: '{{ fish_resolved_temp }}/fisher-my-setup/fish_plugins'
+        line: '{{ fish_resolved_temp }}/fisher-my-setup'
       changed_when: false
 
 - name: 14-setup-fisher | Copy files to remote (for MacOSX)
@@ -70,30 +70,30 @@
     - name: 14-setup-fisher | Copy files to remote (for MacOSX)
       ansible.builtin.copy:
         src: 'fisher-my-setup-mac/'
-        dest: '{{ resolved_temp }}/fisher-my-setup-mac/'
+        dest: '{{ fish_resolved_temp }}/fisher-my-setup-mac/'
         mode: 0755
       changed_when: false
 
     - name: 14-setup-fisher | Append fish config (for MacOSX)
       ansible.builtin.lineinfile:
-        path: '{{ resolved_temp }}/fisher-my-setup/fish_plugins'
-        line: '{{ resolved_temp }}/fisher-my-setup-mac'
+        path: '{{ fish_resolved_temp }}/fisher-my-setup/fish_plugins'
+        line: '{{ fish_resolved_temp }}/fisher-my-setup-mac'
       changed_when: false
 
 - name: 14-setup-fisher | Copy files to remote (for WSL)
-  when: type_cmd.rc == 0
+  when: fish_type_cmd.rc == 0
   block:
     - name: 14-setup-fisher | Copy files to remote (for WSL)
       ansible.builtin.copy:
         src: 'fisher-my-setup-wsl/'
-        dest: '{{ resolved_temp }}/fisher-my-setup-wsl/'
+        dest: '{{ fish_resolved_temp }}/fisher-my-setup-wsl/'
         mode: 0755
       changed_when: false
 
     - name: 14-setup-fisher | Append fish config (for WSL)
       ansible.builtin.lineinfile:
-        path: '{{ resolved_temp }}/fisher-my-setup/fish_plugins'
-        line: '{{ resolved_temp }}/fisher-my-setup-wsl'
+        path: '{{ fish_resolved_temp }}/fisher-my-setup/fish_plugins'
+        line: '{{ fish_resolved_temp }}/fisher-my-setup-wsl'
       changed_when: false
 
 - name: 14-setup-fisher | Configure fisher with SHELL env
@@ -108,7 +108,7 @@
 
     - name: 14-setup-fisher | Copy fish_plugin file
       ansible.builtin.copy:
-        src: '{{ resolved_temp }}/fisher-my-setup/fish_plugins'
+        src: '{{ fish_resolved_temp }}/fisher-my-setup/fish_plugins'
         dest: '{{ xdg_config_home }}/fish/fish_plugins'
         mode: 0644
 
@@ -116,6 +116,6 @@
       ansible.builtin.shell: fish -l -c 'fisher update'
       args:
         executable: '{{ fish_path }}'
-      register: update_fisher_plugins
-      failed_when: update_fisher_plugins.stderr is search('Cannot install')
+      register: fish_update_fisher_plugins
+      failed_when: fish_update_fisher_plugins.stderr is search('Cannot install')
       changed_when: false
