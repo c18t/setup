@@ -16,5 +16,5 @@
 
 - name: set_global_path | set global path
   become: true
-  ansible.builtin.command: /bin/launchctl config user path "{{ echo_path.stdout }}"
+  ansible.builtin.command: /bin/launchctl config user path "{{ echo_path.stdout | replace(':~/', ':$HOME/') | expandvars }}"
   when: which_fish.rc == 0
