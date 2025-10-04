@@ -20,6 +20,6 @@ jobs:
       - name: run pre-commit
         uses: pre-commit/action@v3.0.1
       - name: run ansible-lint
-        uses: ansible/ansible-lint@v24.5.0
+        uses: ansible/ansible-lint@v25.9.1
         env:
           ANSIBLE_HOME: ./ansible
