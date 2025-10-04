@@ -4,10 +4,10 @@
     link_items:
       # ssh
       - path: '{{ home_my_ssh_config }}'
-        dest: '{{ home }}/.ssh/config'
+        dest: '{{ home_ssh_config }}'
       # git
       - path: '{{ home_my_git_config }}'
-        dest: '{{ home }}/.gitconfig'
+        dest: '{{ home_git_config }}'
 
 - name: includes | 11-make-symbolic-links | Check that link sources exists
   ansible.builtin.stat:
