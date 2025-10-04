@@ -1,6 +1,5 @@
 tap "buo/cask-upgrade" # for `brew cu` command
 tap "gromgit/fuse" # for sshfs-mac
-tap "homebrew/cask-fonts" # for font installation
 # Automate deployment, configuration, and upgrading
 brew "ansible"
 # Checks ansible playbooks for practices and behaviour
@@ -117,7 +116,7 @@ cask "font-ricty-diminished"
 # GIT client
 cask "fork"
 # Free and open-source image editor
-cask "gimp"
+#cask "gimp"
 # Web browser
 cask "google-chrome"
 # Set of tools to manage resources and applications hosted on Google Cloud
@@ -131,9 +130,7 @@ cask "gpg-suite-no-mail"
 # Android USB tethering driver
 #cask "horndis"
 # Vector graphics editor
-cask "inkscape"
-# Terminal emulator as alternative to Apple's Terminal app
-cask "iterm2"
+#cask "inkscape"
 # Animated screen capture application
 cask "licecap"
 # File system integration
@@ -152,6 +149,8 @@ cask "powershell"
 cask "processing"
 # All-in-one bookmark manager
 cask "raindropio"
+# Hardware-accelerated GPU terminal emulator
+cask "rio"
 # Video chat, voice call and instant messaging application
 cask "skype"
 # Team communication and collaboration software

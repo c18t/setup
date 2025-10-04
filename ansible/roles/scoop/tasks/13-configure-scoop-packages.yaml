@@ -11,7 +11,7 @@
     url: https://winscp.net/translations/dll/5.15.9/jp.zip
     dest: '{{ temporary_home }}\winscp_tran_5.15.9_jp.zip'
     force: false
-  register: download_tran_winscp
+  register: scoop_download_tran_winscp
   ignore_errors: true
   when: false
 
@@ -19,17 +19,17 @@
   community.windows.win_unzip:
     src: '{{ temporary_home }}\winscp_tran_5.15.9_jp.zip'
     dest: C:\ProgramData\scoop\apps\winscp\current\Translations
-  # when: download_tran_winscp.changed == true
+  # when: scoop_download_tran_winscp.changed == true
   when: false
 
 # pre-commitで参照しているsqlite3パッケージが動かないので追加
 - name: 13-configure-scoop-packages | Find scoop\shims\sqlite3.dll
   ansible.windows.win_stat:
     path: C:\ProgramData\scoop\shims\sqlite3.dll
-  register: find_sqlite3_dll
+  register: scoop_find_sqlite3_dll
 
 - name: 13-configure-scoop-packages | Add sqlite3.dll to scoop\shims
-  when: not find_sqlite3_dll.stat.exists
+  when: not scoop_find_sqlite3_dll.stat.exists
   block:
     - name: 13-configure-scoop-packages | Download sqlite3.dll
       ansible.windows.win_get_url:

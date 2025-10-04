@@ -15,8 +15,8 @@
     - name: 10-add-fish-to-shells | Add fish to shells
       become: true
       ansible.builtin.shell: echo {{ fish_path }} | tee -a /etc/shells
-      register: add_fish_in_shells
-      changed_when: add_fish_in_shells.rc == 0
+      register: fish_add_fish_in_shells
+      changed_when: fish_add_fish_in_shells.rc == 0
 
     - name: 10-add-fish-to-shells | Recheck fish is enabled as login shells
       ansible.builtin.shell: cat /etc/shells | grep -q '{{ fish_path }}'

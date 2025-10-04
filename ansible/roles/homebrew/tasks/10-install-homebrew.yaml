@@ -1,8 +1,8 @@
 ---
 - name: 10-install-homebrew | Check brew
   ansible.builtin.command: which brew
-  register: which_brew
-  failed_when: which_brew.rc not in [0, 1, 126, 127]
+  register: homebrew_which_brew
+  failed_when: homebrew_which_brew.rc not in [0, 1, 126, 127]
   changed_when: false
   check_mode: false
 
@@ -10,5 +10,5 @@
   ansible.builtin.command: >-
     /bin/bash -c "$(curl -fsSL
     https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  when: which_brew.rc != 0
+  when: homebrew_which_brew.rc != 0
   changed_when: true

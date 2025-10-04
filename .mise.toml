@@ -4,7 +4,6 @@ shellcheck = "latest"
 yamllint = "latest"
 markdownlint-cli2 = "latest"
 "go:github.com/rhysd/actionlint/cmd/actionlint" = "latest"
-"npm:prettier" = "latest"
 
 [env]
 '_'.file = ".env"

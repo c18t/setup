@@ -18,7 +18,7 @@
       ansible.windows.win_shell: .\vswhere.exe -all -prerelease -latest -format json
       args:
         chdir: C:\Program Files (x86)\Microsoft Visual Studio\Installer
-      register: find_vs
+      register: winget_find_vs
       changed_when: false
       ignore_errors: true
 
@@ -26,16 +26,16 @@
         12-configure-winget-packages
         | Get information on latest installed version of Visual Studio
       ansible.builtin.set_fact:
-        vs_info: >-
-          {{ find_vs.stdout | default("[]")
+        winget_vs_info: >-
+          {{ winget_find_vs.stdout | default("[]")
           | from_json | first | default(none) }}
 
     - name: 12-configure-winget-packages | Install components for Visual Studio
       become: true
       ansible.windows.win_shell: >-
-        & "{{ vs_info.properties.setupEngineFilePath }}" modify
-        -p --norestart --channelId {{ vs_info.channelId }}
-        --productId {{ vs_info.productId }}
+        & "{{ winget_vs_info.properties.setupEngineFilePath }}" modify
+        -p --norestart --channelId {{ winget_vs_info.channelId }}
+        --productId {{ winget_vs_info.productId }}
         --config "{{ temporary_home }}\visual-studio\.vsconfig"
       changed_when: false
-      when: vs_info is mapping
+      when: winget_vs_info is mapping
