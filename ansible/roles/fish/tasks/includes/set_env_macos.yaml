@@ -25,7 +25,7 @@
     content: >
       set -gx PKG_CONFIG_PATH
       "{{ brew_prefix }}/opt/{{ item }}/lib/pkgconfig" $PKG_CONFIG_PATH
-    mode: 0644
+    mode: u=rw,g=r,o=r
   loop:
     - freetype
     - gd

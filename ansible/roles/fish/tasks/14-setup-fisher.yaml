@@ -55,7 +55,7 @@
       ansible.builtin.copy:
         src: 'fisher-my-setup/'
         dest: '{{ fish_resolved_temp }}/fisher-my-setup/'
-        mode: 0755
+        mode: u=rwx,g=rx,o=rx
       changed_when: false
 
     - name: 14-setup-fisher | Append fish config
@@ -71,7 +71,7 @@
       ansible.builtin.copy:
         src: 'fisher-my-setup-mac/'
         dest: '{{ fish_resolved_temp }}/fisher-my-setup-mac/'
-        mode: 0755
+        mode: u=rwx,g=rx,o=rx
       changed_when: false
 
     - name: 14-setup-fisher | Append fish config (for MacOSX)
@@ -87,7 +87,7 @@
       ansible.builtin.copy:
         src: 'fisher-my-setup-wsl/'
         dest: '{{ fish_resolved_temp }}/fisher-my-setup-wsl/'
-        mode: 0755
+        mode: u=rwx,g=rx,o=rx
       changed_when: false
 
     - name: 14-setup-fisher | Append fish config (for WSL)
@@ -110,7 +110,7 @@
       ansible.builtin.copy:
         src: '{{ fish_resolved_temp }}/fisher-my-setup/fish_plugins'
         dest: '{{ xdg_config_home }}/fish/fish_plugins'
-        mode: 0644
+        mode: u=rw,g=r,o=r
 
     - name: 14-setup-fisher | Update fisher plugins
       ansible.builtin.shell: fish -l -c 'fisher update'

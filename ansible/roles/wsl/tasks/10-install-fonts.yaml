@@ -4,4 +4,4 @@
   ansible.builtin.copy:
     src: 'fonts_local.conf'
     dest: '/etc/fonts/local.conf'
-    mode: 0644
+    mode: u=rw,g=r,o=r

@@ -8,7 +8,7 @@ solves: #1
 
 ## なにをやったか / What I did
 
-## 影響範囲  / Affected by the change
+## 影響範囲 / Affected by the change
 
 ## 懸念事項 / Concerns
 

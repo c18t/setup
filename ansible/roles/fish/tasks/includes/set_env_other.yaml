@@ -105,7 +105,7 @@
     content: >
       set -gx PKG_CONFIG_PATH
       "{{ brew_prefix }}/opt/{{ item }}/lib/pkgconfig" $PKG_CONFIG_PATH
-    mode: 0644
+    mode: u=rw,g=r,o=r
   with_items: []
 
 - name: includes | set_env_other | Add other PKG_CONFIG_PATH config (for other)
@@ -114,7 +114,7 @@
     content: >
       set -gx PKG_CONFIG_PATH
       "{{ item.path }}/pkgconfig" $PKG_CONFIG_PATH
-    mode: 0644
+    mode: u=rw,g=r,o=r
   with_items:
     - name: 'zzz_x86_64-linux-gnu'
       path: '/usr/lib/x86_64-linux-gnu'

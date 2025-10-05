@@ -4,7 +4,7 @@
     state: directory
     follow: true
     path: '{{ item }}'
-    mode: 0755
+    mode: u=rwx,g=rx,o=rx
   with_items:
     - '{{ xdg_cache_home }}/nvim_backup'
 

@@ -4,9 +4,9 @@ $Current = Split-Path $PSCommandPath
 
 # Ubuntuパッケージの確認
 if (-Not (Get-Command -Name ubuntu -ErrorAction SilentlyContinue)) {
-    Write-Host "install ubuntu package ..."
-    wsl --install -d Ubuntu
-    Write-Host "... done!"
+  Write-Host "install ubuntu package ..."
+  wsl --install -d Ubuntu
+  Write-Host "... done!"
 }
 
 # ubuntuのインストール
@@ -23,18 +23,18 @@ $wslPath = "$Current\make-wsl-config.sh" -replace "\\", "/" -replace "^\w:", "/m
 ubuntu run bash "$wslPath"
 $result = $LASTEXITCODE
 if ($result -eq 0) {
-    Write-Host "... done!"
-    # 変更なし
+  Write-Host "... done!"
+  # 変更なし
 }
 elseif ($result -eq 1) {
-    Write-Host "reboot windows subsystem for linux ..."
-    # WSLの再起動
-    wsl --shutdown
-    Write-Host "... done!"
+  Write-Host "reboot windows subsystem for linux ..."
+  # WSLの再起動
+  wsl --shutdown
+  Write-Host "... done!"
 }
 else {
-    Write-Host "... failed!"
-    throw "Ubuntuのセットアップに失敗しました。終了します。"
+  Write-Host "... failed!"
+  throw "Ubuntuのセットアップに失敗しました。終了します。"
 }
 
 # ホームディレクトリの変更 (ホームディレクトリをWindows側にすると起動が凄まじく遅いのでやめる)

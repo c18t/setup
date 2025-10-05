@@ -1,45 +1,71 @@
-tap "buo/cask-upgrade" # for `brew cu` command
-tap "gromgit/fuse" # for sshfs-mac
+# Cryptographic recipes and primitives for Python
+brew "cryptography"
+# NaCl networking and cryptography library
+brew "libsodium"
+# Display directories as trees (with optional color/HTML output)
+brew "tree"
 # Automate deployment, configuration, and upgrading
 brew "ansible"
 # Checks ansible playbooks for practices and behaviour
 brew "ansible-lint"
+# Library for manipulating PNG images
+brew "libpng"
 # Automatic configure script builder
 brew "autoconf" # for asdf-erlang, asdf-php
 # Tool for generating GNU Standards-compliant Makefiles
 brew "automake" # for asdf-php
 # Parser generator
 brew "bison" # for asdf-php
-# Text-based window manager and terminal multiplexer
-brew "byobu"
-# Pack, ship and run any application as a lightweight container
-brew "docker", link: false
-# User-friendly command-line shell for UNIX-like operating systems
-brew "fish"
-# XSL-FO print formatter for making PDF or PS documents
-brew "fop" # for asdf-erlang
-# Software library to render fonts
-brew "freetype" # for asdf-php
-# GNU compiler collection
-brew "gfortran" # part of gcc
-# Graphics library to dynamically manipulate images
-brew "gd" # for asdf-php
+# GNU multiple precision arithmetic library
+brew "gmp" # for asdf-php
 # GNU internationalization (i18n) and localization (l10n) library
 brew "gettext" # for asdf-php
+# Text-based window manager and terminal multiplexer
+brew "byobu"
+# Software library to render fonts
+brew "freetype" # for asdf-php
+# Core application library for C
+brew "glib"
+# Vector graphics library with cross-device output support
+brew "cairo"
+# Like neofetch, but much faster because written mostly in C
+brew "fastfetch"
+# User-friendly command-line shell for UNIX-like operating systems
+brew "fish"
+# C/C++ and Java libraries for Unicode and globalization
+brew "icu4c@77" # for asdf-php
+# OpenType text shaping engine
+brew "harfbuzz"
+# Development kit for the Java programming language
+brew "openjdk"
+# XSL-FO print formatter for making PDF or PS documents
+brew "fop" # for asdf-erlang
+# GNU compiler collection
+brew "gcc" # part of gcc
+# Graphics library to dynamically manipulate images
+brew "gd" # for asdf-php
+# Validating, recursive, caching DNS resolver
+brew "unbound"
+# GNU Pretty Good Privacy (PGP) package
+brew "gnupg"
 # Bash-tool to store the private data inside a git repo
 brew "git-secret"
 # Prevents you from committing sensitive information to a git repo
 brew "git-secrets"
-# GNU multiple precision arithmetic library
-brew "gmp" # for asdf-php
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.12"
+# Library to render SVG files using Cairo
+brew "librsvg"
 # Graph visualization software from AT&T and Bell Labs
 brew "graphviz"
-# C/C++ and Java libraries for Unicode and globalization
-brew "icu4c" # for asdf-php
+# C/C++ seam carving library
+brew "liblqr"
 # Tools and libraries to manipulate images in many formats
 brew "imagemagick" # for asdf-php
 # Update of iperf: measures TCP, UDP, and SCTP bandwidth
 brew "iperf3"
+# Image manipulation library
+brew "jpeg" # for asdf-php
 # Easy building and installing of Erlang/OTP instances
 brew "kerl" # for asdf-erlang
 # Network authentication protocol
@@ -48,12 +74,6 @@ brew "krb5" # for asdf-php
 brew "libedit" # for asdf-php
 # Conversion library
 brew "libiconv" # for asdf-php
-# Image manipulation library
-brew "libjpeg" # for asdf-php
-# Library for manipulating PNG images
-brew "libpng" # for asdf-php
-# NaCl networking and cryptography library
-brew "libsodium" # for asdf-php
 # GNOME XML library
 brew "libxml2" # for asdf-php
 # C XSLT library for GNOME
@@ -68,59 +88,47 @@ brew "mas"
 brew "mise"
 # Automated testing for Ansible roles
 brew "molecule"
-# Fast, highly customisable system info script
-brew "neofetch"
 # Regular expressions library
 brew "oniguruma" # for asdf-php
-# Cryptography and SSL/TLS Toolkit
-brew "openssl@1.1" # for asdf-erlang, asdf-php
-brew "openssl@3" # for asdf-erlang, asdf-php
-# Manage compile and link flags for libraries
-brew "pkg-config" # for ansible, asdf-php
+# Package compiler and linker metadata toolkit
+brew "pkgconf" # for ansible, asdf-php
 # Generate C-based recognizers from regular expressions
 brew "re2c" # for asdf-php
-# Library for command-line editing
-brew "readline" # for asdf-erlang
-# Command-line interface for SQLite
-brew "sqlite" # for ansible
 # Send macOS User Notifications from the command-line
 brew "terminal-notifier"
-# Display directories as trees (with optional color/HTML output)
-brew "tree"
-# Homebrew, but with Docker images
-brew "whalebrew"
+# CLI for Todoist
+brew "todoist-cli"
+# Simple terminal image viewer written in Rust
+brew "viu"
 # Cross-platform C++ GUI toolkit
 brew "wxwidgets" # for asdf-erlang
 # General-purpose lossless data-compression library
 brew "zlib" # for asdf-php
-# File system client based on SSH File Transfer Protocol
-brew "gromgit/fuse/sshfs-mac", link: false
+# Command-line interface for 1Password
+cask "1password-cli"
 # Tools for building Android applications
 cask "android-studio"
 # E-books management software
 cask "calibre"
 # Voice and text chat software
 cask "discord"
-# App to build and share containerised applications and microservices
-cask "docker"
 # Developer platform
-cask "dotnet"
+cask "dotnet-runtime"
 # Web browser
 cask "firefox"
-# Japanese programming font which is a composed of Hack and GenJyuu-Gothic
 cask "font-hackgen"
-# Japanese programming font which is a composed of Hack and GenJyuu-Gothic
 cask "font-hackgen-nerd"
-# Ricty Diminished
 cask "font-ricty-diminished"
 # GIT client
 cask "fork"
+# Set of tools to manage resources and applications hosted on Google Cloud
+cask "gcloud-cli"
+# Terminal emulator that uses platform-native UI and GPU acceleration
+cask "ghostty"
 # Free and open-source image editor
 #cask "gimp"
 # Web browser
 cask "google-chrome"
-# Set of tools to manage resources and applications hosted on Google Cloud
-cask "google-cloud-sdk"
 # Client for the Google Drive storage service
 cask "google-drive"
 # Japanese input software
@@ -133,8 +141,6 @@ cask "gpg-suite-no-mail"
 #cask "inkscape"
 # Animated screen capture application
 cask "licecap"
-# File system integration
-cask "macfuse"
 # Full TeX Live distribution without GUI applications
 cask "mactex-no-gui"
 # Minimal installer for conda
@@ -143,38 +149,43 @@ cask "miniconda"
 #cask "mono-mdk-for-visual-studio" # install with "visual-studio"
 # App to write, plan, collaborate, and get organised
 cask "notion"
-# Command-line shell and scripting language
-cask "powershell"
+# Calendar for professionals and teams
+cask "notion-calendar"
 # Flexible software sketchbook and a language for learning how to code
 cask "processing"
 # All-in-one bookmark manager
 cask "raindropio"
-# Hardware-accelerated GPU terminal emulator
-cask "rio"
-# Video chat, voice call and instant messaging application
-cask "skype"
 # Team communication and collaboration software
 cask "slack"
+# Music streaming service
+cask "spotify"
+# Video game digital distribution service
+cask "steam"
 # To-do list
-cask "todoist"
+cask "todoist-app"
 # Management tool for Unity
 cask "unity-hub"
-# Integrated development environment
-cask "visual-studio"
 # Open-source code editor
 cask "visual-studio-code"
 # Resources for Wacom tablets
 cask "wacom-tablet"
 # Mind mapping and brainstorming tool
 cask "xmind"
+mas "GarageBand", id: 682658836
+mas "iMovie", id: 408981434
+mas "Keynote", id: 409183694
 mas "Kindle", id: 302584613
 #mas "LimeChat", id: 414030210
 mas "LINE", id: 539883307
 mas "Microsoft Excel", id: 462058435
-mas "Microsoft Remote Desktop", id: 1295203466
+mas "NFC Tools for Desktop", id: 1392471092
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541
 mas "Steam Link", id: 1246969117
+mas "Windows App", id: 1295203466
 mas "Xcode", id: 497799835
 vscode "actboy168.lua-debug"
+vscode "anthropic.claude-code"
 vscode "bdavs.expect"
 vscode "bierner.github-markdown-preview"
 vscode "bierner.markdown-checkbox"
@@ -184,20 +195,21 @@ vscode "bierner.markdown-mermaid"
 vscode "bierner.markdown-preview-github-styles"
 vscode "bierner.markdown-yaml-preamble"
 vscode "bmalehorn.vscode-fish"
-vscode "casualjim.theme-desertex"
+vscode "bradlc.vscode-tailwindcss"
 vscode "chrisdias.vscode-opennewinstance"
 vscode "christian-kohler.path-intellisense"
 vscode "chrmarti.regex"
-vscode "dawhite.mustache"
+vscode "csstools.postcss"
+vscode "davidanson.vscode-markdownlint"
 vscode "dbaeumer.vscode-eslint"
 vscode "denoland.vscode-deno"
+vscode "docker.docker"
 vscode "donjayamanne.githistory"
 vscode "eamodio.gitlens"
 vscode "ecmel.vscode-html-css"
 vscode "editorconfig.editorconfig"
 vscode "eiminsasete.apacheconf-snippets"
 vscode "electrotype.windows-explorer-context-menu"
-vscode "eliverlara.andromeda"
 vscode "emilast.logfilehighlighter"
 vscode "esbenp.prettier-vscode"
 vscode "evilz.vscode-reveal"
@@ -207,27 +219,34 @@ vscode "formulahendry.auto-complete-tag"
 vscode "formulahendry.auto-rename-tag"
 vscode "geeklearningio.graphviz-markdown-preview"
 vscode "george-alisson.html-preview-vscode"
+vscode "github.copilot"
+vscode "github.copilot-chat"
 vscode "golang.go"
 vscode "hediet.vscode-drawio"
 vscode "humao.rest-client"
 vscode "ibm.output-colorizer"
 vscode "idleberg.badges"
+vscode "imgildev.vscode-mustache-snippets"
 vscode "jakebecker.elixir-ls"
 vscode "jebbs.plantuml"
 vscode "jinsihou.diff-tool"
 vscode "joaompinto.vscode-graphviz"
 vscode "justusadam.language-haskell"
-vscode "kenhowardpdx.vscode-gist"
 vscode "kisstkondoros.vscode-codemetrics"
 vscode "kukushi.pasteurl"
 vscode "l13rary.l13-diff"
+vscode "lit.lit-snippets"
+vscode "marlosirapuan.nord-deep"
 vscode "me-dutour-mathieu.vscode-github-actions"
 vscode "mechatroner.rainbow-csv"
+vscode "mfederczuk.w3c-ebnf"
 vscode "mhutchie.git-graph"
 vscode "mikestead.dotenv"
 vscode "mitchdenny.ecdc"
+vscode "moonbit.moonbit-lang"
 vscode "mosapride.zenkaku"
-vscode "ms-azuretools.vscode-docker"
+vscode "mrmlnc.vscode-apache"
+vscode "ms-azuretools.vscode-containers"
 vscode "ms-ceintl.vscode-language-pack-ja"
 vscode "ms-dotnettools.csharp"
 vscode "ms-dotnettools.vscode-dotnet-runtime"
@@ -235,6 +254,7 @@ vscode "ms-python.debugpy"
 vscode "ms-python.isort"
 vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"
+vscode "ms-python.vscode-python-envs"
 vscode "ms-toolsai.jupyter"
 vscode "ms-toolsai.jupyter-keymap"
 vscode "ms-toolsai.jupyter-renderers"
@@ -252,6 +272,7 @@ vscode "ms-vsliveshare.vsliveshare"
 vscode "nickdemayo.vscode-json-editor"
 vscode "nimsaem.nimvscode"
 vscode "oderwat.indent-rainbow"
+vscode "orta.vscode-jest"
 vscode "pkief.markdown-checkbox"
 vscode "pranaygp.vscode-css-peek"
 vscode "rafaelmaiolla.diff"
@@ -261,13 +282,14 @@ vscode "ryu1kn.partial-diff"
 vscode "shardulm94.trailing-spaces"
 vscode "shuworks.vscode-table-formatter"
 vscode "sirtobi.code-clip-ring"
-vscode "sysoev.language-stylus"
+vscode "smelukov.vscode-csstree"
 vscode "tamasfe.even-better-toml"
-vscode "thisismanta.stylus-supremacy"
 vscode "tintinweb.graphviz-interactive-preview"
 vscode "tomoki1207.pdf"
 vscode "tomoki1207.vscode-input-sequence"
 vscode "tyriar.sort-lines"
+vscode "umoxfo.vscode-w3cvalidation"
+vscode "usernamehw.errorlens"
 vscode "vscode-icons-team.vscode-icons"
 vscode "vscodevim.vim"
 vscode "vue.volar"
@@ -275,5 +297,7 @@ vscode "wix.vscode-import-cost"
 vscode "wmaurer.change-case"
 vscode "xabikos.javascriptsnippets"
 vscode "xdebug.php-debug"
+vscode "yoavbls.pretty-ts-errors"
 vscode "yzane.markdown-pdf"
+vscode "zignd.html-css-class-completion"
 vscode "zxh404.vscode-proto3"

@@ -4,8 +4,8 @@ Dim currentPath ' 現在の環境変数PATH
 Dim path        ' 環境変数PATHに追加するパス
 
 If WScript.Arguments.Count < 2 Then
-    WScript.echo("Usage: prependpath.vbs (System | User | Volatile | Process) <path>")
-    WScript.Quit(-1)
+  WScript.echo("Usage: prependpath.vbs (System | User | Volatile | Process) <path>")
+  WScript.Quit(-1)
 End If
 
 Set WshShell = WScript.CreateObject("WScript.Shell")
@@ -19,6 +19,6 @@ path = WScript.Arguments(1)
 ' WScript.echo(Len(currentPath)-Len(";"&path)+1) ' ;pathが環境変数PATHの末尾にある場合の位置
 ' WScript.echo(InStrRev(currentPath, ";"&path) <> (Len(currentPath)-Len(";"&path)+1)) ' 環境変数PATHの末尾が;pathでないこと
 If path <> currentPath And InStr(currentPath, path&";") = 0 And InStrRev(currentPath, ";"&path) <> (Len(currentPath)-Len(";"&path)+1) Then
-    ' pathが指定されていなければ先頭に追加する
-    WshEnv.Item("PATH") = path & ";" & currentPath
+  ' pathが指定されていなければ先頭に追加する
+  WshEnv.Item("PATH") = path & ";" & currentPath
 End If

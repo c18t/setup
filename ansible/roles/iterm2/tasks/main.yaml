@@ -1,6 +1,0 @@
----
-- name: ITerm2 role tasks
-  tags: iterm2
-  block:
-    - name: Install imgcat for iTerm2
-      ansible.builtin.import_tasks: 10-install-imgcat.yaml

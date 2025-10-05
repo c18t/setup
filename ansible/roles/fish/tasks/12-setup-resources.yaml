@@ -4,7 +4,7 @@
     state: directory
     follow: true
     path: '{{ item }}'
-    mode: 0755
+    mode: u=rwx,g=rx,o=rx
   loop:
     - '{{ xdg_config_home }}/fish/completions'
     - '{{ xdg_config_home }}/fish/conf.d'

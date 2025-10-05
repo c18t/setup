@@ -60,7 +60,7 @@ _path (for macOS):_ ansible/playbooks/files/homebrew/Brewfile-mac
 _path (for WSL):_ ansible/playbooks/files/homebrew/Brewfile-wsl
 
 ```sh
-brew bundle dump --describe
+brew bundle dump --describe --file=- > <Brewfile path>
 ```
 
 ### VS Code extensions

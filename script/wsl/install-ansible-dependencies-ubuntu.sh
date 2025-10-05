@@ -2,9 +2,9 @@
 result=0
 
 # Use FD3 to print log messages
-exec 3>/dev/null
+exec 3> /dev/null
 if [ -n "$VERBOSE" ]; then
-    exec 3>&2
+  exec 3>&2
 fi
 
 echo -n "check expect ..." >&3
@@ -24,15 +24,15 @@ SSHPASS=$?
 
 # install expect, python3-apt, sshpass
 if [ $EXPECT -ne 0 ] || [ $PYTHON3_APT -ne 0 ] || [ $SSHPASS -ne 0 ]; then
-    echo install ansible dependencies ...
-    sudo apt update -y \
-        && sudo apt install -y expect python3-apt sshpass
-    result=$?
-    if [ $result -eq 0 ]; then
-        echo ... done!
-    else
-        echo ... failed!
-    fi
+  echo install ansible dependencies ...
+  sudo apt update -y \
+    && sudo apt install -y expect python3-apt sshpass
+  result=$?
+  if [ $result -eq 0 ]; then
+    echo ... done!
+  else
+    echo ... failed!
+  fi
 fi
 
 exit $result

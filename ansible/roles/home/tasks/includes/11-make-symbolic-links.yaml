@@ -1,13 +1,25 @@
 ---
+- name: includes | 11-make-symbolic-links | Link to google drive directory
+  become: true
+  ansible.builtin.file:
+    state: link
+    follow: false
+    force: true
+    owner: '{{ user }}'
+    src: '{{ my_google_drive }}'
+    dest: '{{ home_google_drive }}'
+
 - name: includes | 11-make-symbolic-links | Set link items
   ansible.builtin.set_fact:
     link_items:
-      # ssh
-      - path: '{{ home_my_ssh_config }}'
-        dest: '{{ home }}/.ssh/config'
-      # git
+      # .gitignore
       - path: '{{ home_my_git_config }}'
-        dest: '{{ home }}/.gitconfig'
+        dest: '{{ home_git_config }}'
+      - path: '{{ home_my_git_config_local }}'
+        dest: '{{ home_git_config_local }}'
+      # Ghostty
+      - path: '{{ home_my_ghostty_config }}'
+        dest: '{{ home_ghostty_config }}'
 
 - name: includes | 11-make-symbolic-links | Check that link sources exists
   ansible.builtin.stat:
