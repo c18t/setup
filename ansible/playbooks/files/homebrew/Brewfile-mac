@@ -91,7 +91,7 @@ brew "molecule"
 # Regular expressions library
 brew "oniguruma" # for asdf-php
 # Package compiler and linker metadata toolkit
-brew "pkgconf" # for ansible, asdf-php
+brew "pkgconf" # for ansible, asdf-php, asdf-erlang
 # Generate C-based recognizers from regular expressions
 brew "re2c" # for asdf-php
 # Send macOS User Notifications from the command-line

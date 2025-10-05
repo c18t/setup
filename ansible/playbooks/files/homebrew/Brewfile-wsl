@@ -1,4 +1,3 @@
-tap "homebrew/bundle"
 # Interpreted, interactive, object-oriented programming language
 brew "python"
 # Automate deployment, configuration, and upgrading
@@ -9,6 +8,8 @@ brew "ansible-lint"
 brew "byobu"
 # Pack, ship and run any application as a lightweight container
 brew "docker"
+# Like neofetch, but much faster because written mostly in C
+brew "fastfetch"
 # User-friendly command-line shell for UNIX-like operating systems
 brew "fish"
 # Bash-tool to store the private data inside a git repo
@@ -25,8 +26,6 @@ brew "lynx"
 brew "mise"
 # Automated testing for Ansible roles
 brew "molecule"
-# Fast, highly customisable system info script
-brew "neofetch"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
 # Homebrew, but with Docker images
