@@ -1,0 +1,16 @@
+*.conf
+*.exp
+*.ini
+*.ps1
+
+ansible/playbooks/files/**/*
+
+ansible.cfg
+inventory
+.ansible-lint
+.editorconfig
+.npmrc
+pnpm-lock.yaml
+LICENSE
+
+.github/pull_request_template.md

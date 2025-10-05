@@ -1,0 +1,25 @@
+{
+  "name": "setup",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "ɯ̹t͡ɕʲi <info@c18t.me>",
+  "license": "CC0-1.0",
+  "packageManager": "pnpm@10.18.0",
+  "engines": {
+    "node": "*",
+    "pnpm": "*",
+    "npm": "⚠️use pnpm instead",
+    "yarn": "⚠️use pnpm instead"
+  },
+  "devDependencies": {
+    "prettier": "*",
+    "prettier-plugin-sh": "*",
+    "prettier-plugin-toml": "*",
+    "pretty-quick": "*"
+  }
+}
