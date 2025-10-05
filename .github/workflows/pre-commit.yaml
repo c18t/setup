@@ -17,6 +17,8 @@ jobs:
         uses: jdx/mise-action@v2
         with:
           experimental: true
+      - name: install pretty-quick and dependencies
+        run: pnpm install
       - name: run pre-commit
         uses: pre-commit/action@v3.0.1
       - name: run ansible-lint
