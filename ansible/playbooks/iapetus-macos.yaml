@@ -10,6 +10,7 @@
     my_editor: code
     my_visual: code
     my_temporary_home: /tmp
+    my_google_drive: /Users/private/Library/CloudStorage/GoogleDrive-xc18tx@gmail.com/マイドライブ
   pre_tasks:
     - name: Run always
       tags: always
@@ -31,8 +32,9 @@
         home_standard_directories:
           - Archives
           - Projects
-        home_my_ssh_config: '{{ dotfiles }}/ssh/config-prv'
         home_my_git_config: '{{ dotfiles }}/git/.gitconfig-prv'
+        home_my_git_config_local: '{{ dotfiles }}/git/.gitconfig-prv.mac.local'
+        home_my_ghostty_config: '{{ dotfiles }}/ghostty/config'
     - name: Import homebrew
       ansible.builtin.import_role:
         name: homebrew
@@ -40,9 +42,6 @@
         homebrew_brewfile: >-
           {{ my_homebrew_brewfile
           | default(playbook_dir + "/files/homebrew/Brewfile-mac") }}
-    - name: Import iterm2
-      ansible.builtin.import_role:
-        name: iterm2
     - name: Import nvim
       ansible.builtin.import_role:
         name: nvim

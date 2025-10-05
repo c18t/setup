@@ -3,8 +3,11 @@
 home_xdg_cache_home: '{{ home }}/.cache'
 home_xdg_config_home: '{{ home }}/.config'
 home_xdg_data_home: '{{ home }}/.local/share'
+# ghostty default
+home_ghostty_home: '{{ home_xdg_config_home }}/ghostty'
+home_ghostty_config: '{{ home_ghostty_home }}/config'
 # Google Drive default
 home_google_drive: '{{ home }}/GoogleDrive'
 # config file default
-home_ssh_config: '{{ home }}/.ssh/config'
 home_git_config: '{{ home }}/.gitconfig'
+home_git_config_local: '{{ home }}/.gitconfig.local'

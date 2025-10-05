@@ -12,7 +12,7 @@
       ansible.builtin.copy:
         src: 'visual-studio/'
         dest: '{{ temporary_home }}/visual-studio/'
-        mode: 0755
+        mode: u=rwx,g=rx,o=rx
 
     - name: 12-configure-winget-packages | Find Visual Studio
       ansible.windows.win_shell: .\vswhere.exe -all -prerelease -latest -format json

@@ -7,7 +7,7 @@
     force: true
     owner: '{{ user }}'
     src: '/mnt/g'
-    dest: '{{ home }}/GoogleDrive'
+    dest: '{{ home_google_drive }}'
 
 - name: includes | 11-make-symbolic-links-windows.wsl | Check that link sources exists
   ansible.builtin.stat:
@@ -15,14 +15,8 @@
   register: stat_link_source
   failed_when: not stat_link_source.stat.exists or stat_link_source.stat.isdir
   loop:
-    - '{{ home_my_ssh_config }}'
     - '{{ home_my_git_config }}'
-
-- name: includes | 11-make-symbolic-links-windows.wsl | Copy ssh config
-  ansible.builtin.copy:
-    src: '{{ home_my_ssh_config }}'
-    dest: '{{ home_ssh_config }}'
-    mode: 0600
+    - '{{ home_my_git_config_local }}'
 
 - name: includes | 11-make-symbolic-links-windows.wsl | Link to git config
   become: true
@@ -31,5 +25,10 @@
     follow: false
     force: true
     owner: '{{ user }}'
-    src: '{{ home_my_git_config }}'
-    dest: '{{ home_git_config }}'
+    src: '{{ item.path }}'
+    dest: '{{ item.dest }}'
+  loop:
+    - path: '{{ home_my_git_config }}'
+      dest: '{{ home_git_config }}'
+    - path: '{{ home_my_git_config_local }}'
+      dest: '{{ home_git_config_local }}'
