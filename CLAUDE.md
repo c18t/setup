@@ -104,7 +104,8 @@ slash command. The subagent will:
    comments (e.g., `# for asdf-erlang, asdf-php`)
 3. Write the complete output to the Brewfile, preserving:
    - Inline comments on brew formulae
-   - Commented-out casks: `#cask "gimp"`, `#cask "horndis"`, `#cask "inkscape"`, `#cask "mono-mdk-for-visual-studio"`
+   - Commented-out casks: `#cask "gimp"`, `#cask "horndis"`,
+     `#cask "inkscape"`, `#cask "mono-mdk-for-visual-studio"`
    - Commented-out mas entry: `#mas "LimeChat", id: 414030210`
 4. Verify the result by comparing with `brew bundle dump` output (ignoring
    comments)
