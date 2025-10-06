@@ -8,15 +8,12 @@ spawn bash -c "${SH_COMMAND}"
 expect {
   -glob "* password for *:*" {
     send -- "${PW}\n"
+    exp_continue
   }
-}
-expect {
   -glob "Press * to continue or any other key to abort" {
     send -- "\n"
+    exp_continue
   }
-}
-
-expect {
   eof {
     exit 0
   }

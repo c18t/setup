@@ -35,7 +35,7 @@ on:
 
 jobs:
   setup-iapetus:
-    runs-on: macos-latest
+    runs-on: macos-15
 
     steps:
       - name: checkout repo
@@ -51,7 +51,7 @@ jobs:
           VERBOSE_OPTION: ${{ inputs.verbose && '-vvv' || '' }}
 
   setup-khronos-wsl:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: checkout repo

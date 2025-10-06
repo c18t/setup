@@ -74,8 +74,9 @@
           - Applications
           - Archives
           - Projects
-        home_my_ssh_config: '{{ dotfiles }}/ssh/config-prv'
-        home_my_git_config: '{{ dotfiles }}/git/.gitconfig-prv-win'
+        home_my_git_config: '{{ dotfiles }}/git/.gitconfig-prv'
+        home_my_git_config_local: '{{ dotfiles }}/git/.gitconfig-prv.win.local'
+        home_my_ghostty_config: '{{ dotfiles }}/ghostty/config'
     - name: Import scoop
       ansible.builtin.import_role:
         name: scoop
@@ -183,8 +184,9 @@
         home_host_home: '{{ "/mnt/c/Users/" + (home | basename) }}'
         home_standard_directories:
           - Projects
-        home_my_ssh_config: '{{ dotfiles }}/ssh/config-prv'
         home_my_git_config: '{{ dotfiles }}/git/.gitconfig-prv'
+        home_my_git_config_local: '{{ dotfiles }}/git/.gitconfig-prv.wsl.local'
+        home_my_ghostty_config: '{{ dotfiles }}/ghostty/config'
     - name: Import apt
       ansible.builtin.import_role:
         name: apt

@@ -1,11 +1,12 @@
 [tools]
+node = "latest"
+pnpm = "latest"
+python = "latest"
 pre-commit = "latest"
 shellcheck = "latest"
 yamllint = "latest"
 markdownlint-cli2 = "latest"
 "go:github.com/rhysd/actionlint/cmd/actionlint" = "latest"
-node = "latest"
-pnpm = "latest"
 
 [env]
 '_'.file = ".env"

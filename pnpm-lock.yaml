@@ -9,16 +9,16 @@ importers:
   .:
     devDependencies:
       prettier:
-        specifier: '*'
+        specifier: ^3.6.2
         version: 3.6.2
       prettier-plugin-sh:
-        specifier: '*'
+        specifier: ^0.18.0
         version: 0.18.0(prettier@3.6.2)
       prettier-plugin-toml:
-        specifier: '*'
+        specifier: ^2.0.6
         version: 2.0.6(prettier@3.6.2)
       pretty-quick:
-        specifier: '*'
+        specifier: ^4.2.2
         version: 4.2.2(prettier@3.6.2)
 
 packages:
