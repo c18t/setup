@@ -14,7 +14,7 @@ markdownlint-cli2 = "latest"
 [tasks.setup]
 description = "Setup project"
 depends = ["setup:mise"]
-run = "mise run setup:pre-commit"
+run = "mise run setup:pre-commit & mise run setup:pnpm"
 
 [tasks."setup:mise"]
 description = "Setup project mise"
@@ -24,3 +24,8 @@ run = "mise install -y"
 description = "Setup project pre-commit"
 depends = ["setup:mise"]
 run = "pre-commit install"
+
+[tasks."setup:pnpm"]
+description = "Setup project pnpm"
+depends = ["setup:mise"]
+run = "pnpm install"
