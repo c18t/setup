@@ -3,8 +3,6 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with
 code in this repository.
 
-Think in English, speak Japanese to users.
-
 ## Overview
 
 This is a personal environment setup repository that uses Ansible to configure
