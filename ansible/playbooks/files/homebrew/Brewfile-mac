@@ -2,8 +2,6 @@
 brew "cryptography"
 # NaCl networking and cryptography library
 brew "libsodium"
-# Display directories as trees (with optional color/HTML output)
-brew "tree"
 # Automate deployment, configuration, and upgrading
 brew "ansible"
 # Checks ansible playbooks for practices and behaviour
@@ -28,8 +26,6 @@ brew "freetype" # for asdf-php
 brew "glib"
 # Vector graphics library with cross-device output support
 brew "cairo"
-# Like neofetch, but much faster because written mostly in C
-brew "fastfetch"
 # User-friendly command-line shell for UNIX-like operating systems
 brew "fish"
 # C/C++ and Java libraries for Unicode and globalization
@@ -44,6 +40,8 @@ brew "fop" # for asdf-erlang
 brew "gcc" # part of gcc
 # Graphics library to dynamically manipulate images
 brew "gd" # for asdf-php
+# Ping, but with a graph
+brew "gping"
 # Validating, recursive, caching DNS resolver
 brew "unbound"
 # GNU Pretty Good Privacy (PGP) package

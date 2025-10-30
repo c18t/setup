@@ -11,3 +11,4 @@ home_google_drive: '{{ home }}/GoogleDrive'
 # config file default
 home_git_config: '{{ home }}/.gitconfig'
 home_git_config_local: '{{ home }}/.gitconfig.local'
+home_git_ignore: '{{ home_xdg_config_home }}/git/ignore'

@@ -4,7 +4,9 @@
 
 profile: null # min, basic, moderate,safety, shared, production
 
-exclude_paths: []
+exclude_paths: [
+  'ansible/roles/claude/tasks/11-setup-claude-windows.yaml' # 何故か ansible.windows モジュールで怒られる
+]
 
 use_default_rules: true
 

@@ -1,0 +1,7 @@
+---
+# defaults file for claude
+claude_settings: null
+claude_md: null
+claude_commands: null
+claude_agents: null
+claude_skills: null

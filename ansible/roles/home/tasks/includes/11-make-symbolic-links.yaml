@@ -12,11 +12,13 @@
 - name: includes | 11-make-symbolic-links | Set link items
   ansible.builtin.set_fact:
     link_items:
-      # .gitignore
+      # git
       - path: '{{ home_my_git_config }}'
         dest: '{{ home_git_config }}'
       - path: '{{ home_my_git_config_local }}'
         dest: '{{ home_git_config_local }}'
+      - path: '{{ home_my_git_ignore }}'
+        dest: '{{ home_git_ignore }}'
       # Ghostty
       - path: '{{ home_my_ghostty_config }}'
         dest: '{{ home_ghostty_config }}'

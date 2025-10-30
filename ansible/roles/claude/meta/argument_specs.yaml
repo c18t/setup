@@ -1,0 +1,29 @@
+---
+argument_specs:
+  main:
+    short_description: default entry point
+    options: &options
+      claude_settings:
+        type: path
+        required: true
+        description: 'Source path of ~/.claude/settings.json to be linked.'
+      claude_md:
+        type: path
+        required: true
+        description: 'Source path of ~/.claude/CLAUDE.md to be linked.'
+      claude_commands:
+        type: path
+        required: true
+        description: 'Source path of ~/.claude/commands/ to be linked.'
+      claude_agents:
+        type: path
+        required: true
+        description: 'Source path of ~/.claude/agents/ to be linked.'
+      claude_skills:
+        type: path
+        required: true
+        description: 'Source path of ~/.claude/skills/ to be linked.'
+
+  windows:
+    short_description: entry point for windows
+    options: *options
