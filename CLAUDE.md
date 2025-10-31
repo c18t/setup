@@ -153,6 +153,25 @@ scoop export `
    `handlers/`, `meta/`, `tasks/`, `templates/`, `tests/`, and `vars/`
    directories
 
+### Important: Run ansible-lint After Changes
+
+**IMPORTANT**: When you modify any of the following files, you MUST run
+`ansible-lint` to check for errors before committing:
+
+- `ansible/playbooks/**`
+- `ansible/roles/**`
+- `script/**`
+- `setup-*.sh`
+
+Run the linter with:
+
+```sh
+ansible-lint
+```
+
+This ensures that Ansible code follows best practices and maintains consistency
+across the project.
+
 ## Testing
 
 The repository includes GitHub Actions workflows:

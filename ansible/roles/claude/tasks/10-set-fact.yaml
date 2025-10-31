@@ -1,4 +1,14 @@
 ---
+- name: 10-set-fact | Find fish
+  ansible.builtin.command: which fish
+  register: claude_which_fish
+  changed_when: false
+  check_mode: false
+
+- name: 10-set-fact | Set fish_path
+  ansible.builtin.set_fact:
+    claude_fish_path: '{{ claude_which_fish.stdout }}'
+
 - name: 10-set-fact | Set link items
   ansible.builtin.set_fact:
     claude_link_dir_items:

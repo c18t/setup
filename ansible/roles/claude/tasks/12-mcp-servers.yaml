@@ -1,0 +1,85 @@
+---
+- name: 12-mcp-servers | Check installed MCP servers
+  ansible.builtin.shell: claude mcp list
+  args:
+    executable: '{{ claude_fish_path }}'
+  register: claude_mcp_list
+  changed_when: false
+  failed_when: false
+
+- name: 12-mcp-servers | Add context7 MCP server
+  ansible.builtin.shell: >
+    claude mcp add --scope user context7 --
+    npx -y @upstash/context7-mcp
+  args:
+    executable: '{{ claude_fish_path }}'
+  when: "'context7' not in claude_mcp_list.stdout"
+  register: claude_mcp_add_context7
+  changed_when: claude_mcp_add_context7.rc == 0
+
+- name: 12-mcp-servers | Add ccusage MCP server
+  ansible.builtin.shell: >
+    claude mcp add --scope user ccusage --
+    npx -y @ccusage/mcp
+  args:
+    executable: '{{ claude_fish_path }}'
+  when: "'ccusage' not in claude_mcp_list.stdout"
+  register: claude_mcp_add_ccusage
+  changed_when: claude_mcp_add_ccusage.rc == 0
+
+- name: 12-mcp-servers | Add cipher MCP server
+  ansible.builtin.shell: >
+    claude mcp add --scope user cipher
+    -e CIPHER_EMBEDDER=local
+    -e MCP_SERVER_MODE=aggregator
+    -e STORAGE_DATABASE_PATH=./.cipher
+    -e OLLAMA_BASE_URL=http://localhost:11434
+    --
+    cipher --mode mcp
+  args:
+    executable: '{{ claude_fish_path }}'
+  when: "'cipher' not in claude_mcp_list.stdout"
+  register: claude_mcp_add_cipher
+  changed_when: claude_mcp_add_cipher.rc == 0
+
+- name: 12-mcp-servers | Add scopecraft MCP server
+  ansible.builtin.shell: >
+    claude mcp add --scope user scopecraft --
+    sc-stdio
+  args:
+    executable: '{{ claude_fish_path }}'
+  when: "'scopecraft' not in claude_mcp_list.stdout"
+  register: claude_mcp_add_scopecraft
+  changed_when: claude_mcp_add_scopecraft.rc == 0
+
+- name: 12-mcp-servers | Add simone MCP server
+  ansible.builtin.shell: >
+    claude mcp add --scope user simone
+    -e PROJECT_PATH=.
+    --
+    npx -y simone-mcp
+  args:
+    executable: '{{ claude_fish_path }}'
+  when: "'simone' not in claude_mcp_list.stdout"
+  register: claude_mcp_add_simone
+  changed_when: claude_mcp_add_simone.rc == 0
+
+- name: 12-mcp-servers | Add typescript MCP server
+  ansible.builtin.shell: >
+    claude mcp add --scope user typescript --
+    npx -y @mizchi/lsmcp -p tsgo
+  args:
+    executable: '{{ claude_fish_path }}'
+  when: "'typescript' not in claude_mcp_list.stdout"
+  register: claude_mcp_add_typescript
+  changed_when: claude_mcp_add_typescript.rc == 0
+
+- name: 12-mcp-servers | Add go MCP server
+  ansible.builtin.shell: >
+    claude mcp add --scope user go --
+    npx -y @mizchi/lsmcp -p gopls
+  args:
+    executable: '{{ claude_fish_path }}'
+  when: "'go' not in claude_mcp_list.stdout"
+  register: claude_mcp_add_go
+  changed_when: claude_mcp_add_go.rc == 0

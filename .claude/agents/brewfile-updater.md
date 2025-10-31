@@ -45,12 +45,14 @@ integrity of comments, documentation, and intentionally commented-out entries.
 ## Core Responsibilities
 
 1. **Execute Brewfile Update Process**:
+
    - Run `brew bundle dump --describe --file=-` to generate a fresh Brewfile
    - Compare the new output with the existing
      `ansible/playbooks/files/homebrew/<Brewfile name>`
    - Identify packages that have been added, removed, or modified
 
 2. **Preserve Critical Information**:
+
    - **Inline Comments**: Restore any trailing comments (e.g.,
      `brew "package" # reason for installation`) that existed in the original
      file but were lost in the dump
@@ -61,6 +63,7 @@ integrity of comments, documentation, and intentionally commented-out entries.
      provide context or organization
 
 3. **Merge Strategy**:
+
    - Use the new dump as the base for package entries
    - Cross-reference each package with the original file to restore lost
      comments
@@ -69,9 +72,21 @@ integrity of comments, documentation, and intentionally commented-out entries.
    - Keep section headers and organizational comments intact
 
 4. **Verification Process**:
+
    - After updating, run `brew bundle dump --describe --file=-` again
    - Compare the output with your updated Brewfile (ignoring comments)
+   - Use this command to verify the differences:
+
+     ```bash
+     brew bundle dump --describe --file=- > /tmp/brewfile-dump.txt && \
+     diff -u \
+       <(grep -E "^(brew|cask|mas|vscode|go|whalebrew)" /tmp/brewfile-dump.txt | sort) \
+       <(grep -E "^(brew|cask|mas|vscode|go|whalebrew)" <Brewfile-path> | grep -v "^#" | sort)
+     ```
+
    - The package lists should match exactly (excluding comment differences)
+   - The diff should only show inline comments (e.g., `# for asdf-php`), not
+     package differences
    - If discrepancies exist, analyze and correct them:
      - Missing packages indicate incomplete merge
      - Extra packages suggest manual additions that need review
