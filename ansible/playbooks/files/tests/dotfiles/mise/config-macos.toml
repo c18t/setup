@@ -1,12 +1,5 @@
 [tools]
 usage = "latest"
-go = "latest"
-node = "latest"
-#erlang = "latest"
-#elixir = "latest"
-#lua = "latest"
-ghq = "latest"
-neovim = "latest"
 
 [settings]
 experimental = true
