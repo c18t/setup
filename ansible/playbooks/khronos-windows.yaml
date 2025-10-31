@@ -19,15 +19,15 @@
     ansible_shell_type: powershell
     ansible_python_interpreter: /home/linuxbrew/.linuxbrew/bin/python3
     # common
-    my_home: C:\Users\{{ user }}
+    my_home: 'C:\Users\{{ user }}'
     my_user: '{{ win_username }}'
     my_editor: code
     my_visual: code
     # my_temporary_home: D:\Temp\{{ user }}
-    my_xdg_cache_home: C:\Users\{{ user }}\AppData\Roaming
-    my_xdg_config_home: C:\Users\{{ user }}\AppData\Local
-    my_xdg_data_home: C:\Users\{{ user }}\AppData\Local
-    my_google_drive: G:\マイドライブ
+    my_xdg_cache_home: 'C:\Users\{{ user }}\AppData\Roaming'
+    my_xdg_config_home: 'C:\Users\{{ user }}\AppData\Local'
+    my_xdg_data_home: 'C:\Users\{{ user }}\AppData\Local'
+    my_google_drive: 'G:\マイドライブ'
   pre_tasks:
     - name: Run always
       tags: always
@@ -44,27 +44,97 @@
       vars:
         winget_packages:
           - { name: AgileBits.1Password }
-          - { name: Amazon.SendToKindle }
-          - { name: Anaconda.Anaconda3 }
+          - { name: Anthropic.Claude }
+          # - { name: Apple.Bonjour } # インストールに失敗する
           - { name: Apple.iTunes }
+          - { name: ArduinoSA.IDE.stable }
+          - { name: Audacity.Audacity }
+          - { name: AutoHotkey.AutoHotkey }
+          - { name: Bandisoft.Honeyview }
           - { name: calibre.calibre }
+          - { name: Cloudflare.cloudflared }
+          - { name: CPUID.CPU-Z.MSI }
+          - { name: CPUID.HWMonitor }
+          - { name: DEVCOM.JMeter }
           - { name: Discord.Discord }
-          - { name: Docker.DockerDesktop }
           - { name: Doist.Todoist }
+          - { name: dorssel.usbipd-win }
           - { name: ElaborateBytes.VirtualCloneDrive }
           - { name: Fork.Fork }
-          - { name: Gitlab.Gitter }
+          - { name: GIMP.GIMP.3 }
+          - { name: GnuPG.Gpg4win }
           - { name: Google.Chrome }
           - { name: Google.Chrome.Dev }
-          - { name: Google.Drive }
-          # ハッシュが一致しない
-          # - { name: Google.JapaneseIME, become: false, force: true }
+          - { name: Google.GoogleDrive }
+          - { name: GuinpinSoft.MakeMKV }
+          - { name: Inkscape.Inkscape }
+          # - { name: Google.JapaneseIME, become: false, force: true } # ハッシュが一致しない
+          - { name: Kensington.KensingtonWorks }
+          - { name: LIGHTNINGUK.ImgBurn }
+          - { name: LINQPad.LINQPad.8 }
+          - { name: M2Team.NanaZip }
+          - { name: Meltytech.Shotcut }
           - { name: Microsoft.PowerShell }
+          - { name: Microsoft.PowerToys }
           - { name: Microsoft.SQLServerManagementStudio }
           - { name: Microsoft.VisualStudio.2022.Community }
+          - { name: Microsoft.WindowsTerminal }
+          - { name: Mozilla.Firefox.ja }
+          - { name: NickeManarin.ScreenToGif }
+          - { name: Notion.Notion }
+          - { name: OBSProject.OBSStudio }
+          - { name: Ollama.Ollama }
           - { name: PeterBienstman.Mnemosyne, list_id: Mnemosyne_is1 }
-          - { name: UnityTechnologies.UnityHub }
+          - { name: Rufus.Rufus }
+          - { name: RustemMussabekov.Raindrop }
+          - { name: SlackTechnologies.Slack }
+          - { name: Spotify.Spotify }
+          - { name: TeraTermProject.teraterm }
+          - { name: Unity.UnityHub }
           - { name: Valve.Steam }
+          - { name: Vivaldi.Vivaldi }
+          - { name: VideoLAN.VLC }
+          - { name: WinMerge.WinMerge }
+          - { name: WinSCP.WinSCP }
+          - { name: XPFFTQ032PTPHF } # UniGetUI
+          - { name: Yamaha.SteinbergUSBDriver }
+    - name: Import scoop
+      ansible.builtin.import_role:
+        name: scoop
+      vars:
+        scoop_buckets:
+          - main
+          - extras
+        scoop_packages:
+          - { name: 1password-cli }
+          - { name: 7zip }
+          - { name: busybox }
+          - { name: dark }
+          - { name: dust }
+          - { name: fastfetch }
+          - { name: ffmpeg }
+          - { name: fzf }
+          - { name: gh }
+          - { name: ghq }
+          - { name: git }
+          - { name: go }
+          - { name: gradle }
+          - { name: graphviz }
+          - { name: hadolint }
+          - { name: helm }
+          - { name: innounp }
+          - { name: neovim }
+          - { name: nodejs-lts }
+          - { name: pandoc }
+          - { name: pasteboard }
+          - { name: perl }
+          - { name: plantuml }
+          - { name: python }
+          - { name: scoop-search }
+          - { name: shellcheck }
+          - { name: vscode }
+          - { name: youtube-dl }
+          - { name: zed }
     - name: Import home
       ansible.builtin.import_role:
         name: home
@@ -76,79 +146,17 @@
           - Projects
         home_my_git_config: '{{ dotfiles }}/git/.gitconfig-prv'
         home_my_git_config_local: '{{ dotfiles }}/git/.gitconfig-prv.win.local'
-        home_my_ghostty_config: '{{ dotfiles }}/ghostty/config'
-    - name: Import scoop
+        home_my_git_ignore: '{{ dotfiles }}/git/ignore'
+    - name: Import claude
       ansible.builtin.import_role:
-        name: scoop
+        name: claude
+        tasks_from: windows
       vars:
-        scoop_buckets:
-          - main
-          - extras
-          - java
-        scoop_packages:
-          - { name: 7zip }
-          # - { name: anaconda3 } # インストールが終わらないのでwingetに移動
-          - { name: android-studio }
-          - { name: arduino }
-          # - { name: audacity } # scoop のマニフェストが古い
-          - { name: autohotkey }
-          - { name: busybox }
-          # - { name: calibre } # インストーラがパスが長すぎるって怒るせいで失敗する
-          - { name: direnv }
-          - { name: ffmpeg }
-          - { name: firefox }
-          - { name: firefox-nightly }
-          # - { name: fork } # scoopからインストールすると動かないのでwingetに移動
-          - { name: gcloud }
-          - { name: ghostscript }
-          - { name: ghq }
-          - { name: gimp }
-          - { name: git }
-          - { name: go }
-          - { name: gpg4win }
-          - { name: gradle }
-          - { name: graphviz }
-          - { name: gsudo }
-          - { name: hadolint }
-          - { name: helm }
-          - { name: honeyview }
-          - { name: hwmonitor }
-          - { name: hub }
-          - { name: imgburn }
-          - { name: inkscape }
-          - { name: innounp }
-          - { name: jmeter }
-          # - { name: linqpad } # scoop のマニフェストが古い
-          # - { name: makemkv } # scoop のマニフェストが古い
-          - { name: msys2 }
-          - { name: neofetch }
-          - { name: neovim }
-          - { name: nodejs }
-          - { name: notion }
-          - { name: obs-studio }
-          - { name: openjdk, global: true }
-          - { name: openssl, global: true }
-          - { name: pandoc }
-          - { name: perl }
-          - { name: plantuml }
-          - { name: powertoys }
-          - { name: qbittorrent }
-          - { name: ruby }
-          - { name: rufus }
-          - { name: screentogif }
-          - { name: shellcheck }
-          - { name: shotcut }
-          - { name: slack }
-          - { name: stack }
-          - { name: sudo }
-          - { name: teraterm }
-          - { name: vivaldi }
-          - { name: vlc }
-          - { name: vscode }
-          - { name: winmerge }
-          - { name: winscp }
-          - { name: xmind8 }
-          - { name: youtube-dl }
+        claude_settings: '{{ dotfiles }}/claude/settings.json'
+        claude_md: '{{ dotfiles }}/claude/CLAUDE.md'
+        claude_commands: '{{ dotfiles }}/claude/commands'
+        claude_agents: '{{ dotfiles }}/claude/agents'
+        claude_skills: '{{ dotfiles }}/claude/skills'
 
 - name: Setup Khronos (WSL)
   hosts: local
@@ -176,25 +184,15 @@
     - name: Import wsl
       ansible.builtin.import_role:
         name: wsl
-    - name: Import home
-      ansible.builtin.import_role:
-        name: home
-        tasks_from: windows.wsl
-      vars:
-        home_host_home: '{{ "/mnt/c/Users/" + (home | basename) }}'
-        home_standard_directories:
-          - Projects
-        home_my_git_config: '{{ dotfiles }}/git/.gitconfig-prv'
-        home_my_git_config_local: '{{ dotfiles }}/git/.gitconfig-prv.wsl.local'
-        home_my_ghostty_config: '{{ dotfiles }}/ghostty/config'
     - name: Import apt
       ansible.builtin.import_role:
         name: apt
       vars:
         apt_keys:
-          - https://dl-ssl.google.com/linux/linux_signing_key.pub
+          - url: 'https://dl-ssl.google.com/linux/linux_signing_key.pub'
+            filename: 'google-chrome.gpg'
         apt_repositories:
-          - repo: 'deb http://dl.google.com/linux/chrome/deb/ stable main'
+          - repo: 'deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main'
             filename: 'google-chrome'
         apt_packages:
           - google-chrome-stable
@@ -218,9 +216,18 @@
         name: homebrew
       vars:
         homebrew_brewfile: '{{ playbook_dir }}/files/homebrew/Brewfile-wsl'
-    - name: Import nvim
+    - name: Import home
       ansible.builtin.import_role:
-        name: nvim
+        name: home
+        tasks_from: windows.wsl
+      vars:
+        home_host_home: '{{ "/mnt/c/Users/" + (home | basename) }}'
+        home_standard_directories:
+          - Projects
+        home_my_git_config: '{{ dotfiles }}/git/.gitconfig-prv'
+        home_my_git_config_local: '{{ dotfiles }}/git/.gitconfig-prv.wsl.local'
+        home_my_git_ignore: '{{ dotfiles }}/git/ignore'
+        home_my_ghostty_config: '{{ dotfiles }}/ghostty/config'
     - name: Import fish
       ansible.builtin.import_role:
         name: fish
@@ -237,3 +244,15 @@
         mise_default_gems: '{{ dotfiles }}/mise/.default-gems'
         mise_default_mix_commands: '{{ dotfiles }}/mise/.default-mix-commands'
         mise_default_perl_modules: '{{ dotfiles }}/mise/.default-perl-modules'
+    - name: Import nvim
+      ansible.builtin.import_role:
+        name: nvim
+    - name: Import claude
+      ansible.builtin.import_role:
+        name: claude
+      vars:
+        claude_settings: '{{ dotfiles }}/claude/settings.json'
+        claude_md: '{{ dotfiles }}/claude/CLAUDE.md'
+        claude_commands: '{{ dotfiles }}/claude/commands'
+        claude_agents: '{{ dotfiles }}/claude/agents'
+        claude_skills: '{{ dotfiles }}/claude/skills'

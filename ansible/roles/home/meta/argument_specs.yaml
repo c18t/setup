@@ -20,6 +20,11 @@ argument_specs:
         required: true
         description: 'Source path of ~/.gitconfig.local to be linked.'
 
+      home_my_git_ignore:
+        type: path
+        required: true
+        description: 'Source path of ~/.config/git/ignore to be linked.'
+
   windows.wsl:
     short_description: entry point for windows.wsl
     options:

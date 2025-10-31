@@ -24,6 +24,13 @@
     - name: Import os_macos
       ansible.builtin.import_role:
         name: os_macos
+    - name: Import homebrew
+      ansible.builtin.import_role:
+        name: homebrew
+      vars:
+        homebrew_brewfile: >-
+          {{ my_homebrew_brewfile
+          | default(playbook_dir + "/files/homebrew/Brewfile-mac") }}
     - name: Import home
       ansible.builtin.import_role:
         name: home
@@ -34,17 +41,8 @@
           - Projects
         home_my_git_config: '{{ dotfiles }}/git/.gitconfig-prv'
         home_my_git_config_local: '{{ dotfiles }}/git/.gitconfig-prv.mac.local'
+        home_my_git_ignore: '{{ dotfiles }}/git/ignore'
         home_my_ghostty_config: '{{ dotfiles }}/ghostty/config'
-    - name: Import homebrew
-      ansible.builtin.import_role:
-        name: homebrew
-      vars:
-        homebrew_brewfile: >-
-          {{ my_homebrew_brewfile
-          | default(playbook_dir + "/files/homebrew/Brewfile-mac") }}
-    - name: Import nvim
-      ansible.builtin.import_role:
-        name: nvim
     - name: Import fish
       ansible.builtin.import_role:
         name: fish
@@ -61,3 +59,15 @@
         mise_default_gems: '{{ dotfiles }}/mise/.default-gems'
         mise_default_mix_commands: '{{ dotfiles }}/mise/.default-mix-commands'
         mise_default_perl_modules: '{{ dotfiles }}/mise/.default-perl-modules'
+    - name: Import nvim
+      ansible.builtin.import_role:
+        name: nvim
+    - name: Import claude
+      ansible.builtin.import_role:
+        name: claude
+      vars:
+        claude_settings: '{{ dotfiles }}/claude/settings.json'
+        claude_md: '{{ dotfiles }}/claude/CLAUDE.md'
+        claude_commands: '{{ dotfiles }}/claude/commands'
+        claude_agents: '{{ dotfiles }}/claude/agents'
+        claude_skills: '{{ dotfiles }}/claude/skills'

@@ -1,0 +1,10 @@
+---
+- name: Claude role tasks
+  tags: claude
+  block:
+    - name: Set fact
+      ansible.builtin.import_tasks: 10-set-fact.yaml
+    - name: Setup claude
+      ansible.builtin.import_tasks: 11-setup-claude.yaml
+    - name: Setup MCP servers
+      ansible.builtin.import_tasks: 12-mcp-servers.yaml

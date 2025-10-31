@@ -1,21 +1,23 @@
 # Interpreted, interactive, object-oriented programming language
-brew "python"
+brew "python@3.13"
 # Automate deployment, configuration, and upgrading
 brew "ansible"
 # Checks ansible playbooks for practices and behaviour
 brew "ansible-lint"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.14"
 # Text-based window manager and terminal multiplexer
 brew "byobu"
 # Pack, ship and run any application as a lightweight container
 brew "docker"
-# Like neofetch, but much faster because written mostly in C
-brew "fastfetch"
 # User-friendly command-line shell for UNIX-like operating systems
 brew "fish"
 # Bash-tool to store the private data inside a git repo
 brew "git-secret"
 # Prevents you from committing sensitive information to a git repo
 brew "git-secrets"
+# Ping, but with a graph
+brew "gping"
 # Graph visualization software from AT&T and Bell Labs
 brew "graphviz"
 # Update of iperf: measures TCP, UDP, and SCTP bandwidth
@@ -26,7 +28,9 @@ brew "lynx"
 brew "mise"
 # Automated testing for Ansible roles
 brew "molecule"
-# Display directories as trees (with optional color/HTML output)
-brew "tree"
+# CLI for Todoist
+brew "todoist-cli"
+# Simple terminal image viewer written in Rust
+brew "viu"
 # Homebrew, but with Docker images
 brew "whalebrew"

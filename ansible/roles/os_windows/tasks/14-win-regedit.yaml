@@ -86,7 +86,7 @@
         data: 1
         type: dword
 
-- name: 14-win-regedit | Comand prompt
+- name: 14-win-regedit | Command processor
   block:
     - name: 14-win-regedit | Disable UNC check
       ansible.windows.win_regedit:

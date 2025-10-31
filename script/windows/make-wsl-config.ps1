@@ -4,11 +4,13 @@ $result = 0
 # make .wslconfig
 $wslConfigFilePath = "$env:USERPROFILE\.wslconfig"
 if (-Not (Test-Path $wslConfigFilePath)) {
+  # networkingMode: ホストのネットワークインターフェースをミラーリングする
   # memory: WSLのVMメモリ上限を設定する
   # swap: WSLのスワップファイルサイズを設定する
   # cf. https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configure-global-options-with-wslconfig
   $content = @'
 [wsl2]
+networkingMode=mirrored
 memory=16G
 swap=0 # for Kubernetes
 '@

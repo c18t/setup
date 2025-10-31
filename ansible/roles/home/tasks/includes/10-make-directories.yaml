@@ -18,16 +18,10 @@
     - '{{ xdg_config_home }}'
     - '{{ xdg_cache_home }}'
     - '{{ xdg_data_home }}'
+    # Git
+    - '{{ xdg_config_home }}/git'
     # Ghostty
     - '{{ xdg_config_home }}/ghostty'
-
-- name: includes | 10-make-directories | Make ssh directories
-  ansible.builtin.stat:
-    path: '{{ item }}'
-  register: a
-  loop:
-    # ssh
-    - '{{ home }}/.ssh'
 
 - name: includes | 10-make-directories | Make ssh directories
   ansible.builtin.file:

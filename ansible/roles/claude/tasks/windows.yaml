@@ -1,0 +1,10 @@
+---
+- name: windows | Claude role tasks for Windows
+  tags: claude
+  block:
+    - name: windows | Set fact
+      ansible.builtin.import_tasks: 10-set-fact.yaml
+    - name: windows | Setup claude
+      ansible.builtin.import_tasks: 11-setup-claude-windows.yaml
+    - name: windows | Setup MCP servers
+      ansible.builtin.import_tasks: 12-mcp-servers-windows.yaml

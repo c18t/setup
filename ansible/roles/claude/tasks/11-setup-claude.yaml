@@ -1,0 +1,34 @@
+---
+- name: 11-setup-claude | Make claude config directory
+  ansible.builtin.file:
+    state: directory
+    follow: true
+    path: '{{ item }}'
+    mode: u=rwx,g=rx,o=rx
+  loop:
+    - '{{ claude_home }}'
+
+- name: 11-setup-claude | Check that link source dirs exists
+  ansible.builtin.stat:
+    path: '{{ item.path }}'
+  register: claude_stat_link_source_dir
+  failed_when: not claude_stat_link_source_dir.stat.exists or not claude_stat_link_source_dir.stat.isdir
+  loop: '{{ claude_link_dir_items }}'
+
+- name: 11-setup-claude | Check that link source files exists
+  ansible.builtin.stat:
+    path: '{{ item.path }}'
+  register: claude_stat_link_source_file
+  failed_when: not claude_stat_link_source_file.stat.exists or claude_stat_link_source_file.stat.isdir
+  loop: '{{ claude_link_file_items }}'
+
+- name: 11-setup-claude | Make symbolic links
+  become: true
+  ansible.builtin.file:
+    state: link
+    follow: false
+    force: true
+    owner: '{{ user }}'
+    src: '{{ item.path }}'
+    dest: '{{ item.dest }}'
+  loop: '{{ claude_link_file_items + claude_link_dir_items }}'

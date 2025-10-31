@@ -1,0 +1,32 @@
+---
+- name: 11-setup-claude-windows | Make claude config directory
+  ansible.windows.win_file:
+    state: directory
+    path: '{{ claude_home }}'
+
+- name: 11-setup-claude-windows | Check that directory link sources
+  ansible.windows.win_stat:
+    path: '{{ item.path }}'
+  register: claude_stat_link_source_dir
+  failed_when: not claude_stat_link_source_dir.stat.exists or not claude_stat_link_source_dir.stat.isdir
+  loop: '{{ claude_link_dir_items }}'
+
+- name: 11-setup-claude-windows | Check that file link sources
+  ansible.windows.win_stat:
+    path: '{{ item.path }}'
+  register: claude_stat_link_source_file
+  failed_when: not claude_stat_link_source_file.stat.exists or claude_stat_link_source_file.stat.isdir
+  loop: '{{ claude_link_file_items }}'
+
+- name: 11-setup-claude-windows | Make symbolic link
+  become: true
+  ansible.windows.win_shell: >-
+    if (-Not(Test-Path "{{ item.dest }}")) { `
+      New-Item -Type SymbolicLink `
+        -Value "{{ item.path }}" `
+        -Path "{{ item.dest }}"; exit 2 `
+    }
+  register: claude_make_symbolic_links
+  failed_when: claude_make_symbolic_links.rc not in [0, 2]
+  changed_when: claude_make_symbolic_links.rc == 2
+  loop: '{{ claude_link_dir_items + claude_link_file_items }}'

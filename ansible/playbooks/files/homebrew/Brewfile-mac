@@ -3,7 +3,7 @@ brew "cryptography"
 # NaCl networking and cryptography library
 brew "libsodium"
 # Display directories as trees (with optional color/HTML output)
-brew "tree"
+brew "tree" # for ansible
 # Automate deployment, configuration, and upgrading
 brew "ansible"
 # Checks ansible playbooks for practices and behaviour
@@ -41,7 +41,7 @@ brew "openjdk"
 # XSL-FO print formatter for making PDF or PS documents
 brew "fop" # for asdf-erlang
 # GNU compiler collection
-brew "gcc" # part of gcc
+brew "gcc"
 # Graphics library to dynamically manipulate images
 brew "gd" # for asdf-php
 # Validating, recursive, caching DNS resolver
@@ -52,6 +52,8 @@ brew "gnupg"
 brew "git-secret"
 # Prevents you from committing sensitive information to a git repo
 brew "git-secrets"
+# Ping, but with a graph
+brew "gping"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.12"
 # Library to render SVG files using Cairo
@@ -60,6 +62,8 @@ brew "librsvg"
 brew "graphviz"
 # C/C++ seam carving library
 brew "liblqr"
+# C library for reading, creating, and modifying zip archives
+brew "libzip" # for asdf-php
 # Tools and libraries to manipulate images in many formats
 brew "imagemagick" # for asdf-php
 # Update of iperf: measures TCP, UDP, and SCTP bandwidth
@@ -78,8 +82,6 @@ brew "libiconv" # for asdf-php
 brew "libxml2" # for asdf-php
 # C XSLT library for GNOME
 brew "libxslt" # for asdf-erlang
-# C library for reading, creating, and modifying zip archives
-brew "libzip" # for asdf-php
 # Text-based web browser
 brew "lynx"
 # Mac App Store command-line interface
@@ -100,6 +102,8 @@ brew "terminal-notifier"
 brew "todoist-cli"
 # Simple terminal image viewer written in Rust
 brew "viu"
+# Homebrew, but with Docker images
+brew "whalebrew"
 # Cross-platform C++ GUI toolkit
 brew "wxwidgets" # for asdf-erlang
 # General-purpose lossless data-compression library
@@ -118,7 +122,6 @@ cask "dotnet-runtime"
 cask "firefox"
 cask "font-hackgen"
 cask "font-hackgen-nerd"
-cask "font-ricty-diminished"
 # GIT client
 cask "fork"
 # Set of tools to manage resources and applications hosted on Google Cloud
@@ -184,6 +187,7 @@ mas "Pages", id: 409201541
 mas "Steam Link", id: 1246969117
 mas "Windows App", id: 1295203466
 mas "Xcode", id: 497799835
+vscode "3w36zj6.textlint"
 vscode "actboy168.lua-debug"
 vscode "anthropic.claude-code"
 vscode "bdavs.expect"
@@ -196,11 +200,13 @@ vscode "bierner.markdown-preview-github-styles"
 vscode "bierner.markdown-yaml-preamble"
 vscode "bmalehorn.vscode-fish"
 vscode "bradlc.vscode-tailwindcss"
+vscode "casualjim.theme-desertex"
 vscode "chrisdias.vscode-opennewinstance"
 vscode "christian-kohler.path-intellisense"
 vscode "chrmarti.regex"
 vscode "csstools.postcss"
 vscode "davidanson.vscode-markdownlint"
+vscode "dawhite.mustache"
 vscode "dbaeumer.vscode-eslint"
 vscode "denoland.vscode-deno"
 vscode "docker.docker"
@@ -212,6 +218,7 @@ vscode "eiminsasete.apacheconf-snippets"
 vscode "electrotype.windows-explorer-context-menu"
 vscode "emilast.logfilehighlighter"
 vscode "esbenp.prettier-vscode"
+vscode "evgeniypetukhov.dark-low-contrast"
 vscode "evilz.vscode-reveal"
 vscode "fabiospampinato.vscode-todo-plus"
 vscode "formulahendry.auto-close-tag"
@@ -232,6 +239,7 @@ vscode "jebbs.plantuml"
 vscode "jinsihou.diff-tool"
 vscode "joaompinto.vscode-graphviz"
 vscode "justusadam.language-haskell"
+vscode "kenhowardpdx.vscode-gist"
 vscode "kisstkondoros.vscode-codemetrics"
 vscode "kukushi.pasteurl"
 vscode "l13rary.l13-diff"
@@ -247,9 +255,11 @@ vscode "moonbit.moonbit-lang"
 vscode "mosapride.zenkaku"
 vscode "mrmlnc.vscode-apache"
 vscode "ms-azuretools.vscode-containers"
+vscode "ms-azuretools.vscode-docker"
 vscode "ms-ceintl.vscode-language-pack-ja"
 vscode "ms-dotnettools.csharp"
 vscode "ms-dotnettools.vscode-dotnet-runtime"
+vscode "ms-python.black-formatter"
 vscode "ms-python.debugpy"
 vscode "ms-python.isort"
 vscode "ms-python.python"
@@ -271,6 +281,7 @@ vscode "ms-vscode.remote-server"
 vscode "ms-vsliveshare.vsliveshare"
 vscode "nickdemayo.vscode-json-editor"
 vscode "nimsaem.nimvscode"
+vscode "octref.vetur"
 vscode "oderwat.indent-rainbow"
 vscode "orta.vscode-jest"
 vscode "pkief.markdown-checkbox"
@@ -301,3 +312,5 @@ vscode "yoavbls.pretty-ts-errors"
 vscode "yzane.markdown-pdf"
 vscode "zignd.html-css-class-completion"
 vscode "zxh404.vscode-proto3"
+go "cmd/go"
+go "cmd/gofmt"
