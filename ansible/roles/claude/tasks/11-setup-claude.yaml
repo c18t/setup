@@ -38,12 +38,14 @@
   args:
     executable: '{{ claude_fish_path }}'
   register: claude_which_claude
+  failed_when: claude_which_claude.rc not in [0, 1, 126, 127]
   changed_when: false
+  check_mode: false
 
 - name: 11-setup-claude | Install Claude Code
   ansible.builtin.shell: >-
     fish -l -c 'curl -fsSL https://claude.ai/install.sh | bash'
   args:
     executable: '{{ claude_fish_path }}'
-  when: claude_which_claude.failed
+  when: claude_which_claude.rc != 0
   changed_when: true
