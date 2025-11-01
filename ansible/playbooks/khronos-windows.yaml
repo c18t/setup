@@ -171,6 +171,7 @@
     my_editor: nvim
     my_visual: nvim
     my_temporary_home: /tmp
+    my_google_drive: /mnt/g
   pre_tasks:
     - name: Run always
       tags: always
