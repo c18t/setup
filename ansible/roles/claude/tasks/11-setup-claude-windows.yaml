@@ -30,3 +30,12 @@
   failed_when: claude_make_symbolic_links.rc not in [0, 2]
   changed_when: claude_make_symbolic_links.rc == 2
   loop: '{{ claude_link_dir_items + claude_link_file_items }}'
+
+- name: 11-setup-claude-windows | Check Claude Code
+  ansible.windows.win_shell: gcm claude
+  register: claude_which_claude
+  changed_when: false
+
+- name: 11-setup-claude-windows | Install Claude Code
+  ansible.windows.win_shell: irm https://claude.ai/install.ps1 | iex
+  when: claude_which_claude.failed

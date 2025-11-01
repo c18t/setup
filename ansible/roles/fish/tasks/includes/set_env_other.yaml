@@ -52,6 +52,16 @@
         cplus_include_path: '{{ echo_cplus_include_path.stdout }}'
         objc_include_path: '{{ echo_objc_include_path.stdout }}'
 
+- name: includes | set_env_other | Add tools to fish_user_paths
+  ansible.builtin.shell: set -U fish_user_paths $fish_user_paths "{{ item }}"
+  args:
+    executable: '{{ fish_path }}'
+  when: fish_user_paths is not search(item)
+  changed_when: true
+  notify: UpdateGlobalPath
+  loop:
+    - '{{ home }}/.local/bin'
+
 - name: includes | set_env_other | Add Linuxbrew to LIBRARY_PATH (for other)
   ansible.builtin.shell: set -Ux LIBRARY_PATH "{{ item }}" $LIBRARY_PATH
   args:

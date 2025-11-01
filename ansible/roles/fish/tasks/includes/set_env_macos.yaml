@@ -16,6 +16,7 @@
   changed_when: true
   notify: UpdateGlobalPath
   loop:
+    - '{{ home }}/.local/bin'
     - '{{ home }}/Library/Android/sdk/tools'
     - '{{ home }}/Library/Android/sdk/platform-tools'
 

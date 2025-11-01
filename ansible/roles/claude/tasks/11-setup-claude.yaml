@@ -32,3 +32,18 @@
     src: '{{ item.path }}'
     dest: '{{ item.dest }}'
   loop: '{{ claude_link_file_items + claude_link_dir_items }}'
+
+- name: 11-setup-claude | Check Claude Code
+  ansible.builtin.shell: which claude
+  args:
+    executable: '{{ claude_fish_path }}'
+  register: claude_which_claude
+  changed_when: false
+
+- name: 11-setup-claude | Install Claude Code
+  ansible.builtin.shell: >-
+    fish -l -c 'curl -fsSL https://claude.ai/install.sh | bash'
+  args:
+    executable: '{{ claude_fish_path }}'
+  when: claude_which_claude.failed
+  changed_when: true
