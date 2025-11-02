@@ -1,4 +1,9 @@
 ---
+- name: 11-win-environment | Set user PATH
+  ansible.windows.win_path:
+    elements: '{{ home }}\.local\bin'
+    scope: user
+
 - name: 11-win-environment | Set environment variables
   ansible.windows.win_environment:
     level: '{{ item.level }}'
