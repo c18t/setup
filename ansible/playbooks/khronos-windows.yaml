@@ -55,6 +55,7 @@
           - { name: Cloudflare.cloudflared }
           - { name: CPUID.CPU-Z.MSI }
           - { name: CPUID.HWMonitor }
+          - { name: Creality.CrealityPrint }
           - { name: DEVCOM.JMeter }
           - { name: Discord.Discord }
           - { name: Doist.Todoist }
