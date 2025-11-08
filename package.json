@@ -9,7 +9,7 @@
   "keywords": [],
   "author": "ɯ̹t͡ɕʲi <info@c18t.me>",
   "license": "CC0-1.0",
-  "packageManager": "pnpm@10.18.0",
+  "packageManager": "pnpm@10.20.0",
   "engines": {
     "node": "*",
     "pnpm": "*",
