@@ -193,9 +193,13 @@
         apt_keys:
           - url: 'https://dl-ssl.google.com/linux/linux_signing_key.pub'
             filename: 'google-chrome.gpg'
+          - url: 'https://download.docker.com/linux/ubuntu/gpg'
+            filename: 'docker.asc'
         apt_repositories:
           - repo: 'deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main'
             filename: 'google-chrome'
+          - repo: 'deb [arch=amd64 signed-by=/usr/share/keyrings/docker.asc] https://download.docker.com/{{ ansible_system | lower }}/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable'
+            filename: 'docker'
         apt_packages:
           - google-chrome-stable
           - autoconf # for asdf-erlang
@@ -213,6 +217,12 @@
           - m4 # for asdf-erlang
           - unixodbc-dev # for asdf-erlang
           - xsltproc # for asdf-erlang
+          # docker
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
     - name: Import homebrew
       ansible.builtin.import_role:
         name: homebrew
