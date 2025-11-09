@@ -74,27 +74,11 @@ Claude Code functionality.
 - **WHEN** the MCP server installation runs
 - **THEN** ccusage SHALL be installed via npx with user scope
 
-#### Scenario: Install cipher MCP server with environment variables
-
-- **GIVEN** cipher is not in the installed MCP server list
-- **WHEN** the MCP server installation runs
-- **THEN** cipher SHALL be installed with the following environment variables:
-  - CIPHER_EMBEDDER=local
-  - MCP_SERVER_MODE=aggregator
-  - STORAGE_DATABASE_PATH=./.cipher
-  - OLLAMA_BASE_URL=<http://localhost:11434>
-
 #### Scenario: Install scopecraft MCP server
 
 - **GIVEN** scopecraft is not in the installed MCP server list
 - **WHEN** the MCP server installation runs
 - **THEN** scopecraft SHALL be installed via sc-stdio with user scope
-
-#### Scenario: Install simone MCP server with project path
-
-- **GIVEN** simone is not in the installed MCP server list
-- **WHEN** the MCP server installation runs
-- **THEN** simone SHALL be installed via npx with PROJECT_PATH environment variable
 
 #### Scenario: Install language server MCP servers
 
