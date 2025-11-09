@@ -28,6 +28,12 @@ brew "freetype" # for asdf-php
 brew "glib"
 # Vector graphics library with cross-device output support
 brew "cairo"
+# Container runtimes on MacOS (and Linux) with minimal setup
+brew "colima", restart_service: :changed
+# Pack, ship and run any application as a lightweight container
+brew "docker"
+# Isolated development environments using Docker
+brew "docker-compose"
 # Like neofetch, but much faster because written mostly in C
 brew "fastfetch"
 # User-friendly command-line shell for UNIX-like operating systems
