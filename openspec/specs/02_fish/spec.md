@@ -2,7 +2,11 @@
 
 ## Purpose
 
-The fish role manages the installation and configuration of the Fish shell, including setting it as the default login shell, installing the Fisher plugin manager, and setting up platform-specific plugins and environment variables. This specification defines requirements for Fish shell setup across macOS, Windows, and WSL environments.
+The fish role manages the installation and configuration of the Fish shell,
+including setting it as the default login shell, installing the Fisher plugin
+manager, and setting up platform-specific plugins and environment variables.
+This specification defines requirements for Fish shell setup across macOS,
+Windows, and WSL environments.
 
 ## Requirements
 
@@ -62,7 +66,8 @@ The fish role SHALL install and configure the Fisher plugin manager.
 
 ### Requirement: Platform-Specific Plugin Configuration
 
-The fish role SHALL install platform-specific Fisher plugins based on the operating system.
+The fish role SHALL install platform-specific Fisher plugins based on the
+operating system.
 
 #### Scenario: Base plugins for all platforms
 
@@ -74,13 +79,15 @@ The fish role SHALL install platform-specific Fisher plugins based on the operat
 
 - **GIVEN** the role is running on macOS
 - **WHEN** the plugin installation runs
-- **THEN** plugins from fisher-my-setup-mac SHALL be installed in addition to base plugins
+- **THEN** plugins from fisher-my-setup-mac SHALL be installed in addition to
+  base plugins
 
 #### Scenario: WSL-specific plugins
 
 - **GIVEN** the role is running on WSL (cmd.exe is available)
 - **WHEN** the plugin installation runs
-- **THEN** plugins from fisher-my-setup-wsl SHALL be installed in addition to base plugins
+- **THEN** plugins from fisher-my-setup-wsl SHALL be installed in addition to
+  base plugins
 
 #### Scenario: Plugin list assembly
 

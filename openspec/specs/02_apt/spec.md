@@ -2,7 +2,10 @@
 
 ## Purpose
 
-The apt role manages package installation and system updates on Debian/Ubuntu-based systems. This specification defines requirements for adding APT repositories, managing GPG keys, updating package caches, upgrading packages, and installing specified packages.
+The apt role manages package installation and system updates on Debian/Ubuntu-based
+systems.
+This specification defines requirements for adding APT repositories, managing
+GPG keys, updating package caches, upgrading packages, and installing specified packages.
 
 ## Requirements
 
@@ -14,7 +17,8 @@ The apt role SHALL add APT repositories with their GPG keys before installing pa
 
 - **GIVEN** a list of APT keys is configured in `apt_keys`
 - **WHEN** the apt role executes repository setup
-- **THEN** all GPG keys SHALL be downloaded to `/usr/share/keyrings/` with appropriate permissions
+- **THEN** all GPG keys SHALL be downloaded to `/usr/share/keyrings/` with
+  appropriate permissions
 
 #### Scenario: Add APT repositories
 
@@ -78,7 +82,8 @@ The apt role SHALL install all packages specified in the configuration.
 
 ### Requirement: Execution Order
 
-The apt role SHALL execute tasks in the correct order to ensure dependencies are met.
+The apt role SHALL execute tasks in the correct order to ensure dependencies are
+met.
 
 #### Scenario: Sequential execution
 

@@ -2,7 +2,10 @@
 
 ## Purpose
 
-The nvim role manages the configuration of Neovim editor by creating necessary directories and linking Neovim configuration files from a dotfiles repository. This specification defines requirements for setting up Neovim's configuration directory structure and backup locations.
+The nvim role manages the configuration of Neovim editor by creating necessary
+directories and linking Neovim configuration files from a dotfiles repository.
+This specification defines requirements for setting up Neovim's configuration
+directory structure and backup locations.
 
 ## Requirements
 
@@ -25,7 +28,8 @@ The nvim role SHALL create necessary directories for Neovim configuration and ca
 
 ### Requirement: Configuration Link Setup
 
-The nvim role SHALL create symbolic links from the dotfiles repository to Neovim's configuration directory.
+The nvim role SHALL create symbolic links from the dotfiles repository to
+Neovim's configuration directory.
 
 #### Scenario: Define link items
 
@@ -67,7 +71,8 @@ The nvim role SHALL properly manage symbolic links with force replacement.
 
 ### Requirement: XDG Base Directory Compliance
 
-The nvim role SHALL follow XDG Base Directory specification for configuration and cache.
+The nvim role SHALL follow XDG Base Directory specification for configuration
+and cache.
 
 #### Scenario: Configuration directory location
 

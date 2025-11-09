@@ -2,13 +2,19 @@
 
 ## Purpose
 
-The scripts directory contains bootstrap and utility scripts that enable automated environment setup across macOS, Windows, and WSL platforms. These scripts handle prerequisite installation, dependency management, and system configuration before Ansible playbook execution. The scripts are organized by platform and provide idempotent, error-resilient installation of package managers, build tools, and runtime dependencies.
+The scripts directory contains bootstrap and utility scripts that enable
+automated environment setup across macOS, Windows, and WSL platforms. These
+scripts handle prerequisite installation, dependency management, and system
+configuration before Ansible playbook execution. The scripts are organized by
+platform and provide idempotent, error-resilient installation of package
+managers, build tools, and runtime dependencies.
 
 ## Requirements
 
 ### Requirement: Bootstrap Script Execution Model
 
-All bootstrap scripts SHALL follow a consistent execution pattern with verbose logging, error handling, and idempotency checks.
+All bootstrap scripts SHALL follow a consistent execution pattern with verbose
+logging, error handling, and idempotency checks.
 
 #### Scenario: Verbose logging control
 
@@ -34,13 +40,15 @@ All bootstrap scripts SHALL follow a consistent execution pattern with verbose l
 
 ### Requirement: macOS Bootstrap Scripts
 
-The macOS bootstrap scripts SHALL install Homebrew and Ansible with proper dependency management.
+The macOS bootstrap scripts SHALL install Homebrew and Ansible with proper
+dependency management.
 
 #### Scenario: Homebrew installation on macOS
 
 - **GIVEN** Homebrew is not installed on macOS
 - **WHEN** install-homebrew.sh is executed
-- **THEN** Homebrew SHALL be installed via the official installation script from GitHub
+- **THEN** Homebrew SHALL be installed via the official installation script
+  from GitHub
 - **AND** the installation result SHALL be reported
 
 #### Scenario: Homebrew already exists on macOS
@@ -67,7 +75,8 @@ The macOS bootstrap scripts SHALL install Homebrew and Ansible with proper depen
 
 ### Requirement: WSL Bootstrap Scripts
 
-The WSL bootstrap scripts SHALL install dependencies, Linuxbrew, Python packages, and Ansible in the correct order.
+The WSL bootstrap scripts SHALL install dependencies, Linuxbrew, Python
+packages, and Ansible in the correct order.
 
 #### Scenario: Ansible dependency installation on Ubuntu
 

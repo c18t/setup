@@ -2,7 +2,9 @@
 
 ## Purpose
 
-The entrypoint scripts provide the primary interface for users to set up their development environments. These scripts orchestrate the bootstrap process and Ansible playbook execution for each target platform (macOS, WSL).
+The entrypoint scripts provide the primary interface for users to set up their
+development environments. These scripts orchestrate the bootstrap process and
+Ansible playbook execution for each target platform (macOS, WSL).
 
 ## Requirements
 
@@ -42,7 +44,8 @@ Entrypoint scripts SHALL orchestrate the two-phase setup process: bootstrap and 
 
 ### Requirement: Error Handling and Propagation
 
-Entrypoint scripts SHALL properly handle and propagate errors from all subprocess executions.
+Entrypoint scripts SHALL properly handle and propagate errors from all
+subprocess executions.
 
 #### Scenario: Bootstrap failure stops execution
 
@@ -66,7 +69,8 @@ Entrypoint scripts SHALL properly handle and propagate errors from all subproces
 
 ### Requirement: Verbose Logging Support
 
-Entrypoint scripts SHALL support verbose logging via file descriptor 3 controlled by the VERBOSE environment variable.
+Entrypoint scripts SHALL support verbose logging via file descriptor 3
+controlled by the VERBOSE environment variable.
 
 #### Scenario: Verbose logging enabled
 
@@ -120,7 +124,8 @@ Entrypoint scripts SHALL configure platform-specific environment requirements.
 
 ### Requirement: Command-Line Argument Pass-Through
 
-Entrypoint scripts SHALL pass all command-line arguments to the Ansible playbook unchanged.
+Entrypoint scripts SHALL pass all command-line arguments to the Ansible
+playbook unchanged.
 
 #### Scenario: Arguments forwarded to playbook
 
@@ -137,5 +142,6 @@ Entrypoint scripts SHALL provide clear feedback on successful completion.
 
 - **GIVEN** the entire setup process completes successfully
 - **WHEN** the script finishes
-- **THEN** it SHALL display "setup-[platform].sh: your machine have been configured! enjoy your development!"
+- **THEN** it SHALL display "setup-[platform].sh: your machine have been
+  configured! enjoy your development!"
 - **AND** use the script's basename in the message

@@ -2,13 +2,17 @@
 
 ## Purpose
 
-The scoop role manages the Scoop package manager for Windows, including installation, bucket configuration, package installation, and post-installation configuration. This specification defines requirements for setting up Scoop and managing Windows applications through command-line package management.
+The scoop role manages the Scoop package manager for Windows, including
+installation, bucket configuration, package installation, and post-installation
+configuration. This specification defines requirements for setting up Scoop and
+managing Windows applications through command-line package management.
 
 ## Requirements
 
 ### Requirement: Scoop Installation
 
-The scoop role SHALL install Scoop package manager if it is not already available on Windows.
+The scoop role SHALL install Scoop package manager if it is not already
+available on Windows.
 
 #### Scenario: Scoop not installed
 
@@ -24,7 +28,8 @@ The scoop role SHALL install Scoop package manager if it is not already availabl
 
 ### Requirement: Bucket Management
 
-The scoop role SHALL add configured Scoop buckets to enable access to additional packages.
+The scoop role SHALL add configured Scoop buckets to enable access to
+additional packages.
 
 #### Scenario: Add Scoop buckets
 
@@ -40,7 +45,8 @@ The scoop role SHALL add configured Scoop buckets to enable access to additional
 
 ### Requirement: Package Installation
 
-The scoop role SHALL install packages from configured lists with support for global installation.
+The scoop role SHALL install packages from configured lists with support for
+global installation.
 
 #### Scenario: Install user-scoped packages
 
@@ -59,7 +65,8 @@ The scoop role SHALL install packages from configured lists with support for glo
 
 - **GIVEN** a package installation command is executed
 - **WHEN** the command completes
-- **THEN** the task SHALL be marked as changed only if output contains "was installed successfully!"
+- **THEN** the task SHALL be marked as changed only if output contains "was
+  installed successfully!"
 
 #### Scenario: Installation error handling
 
@@ -70,7 +77,8 @@ The scoop role SHALL install packages from configured lists with support for glo
 
 ### Requirement: Package Configuration
 
-The scoop role SHALL configure installed Scoop packages with post-installation settings.
+The scoop role SHALL configure installed Scoop packages with post-installation
+settings.
 
 #### Scenario: Configure packages
 
@@ -80,7 +88,8 @@ The scoop role SHALL configure installed Scoop packages with post-installation s
 
 ### Requirement: Task Execution Order
 
-The scoop role SHALL execute tasks in the correct order to ensure dependencies are met.
+The scoop role SHALL execute tasks in the correct order to ensure dependencies
+are met.
 
 #### Scenario: Sequential execution
 
@@ -102,13 +111,15 @@ The scoop role SHALL use Windows PowerShell for Scoop operations.
 
 ### Requirement: Documentation
 
-The project documentation SHALL include commands to export and update Scoop package lists.
+The project documentation SHALL include commands to export and update Scoop
+package lists.
 
 #### Scenario: Export Scoop packages
 
 - **GIVEN** Scoop packages are installed
 - **WHEN** a developer wants to update the package list
-- **THEN** documentation SHALL provide PowerShell command to export packages in the correct YAML format
+- **THEN** documentation SHALL provide PowerShell command to export packages
+  in the correct YAML format
 - **AND** the command SHALL handle global packages appropriately
 
 ### Requirement: Idempotency

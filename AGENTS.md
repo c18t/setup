@@ -23,7 +23,8 @@ These instructions are for AI assistants working in this project.
 Always open `@/openspec/AGENTS.md` when the request:
 
 - Mentions planning or proposals (words like proposal, spec, change, plan)
-- Introduces new capabilities, breaking changes, architecture shifts, or big performance/security work
+- Introduces new capabilities, breaking changes, architecture shifts,
+  or big performance/security work
 - Sounds ambiguous and you need the authoritative spec before coding
 
 Use `@/openspec/AGENTS.md` to learn:
@@ -46,7 +47,8 @@ context, architecture patterns, and design decisions, see `openspec/project.md`.
 
 - **Playbooks:** `ansible/playbooks/` (iapetus-macos, khronos-windows)
 - **Roles:** `ansible/roles/` (platform, package managers, tools)
-- **Specs:** `openspec/specs/` (00*\* = infrastructure, 01*\* = playbooks, 02\_\* = roles)
+- **Specs:** `openspec/specs/` (00*\* = infrastructure, 01*\* = playbooks,
+  02\_\* = roles)
 - **Key Files:**
   - `ansible.cfg` - Ansible configuration (private role vars, Python interpreter)
   - `.ansible-lint` - Linting rules (production profile)
@@ -213,15 +215,12 @@ and environment setup lifecycle. Key workflow steps:
 2. Playbooks orchestrate role execution with common variables
 3. Roles configure specific tools (private variables via `ansible.cfg`)
 
-### Important: Run ansible-lint After Changes
+### Important: Run Linters After Changes
 
-**IMPORTANT**: When you modify any of the following files, you MUST run
-`ansible-lint` to check for errors before committing:
+**IMPORTANT**: When you modify files, you MUST run the appropriate linters to
+check for errors before committing:
 
-- `ansible/playbooks/**`
-- `ansible/roles/**`
-
-Run the linter with:
+**For Ansible files** (`ansible/playbooks/**`, `ansible/roles/**`):
 
 ```sh
 ansible-lint
@@ -229,6 +228,14 @@ ansible-lint
 
 This ensures that Ansible code follows best practices and maintains consistency
 across the project.
+
+**For Markdown files** (any `.md` file):
+
+```sh
+markdownlint-cli2 "**/*.md"
+```
+
+This validates Markdown formatting and ensures documentation consistency.
 
 ## Testing and Validation
 

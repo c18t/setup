@@ -2,7 +2,9 @@
 
 ## Purpose
 
-Personal development environment setup automation using Ansible. This project provides reproducible, idempotent infrastructure-as-code for configuring development machines across multiple platforms (macOS, Windows, WSL).
+Personal development environment setup automation using Ansible. This project
+provides reproducible, idempotent infrastructure-as-code for configuring
+development machines across multiple platforms (macOS, Windows, WSL).
 
 **Goals:**
 
@@ -104,8 +106,10 @@ Personal development environment setup automation using Ansible. This project pr
 **Ansible Configuration (ansible.cfg):**
 
 - `inventory = ./inventory` - Custom inventory path
-- `private_role_vars = True` - Role variables are private to prevent conflicts
-- `interpreter_python = auto_silent` - Automatic Python interpreter discovery without warnings
+- `private_role_vars = True` - Role variables are private to prevent
+  conflicts
+- `interpreter_python = auto_silent` - Automatic Python interpreter discovery
+  without warnings
 
 **Linting Configuration (.ansible-lint):**
 
@@ -151,10 +155,12 @@ Personal development environment setup automation using Ansible. This project pr
 Specifications in `openspec/specs/` follow a numbered prefix convention:
 
 - **00\_[name]**: Project structure/infrastructure specs (e.g., `00_scripts`)
-- **01\_[name]**: Playbook/environment specs (e.g., `01_iapetus-macos`, `01_khronos-windows`)
+- **01\_[name]**: Playbook/environment specs (e.g., `01_iapetus-macos`,
+  `01_khronos-windows`)
 - **02\_[name]**: Role/task specs (e.g., `02_mise`, `02_homebrew`, `02_fish`)
 
-This numbering ensures specifications are organized by architectural layer and appear in logical order when listed alphabetically.
+This numbering ensures specifications are organized by architectural layer and
+appear in logical order when listed alphabetically.
 
 ### Git Workflow
 
@@ -184,11 +190,13 @@ This numbering ensures specifications are organized by architectural layer and a
 ### Environment Setup Lifecycle
 
 1. **Bootstrap Phase:**
+
    - Platform-specific scripts install package managers
    - Ansible is installed via package manager
    - SSH configuration for remote execution (Windows)
 
 2. **Configuration Phase:**
+
    - Ansible playbooks execute roles in defined order
    - Dotfiles are linked from central repository
    - Tools are configured with default settings

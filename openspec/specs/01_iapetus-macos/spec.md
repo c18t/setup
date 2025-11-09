@@ -2,7 +2,11 @@
 
 ## Purpose
 
-The iapetus-macos playbook orchestrates complete macOS system setup by sequentially executing roles that configure the operating system, install development tools, and establish user environments. This specification defines requirements for the playbook's execution flow, variable handling, and role integration to ensure reproducible macOS development environments.
+The iapetus-macos playbook orchestrates complete macOS system setup by
+sequentially executing roles that configure the operating system, install
+development tools, and establish user environments. This specification defines
+requirements for the playbook's execution flow, variable handling, and role
+integration to ensure reproducible macOS development environments.
 
 ## Requirements
 
@@ -35,7 +39,8 @@ The playbook SHALL initialize common variables before executing any roles.
 
 ### Requirement: Role Execution Order
 
-The playbook SHALL execute roles in a specific sequence to ensure proper dependency resolution.
+The playbook SHALL execute roles in a specific sequence to ensure proper
+dependency resolution.
 
 #### Scenario: Sequential role execution
 
@@ -70,7 +75,8 @@ The playbook SHALL configure the homebrew role with a macOS-specific Brewfile.
 
 ### Requirement: Home Role Platform Integration
 
-The playbook SHALL configure the home role for macOS-specific directory structures and dotfiles.
+The playbook SHALL configure the home role for macOS-specific directory
+structures and dotfiles.
 
 #### Scenario: macOS-specific tasks loaded
 
@@ -113,7 +119,8 @@ The playbook SHALL configure the fish role with macOS-specific configuration.
 
 ### Requirement: Mise Tool Configuration
 
-The playbook SHALL configure the mise role with macOS-specific tool versions and package lists.
+The playbook SHALL configure the mise role with macOS-specific tool versions
+and package lists.
 
 #### Scenario: macOS mise configuration loaded
 

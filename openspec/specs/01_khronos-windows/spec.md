@@ -2,13 +2,18 @@
 
 ## Purpose
 
-The khronos-windows playbook orchestrates complete Windows and WSL system setup through two separate plays that configure the Windows host and WSL environment independently. This specification defines requirements for multi-play execution, variable handling, remote Windows connection, and role integration to ensure reproducible Windows development environments.
+The khronos-windows playbook orchestrates complete Windows and WSL system setup
+through two separate plays that configure the Windows host and WSL environment
+independently. This specification defines requirements for multi-play
+execution, variable handling, remote Windows connection, and role integration
+to ensure reproducible Windows development environments.
 
 ## Requirements
 
 ### Requirement: Multi-Play Structure
 
-The playbook SHALL contain two distinct plays for Windows host and WSL environment setup.
+The playbook SHALL contain two distinct plays for Windows host and WSL
+environment setup.
 
 #### Scenario: Windows host play executes first
 
@@ -26,7 +31,8 @@ The playbook SHALL contain two distinct plays for Windows host and WSL environme
 
 ### Requirement: Windows Host Variable Initialization
 
-The Windows host play SHALL initialize variables for remote Windows connection and platform-specific paths.
+The Windows host play SHALL initialize variables for remote Windows connection
+and platform-specific paths.
 
 #### Scenario: Windows credentials prompted
 

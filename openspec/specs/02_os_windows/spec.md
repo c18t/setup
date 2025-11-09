@@ -2,7 +2,11 @@
 
 ## Purpose
 
-The os_windows role manages Windows system configuration including environment variables, Windows Updates settings, font installation, and registry modifications. This specification defines requirements for configuring Windows-specific settings to support development and user preferences.
+The os_windows role manages Windows system configuration including environment
+variables, Windows Updates settings, font installation, and registry
+modifications.
+This specification defines requirements for configuring Windows-specific
+settings to support development and user preferences.
 
 ## Requirements
 
@@ -14,11 +18,13 @@ The os_windows role SHALL deploy Windows-specific configuration resources.
 
 - **GIVEN** Windows system configuration is being applied
 - **WHEN** the resource setup task runs
-- **THEN** Windows-specific configuration files SHALL be deployed to appropriate locations
+- **THEN** Windows-specific configuration files SHALL be deployed to
+  appropriate locations
 
 ### Requirement: User Environment Configuration
 
-The os_windows role SHALL configure user-level environment variables and PATH settings.
+The os_windows role SHALL configure user-level environment variables and PATH
+settings.
 
 #### Scenario: Configure user PATH
 

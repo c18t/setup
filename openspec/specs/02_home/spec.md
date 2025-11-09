@@ -2,13 +2,19 @@
 
 ## Purpose
 
-The home role manages home directory structure and dotfiles setup through symbolic links. This specification defines requirements for creating necessary directories and linking configuration files from a dotfiles repository to their target locations, with platform-specific support for macOS, Windows, and WSL.
+The home role manages home directory structure and dotfiles setup
+through symbolic links.
+This specification defines requirements for creating necessary directories
+and linking configuration files from a dotfiles repository
+to their target locations, with platform-specific support for macOS, Windows,
+and WSL.
 
 ## Requirements
 
 ### Requirement: Platform-Specific Entry Points
 
-The home role SHALL provide separate entry points for different platforms and fail if called without specifying the platform.
+The home role SHALL provide separate entry points for different platforms and
+fail if called without specifying the platform.
 
 #### Scenario: Direct main.yaml call fails
 
@@ -59,7 +65,8 @@ The home role SHALL create all necessary directories for user configuration and 
 
 ### Requirement: Symbolic Link Management
 
-The home role SHALL create symbolic links from dotfiles repository to target locations in the home directory.
+The home role SHALL create symbolic links from dotfiles repository to target
+locations in the home directory.
 
 #### Scenario: Create symbolic links
 

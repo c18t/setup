@@ -2,7 +2,11 @@
 
 ## Purpose
 
-The claude role manages the installation and configuration of Claude Code CLI and its MCP (Model Context Protocol) servers. This specification defines requirements for installing Claude Code, configuring symbolic links to Claude configuration directories, and setting up multiple MCP servers for enhanced functionality.
+The claude role manages the installation and configuration of Claude Code CLI
+and its MCP (Model Context Protocol) servers.
+This specification defines requirements for installing Claude Code, configuring
+symbolic links to Claude configuration directories, and setting up multiple MCP
+servers for enhanced functionality.
 
 ## Requirements
 
@@ -30,7 +34,8 @@ The claude role SHALL install Claude Code CLI if it is not already available.
 
 ### Requirement: Configuration Directory Setup
 
-The claude role SHALL create and configure Claude Code configuration directories with proper symbolic links.
+The claude role SHALL create and configure Claude Code configuration
+directories with proper symbolic links.
 
 #### Scenario: Create configuration directories
 
@@ -54,7 +59,8 @@ The claude role SHALL create and configure Claude Code configuration directories
 
 ### Requirement: MCP Server Installation
 
-The claude role SHALL install and configure multiple MCP servers for enhanced Claude Code functionality.
+The claude role SHALL install and configure multiple MCP servers for enhanced
+Claude Code functionality.
 
 #### Scenario: Install context7 MCP server
 
@@ -76,7 +82,7 @@ The claude role SHALL install and configure multiple MCP servers for enhanced Cl
   - CIPHER_EMBEDDER=local
   - MCP_SERVER_MODE=aggregator
   - STORAGE_DATABASE_PATH=./.cipher
-  - OLLAMA_BASE_URL=http://localhost:11434
+  - OLLAMA_BASE_URL=<http://localhost:11434>
 
 #### Scenario: Install scopecraft MCP server
 
@@ -105,7 +111,8 @@ The claude role SHALL install and configure multiple MCP servers for enhanced Cl
 
 ### Requirement: Platform-Specific Configuration
 
-The claude role SHALL support both Unix-like and Windows platforms with appropriate task files.
+The claude role SHALL support both Unix-like and Windows platforms with
+appropriate task files.
 
 #### Scenario: Unix-like platform execution
 

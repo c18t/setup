@@ -2,7 +2,11 @@
 
 ## Purpose
 
-The homebrew role manages the installation of Homebrew package manager and applications defined in Brewfiles. This specification defines requirements for installing Homebrew on macOS and Linux systems, and managing packages through Brewfile-based installations with platform-specific configurations.
+The homebrew role manages the installation of Homebrew package manager and
+applications defined in Brewfiles.
+This specification defines requirements for installing Homebrew on macOS and
+Linux systems, and managing packages through Brewfile-based installations with
+platform-specific configurations.
 
 ## Requirements
 
@@ -30,7 +34,8 @@ The homebrew role SHALL install Homebrew if it is not already available on the s
 
 ### Requirement: Precondition Checking
 
-The homebrew role SHALL verify that Homebrew is available before attempting package installation.
+The homebrew role SHALL verify that Homebrew is available before attempting
+package installation.
 
 #### Scenario: Check Homebrew availability
 
@@ -40,7 +45,8 @@ The homebrew role SHALL verify that Homebrew is available before attempting pack
 
 ### Requirement: Brewfile-Based Package Installation
 
-The homebrew role SHALL install and upgrade applications using platform-specific Brewfiles.
+The homebrew role SHALL install and upgrade applications using
+platform-specific Brewfiles.
 
 #### Scenario: macOS package installation
 
@@ -63,7 +69,8 @@ The homebrew role SHALL install and upgrade applications using platform-specific
 
 ### Requirement: Environment Configuration
 
-The homebrew role SHALL configure appropriate environment variables for non-macOS platforms.
+The homebrew role SHALL configure appropriate environment variables for
+non-macOS platforms.
 
 #### Scenario: macOS environment
 
@@ -87,7 +94,8 @@ The homebrew role SHALL configure appropriate environment variables for non-macO
 
 - **GIVEN** Homebrew is installed
 - **WHEN** the prefix detection task runs
-- **THEN** the brew --prefix path SHALL be determined and stored for use in environment variables
+- **THEN** the brew --prefix path SHALL be determined and stored for use in
+  environment variables
 
 ### Requirement: Execution Order
 
@@ -103,19 +111,22 @@ The homebrew role SHALL execute tasks in the correct order.
 
 ### Requirement: Documentation
 
-The project documentation SHALL include commands to export and update Brewfiles.
+The project documentation SHALL include commands to export and update
+Brewfiles.
 
 #### Scenario: Export macOS Brewfile
 
 - **GIVEN** packages are installed via Homebrew on macOS
 - **WHEN** a developer wants to update the Brewfile
-- **THEN** documentation SHALL provide the command to dump the Brewfile with descriptions
+- **THEN** documentation SHALL provide the command to dump the Brewfile with
+  descriptions
 
 #### Scenario: Export WSL Brewfile
 
 - **GIVEN** packages are installed via Homebrew on WSL
 - **WHEN** a developer wants to update the Brewfile
-- **THEN** documentation SHALL provide the command to dump the WSL Brewfile with descriptions
+- **THEN** documentation SHALL provide the command to dump the WSL Brewfile
+  with descriptions
 
 #### Scenario: Preserve Brewfile comments
 

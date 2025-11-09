@@ -2,13 +2,18 @@
 
 ## Purpose
 
-The winget role manages Windows Package Manager (winget) operations including precondition validation, package upgrades, installation, and post-installation configuration. This specification defines requirements for using winget to manage Windows applications through Microsoft's official package manager.
+The winget role manages Windows Package Manager (winget) operations including
+precondition validation, package upgrades, installation, and post-installation
+configuration.
+This specification defines requirements for using winget to manage Windows
+applications through Microsoft's official package manager.
 
 ## Requirements
 
 ### Requirement: Precondition Validation
 
-The winget role SHALL verify that winget is available before attempting package operations.
+The winget role SHALL verify that winget is available before attempting
+package operations.
 
 #### Scenario: Check winget availability
 
@@ -62,7 +67,8 @@ The winget role SHALL install all packages specified in the configuration.
 
 ### Requirement: Package Configuration
 
-The winget role SHALL configure installed winget packages with post-installation settings.
+The winget role SHALL configure installed winget packages with
+post-installation settings.
 
 #### Scenario: Configure packages
 
@@ -72,7 +78,8 @@ The winget role SHALL configure installed winget packages with post-installation
 
 ### Requirement: Task Execution Order
 
-The winget role SHALL execute tasks in the correct order to ensure proper package management.
+The winget role SHALL execute tasks in the correct order to ensure proper
+package management.
 
 #### Scenario: Sequential execution
 
@@ -105,13 +112,15 @@ The winget role SHALL handle package installation errors appropriately.
 
 ### Requirement: Documentation
 
-The project documentation SHALL include commands to export and update winget package lists.
+The project documentation SHALL include commands to export and update winget
+package lists.
 
 #### Scenario: Export installed packages
 
 - **GIVEN** packages are installed via winget
 - **WHEN** a developer wants to update the package list
-- **THEN** documentation SHALL provide command to export packages in the correct format
+- **THEN** documentation SHALL provide command to export packages in the
+  correct format
 
 ### Requirement: Idempotency
 

@@ -2,7 +2,10 @@
 
 ## Purpose
 
-The os_macos role manages macOS system preferences and settings. This specification defines requirements for configuring Dock behavior, Finder preferences, and other macOS-specific system settings through the macOS defaults system.
+The os_macos role manages macOS system preferences and settings.
+This specification defines requirements for configuring Dock behavior, Finder
+preferences, and other macOS-specific system settings through the macOS
+defaults system.
 
 ## Requirements
 
@@ -51,7 +54,8 @@ The os_macos role SHALL configure macOS Finder preferences.
 
 ### Requirement: Settings Persistence
 
-The os_macos role SHALL use the macOS defaults system to ensure settings persist across system restarts.
+The os_macos role SHALL use the macOS defaults system to ensure settings
+persist across system restarts.
 
 #### Scenario: Use osx_defaults module
 
@@ -69,7 +73,8 @@ The os_macos role SHALL use the macOS defaults system to ensure settings persist
 
 ### Requirement: Handler Implementation
 
-The os_macos role SHALL implement handlers to apply settings that require service restarts.
+The os_macos role SHALL implement handlers to apply settings that require
+service restarts.
 
 #### Scenario: RestartDock handler
 

@@ -2,7 +2,10 @@
 
 ## Purpose
 
-The wsl role manages Windows Subsystem for Linux (WSL) specific configuration including font installation and fstab configuration for mounting Windows drives. This specification defines requirements for configuring WSL environments to integrate properly with the Windows host system.
+The wsl role manages Windows Subsystem for Linux (WSL) specific configuration
+including font installation and fstab configuration for mounting Windows drives.
+This specification defines requirements for configuring WSL environments to
+integrate properly with the Windows host system.
 
 ## Requirements
 
@@ -24,7 +27,8 @@ The wsl role SHALL install fonts in the WSL environment for proper terminal disp
 
 ### Requirement: Fstab Configuration
 
-The wsl role SHALL configure /etc/fstab to mount Windows drives with appropriate options.
+The wsl role SHALL configure /etc/fstab to mount Windows drives with
+appropriate options.
 
 #### Scenario: Configure Google Drive mount
 
@@ -32,7 +36,8 @@ The wsl role SHALL configure /etc/fstab to mount Windows drives with appropriate
 - **WHEN** the fstab configuration task runs
 - **THEN** an entry SHALL be added for mounting "G:\マイドライブ" to /mnt/g
 - **AND** the mount SHALL use drvfs filesystem type
-- **AND** the mount options SHALL include: metadata, noatime, uid=1000, gid=1000, defaults
+- **AND** the mount options SHALL include: metadata, noatime, uid=1000,
+  gid=1000, defaults
 - **AND** dump and pass values SHALL be set to 0 0
 
 #### Scenario: Metadata support
@@ -120,7 +125,8 @@ The wsl role SHALL support configurable mount points for Windows drives.
 
 ### Requirement: File System Integration
 
-The wsl role SHALL configure proper integration between WSL Linux filesystem and Windows NTFS.
+The wsl role SHALL configure proper integration between WSL Linux filesystem
+and Windows NTFS.
 
 #### Scenario: NTFS compatibility
 
