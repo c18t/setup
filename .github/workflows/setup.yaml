@@ -39,7 +39,7 @@ jobs:
 
     steps:
       - name: checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: run setup script
         run: |-
           bash -c "./setup-iapetus.sh ${VERBOSE_OPTION} \
@@ -55,7 +55,7 @@ jobs:
 
     steps:
       - name: checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: run setup script
         run: |-
           bash -c "./setup-khronos.sh -l local ${VERBOSE_OPTION} \

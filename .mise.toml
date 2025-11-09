@@ -1,7 +1,8 @@
 [tools]
+go = "latest"
 node = "latest"
-pnpm = "latest"
 python = "latest"
+pnpm = "latest"
 pre-commit = "latest"
 shellcheck = "latest"
 yamllint = "latest"
