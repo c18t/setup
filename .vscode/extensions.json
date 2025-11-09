@@ -1,7 +1,17 @@
 {
   "recommendations": [
+    "davidanson.vscode-markdownlint",
+    "editorconfig.editorconfig",
     "esbenp.prettier-vscode",
+    "me-dutour-mathieu.vscode-github-actions",
+    "mikestead.dotenv",
     "oderwat.indent-rainbow",
-    "redhat.vscode-yaml"
+    "redhat.vscode-yaml",
+    "shardulm94.trailing-spaces",
+    "tamasfe.even-better-toml",
+    "usernamehw.errorlens",
+    "mosapride.zenkaku",
+    "bmalehorn.vscode-fish",
+    "bdavs.expect"
   ]
 }
