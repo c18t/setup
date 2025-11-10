@@ -10,22 +10,27 @@ yamllint = "latest"
 
 [env]
 '_'.file = ".env"
+'_'.path = './node_modules/.bin'
 
 [tasks.setup]
 description = "Setup project"
-depends = ["setup:mise"]
-run = "mise run setup:pre-commit & mise run setup:pnpm"
+depends = ["setup:mise", "setup:pnpm", "setup:pre-commit"]
 
 [tasks."setup:mise"]
 description = "Setup project mise"
 run = "mise install -y"
+sources = ['.mise.toml']
+
+[tasks."setup:pnpm"]
+description = "Setup project pnpm"
+depends = ["setup:mise"]
+run = 'pnpm install'
+sources = ['package.json', 'pnpm-lock.yaml', '.mise.toml']
+outputs = ['node_modules/.pnpm/lock.yaml']
 
 [tasks."setup:pre-commit"]
 description = "Setup project pre-commit"
 depends = ["setup:mise"]
 run = "pre-commit install"
-
-[tasks."setup:pnpm"]
-description = "Setup project pnpm"
-depends = ["setup:mise"]
-run = "pnpm install"
+sources = ['.pre-commit-config.yaml']
+outputs = ['.git/hooks/pre-commit']
