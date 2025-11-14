@@ -80,6 +80,13 @@ Claude Code functionality.
 - **WHEN** the MCP server installation runs
 - **THEN** scopecraft SHALL be installed via sc-stdio with user scope
 
+#### Scenario: Install playwright MCP server
+
+- **GIVEN** playwright is not in the installed MCP server list
+- **WHEN** the MCP server installation runs
+- **THEN** playwright SHALL be installed via npx with user scope
+- **AND** the official Microsoft package @playwright/mcp SHALL be used
+
 #### Scenario: Install language server MCP servers
 
 - **GIVEN** typescript or go servers are not installed

@@ -190,13 +190,11 @@ appear in logical order when listed alphabetically.
 ### Environment Setup Lifecycle
 
 1. **Bootstrap Phase:**
-
    - Platform-specific scripts install package managers
    - Ansible is installed via package manager
    - SSH configuration for remote execution (Windows)
 
 2. **Configuration Phase:**
-
    - Ansible playbooks execute roles in defined order
    - Dotfiles are linked from central repository
    - Tools are configured with default settings
@@ -270,9 +268,8 @@ appear in logical order when listed alphabetically.
 
 - context7: Library documentation
 - ccusage: Usage tracking
-- cipher: Memory management
 - scopecraft: Task management
-- simone: Activity logging
+- playwright: Browser automation and testing
 - typescript: TypeScript LSP integration
 - go: Go LSP integration
 

@@ -56,3 +56,13 @@
   when: "'go' not in claude_mcp_list.stdout"
   register: claude_mcp_add_go
   changed_when: claude_mcp_add_go.rc == 0
+
+- name: 12-mcp-servers | Add playwright MCP server
+  ansible.builtin.shell: >
+    claude mcp add --scope user playwright --
+    npx -y @playwright/mcp
+  args:
+    executable: '{{ claude_fish_path }}'
+  when: "'playwright' not in claude_mcp_list.stdout"
+  register: claude_mcp_add_playwright
+  changed_when: claude_mcp_add_playwright.rc == 0

@@ -237,6 +237,32 @@ markdownlint-cli2 "**/*.md"
 
 This validates Markdown formatting and ensures documentation consistency.
 
+**After OpenSpec archive operations**:
+
+When you run `openspec archive <change-id>`, the archive operation updates spec
+files and moves the change to the archive directory. You MUST perform the
+following steps:
+
+1. **Run markdownlint** to fix formatting issues in updated documentation:
+
+   ```sh
+   # After openspec archive, run markdownlint on updated specs and archived changes
+   npx markdownlint-cli2 "openspec/specs/**/*.md" "openspec/changes/archive/**/*.md"
+   ```
+
+   This ensures all OpenSpec documentation maintains consistent formatting.
+
+2. **Review and update `openspec/project.md`** to reflect changes in project
+   context:
+   - Check if external dependencies lists need updating (e.g., MCP servers,
+     package managers, tools)
+   - Verify that tech stack descriptions match current implementation
+   - Update any project conventions or patterns that changed
+   - Ensure domain context and constraints remain accurate
+
+   Pay special attention to sections like "MCP Servers (Claude Code)" and other
+   enumerated lists that may need to reflect added or removed components.
+
 ## Testing and Validation
 
 See `openspec/project.md` for complete testing strategy including idempotency
