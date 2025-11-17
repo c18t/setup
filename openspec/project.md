@@ -268,10 +268,7 @@ appear in logical order when listed alphabetically.
 
 - context7: Library documentation
 - ccusage: Usage tracking
-- scopecraft: Task management
 - playwright: Browser automation and testing
-- typescript: TypeScript LSP integration
-- go: Go LSP integration
 
 ### System Requirements
 

@@ -21,30 +21,6 @@
   register: claude_mcp_add_ccusage
   changed_when: claude_mcp_add_ccusage.rc == 0
 
-- name: 12-mcp-servers-windows | Add scopecraft MCP server
-  ansible.windows.win_shell: >-
-    claude mcp add --scope user scopecraft --
-    sc-stdio
-  when: "'scopecraft' not in claude_mcp_list.stdout"
-  register: claude_mcp_add_scopecraft
-  changed_when: claude_mcp_add_scopecraft.rc == 0
-
-- name: 12-mcp-servers-windows | Add typescript MCP server
-  ansible.windows.win_shell: >-
-    claude mcp add --scope user typescript --
-    npx -y @mizchi/lsmcp -p tsgo
-  when: "'typescript' not in claude_mcp_list.stdout"
-  register: claude_mcp_add_typescript
-  changed_when: claude_mcp_add_typescript.rc == 0
-
-- name: 12-mcp-servers-windows | Add go MCP server
-  ansible.windows.win_shell: >-
-    claude mcp add --scope user go --
-    npx -y @mizchi/lsmcp -p gopls
-  when: "'go' not in claude_mcp_list.stdout"
-  register: claude_mcp_add_go
-  changed_when: claude_mcp_add_go.rc == 0
-
 - name: 12-mcp-servers-windows | Add playwright MCP server
   ansible.windows.win_shell: >-
     claude mcp add --scope user playwright --

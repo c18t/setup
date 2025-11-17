@@ -247,7 +247,7 @@ following steps:
 
    ```sh
    # After openspec archive, run markdownlint on updated specs and archived changes
-   npx markdownlint-cli2 "openspec/specs/**/*.md" "openspec/changes/archive/**/*.md"
+   markdownlint-cli2 "openspec/specs/**/*.md" "openspec/changes/archive/**/*.md"
    ```
 
    This ensures all OpenSpec documentation maintains consistent formatting.

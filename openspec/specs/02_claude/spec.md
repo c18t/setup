@@ -74,12 +74,6 @@ Claude Code functionality.
 - **WHEN** the MCP server installation runs
 - **THEN** ccusage SHALL be installed via npx with user scope
 
-#### Scenario: Install scopecraft MCP server
-
-- **GIVEN** scopecraft is not in the installed MCP server list
-- **WHEN** the MCP server installation runs
-- **THEN** scopecraft SHALL be installed via sc-stdio with user scope
-
 #### Scenario: Install playwright MCP server
 
 - **GIVEN** playwright is not in the installed MCP server list
@@ -87,18 +81,21 @@ Claude Code functionality.
 - **THEN** playwright SHALL be installed via npx with user scope
 - **AND** the official Microsoft package @playwright/mcp SHALL be used
 
-#### Scenario: Install language server MCP servers
-
-- **GIVEN** typescript or go servers are not installed
-- **WHEN** the MCP server installation runs
-- **THEN** typescript SHALL be installed via @mizchi/lsmcp with tsgo parameter
-- **AND** go SHALL be installed via @mizchi/lsmcp with gopls parameter
-
 #### Scenario: Skip already installed servers
 
 - **GIVEN** an MCP server is already installed
 - **WHEN** the MCP server check runs
 - **THEN** the installation for that server SHALL be skipped
+
+**Removed scenarios:**
+
+- ~~Install scopecraft MCP server~~ - Not used in practice. Task management is
+  better handled through Claude Code's built-in task management, OpenSpec
+  proposals, and project-specific task management tools.
+- ~~Install language server MCP servers (typescript/go)~~ - Removed to reduce
+  token consumption. These language server integrations consume significant
+  tokens even when not actively used. Configuring them on a per-project basis
+  is more efficient.
 
 ### Requirement: Platform-Specific Configuration
 
