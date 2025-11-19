@@ -1,5 +1,8 @@
-# Created by https://www.toptal.com/developers/gitignore/api/vim,visualstudiocode,windows,macos,node
-# Edit at https://www.toptal.com/developers/gitignore?templates=vim,visualstudiocode,windows,macos,node
+# Created by https://www.toptal.com/developers/gitignore/api/vim,visualstudiocode,windows,macos,dotenv,node
+# Edit at https://www.toptal.com/developers/gitignore?templates=vim,visualstudiocode,windows,macos,dotenv,node
+
+### dotenv ###
+.env
 
 ### macOS ###
 # General
@@ -109,7 +112,6 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variable files
-.env
 .env.development.local
 .env.test.local
 .env.production.local
@@ -239,4 +241,9 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/vim,visualstudiocode,windows,macos,node
+# End of https://www.toptal.com/developers/gitignore/api/vim,visualstudiocode,windows,macos,dotenv,node
+
+## working dir ##
+.claude/settings.local.json
+.playwright-mcp/
+.lock
