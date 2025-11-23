@@ -94,3 +94,13 @@
         name: DisableUNCCheck
         data: 1
         type: dword
+
+# https://learn.microsoft.com/ja-jp/answers/questions/5596309/windows11-25h2-mdns
+- name: 14-win-regedit | DNS Client Service
+  block:
+    - name: 14-win-regedit | Enable mDNS multicast
+      ansible.windows.win_regedit:
+        path: HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient
+        name: EnableMulticast
+        data: 1
+        type: dword
