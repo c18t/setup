@@ -1,0 +1,86 @@
+---
+- name: 20-install-global-tools | Check if pnpm packages file exists
+  ansible.builtin.stat:
+    path: '{{ mise_default_pnpm_packages }}'
+  register: mise_stat_pnpm_packages
+  when: mise_default_pnpm_packages is defined and mise_default_pnpm_packages | length > 0
+
+- name: 20-install-global-tools | Check if pnpm is available
+  ansible.builtin.shell: which pnpm
+  args:
+    executable: '{{ mise_fish_path }}'
+  register: mise_check_pnpm
+  changed_when: false
+  failed_when: false
+
+- name: 20-install-global-tools | Upgrade pnpm global packages
+  ansible.builtin.shell: pnpm update -g
+  args:
+    executable: '{{ mise_fish_path }}'
+  register: mise_upgrade_pnpm_packages
+  changed_when: false
+  when: mise_check_pnpm.rc == 0
+
+- name: 20-install-global-tools | Read pnpm packages from file
+  ansible.builtin.set_fact:
+    mise_pnpm_packages_list: "{{ lookup('file', mise_default_pnpm_packages).split('\n') | map('trim') | reject('match', '^\\s*$') | reject('match', '^\\s*#') | list }}"
+  when:
+    - mise_default_pnpm_packages is defined
+    - mise_default_pnpm_packages | length > 0
+    - mise_stat_pnpm_packages.stat.exists
+    - mise_stat_pnpm_packages.stat.size > 0
+
+- name: 20-install-global-tools | Install pnpm global packages
+  ansible.builtin.shell: pnpm install -g {{ item }}
+  args:
+    executable: '{{ mise_fish_path }}'
+  loop: '{{ mise_pnpm_packages_list | default([]) }}'
+  register: mise_install_pnpm_packages
+  changed_when: false
+  when:
+    - mise_check_pnpm.rc == 0
+    - mise_pnpm_packages_list is defined
+    - mise_pnpm_packages_list | length > 0
+
+- name: 20-install-global-tools | Check if uv tools file exists
+  ansible.builtin.stat:
+    path: '{{ mise_default_uv_tools }}'
+  register: mise_stat_uv_tools
+  when: mise_default_uv_tools is defined and mise_default_uv_tools | length > 0
+
+- name: 20-install-global-tools | Check if uv is available
+  ansible.builtin.shell: which uv
+  args:
+    executable: '{{ mise_fish_path }}'
+  register: mise_check_uv
+  changed_when: false
+  failed_when: false
+
+- name: 20-install-global-tools | Upgrade uv tools
+  ansible.builtin.shell: uv tool upgrade --all
+  args:
+    executable: '{{ mise_fish_path }}'
+  register: mise_upgrade_uv_tools
+  changed_when: mise_upgrade_uv_tools.stderr is not search('Nothing to upgrade')
+  when: mise_check_uv.rc == 0
+
+- name: 20-install-global-tools | Read uv tools from file
+  ansible.builtin.set_fact:
+    mise_uv_tools_list: "{{ lookup('file', mise_default_uv_tools).split('\n') | map('trim') | reject('match', '^\\s*$') | reject('match', '^\\s*#') | list }}"
+  when:
+    - mise_default_uv_tools is defined
+    - mise_default_uv_tools | length > 0
+    - mise_stat_uv_tools.stat.exists
+    - mise_stat_uv_tools.stat.size > 0
+
+- name: 20-install-global-tools | Install uv tools
+  ansible.builtin.shell: uv tool install {{ item }}
+  args:
+    executable: '{{ mise_fish_path }}'
+  loop: '{{ mise_uv_tools_list | default([]) }}'
+  register: mise_install_uv_tools
+  changed_when: mise_install_uv_tools.stdout is search('Installed')
+  when:
+    - mise_check_uv.rc == 0
+    - mise_uv_tools_list is defined
+    - mise_uv_tools_list | length > 0
