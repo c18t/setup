@@ -1,10 +1,10 @@
 {
-  "packageManager": "pnpm@10.21.0",
+  "packageManager": "pnpm@10.24.0",
   "devDependencies": {
     "@fission-ai/openspec": "^0.14.0",
-    "markdownlint-cli2": "^0.18.1",
-    "pnpm": "^10.21.0",
-    "prettier": "^3.6.2",
+    "markdownlint-cli2": "^0.19.1",
+    "pnpm": "^10.24.0",
+    "prettier": "^3.7.3",
     "prettier-plugin-sh": "^0.18.0",
     "prettier-plugin-toml": "^2.0.6",
     "pretty-quick": "^4.2.2"
