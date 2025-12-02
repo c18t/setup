@@ -8,3 +8,5 @@
       ansible.builtin.import_tasks: 11-update-and-upgrade.yaml
     - name: Install apt packages
       ansible.builtin.import_tasks: 12-install-packages.yaml
+    - name: Setup Docker
+      ansible.builtin.import_tasks: 13-setup-docker.yaml

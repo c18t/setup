@@ -7,3 +7,5 @@
       ansible.builtin.import_tasks: 01-gather-facts.yaml
     - name: Setup mise
       ansible.builtin.import_tasks: 10-setup-mise.yaml
+    - name: Install global tools
+      ansible.builtin.import_tasks: 20-install-global-tools.yaml

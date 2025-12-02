@@ -13,4 +13,5 @@ inventory
 pnpm-lock.yaml
 LICENSE
 
+.claude/commands/openspec/**
 .github/pull_request_template.md

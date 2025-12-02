@@ -55,6 +55,7 @@
           - { name: Cloudflare.cloudflared }
           - { name: CPUID.CPU-Z.MSI }
           - { name: CPUID.HWMonitor }
+          - { name: Creality.CrealityPrint }
           - { name: DEVCOM.JMeter }
           - { name: Discord.Discord }
           - { name: Doist.Todoist }
@@ -192,9 +193,13 @@
         apt_keys:
           - url: 'https://dl-ssl.google.com/linux/linux_signing_key.pub'
             filename: 'google-chrome.gpg'
+          - url: 'https://download.docker.com/linux/ubuntu/gpg'
+            filename: 'docker.asc'
         apt_repositories:
           - repo: 'deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main'
             filename: 'google-chrome'
+          - repo: 'deb [arch=amd64 signed-by=/usr/share/keyrings/docker.asc] https://download.docker.com/{{ ansible_system | lower }}/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable'
+            filename: 'docker'
         apt_packages:
           - google-chrome-stable
           - autoconf # for asdf-erlang
@@ -212,6 +217,12 @@
           - m4 # for asdf-erlang
           - unixodbc-dev # for asdf-erlang
           - xsltproc # for asdf-erlang
+          # docker
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
     - name: Import homebrew
       ansible.builtin.import_role:
         name: homebrew
@@ -245,6 +256,8 @@
         mise_default_gems: '{{ dotfiles }}/mise/.default-gems'
         mise_default_mix_commands: '{{ dotfiles }}/mise/.default-mix-commands'
         mise_default_perl_modules: '{{ dotfiles }}/mise/.default-perl-modules'
+        mise_default_pnpm_packages: '{{ dotfiles }}/mise/.default-pnpm-packages'
+        mise_default_uv_tools: '{{ dotfiles }}/mise/.default-uv-tools'
     - name: Import nvim
       ansible.builtin.import_role:
         name: nvim

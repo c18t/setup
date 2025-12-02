@@ -1,9 +1,10 @@
 ---
 - name: 10-add-repositories | Add apt keys
   become: true
-  ansible.builtin.apt_key:
+  ansible.builtin.get_url:
     url: '{{ item.url }}'
-    keyring: '/usr/share/keyrings/{{ item.filename }}'
+    dest: '/usr/share/keyrings/{{ item.filename }}'
+    mode: u=rw,g=r,o=r
   loop: '{{ apt_keys }}'
 
 - name: 10-add-repositories | Add apt repositories

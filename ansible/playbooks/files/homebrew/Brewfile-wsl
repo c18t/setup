@@ -8,8 +8,6 @@ brew "ansible-lint"
 brew "python@3.14"
 # Text-based window manager and terminal multiplexer
 brew "byobu"
-# Pack, ship and run any application as a lightweight container
-brew "docker"
 # User-friendly command-line shell for UNIX-like operating systems
 brew "fish"
 # Bash-tool to store the private data inside a git repo

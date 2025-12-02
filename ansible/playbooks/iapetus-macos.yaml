@@ -59,6 +59,8 @@
         mise_default_gems: '{{ dotfiles }}/mise/.default-gems'
         mise_default_mix_commands: '{{ dotfiles }}/mise/.default-mix-commands'
         mise_default_perl_modules: '{{ dotfiles }}/mise/.default-perl-modules'
+        mise_default_pnpm_packages: '{{ dotfiles }}/mise/.default-pnpm-packages'
+        mise_default_uv_tools: '{{ dotfiles }}/mise/.default-uv-tools'
     - name: Import nvim
       ansible.builtin.import_role:
         name: nvim

@@ -1,0 +1,11 @@
+---
+# https://www.mizuyi.com/content/tech/wsl-docker-permission-error
+- name: 13-setup-docker | Add user to docker group
+  become: true
+  ansible.builtin.command: usermod -aG docker $USER
+  changed_when: false
+
+- name: 13-setup-docker | Grant permissions
+  become: true
+  ansible.builtin.command: chmod o+rw /var/run/docker.sock
+  changed_when: false

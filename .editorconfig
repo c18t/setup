@@ -20,3 +20,6 @@ charset = unset
 
 [*.ps1]
 charset = utf-8-bom
+
+[.vsconfig]
+end_of_line = crlf

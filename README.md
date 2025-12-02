@@ -94,6 +94,22 @@ _path:_ ansible/playbooks/files/visual-studio/.vsconfig
 PS > & "C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer\\setup.exe" export -p --channelId VisualStudio.17.Preview --productId Microsoft.VisualStudio.Product.Community --config .vsconfig
 ```
 
+### pnpm global packages
+
+_path:_ ~/GoogleDrive/share/dotfiles/mise/.default-pnpm-packages
+
+```sh
+pnpm ls -g --depth=0 | awk 'NF==2 && $2 ~ /^[0-9]/ {print $1}' > ~/GoogleDrive/share/dotfiles/mise/.default-pnpm-packages
+```
+
+### uv tools
+
+_path:_ ~/GoogleDrive/share/dotfiles/mise/.default-uv-tools
+
+```sh
+uv tool list | awk '$2 ~ /^v/ {print $1}' > ~/GoogleDrive/share/dotfiles/mise/.default-uv-tools
+```
+
 ## Copyrights
 
 [LICENSE](./LICENSE)
