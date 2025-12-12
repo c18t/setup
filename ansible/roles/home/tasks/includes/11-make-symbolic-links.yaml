@@ -11,7 +11,7 @@
 
 - name: includes | 11-make-symbolic-links | Set link items
   ansible.builtin.set_fact:
-    link_items:
+    home_link_items:
       # git
       - path: '{{ home_my_git_config }}'
         dest: '{{ home_git_config }}'
@@ -26,9 +26,9 @@
 - name: includes | 11-make-symbolic-links | Check that link sources exists
   ansible.builtin.stat:
     path: '{{ item.path }}'
-  register: stat_link_source
-  failed_when: not stat_link_source.stat.exists or stat_link_source.stat.isdir
-  loop: '{{ link_items }}'
+  register: home_stat_link_source
+  failed_when: not home_stat_link_source.stat.exists or home_stat_link_source.stat.isdir
+  loop: '{{ home_link_items }}'
 
 - name: includes | 11-make-symbolic-links | Link to files
   become: true
@@ -39,4 +39,4 @@
     owner: '{{ user }}'
     src: '{{ item.path }}'
     dest: '{{ item.dest }}'
-  loop: '{{ link_items }}'
+  loop: '{{ home_link_items }}'

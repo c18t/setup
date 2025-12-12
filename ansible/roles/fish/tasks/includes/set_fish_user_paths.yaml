@@ -3,10 +3,10 @@
   ansible.builtin.shell: echo $fish_user_paths
   args:
     executable: '{{ fish_path }}'
-  register: check_fish_user_paths
+  register: fish_check_user_paths
   changed_when: false
   check_mode: false
 
 - name: includes | set_fish_user_paths | Set fish_user_paths
   ansible.builtin.set_fact:
-    fish_user_paths: '{{ check_fish_user_paths.stdout }}'
+    fish_user_paths: '{{ fish_check_user_paths.stdout }}'

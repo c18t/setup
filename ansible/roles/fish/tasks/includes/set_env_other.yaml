@@ -8,7 +8,7 @@
       ansible.builtin.shell: echo $LIBRARY_PATH
       args:
         executable: '{{ fish_path }}'
-      register: echo_lib_path
+      register: fish_echo_lib_path
       changed_when: false
       check_mode: false
 
@@ -16,7 +16,7 @@
       ansible.builtin.shell: echo $LD_LIBRARY_PATH
       args:
         executable: '{{ fish_path }}'
-      register: echo_ld_lib_path
+      register: fish_echo_ld_lib_path
       changed_when: false
       check_mode: false
 
@@ -24,7 +24,7 @@
       ansible.builtin.shell: echo $C_INCLUDE_PATH
       args:
         executable: '{{ fish_path }}'
-      register: echo_c_include_path
+      register: fish_echo_c_include_path
       changed_when: false
       check_mode: false
 
@@ -32,7 +32,7 @@
       ansible.builtin.shell: echo $CPLUS_INCLUDE_PATH
       args:
         executable: '{{ fish_path }}'
-      register: echo_cplus_include_path
+      register: fish_echo_cplus_include_path
       changed_when: false
       check_mode: false
 
@@ -40,17 +40,17 @@
       ansible.builtin.shell: echo $OBJC_INCLUDE_PATH
       args:
         executable: '{{ fish_path }}'
-      register: echo_objc_include_path
+      register: fish_echo_objc_include_path
       changed_when: false
       check_mode: false
 
     - name: includes | set_env_other | Set lib_path and include_path (for other)
       ansible.builtin.set_fact:
-        lib_path: '{{ echo_lib_path.stdout }}'
-        ld_lib_path: '{{ echo_ld_lib_path.stdout }}'
-        c_include_path: '{{ echo_c_include_path.stdout }}'
-        cplus_include_path: '{{ echo_cplus_include_path.stdout }}'
-        objc_include_path: '{{ echo_objc_include_path.stdout }}'
+        fish_lib_path: '{{ fish_echo_lib_path.stdout }}'
+        fish_ld_lib_path: '{{ fish_echo_ld_lib_path.stdout }}'
+        fish_c_include_path: '{{ fish_echo_c_include_path.stdout }}'
+        fish_cplus_include_path: '{{ fish_echo_cplus_include_path.stdout }}'
+        fish_objc_include_path: '{{ fish_echo_objc_include_path.stdout }}'
 
 - name: includes | set_env_other | Add tools to fish_user_paths
   ansible.builtin.shell: set -U fish_user_paths $fish_user_paths "{{ item }}"
@@ -66,55 +66,55 @@
   ansible.builtin.shell: set -Ux LIBRARY_PATH "{{ item }}" $LIBRARY_PATH
   args:
     executable: '{{ fish_path }}'
-  when: lib_path is not search(item)
+  when: fish_lib_path is not search(item)
   changed_when: true
   with_items:
-    - '{{ brew_prefix }}/lib'
+    - '{{ fish_brew_prefix }}/lib'
     - '/usr/lib/x86_64-linux-gnu' # linuxbrewのlibより先に読み込ませる(for curl)
 
 - name: includes | set_env_other | Add Linuxbrew to LD_LIBRARY_PATH (for other)
   ansible.builtin.shell: set -Ux LD_LIBRARY_PATH "{{ item }}" $LD_LIBRARY_PATH
   args:
     executable: '{{ fish_path }}'
-  when: ld_lib_path is not search(item)
+  when: fish_ld_lib_path is not search(item)
   changed_when: true
   with_items:
-    - '{{ brew_prefix }}/lib'
+    - '{{ fish_brew_prefix }}/lib'
     - '/usr/lib/x86_64-linux-gnu' # linuxbrewのlibより先に読み込ませる(for curl)
 
 - name: includes | set_env_other | Add Linuxbrew to C_INCLUDE_PATH (for other)
   ansible.builtin.shell: set -Ux C_INCLUDE_PATH "{{ item }}" $C_INCLUDE_PATH
   args:
     executable: '{{ fish_path }}'
-  when: c_include_path is not search(item)
+  when: fish_c_include_path is not search(item)
   changed_when: true
   with_items:
-    - '{{ brew_prefix }}/include'
+    - '{{ fish_brew_prefix }}/include'
 
 - name: includes | set_env_other | Add Linuxbrew to CPLUS_INCLUDE_PATH (for other)
   ansible.builtin.shell: set -Ux CPLUS_INCLUDE_PATH "{{ item }}" $CPLUS_INCLUDE_PATH
   args:
     executable: '{{ fish_path }}'
-  when: cplus_include_path is not search(item)
+  when: fish_cplus_include_path is not search(item)
   changed_when: true
   with_items:
-    - '{{ brew_prefix }}/include'
+    - '{{ fish_brew_prefix }}/include'
 
 - name: includes | set_env_other | Add Linuxbrew to OBJC_INCLUDE_PATH (for other)
   ansible.builtin.shell: set -Ux OBJC_INCLUDE_PATH "{{ item }}" $OBJC_INCLUDE_PATH
   args:
     executable: '{{ fish_path }}'
-  when: objc_include_path is not search(item)
+  when: fish_objc_include_path is not search(item)
   changed_when: true
   with_items:
-    - '{{ brew_prefix }}/include'
+    - '{{ fish_brew_prefix }}/include'
 
 - name: includes | set_env_other | Make PKG_CONFIG_PATH config (for other)
   ansible.builtin.copy:
     dest: '{{ xdg_config_home }}/fish/conf.d/{{ item }}.fish'
     content: >
       set -gx PKG_CONFIG_PATH
-      "{{ brew_prefix }}/opt/{{ item }}/lib/pkgconfig" $PKG_CONFIG_PATH
+      "{{ fish_brew_prefix }}/opt/{{ item }}/lib/pkgconfig" $PKG_CONFIG_PATH
     mode: u=rw,g=r,o=r
   with_items: []
 

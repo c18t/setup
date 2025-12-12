@@ -15,8 +15,8 @@
     ({{ "file: " + (homebrew_brewfile | basename) + ", for " + (brew_distr) }})
   ansible.builtin.command: >-
     brew bundle install -v --file "{{ homebrew_brewfile }}"
-  register: brew_bundle
+  register: homebrew_brew_bundle
   changed_when: >-
-    brew_bundle.rc == 0 and brew_bundle.stdout
+    homebrew_brew_bundle.rc == 0 and homebrew_brew_bundle.stdout
       is search('It is not currently installed')
   ignore_errors: true

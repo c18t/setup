@@ -1,16 +1,16 @@
 ---
 - name: includes | set_brew_prefix | Check Homebrew
   ansible.builtin.command: which brew
-  register: which_brew
+  register: homebrew_which_brew
   changed_when: false
   check_mode: false
 
 - name: includes | set_brew_prefix | Get brew --prefix
   ansible.builtin.command: brew --prefix
-  register: get_brew_prefix
+  register: homebrew_get_brew_prefix
   changed_when: false
   check_mode: false
 
 - name: includes | set_brew_prefix | Set Homebrew prefix
   ansible.builtin.set_fact:
-    brew_prefix: '{{ get_brew_prefix.stdout }}'
+    homebrew_brew_prefix: '{{ homebrew_get_brew_prefix.stdout }}'

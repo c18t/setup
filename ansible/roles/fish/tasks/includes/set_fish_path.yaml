@@ -1,10 +1,10 @@
 ---
 - name: includes | set_fish_path | Find fish
   ansible.builtin.command: which fish
-  register: which_fish
+  register: fish_which_fish
   changed_when: false
   check_mode: false
 
 - name: includes | set_fish_path | Set fish_path
   ansible.builtin.set_fact:
-    fish_path: '{{ which_fish.stdout }}'
+    fish_path: '{{ fish_which_fish.stdout }}'

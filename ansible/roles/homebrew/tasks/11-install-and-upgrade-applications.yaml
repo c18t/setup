@@ -5,7 +5,7 @@
 - name: >-
     11-install-and-upgrade-applications
     | Exec includes/brew_tasks.yaml (for MacOSX)
-  when: which_brew.rc == 0 and ansible_distribution == "MacOSX"
+  when: homebrew_which_brew.rc == 0 and ansible_distribution == "MacOSX"
   block:
     - name: 11-install-and-upgrade-applications | Import brew_tasks.yaml
       ansible.builtin.include_tasks: includes/brew_tasks.yaml
@@ -17,19 +17,19 @@
     | Exec includes/brew_tasks.yaml (for other)
   # environmentへのomitの指定がうまくいかないので ansible_distribution で場合分け
   environment:
-    PATH: '{{ brew_prefix }}/bin:{{ ansible_env.PATH | default("") }}'
-    LIBRARY_PATH: '{{ brew_prefix }}/lib:{{ ansible_env.LIBRARY_PATH | default("") }}'
-    LD_LIBRARY_PATH: '{{ brew_prefix }}/lib:{{ ansible_env.LD_LIBRARY_PATH | default("") }}'
-    C_INCLUDE_PATH: '{{ brew_prefix }}/include:{{ ansible_env.C_INCLUDE_PATH | default("") }}'
+    PATH: '{{ homebrew_brew_prefix }}/bin:{{ ansible_env.PATH | default("") }}'
+    LIBRARY_PATH: '{{ homebrew_brew_prefix }}/lib:{{ ansible_env.LIBRARY_PATH | default("") }}'
+    LD_LIBRARY_PATH: '{{ homebrew_brew_prefix }}/lib:{{ ansible_env.LD_LIBRARY_PATH | default("") }}'
+    C_INCLUDE_PATH: '{{ homebrew_brew_prefix }}/include:{{ ansible_env.C_INCLUDE_PATH | default("") }}'
     CPLUS_INCLUDE_PATH: >-
-      {{ brew_prefix }}/include:{{
+      {{ homebrew_brew_prefix }}/include:{{
       ansible_env.CPLUS_INCLUDE_PATH | default("")
       }}
     OBJC_INCLUDE_PATH: >-
-      {{ brew_prefix }}/include:{{
+      {{ homebrew_brew_prefix }}/include:{{
       ansible_env.OBJC_INCLUDE_PATH | default("")
       }}
-  when: which_brew.rc == 0 and ansible_distribution != "MacOSX"
+  when: homebrew_which_brew.rc == 0 and ansible_distribution != "MacOSX"
   block:
     - name: >-
         11-install-and-upgrade-applications

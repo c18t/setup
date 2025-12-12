@@ -6,10 +6,10 @@
 
 - name: includes | set_brew_prefix | Get brew --prefix
   ansible.builtin.command: brew --prefix
-  register: get_brew_prefix
+  register: fish_get_brew_prefix
   changed_when: false
   check_mode: false
 
 - name: includes | set_brew_prefix | Set Homebrew/Linuxbrew prefix
   ansible.builtin.set_fact:
-    brew_prefix: '{{ get_brew_prefix.stdout }}'
+    fish_brew_prefix: '{{ fish_get_brew_prefix.stdout }}'
