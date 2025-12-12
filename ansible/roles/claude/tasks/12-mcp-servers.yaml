@@ -36,3 +36,13 @@
   when: "'playwright' not in claude_mcp_list.stdout"
   register: claude_mcp_add_playwright
   changed_when: claude_mcp_add_playwright.rc == 0
+
+- name: 12-mcp-servers | Add gemini-cli MCP server
+  ansible.builtin.shell: >
+    claude mcp add --scope user gemini-cli --
+    npx @choplin/mcp-gemini-cli --allow-npx
+  args:
+    executable: '{{ claude_fish_path }}'
+  when: "'gemini-cli' not in claude_mcp_list.stdout"
+  register: claude_mcp_add_gemini_cli
+  changed_when: claude_mcp_add_gemini_cli.rc == 0
